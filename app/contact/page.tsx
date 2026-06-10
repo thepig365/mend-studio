@@ -20,6 +20,7 @@ export default function ContactPage() {
         body="Bookings, gift cards, consultations or career enquiries — call, message or send us a note below."
         image={siteImages.contact.src}
         imageAlt={siteImages.contact.alt}
+        imageAspect="aspect-[3/4]"
         actions={[
           { label: "Call Now", href: site.phoneHref, variant: "gold" },
           { label: "View Services", href: "/services", variant: "outline" },

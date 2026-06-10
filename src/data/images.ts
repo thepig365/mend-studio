@@ -87,9 +87,9 @@ export const siteImages = {
     credit: CREDIT,
   },
   contact: {
-    src: unsplash("1633681926022-84c23e8cb2d6"),
-    alt: "Warm premium salon reception",
-    credit: CREDIT,
+    src: "/images/mend-beauty-contact.png",
+    alt: "Mend Beauty Studio product shelves and professional hair care station",
+    credit: "Mend Beauty Studio",
   },
 } satisfies Record<string, SiteImage>;
 
