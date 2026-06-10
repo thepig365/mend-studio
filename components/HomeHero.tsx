@@ -4,7 +4,7 @@ import Link from "next/link";
 // Full-width homepage hero banner over the real Mend Beauty Studio interior photo.
 export default function HomeHero() {
   return (
-    <section className="relative flex min-h-[70vh] items-end overflow-hidden sm:min-h-[78vh]">
+    <section className="relative flex min-h-[72vh] items-end overflow-hidden sm:min-h-[78vh]">
       <Image
         src="/images/mend-beauty-hero.png"
         alt="Mend Beauty Studio Balwyn salon interior"
@@ -22,21 +22,21 @@ export default function HomeHero() {
         aria-hidden
         className="absolute inset-0 bg-gradient-to-r from-charcoal/45 via-transparent to-transparent"
       />
-      <div className="wrap relative pb-16 pt-40 sm:pb-24 sm:pt-56">
-        <p className="text-xs font-medium uppercase tracking-[0.25em] text-cream/90">
+      <div className="wrap relative pb-12 pt-28 sm:pb-24 sm:pt-56">
+        <p className="text-[0.65rem] font-medium uppercase tracking-[0.22em] text-cream/90 sm:text-xs sm:tracking-[0.25em]">
           Mend Beauty Studio — Balwyn
         </p>
-        <h1 className="mt-4 max-w-3xl font-display text-4xl font-medium leading-tight text-cream sm:text-5xl lg:text-6xl">
+        <h1 className="mt-3 max-w-3xl font-display text-[1.75rem] font-medium leading-[1.15] text-cream sm:mt-4 sm:text-5xl sm:leading-tight lg:text-6xl">
           Mend your hair. Refresh your skin. Renew your look.
         </h1>
-        <p className="mt-5 max-w-xl text-base leading-relaxed text-cream/90 sm:text-lg">
+        <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/90 sm:mt-5 sm:text-lg">
           Premium hair, head spa, skin and beauty care in Balwyn.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href="#contact" className="btn-gold">
+        <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+          <a href="#contact" className="btn-gold w-full py-3.5 sm:w-auto">
             Book an Appointment
           </a>
-          <Link href="/services" className="btn-outline-light">
+          <Link href="/services" className="btn-outline-light w-full py-3.5 sm:w-auto">
             Explore Services
           </Link>
         </div>

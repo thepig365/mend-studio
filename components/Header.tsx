@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 import { mainNav, servicesNav, site } from "@/lib/site";
 
 export default function Header() {
@@ -13,17 +14,20 @@ export default function Header() {
     setMobileServicesOpen(false);
   };
 
+  // Lock body scroll while the full-screen mobile menu is open.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-beige/70 bg-cream/90 backdrop-blur">
-      <div className="wrap flex h-20 items-center justify-between gap-6">
-        <Link href="/" className="flex flex-col leading-none" onClick={closeMobile}>
-          <span className="font-display text-3xl font-medium tracking-wide text-charcoal">
-            Mend
-          </span>
-          <span className="text-[0.6rem] font-medium uppercase tracking-[0.42em] text-gold">
-            Beauty Studio
-          </span>
-        </Link>
+    <header className="sticky top-0 z-50 border-b border-beige/70 bg-cream/95 backdrop-blur-md safe-top">
+      <div className="wrap flex h-16 items-center justify-between gap-4 sm:h-[4.5rem]">
+        <Logo onClick={closeMobile} />
 
         {/* Desktop nav */}
         <nav aria-label="Main navigation" className="hidden items-center gap-7 lg:flex">
@@ -76,7 +80,7 @@ export default function Header() {
         {/* Mobile menu button */}
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-beige text-charcoal lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-beige text-charcoal transition-colors hover:border-gold lg:hidden"
           aria-expanded={mobileOpen}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen((open) => !open)}
@@ -93,73 +97,84 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile nav */}
+      {/* Full-screen mobile menu */}
       {mobileOpen && (
-        <nav
-          aria-label="Mobile navigation"
-          className="border-t border-beige/70 bg-cream lg:hidden"
-        >
-          <div className="wrap flex flex-col py-4">
-            {mainNav.map((item) =>
-              item.hasDropdown ? (
-                <div key={item.label}>
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between py-3 text-left text-base text-charcoal"
-                    aria-expanded={mobileServicesOpen}
-                    onClick={() => setMobileServicesOpen((open) => !open)}
-                  >
-                    {item.label}
-                    <svg
-                      aria-hidden
-                      className={`h-3.5 w-3.5 text-gold transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`}
-                      viewBox="0 0 12 12"
-                      fill="none"
+        <div className="fixed inset-0 top-16 z-50 flex flex-col bg-cream lg:hidden safe-top">
+          <nav
+            aria-label="Mobile navigation"
+            className="flex flex-1 flex-col overflow-y-auto overscroll-contain"
+          >
+            <div className="wrap flex flex-col py-2 pb-28">
+              {mainNav.map((item) =>
+                item.hasDropdown ? (
+                  <div key={item.label} className="border-b border-beige/50">
+                    <button
+                      type="button"
+                      className="flex w-full min-h-[3rem] items-center justify-between py-3 text-left text-base font-medium text-charcoal"
+                      aria-expanded={mobileServicesOpen}
+                      onClick={() => setMobileServicesOpen((open) => !open)}
                     >
-                      <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  </button>
-                  {mobileServicesOpen && (
-                    <div className="mb-2 flex flex-col rounded-2xl bg-sand px-4 py-2">
-                      <Link
-                        href="/services"
-                        className="py-2.5 text-sm text-cocoa"
-                        onClick={closeMobile}
+                      {item.label}
+                      <svg
+                        aria-hidden
+                        className={`h-4 w-4 text-gold transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`}
+                        viewBox="0 0 12 12"
+                        fill="none"
                       >
-                        All Services
-                      </Link>
-                      {servicesNav.map((service) => (
+                        <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                    {mobileServicesOpen && (
+                      <div className="mb-3 flex flex-col rounded-2xl bg-sand px-4 py-2">
                         <Link
-                          key={service.label}
-                          href={service.href}
-                          className="py-2.5 text-sm text-cocoa"
+                          href="/services"
+                          className="min-h-[2.75rem] py-2.5 text-sm font-medium text-charcoal"
                           onClick={closeMobile}
                         >
-                          {service.label}
+                          All Services
                         </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="py-3 text-base text-charcoal"
-                  onClick={closeMobile}
-                >
-                  {item.label}
-                </Link>
-              )
-            )}
-            <a href="#contact" className="btn-gold mt-3 w-full" onClick={closeMobile}>
-              Book Now
-            </a>
-            <p className="mt-4 text-xs text-cocoa">
-              {site.locationName} · {site.phone}
-            </p>
-          </div>
-        </nav>
+                        {servicesNav.map((service) => (
+                          <Link
+                            key={service.label}
+                            href={service.href}
+                            className="min-h-[2.75rem] py-2.5 text-sm text-cocoa"
+                            onClick={closeMobile}
+                          >
+                            {service.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="min-h-[3rem] border-b border-beige/50 py-3 text-base font-medium text-charcoal"
+                    onClick={closeMobile}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
+
+              <div className="mt-6 space-y-3">
+                <a href="#contact" className="btn-gold w-full py-3.5" onClick={closeMobile}>
+                  Book an Appointment
+                </a>
+                <a href={site.phoneHref} className="btn-outline w-full py-3.5">
+                  Call {site.phone}
+                </a>
+              </div>
+
+              <div className="mt-8 rounded-2xl bg-sand/80 px-5 py-4 text-sm text-cocoa">
+                <p className="font-medium text-charcoal">{site.locationName}</p>
+                <p className="mt-1">{site.address}</p>
+                <p className="mt-2">WeChat: {site.wechat}</p>
+              </div>
+            </div>
+          </nav>
+        </div>
       )}
     </header>
   );

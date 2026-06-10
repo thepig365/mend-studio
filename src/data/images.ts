@@ -25,6 +25,11 @@ const pexels = (id: number, w = 1200) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
 export const siteImages = {
+  logo: {
+    src: "/images/mend-beauty-logo.png",
+    alt: "Mend Beauty Studio",
+    credit: "Mend Beauty Studio",
+  },
   // Real Mend Beauty Studio photo — not a stock image.
   hero: {
     src: "/images/mend-beauty-hero.png",

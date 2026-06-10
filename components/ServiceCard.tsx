@@ -36,8 +36,8 @@ export default function ServiceCard({
           />
         </div>
       )}
-      <div className="flex flex-1 flex-col p-7">
-        <h3 className="font-display text-2xl font-medium text-charcoal">{title}</h3>
+      <div className="flex flex-1 flex-col p-5 sm:p-7">
+        <h3 className="font-display text-xl font-medium text-charcoal sm:text-2xl">{title}</h3>
         <p className="mt-3 flex-1 text-sm leading-relaxed text-cocoa">{description}</p>
         <span className="mt-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-gold transition-colors group-hover:text-bronze">
           {linkLabel}

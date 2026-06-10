@@ -1,16 +1,16 @@
 import Link from "next/link";
+import Logo from "@/components/Logo";
 import { mainNav, servicesNav, site } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="bg-charcoal text-cream">
+    <footer className="bg-charcoal pb-20 text-cream lg:pb-0">
       {/* Contact anchor — Book Now buttons across the site land here */}
       <div id="contact" className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-display text-3xl font-medium">Mend</p>
-          <p className="mt-1 text-[0.6rem] font-medium uppercase tracking-[0.42em] text-gold">
-            Beauty Studio
-          </p>
+          <div className="rounded-2xl bg-cream/95 px-3 py-2">
+            <Logo variant="footer" />
+          </div>
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/70">
             {site.tagline}
           </p>

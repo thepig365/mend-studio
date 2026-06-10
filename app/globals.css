@@ -42,6 +42,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -49,11 +50,21 @@ body {
   color: var(--color-charcoal);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* iOS safe-area insets for notched devices */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @layer components {
   .wrap {
-    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-8;
   }
   .eyebrow {
     @apply text-xs font-medium uppercase tracking-[0.28em] text-gold;
