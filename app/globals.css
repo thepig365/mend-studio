@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette — warm, calm, premium */
+  --color-cream: #fbf8f2;
+  --color-sand: #f5efe6;
+  --color-linen: #efe6d8;
+  --color-beige: #e4d6c3;
+  --color-taupe: #c8b69d;
+  --color-gold: #b08d57;
+  --color-bronze: #97784e;
+  --color-cocoa: #74614b;
+  --color-espresso: #463c30;
+  --color-charcoal: #332e26;
+
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-jost), system-ui, -apple-system, sans-serif;
+
+  /* Service image system — soft fade/scale animations */
+  --animate-fade-in: fade-in 0.25s ease-out both;
+  --animate-preview-in: preview-in 0.22s ease-out both;
+  --animate-sheet-up: sheet-up 0.32s cubic-bezier(0.32, 0.72, 0.25, 1) both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes preview-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+  }
+  @keyframes sheet-up {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.28em] text-gold;
+  }
+  .btn-primary,
+  .btn-gold,
+  .btn-outline,
+  .btn-light,
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center rounded-full px-7 py-3 text-sm font-medium tracking-wide transition-colors duration-200;
+  }
+  .btn-primary {
+    @apply bg-charcoal text-cream hover:bg-cocoa;
+  }
+  .btn-gold {
+    @apply bg-gold text-cream hover:bg-bronze;
+  }
+  .btn-outline {
+    @apply border border-charcoal/30 text-charcoal hover:border-gold hover:text-bronze;
+  }
+  .btn-light {
+    @apply bg-cream text-charcoal hover:bg-linen;
+  }
+  .btn-outline-light {
+    @apply border border-cream/40 text-cream hover:border-gold hover:text-gold;
+  }
+}

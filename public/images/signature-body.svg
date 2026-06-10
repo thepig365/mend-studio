@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5EFE6"/>
+      <stop offset="1" stop-color="#D9C6A8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <circle cx="188" cy="225" r="288" fill="#FFFFFF" opacity="0.16"/>
+  <circle cx="1075" cy="702" r="378" fill="#8A6F4D" opacity="0.08"/>
+  <text x="600" y="464" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="45" letter-spacing="6" fill="#74614B" opacity="0.55">BODY SCRUB & RELAXATION</text>
+</svg>
