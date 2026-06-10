@@ -25,8 +25,8 @@ export const viewport = {
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/images/mend-beauty-logo.png",
-    apple: "/images/mend-beauty-logo.png",
+    icon: "/images/mend-monogram.svg",
+    apple: "/images/mend-monogram.svg",
   },
   title: {
     default: "Mend Beauty Studio Balwyn | Hair, Head Spa, Skin & Beauty",

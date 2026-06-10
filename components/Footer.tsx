@@ -8,9 +8,7 @@ export default function Footer() {
       {/* Contact anchor — Book Now buttons across the site land here */}
       <div id="contact" className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="rounded-2xl bg-cream/95 px-3 py-2">
-            <Logo variant="footer" />
-          </div>
+          <Logo variant="stacked" tone="light" />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/70">
             {site.tagline}
           </p>

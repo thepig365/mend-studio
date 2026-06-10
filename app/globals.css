@@ -91,4 +91,131 @@ body {
   .btn-outline-light {
     @apply border border-cream/40 text-cream hover:border-gold hover:text-gold;
   }
+
+  /* —— Premium site header —— */
+  .site-header {
+    background: linear-gradient(
+      180deg,
+      rgba(251, 248, 242, 0.97) 0%,
+      rgba(245, 239, 230, 0.94) 100%
+    );
+    border-bottom: 1px solid rgba(228, 214, 195, 0.85);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.6) inset,
+      0 6px 28px -8px rgba(51, 46, 38, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .logo-plaque {
+    @apply rounded-2xl border border-beige/70 px-2.5 py-1.5 transition-all duration-200 sm:px-3 sm:py-1.5;
+    background: linear-gradient(180deg, rgba(239, 230, 216, 0.55) 0%, rgba(245, 239, 230, 0.35) 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.65) inset,
+      0 2px 10px -3px rgba(51, 46, 38, 0.08);
+  }
+
+  .logo-plaque:hover {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 4px 14px -4px rgba(51, 46, 38, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .nav-link {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm tracking-wide text-cocoa transition-all duration-200 ease-out;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/35 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  .nav-link:hover {
+    @apply -translate-y-px bg-linen/70 text-charcoal;
+    box-shadow: 0 3px 10px -4px rgba(51, 46, 38, 0.12);
+  }
+
+  .nav-link-active {
+    @apply -translate-y-px bg-gradient-to-b from-linen to-sand text-charcoal;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.55) inset,
+      0 3px 12px -4px rgba(176, 141, 87, 0.28);
+  }
+
+  .nav-link-active:hover {
+    @apply bg-gradient-to-b from-linen to-sand text-charcoal;
+  }
+
+  .btn-book {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium tracking-wide text-cream transition-all duration-200 ease-out;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+    background: linear-gradient(180deg, #c9a56e 0%, #b08d57 48%, #97784e 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.22) inset,
+      0 5px 18px -4px rgba(151, 120, 78, 0.45);
+  }
+
+  .btn-book:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.28) inset,
+      0 8px 22px -5px rgba(151, 120, 78, 0.5);
+  }
+
+  .btn-book:active {
+    transform: translateY(0);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.15) inset,
+      0 3px 10px -3px rgba(151, 120, 78, 0.4);
+  }
+
+  .menu-toggle {
+    @apply flex h-10 w-10 items-center justify-center rounded-full border border-beige/80 text-charcoal transition-all duration-200 lg:hidden;
+    background: linear-gradient(180deg, rgba(239, 230, 216, 0.5) 0%, rgba(245, 239, 230, 0.3) 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.55) inset,
+      0 2px 8px -3px rgba(51, 46, 38, 0.1);
+  }
+
+  .menu-toggle:hover {
+    @apply border-gold/50 text-bronze;
+    transform: translateY(-1px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.6) inset,
+      0 4px 12px -4px rgba(51, 46, 38, 0.14);
+  }
+
+  .menu-toggle-open {
+    @apply border-gold/60 text-bronze;
+    background: linear-gradient(180deg, rgba(239, 230, 216, 0.75) 0%, rgba(228, 214, 195, 0.45) 100%);
+  }
+
+  .mobile-nav-panel {
+    background: linear-gradient(
+      180deg,
+      rgba(251, 248, 242, 0.98) 0%,
+      rgba(245, 239, 230, 0.96) 100%
+    );
+    border-top: 1px solid rgba(228, 214, 195, 0.7);
+    box-shadow: 0 -4px 24px -8px rgba(51, 46, 38, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .mobile-nav-link {
+    @apply flex min-h-[3rem] items-center rounded-xl px-3 text-base font-medium text-charcoal transition-all duration-200;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/35;
+  }
+
+  .mobile-nav-link:hover {
+    @apply bg-linen/60;
+  }
+
+  .mobile-nav-link-active {
+    @apply bg-gradient-to-r from-linen to-sand/80 text-charcoal;
+    box-shadow: 0 2px 10px -4px rgba(176, 141, 87, 0.22);
+  }
+
+  .mobile-nav-card {
+    @apply rounded-2xl border border-beige/60 px-4 py-3;
+    background: linear-gradient(180deg, rgba(245, 239, 230, 0.65) 0%, rgba(239, 230, 216, 0.35) 100%);
+    box-shadow: 0 2px 12px -6px rgba(51, 46, 38, 0.1);
+  }
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import MendMonogram from "@/components/brand/MendMonogram";
 
 // Full-width homepage hero banner over the real Mend Beauty Studio interior photo.
 export default function HomeHero() {
@@ -22,6 +23,15 @@ export default function HomeHero() {
         aria-hidden
         className="absolute inset-0 bg-gradient-to-r from-charcoal/45 via-transparent to-transparent"
       />
+      {/* Decorative watermark — low opacity, does not compete with headline */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-[8%] top-[18%] sm:right-[12%] sm:top-[22%]"
+      >
+        <MendMonogram
+          className="h-32 w-32 text-cream opacity-[0.06] sm:h-48 sm:w-48 lg:h-56 lg:w-56"
+        />
+      </div>
       <div className="wrap relative pb-12 pt-28 sm:pb-24 sm:pt-56">
         <p className="text-[0.65rem] font-medium uppercase tracking-[0.22em] text-cream/90 sm:text-xs sm:tracking-[0.25em]">
           Mend Beauty Studio — Balwyn
