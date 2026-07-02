@@ -6,7 +6,7 @@ export const site = {
   phone: "0499 6666 88",
   phoneHref: "tel:+61499666688",
   wechat: "lzho1223",
-  address: "Balwyn VIC 3103",
+  address: "74 Whitehorse Road, Deepdene VIC 3103, Australia",
   region: "Melbourne’s Inner East",
   hours: [
     { days: "Monday", time: "Closed" },

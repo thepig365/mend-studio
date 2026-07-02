@@ -7,8 +7,7 @@ import { siteImages } from "@/src/data/images";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Contact Mend Beauty Studio — Balwyn. Phone 0499 6666 88, WeChat lzho1223. Book hair, head spa, skin, body, brows and lashes services in Balwyn VIC 3103.",
+  description: `Contact Mend Beauty Studio — Balwyn. Phone ${site.phone}, WeChat ${site.wechat}. ${site.address}. Book hair, head spa, skin, body, brows and lashes services.`,
 };
 
 export default function ContactPage() {
