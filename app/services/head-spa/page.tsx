@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import ServicePage from "@/components/ServicePage";
 import { getCategory } from "@/lib/services";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Head Spa & Scalp Care",
   description:
     "Luxury head spa rituals, scalp cleansing and scalp health support at Mend Beauty Studio, Balwyn. Two dedicated head spa stations in a calm, premium setting.",
-};
+  path: "/services/head-spa",
+});
 
 export default function HeadSpaPage() {
   const category = getCategory("head-spa");

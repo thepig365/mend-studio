@@ -1,18 +1,19 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import CTABlock from "@/components/CTABlock";
 import GalleryPreview from "@/components/GalleryPreview";
 import { galleryImages } from "@/lib/services";
+import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
 import { siteImages } from "@/src/data/images";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Gift Cards",
   description:
     "Give the gift of refreshment — Mend Beauty Studio gift cards for head spa, facials, body care, hair repair and beauty refresh experiences in Balwyn.",
-};
+  path: "/gift-cards",
+});
 
 const giftIdeas = [
   {

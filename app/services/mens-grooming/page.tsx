@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import ServicePage from "@/components/ServicePage";
 import { getCategory } from "@/lib/services";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Men’s Grooming",
   description:
     "Men’s cuts, skin fades, beard trims, grey blending, scalp detox and men’s head spa at Mend Beauty Studio, Balwyn.",
-};
+  path: "/services/mens-grooming",
+});
 
 export default function MensGroomingPage() {
   const category = getCategory("mens-grooming");

@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import { getCategory, pricingNote } from "@/lib/services";
 import { getMenuItemsForCategory } from "@/src/data/serviceMenu";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Semi-Permanent Beauty",
   description:
     "Semi-permanent brows, lip blush and lash line enhancement at Mend Beauty Studio, Balwyn — available by consultation only and subject to suitability assessment.",
-};
+  path: "/services/semi-permanent",
+});
 
 export default function SemiPermanentPage() {
   const category = getCategory("semi-permanent");

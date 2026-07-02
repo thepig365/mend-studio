@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import HomeHero from "@/components/HomeHero";
 import SectionHeading from "@/components/SectionHeading";
@@ -9,14 +8,17 @@ import ContactCard from "@/components/ContactCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { site, whyMend } from "@/lib/site";
 import { featuredServices, signatureExperiences, galleryImages } from "@/lib/services";
+import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
 import { siteImages } from "@/src/data/images";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Mend Beauty Studio Balwyn | Hair, Head Spa, Skin & Beauty",
   description:
     "Mend Beauty Studio in Balwyn offers premium hair, head spa, scalp wellness, Korean skin care, brows, lashes and beauty refresh services in a calm, modern salon space.",
-};
+  path: "/",
+  absoluteTitle: true,
+});
 
 export default function HomePage() {
   return (

@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import CTABlock from "@/components/CTABlock";
 import { serviceCategories, pricingNote } from "@/lib/services";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Services",
   description:
     "Explore hair services, luxury head spa and scalp wellness, Korean skin management, body care, brows and lashes, men’s grooming and semi-permanent beauty at Mend Beauty Studio, Balwyn.",
-};
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

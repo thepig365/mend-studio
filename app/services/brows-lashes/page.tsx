@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import ServicePage from "@/components/ServicePage";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { getCategory } from "@/lib/services";
 import { getMenuItemsForCategory } from "@/src/data/serviceMenu";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Brows & Lashes",
   description:
     "Korean lash lift, brow lamination, tinting and eyelash extensions at Mend Beauty Studio, Balwyn. Natural, low-maintenance eye beauty.",
-};
+  path: "/services/brows-lashes",
+});
 
 export default function BrowsLashesPage() {
   const category = getCategory("brows-lashes");

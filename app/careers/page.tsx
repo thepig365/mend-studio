@@ -1,17 +1,18 @@
-import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import CareerCard from "@/components/CareerCard";
 import CTABlock from "@/components/CTABlock";
 import { careerOpportunities } from "@/lib/services";
+import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
 import { siteImages } from "@/src/data/images";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Careers & Rent a Space",
   description:
     "Salon manager and hairdresser roles, rent-a-chair and beauty room rental opportunities at Mend Beauty Studio, a premium hair and beauty studio in Balwyn.",
-};
+  path: "/careers",
+});
 
 const managerBenefits = [
   "Competitive salary package",

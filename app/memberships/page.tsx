@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import CTABlock from "@/components/CTABlock";
 import { membershipPlans } from "@/lib/services";
+import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
 import { siteImages } from "@/src/data/images";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Memberships — Coming Soon",
   description:
     "Monthly head spa, skin glow, hair colour maintenance and beauty refresh membership plans are coming soon to Mend Beauty Studio, Balwyn.",
-};
+  path: "/memberships",
+});
 
 export default function MembershipsPage() {
   return (

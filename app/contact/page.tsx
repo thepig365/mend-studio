@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import ContactCard from "@/components/ContactCard";
 import { site } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
 import { siteImages } from "@/src/data/images";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Contact",
   description: `Contact Mend Beauty Studio — Balwyn. Phone ${site.phone}, WeChat ${site.wechat}. ${site.address}. Book hair, head spa, skin, body, brows and lashes services.`,
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

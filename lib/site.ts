@@ -7,7 +7,20 @@ export const site = {
   phoneHref: "tel:+61499666688",
   wechat: "lzho1223",
   address: "74 Whitehorse Road, Deepdene VIC 3103, Australia",
+  // Structured components of the address above, for JSON-LD only. Values must always
+  // match the `address` string exactly — do not edit one without the other.
+  structuredAddress: {
+    streetAddress: "74 Whitehorse Road",
+    addressLocality: "Deepdene",
+    addressRegion: "VIC",
+    postalCode: "3103",
+    addressCountry: "AU",
+  },
   region: "Melbourne’s Inner East",
+  // Canonical production domain. Used by robots.ts, sitemap.ts, canonical URLs,
+  // OpenGraph/Twitter metadata, and JSON-LD. Single source of truth — do not
+  // hardcode this string elsewhere.
+  url: "https://www.mendbeautystudio.com.au",
   hours: [
     { days: "Monday", time: "Closed" },
     { days: "Tuesday – Friday", time: "9:30 am – 6:30 pm" },

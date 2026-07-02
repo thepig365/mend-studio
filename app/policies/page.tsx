@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Policies",
   description:
     "Booking, cancellation, gift card and service policies for Mend Beauty Studio — Balwyn, including head spa and semi-permanent beauty consultation policies.",
-};
+  path: "/policies",
+});
 
 const policies = [
   {
