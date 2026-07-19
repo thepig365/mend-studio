@@ -43,7 +43,10 @@ export default function Header() {
         <Logo variant="horizontal" onClick={closeMobile} />
 
         {/* Desktop nav */}
-        <nav aria-label="Main navigation" className="ml-5 hidden items-center gap-1 lg:flex xl:ml-8">
+        <nav
+          aria-label="Main navigation"
+          className="ml-3 hidden min-w-0 items-center gap-0 md:flex lg:ml-5 xl:ml-8 xl:gap-1 [&_.nav-link]:px-2 [&_.nav-link]:text-xs xl:[&_.nav-link]:px-3.5 xl:[&_.nav-link]:text-sm"
+        >
           {mainNav.map((item) =>
             item.hasDropdown ? (
               <div key={item.label} className="group relative">
@@ -87,7 +90,10 @@ export default function Header() {
               </Link>
             )
           )}
-          <a href="#contact" className="btn-book ml-2">
+          <a
+            href="#contact"
+            className="btn-book ml-1 px-3 py-2 text-xs xl:ml-2 xl:px-6 xl:py-2.5 xl:text-sm"
+          >
             Book Now
           </a>
         </nav>
@@ -124,7 +130,7 @@ export default function Header() {
       {/* Mobile nav panel — sits below header bar; toggle stays visible */}
       <div
         id="mobile-nav-panel"
-        className={`mobile-nav-panel fixed inset-x-0 bottom-0 top-28 z-[65] flex flex-col transition-all duration-300 ease-out sm:top-32 lg:hidden ${
+        className={`mobile-nav-panel fixed inset-x-0 bottom-0 top-28 z-[65] flex flex-col transition-all duration-300 ease-out sm:top-32 md:hidden ${
           mobileOpen
             ? "visible opacity-100"
             : "pointer-events-none invisible opacity-0"
