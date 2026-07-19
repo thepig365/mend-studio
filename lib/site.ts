@@ -3,8 +3,8 @@ export const site = {
   locationName: "Mend Beauty Studio — Balwyn",
   tagline: "Mend your hair. Refresh your skin. Renew your look.",
   positioning: "Hair • Head Spa • Skin • Body • Brows & Lashes",
-  phone: "0499 6666 88",
-  phoneHref: "tel:+61499666688",
+  phone: "0499 66 88 99",
+  phoneHref: "tel:+61499668899",
   wechat: "lzho1223",
   address: "74 Whitehorse Road, Deepdene VIC 3103, Australia",
   // Structured components of the address above, for JSON-LD only. Values must always
