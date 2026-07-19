@@ -15,16 +15,10 @@ function isNavActive(pathname: string, href: string, hasDropdown?: boolean) {
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const closeMobile = () => {
     setMobileOpen(false);
-    setMobileServicesOpen(false);
   };
-
-  useEffect(() => {
-    closeMobile();
-  }, [pathname]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -45,7 +39,7 @@ export default function Header() {
 
   return (
     <header className="site-header sticky top-0 z-[70] safe-top">
-      <div className="wrap flex h-[3.75rem] items-center justify-between gap-3 sm:h-[4.25rem]">
+      <div className="wrap flex h-28 items-center justify-between gap-3 sm:h-32">
         <Logo variant="horizontal" onClick={closeMobile} />
 
         {/* Desktop nav */}
@@ -130,7 +124,7 @@ export default function Header() {
       {/* Mobile nav panel — sits below header bar; toggle stays visible */}
       <div
         id="mobile-nav-panel"
-        className={`mobile-nav-panel fixed inset-x-0 bottom-0 top-[3.75rem] z-[65] flex flex-col transition-all duration-300 ease-out sm:top-[4.25rem] lg:hidden ${
+        className={`mobile-nav-panel fixed inset-x-0 bottom-0 top-28 z-[65] flex flex-col transition-all duration-300 ease-out sm:top-32 lg:hidden ${
           mobileOpen
             ? "visible opacity-100"
             : "pointer-events-none invisible opacity-0"
@@ -142,65 +136,32 @@ export default function Header() {
           className="flex flex-1 flex-col overflow-y-auto overscroll-contain"
         >
           <div className="wrap flex flex-col py-3 pb-28">
-            {mainNav.map((item) =>
-              item.hasDropdown ? (
-                <div key={item.label} className="mb-1">
-                  <button
-                    type="button"
-                    className={`${mobileLinkClass(item.href, true)} w-full justify-between`}
-                    aria-expanded={mobileServicesOpen}
-                    onClick={() => setMobileServicesOpen((open) => !open)}
-                  >
-                    {item.label}
-                    <svg
-                      aria-hidden
-                      className={`h-4 w-4 text-gold transition-transform duration-200 ${
-                        mobileServicesOpen ? "rotate-180" : ""
-                      }`}
-                      viewBox="0 0 12 12"
-                      fill="none"
-                    >
-                      <path
-                        d="M2 4l4 4 4-4"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </button>
-                  {mobileServicesOpen && (
-                    <div className="mobile-nav-card mb-2 ml-1 mr-1 flex flex-col gap-0.5 py-2">
-                      <Link
-                        href="/services"
-                        className="mobile-nav-link min-h-[2.75rem] text-sm"
-                        onClick={closeMobile}
-                      >
-                        All Services
-                      </Link>
-                      {servicesNav.map((service) => (
-                        <Link
-                          key={service.label}
-                          href={service.href}
-                          className="mobile-nav-link min-h-[2.75rem] text-sm text-cocoa"
-                          onClick={closeMobile}
-                        >
-                          {service.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
+            {mainNav.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={mobileLinkClass(item.href, item.hasDropdown)}
+                onClick={closeMobile}
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            <div className="mobile-nav-card mt-3 flex flex-col gap-0.5 py-2">
+              <p className="px-3 py-2 text-xs font-medium uppercase tracking-[0.24em] text-gold">
+                All Services
+              </p>
+              {servicesNav.map((service) => (
                 <Link
-                  key={item.label}
-                  href={item.href}
-                  className={mobileLinkClass(item.href)}
+                  key={service.label}
+                  href={service.href}
+                  className="mobile-nav-link min-h-[2.75rem] text-sm text-cocoa"
                   onClick={closeMobile}
                 >
-                  {item.label}
+                  {service.label}
                 </Link>
-              )
-            )}
+              ))}
+            </div>
 
             <div className="mt-5 space-y-3">
               <a href="#contact" className="btn-book w-full py-3.5" onClick={closeMobile}>

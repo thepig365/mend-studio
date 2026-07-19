@@ -1,13 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import MendMonogram from "@/components/brand/MendMonogram";
 
 type LogoVariant = "horizontal" | "stacked" | "icon";
 
 type LogoProps = {
   /** horizontal = navbar · stacked = footer · icon = compact mark */
   variant?: LogoVariant;
-  /** light = cream/gold on dark backgrounds (e.g. footer) */
+  /** Retained for compatibility with existing callers. */
   tone?: "dark" | "light";
   className?: string;
   onClick?: () => void;
@@ -15,13 +14,9 @@ type LogoProps = {
 
 export default function Logo({
   variant = "horizontal",
-  tone = "dark",
   className = "",
   onClick,
 }: LogoProps) {
-  const isLight = tone === "light";
-  const nameClass = isLight ? "text-cream" : "text-charcoal";
-  const subClass = isLight ? "text-gold" : "text-gold";
   if (variant === "icon") {
     return (
       <Link
@@ -30,7 +25,13 @@ export default function Logo({
         onClick={onClick}
         aria-label="Mend Beauty Studio — Home"
       >
-        <MendMonogram className="h-9 w-9 text-charcoal" />
+        <Image
+          src="/images/mend-beauty-logo-transparent.png"
+          alt=""
+          width={696}
+          height={1008}
+          className="h-12 w-auto object-contain"
+        />
       </Link>
     );
   }
@@ -43,36 +44,32 @@ export default function Logo({
         onClick={onClick}
         aria-label="Mend Beauty Studio — Home"
       >
-        <MendMonogram className={`h-14 w-14 ${nameClass}`} />
-        <span className={`mt-2 font-display text-2xl font-medium leading-none ${nameClass}`}>
-          Mend
-        </span>
-        <span className={`mt-1.5 text-[0.55rem] font-medium uppercase tracking-[0.38em] ${subClass}`}>
-          Beauty Studio
-        </span>
+        <Image
+          src="/images/mend-beauty-logo-transparent.png"
+          alt=""
+          width={696}
+          height={1008}
+          className="h-auto w-40 object-contain brightness-125 contrast-110 sm:w-44"
+        />
       </Link>
     );
   }
 
-  // Horizontal navbar lockup — monogram + wordmark, no image block.
   return (
     <Link
       href="/"
-      className={`logo-plaque group inline-flex shrink-0 items-center gap-2.5 sm:gap-3 ${className}`}
+      className={`group inline-flex shrink-0 items-center ${className}`}
       onClick={onClick}
       aria-label="Mend Beauty Studio — Home"
     >
-      <MendMonogram
-        className="h-8 w-8 shrink-0 text-charcoal transition-transform duration-200 group-hover:scale-[1.02] sm:h-9 sm:w-9"
+      <Image
+        src="/images/mend-beauty-logo.png"
+        alt=""
+        width={1254}
+        height={1254}
+        priority
+        className="h-24 w-24 shrink-0 rounded-2xl object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-28 sm:w-28"
       />
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.15rem] font-medium tracking-wide text-charcoal sm:text-xl">
-          Mend
-        </span>
-        <span className="mt-0.5 text-[0.5rem] font-medium uppercase tracking-[0.32em] text-gold sm:text-[0.55rem] sm:tracking-[0.36em]">
-          Beauty Studio
-        </span>
-      </span>
     </Link>
   );
 }
@@ -81,10 +78,10 @@ export default function Logo({
 export function LogoStackedImage({ className = "" }: { className?: string }) {
   return (
     <Image
-      src="/images/mend-beauty-logo.png"
+      src="/images/mend-beauty-logo-transparent.png"
       alt="Mend Beauty Studio"
-      width={160}
-      height={160}
+      width={696}
+      height={1008}
       className={`h-auto w-28 object-contain sm:w-32 ${className}`}
     />
   );

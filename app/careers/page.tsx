@@ -117,7 +117,7 @@ export default function CareersPage() {
       <CTABlock
         eyebrow="Let’s talk"
         heading="Express your interest today"
-        body="Call 0499 6666 88, message us on WeChat (lzho1223) or use the contact form — and tell us a little about yourself."
+        body="Call 0499 66 88 99, message us on WeChat (lzho1223) or use the contact form — and tell us a little about yourself."
         actions={[
           { label: "Express Interest", href: "#contact", variant: "light" },
           { label: "Contact Page", href: "/contact", variant: "outline-light" },
