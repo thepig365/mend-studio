@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import MendMonogram from "@/components/brand/MendMonogram";
 
 type LogoVariant = "horizontal" | "stacked" | "icon";
 
@@ -19,9 +18,6 @@ export default function Logo({
   className = "",
   onClick,
 }: LogoProps) {
-  const isLight = tone === "light";
-  const nameClass = isLight ? "text-cream" : "text-charcoal";
-  const subClass = isLight ? "text-gold" : "text-gold";
   if (variant === "icon") {
     return (
       <Link
@@ -30,7 +26,13 @@ export default function Logo({
         onClick={onClick}
         aria-label="Mend Beauty Studio — Home"
       >
-        <MendMonogram className="h-9 w-9 text-charcoal" />
+        <Image
+          src="/images/mend-beauty-logo.png"
+          alt=""
+          width={1254}
+          height={1254}
+          className="h-9 w-9 rounded-full bg-white object-contain"
+        />
       </Link>
     );
   }
@@ -43,18 +45,25 @@ export default function Logo({
         onClick={onClick}
         aria-label="Mend Beauty Studio — Home"
       >
-        <MendMonogram className={`h-14 w-14 ${nameClass}`} />
-        <span className={`mt-2 font-display text-2xl font-medium leading-none ${nameClass}`}>
-          Mend
-        </span>
-        <span className={`mt-1.5 text-[0.55rem] font-medium uppercase tracking-[0.38em] ${subClass}`}>
-          Beauty Studio
+        <span
+          className={`overflow-hidden rounded-2xl bg-white p-2 ${
+            tone === "light" ? "ring-1 ring-cream/15" : "ring-1 ring-beige/70"
+          }`}
+        >
+          <Image
+            src="/images/mend-beauty-logo.png"
+            alt=""
+            width={1254}
+            height={1254}
+            className="h-auto w-40 object-contain sm:w-44"
+          />
         </span>
       </Link>
     );
   }
 
-  // Horizontal navbar lockup — monogram + wordmark, no image block.
+  // The full approved lockup is too detailed to read at navbar height, so the
+  // artwork is paired with a concise text lockup while remaining the source mark.
   return (
     <Link
       href="/"
@@ -62,12 +71,16 @@ export default function Logo({
       onClick={onClick}
       aria-label="Mend Beauty Studio — Home"
     >
-      <MendMonogram
-        className="h-8 w-8 shrink-0 text-charcoal transition-transform duration-200 group-hover:scale-[1.02] sm:h-9 sm:w-9"
+      <Image
+        src="/images/mend-beauty-logo.png"
+        alt=""
+        width={1254}
+        height={1254}
+        className="h-9 w-9 shrink-0 rounded-full bg-white object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-10 sm:w-10"
       />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.15rem] font-medium tracking-wide text-charcoal sm:text-xl">
-          Mend
+        <span className="font-display text-[1.05rem] font-medium tracking-[0.2em] text-charcoal sm:text-lg">
+          MEND
         </span>
         <span className="mt-0.5 text-[0.5rem] font-medium uppercase tracking-[0.32em] text-gold sm:text-[0.55rem] sm:tracking-[0.36em]">
           Beauty Studio
