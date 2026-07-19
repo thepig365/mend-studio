@@ -39,11 +39,11 @@ export default function Header() {
 
   return (
     <header className="site-header sticky top-0 z-[70] safe-top">
-      <div className="wrap flex h-28 items-center justify-between gap-3 sm:h-32">
+      <div className="wrap flex h-28 items-center justify-start gap-3 sm:h-32">
         <Logo variant="horizontal" onClick={closeMobile} />
 
         {/* Desktop nav */}
-        <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Main navigation" className="ml-5 hidden items-center gap-1 lg:flex xl:ml-8">
           {mainNav.map((item) =>
             item.hasDropdown ? (
               <div key={item.label} className="group relative">
@@ -95,7 +95,7 @@ export default function Header() {
         {/* Mobile menu toggle — hamburger ↔ close */}
         <button
           type="button"
-          className={`menu-toggle ${mobileOpen ? "menu-toggle-open" : ""}`}
+          className={`menu-toggle ml-auto ${mobileOpen ? "menu-toggle-open" : ""}`}
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-panel"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
