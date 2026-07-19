@@ -167,7 +167,7 @@ body {
   }
 
   .menu-toggle {
-    @apply flex h-10 w-10 items-center justify-center rounded-full border border-beige/80 text-charcoal transition-all duration-200 lg:hidden;
+    @apply flex h-10 w-10 items-center justify-center rounded-full border border-beige/80 text-charcoal transition-all duration-200 md:hidden;
     background: linear-gradient(180deg, rgba(239, 230, 216, 0.5) 0%, rgba(245, 239, 230, 0.3) 100%);
     box-shadow:
       0 1px 0 rgba(255, 255, 255, 0.55) inset,
