@@ -26,7 +26,7 @@ export default function Logo({
         aria-label="Mend Beauty Studio — Home"
       >
         <Image
-          src="/images/mend-beauty-logo-transparent.png"
+          src="/images/mend-beauty-logo-gold-transparent.png"
           alt=""
           width={696}
           height={1008}
@@ -45,11 +45,11 @@ export default function Logo({
         aria-label="Mend Beauty Studio — Home"
       >
         <Image
-          src="/images/mend-beauty-logo-transparent.png"
+          src="/images/mend-beauty-logo-gold-transparent.png"
           alt=""
           width={696}
           height={1008}
-          className="h-auto w-40 object-contain brightness-125 contrast-110 sm:w-44"
+          className="h-auto w-40 object-contain sm:w-44"
         />
       </Link>
     );
@@ -63,12 +63,12 @@ export default function Logo({
       aria-label="Mend Beauty Studio — Home"
     >
       <Image
-        src="/images/mend-beauty-logo.png"
+        src="/images/mend-beauty-logo-gold-transparent.png"
         alt=""
-        width={1254}
-        height={1254}
+        width={696}
+        height={1008}
         priority
-        className="h-24 w-24 shrink-0 rounded-2xl object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-28 sm:w-28"
+        className="h-24 w-auto shrink-0 object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-28"
       />
     </Link>
   );
@@ -78,7 +78,7 @@ export default function Logo({
 export function LogoStackedImage({ className = "" }: { className?: string }) {
   return (
     <Image
-      src="/images/mend-beauty-logo-transparent.png"
+      src="/images/mend-beauty-logo-gold-transparent.png"
       alt="Mend Beauty Studio"
       width={696}
       height={1008}
