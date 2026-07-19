@@ -45,7 +45,7 @@ export default function Header() {
         {/* Desktop nav */}
         <nav
           aria-label="Main navigation"
-          className="ml-3 hidden min-w-0 items-center gap-0 md:flex lg:ml-5 xl:ml-8 xl:gap-1 [&_.nav-link]:px-2 [&_.nav-link]:text-xs xl:[&_.nav-link]:px-3.5 xl:[&_.nav-link]:text-sm"
+          className="ml-auto hidden min-w-0 items-center gap-1 lg:flex xl:gap-2 [&_.nav-link]:px-3.5 [&_.nav-link]:text-sm xl:[&_.nav-link]:px-[1.125rem] xl:[&_.nav-link]:py-2.5 xl:[&_.nav-link]:text-base"
         >
           {mainNav.map((item) =>
             item.hasDropdown ? (
@@ -92,7 +92,7 @@ export default function Header() {
           )}
           <a
             href="#contact"
-            className="btn-book ml-1 px-3 py-2 text-xs xl:ml-2 xl:px-6 xl:py-2.5 xl:text-sm"
+            className="btn-book ml-2 px-5 py-2.5 text-sm xl:ml-3 xl:px-7 xl:py-3 xl:text-base"
           >
             Book Now
           </a>
@@ -101,7 +101,7 @@ export default function Header() {
         {/* Mobile menu toggle — hamburger ↔ close */}
         <button
           type="button"
-          className={`menu-toggle ml-auto ${mobileOpen ? "menu-toggle-open" : ""}`}
+          className={`menu-toggle ml-auto shrink-0 lg:ml-4 ${mobileOpen ? "menu-toggle-open" : ""}`}
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-panel"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -130,7 +130,7 @@ export default function Header() {
       {/* Mobile nav panel — sits below header bar; toggle stays visible */}
       <div
         id="mobile-nav-panel"
-        className={`mobile-nav-panel fixed inset-x-0 bottom-0 top-28 z-[65] flex flex-col transition-all duration-300 ease-out sm:top-32 md:hidden ${
+        className={`mobile-nav-panel fixed inset-x-0 bottom-0 top-28 z-[65] flex flex-col transition-all duration-300 ease-out sm:top-32 ${
           mobileOpen
             ? "visible opacity-100"
             : "pointer-events-none invisible opacity-0"
