@@ -44,6 +44,12 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Notes for V1
 
+## Domain migration
+
+The approved canonical production host is `https://mendbeauty.com.au`. The value in `lib/site.ts` is the single source for page canonical URLs, Open Graph and Twitter metadata, JSON-LD, `robots.txt`, and `sitemap.xml` locations. Run `npm run check:domain` to verify the repository-side migration invariants before deployment.
+
+Vercel redirects, DNS changes, Search Console, analytics, and Google Business Profile configuration are managed outside this repository and remain separate approval-gated steps.
+
 - No backend: booking / gift card buttons link to `#contact` (footer contact block); the contact form is static.
 - Prices are indicative placeholders (except Brows & Lashes, which use the confirmed ranges) — update `lib/services.ts` when finalised.
 - **Images are temporary stock photos** from Unsplash / Pexels (hand-picked: warm, neutral, no visible branding, no competitor sites). To replace with professional Mend Beauty Studio photography, drop the final photos into `public/images/` and update the `src` values in `src/data/images.ts` — nothing else needs to change. Remote image hosts are allowed in `next.config.ts` (`images.unsplash.com`, `images.pexels.com`).

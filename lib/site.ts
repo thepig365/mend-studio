@@ -20,7 +20,7 @@ export const site = {
   // Canonical production domain. Used by robots.ts, sitemap.ts, canonical URLs,
   // OpenGraph/Twitter metadata, and JSON-LD. Single source of truth — do not
   // hardcode this string elsewhere.
-  url: "https://www.mendbeautystudio.com.au",
+  url: "https://mendbeauty.com.au",
   hours: [
     { days: "Monday", time: "Closed" },
     { days: "Tuesday – Friday", time: "9:30 am – 6:30 pm" },
