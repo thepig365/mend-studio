@@ -116,7 +116,11 @@ export default function PoliciesPage() {
         body="If anything here is unclear, call or message us — we’d rather you ask."
         actions={[
           { label: "Contact Us", href: "/contact", variant: "light" },
-          { label: "Book Now", href: "#contact", variant: "outline-light" },
+          {
+            label: "Book Now",
+            href: "/contact#booking-enquiry",
+            variant: "outline-light",
+          },
         ]}
       />
     </>

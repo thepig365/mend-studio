@@ -118,7 +118,7 @@ export default function HomePage() {
               anniversaries or anyone who needs time to relax, reset and feel renewed.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <a href="#contact" className="btn-gold">
+              <a href="/contact#booking-enquiry" className="btn-gold">
                 Buy Gift Card
               </a>
               <Link href="/gift-cards" className="btn-outline">
@@ -202,7 +202,7 @@ export default function HomePage() {
         heading="Mend your hair. Refresh your skin. Renew your look."
         body="Book your next hair, head spa, skin or beauty visit today."
         actions={[
-          { label: "Book Now", href: "#contact", variant: "light" },
+          { label: "Book Now", href: "/contact#booking-enquiry", variant: "light" },
           { label: "View Services", href: "/services", variant: "outline-light" },
         ]}
       />

@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import ContactCard from "@/components/ContactCard";
+import BookingEnquiryForm from "@/components/BookingEnquiryForm";
 import { site } from "@/lib/site";
 import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
@@ -31,97 +32,25 @@ export default function ContactPage() {
         <div className="space-y-6">
           <ContactCard showHours />
 
-          {/* Map placeholder */}
-          <div className="flex aspect-[4/3] items-center justify-center rounded-3xl border border-dashed border-taupe bg-sand">
+          <div className="flex aspect-[4/3] items-center justify-center rounded-3xl border border-beige bg-sand">
             <div className="text-center">
-              <p className="font-display text-xl font-medium text-cocoa">Google Map</p>
+              <p className="font-display text-xl font-medium text-cocoa">Plan your visit</p>
               <p className="mt-1 text-xs uppercase tracking-[0.2em] text-taupe">
                 {site.address}
               </p>
+              <a
+                className="btn-outline mt-6"
+                href={site.mapsHref}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open in Google Maps
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Static contact form */}
-        <div className="rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-10">
-          <p className="eyebrow">Send a Message</p>
-          <h2 className="mt-3 font-display text-3xl font-medium text-charcoal">
-            Contact form
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-cocoa">
-            Leave your details and we’ll get back to you as soon as we can. For urgent
-            bookings, please call {site.phone}.
-          </p>
-          <form className="mt-8 grid gap-5" aria-label="Contact form">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <label className="grid gap-2 text-sm font-medium text-charcoal">
-                Name
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your name"
-                  className="rounded-2xl border border-beige bg-cream px-5 py-3.5 text-sm font-normal text-charcoal placeholder:text-taupe focus:border-gold focus:outline-none"
-                />
-              </label>
-              <label className="grid gap-2 text-sm font-medium text-charcoal">
-                Phone
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Your phone number"
-                  className="rounded-2xl border border-beige bg-cream px-5 py-3.5 text-sm font-normal text-charcoal placeholder:text-taupe focus:border-gold focus:outline-none"
-                />
-              </label>
-            </div>
-            <label className="grid gap-2 text-sm font-medium text-charcoal">
-              Email
-              <input
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                className="rounded-2xl border border-beige bg-cream px-5 py-3.5 text-sm font-normal text-charcoal placeholder:text-taupe focus:border-gold focus:outline-none"
-              />
-            </label>
-            <label className="grid gap-2 text-sm font-medium text-charcoal">
-              What are you interested in?
-              <select
-                name="topic"
-                className="rounded-2xl border border-beige bg-cream px-5 py-3.5 text-sm font-normal text-charcoal focus:border-gold focus:outline-none"
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select a topic
-                </option>
-                <option>Booking — Hair</option>
-                <option>Booking — Head Spa & Scalp Care</option>
-                <option>Booking — Skin & Facial</option>
-                <option>Booking — Body Care</option>
-                <option>Booking — Brows & Lashes</option>
-                <option>Semi-Permanent Beauty Consultation</option>
-                <option>Gift Cards</option>
-                <option>Memberships</option>
-                <option>Careers / Rent a Space</option>
-                <option>Other</option>
-              </select>
-            </label>
-            <label className="grid gap-2 text-sm font-medium text-charcoal">
-              Message
-              <textarea
-                name="message"
-                rows={5}
-                placeholder="Tell us a little about what you’re looking for…"
-                className="resize-none rounded-2xl border border-beige bg-cream px-5 py-3.5 text-sm font-normal text-charcoal placeholder:text-taupe focus:border-gold focus:outline-none"
-              />
-            </label>
-            <button type="button" className="btn-primary mt-2 w-full sm:w-auto">
-              Send Message
-            </button>
-            <p className="text-xs leading-relaxed text-taupe">
-              This form is for enquiries only and does not confirm a booking. We’ll be in
-              touch to confirm details and availability.
-            </p>
-          </form>
-        </div>
+        <BookingEnquiryForm />
       </section>
     </>
   );

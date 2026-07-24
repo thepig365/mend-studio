@@ -12,7 +12,7 @@ export default function MobileStickyBar() {
         <a href={site.phoneHref} className="btn-outline flex-1 py-3 text-sm">
           Call
         </a>
-        <a href="#contact" className="btn-gold flex-1 py-3 text-sm">
+        <a href="/contact#booking-enquiry" className="btn-gold flex-1 py-3 text-sm">
           Book Now
         </a>
       </div>

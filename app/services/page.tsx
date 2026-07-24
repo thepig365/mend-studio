@@ -20,7 +20,7 @@ export default function ServicesPage() {
         title="One studio. Your complete beauty routine."
         body="Hair, head spa, skin, body, brows and lashes — every service area at Mend Beauty Studio is designed around calm, considered, premium care."
         actions={[
-          { label: "Book Now", href: "#contact", variant: "gold" },
+          { label: "Book Now", href: "/contact#booking-enquiry", variant: "gold" },
           { label: "Gift Cards", href: "/gift-cards", variant: "outline" },
         ]}
       />
@@ -57,7 +57,7 @@ export default function ServicesPage() {
         heading="Tell us what you need — we’ll guide the rest"
         body="Call or message us and we’ll recommend the right service or combination for your hair, scalp, skin or beauty goals."
         actions={[
-          { label: "Book Now", href: "#contact", variant: "light" },
+          { label: "Book Now", href: "/contact#booking-enquiry", variant: "light" },
           { label: "Contact Us", href: "/contact", variant: "outline-light" },
         ]}
       />

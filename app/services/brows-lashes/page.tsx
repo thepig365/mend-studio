@@ -46,7 +46,7 @@ export default function BrowsLashesPage() {
                   {item.time}
                 </span>
               </div>
-              <a href="#contact" className="btn-primary mt-6">
+              <a href="/contact#booking-enquiry" className="btn-primary mt-6">
                 Book Now
               </a>
             </div>
