@@ -32,7 +32,11 @@ export default function CareersPage() {
         image={siteImages.careers.src}
         imageAlt={siteImages.careers.alt}
         actions={[
-          { label: "Express Interest", href: "#contact", variant: "gold" },
+          {
+            label: "Express Interest",
+            href: "/contact#booking-enquiry",
+            variant: "gold",
+          },
           { label: "Contact Us", href: "/contact", variant: "outline" },
         ]}
       />
@@ -69,7 +73,7 @@ export default function CareersPage() {
                 </li>
               ))}
             </ul>
-            <a href="#contact" className="btn-primary mt-8">
+            <a href="/contact#booking-enquiry" className="btn-primary mt-8">
               Apply / Express Interest
             </a>
           </div>
@@ -119,7 +123,11 @@ export default function CareersPage() {
         heading="Express your interest today"
         body="Call 0499 66 88 99, message us on WeChat (+61499666688) or use the contact form — and tell us a little about yourself."
         actions={[
-          { label: "Express Interest", href: "#contact", variant: "light" },
+          {
+            label: "Express Interest",
+            href: "/contact#booking-enquiry",
+            variant: "light",
+          },
           { label: "Contact Page", href: "/contact", variant: "outline-light" },
         ]}
       />

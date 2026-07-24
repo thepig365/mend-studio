@@ -29,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/gift-cards` | Gift Cards |
 | `/memberships` | Memberships (coming soon) |
 | `/careers` | Careers / Rent a Space |
-| `/contact` | Contact (static form, map placeholder) |
+| `/contact` | Contact, booking enquiry and map directions |
 | `/policies` | Policies (draft) |
 
 ## Project structure
@@ -50,7 +50,13 @@ The approved canonical production host is `https://mendbeauty.com.au`. The value
 
 Vercel redirects, DNS changes, Search Console, analytics, and Google Business Profile configuration are managed outside this repository and remain separate approval-gated steps.
 
-- No backend: booking / gift card buttons link to `#contact` (footer contact block); the contact form is static.
+- Booking, gift card, membership and careers calls to action lead to the enquiry
+  form at `/contact#booking-enquiry`.
+- The enquiry form validates required fields and opens a pre-addressed message in
+  the visitor's email app. No personal information is stored by the website.
+- The footer provides native device sharing with a copy-link fallback.
+- Automated email delivery, live availability, deposits and confirmed online
+  bookings require a separately approved booking or transactional-email service.
 - Prices are indicative placeholders (except Brows & Lashes, which use the confirmed ranges) — update `lib/services.ts` when finalised.
 - **Images are temporary stock photos** from Unsplash / Pexels (hand-picked: warm, neutral, no visible branding, no competitor sites). To replace with professional Mend Beauty Studio photography, drop the final photos into `public/images/` and update the `src` values in `src/data/images.ts` — nothing else needs to change. Remote image hosts are allowed in `next.config.ts` (`images.unsplash.com`, `images.pexels.com`).
 - Brand wording rules are baked in: head spa is always positioned as "Head Spa & Scalp Wellness" / "luxury head spa" (no other cultural-origin positioning), "scalp health support" (no cure claims), "Korean skin management", and semi-permanent beauty "available by consultation only".

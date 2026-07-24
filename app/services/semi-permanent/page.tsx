@@ -25,7 +25,11 @@ export default function SemiPermanentPage() {
         image={category.image}
         imageAlt="Semi-permanent beauty at Mend Beauty Studio"
         actions={[
-          { label: "Request a Consultation", href: "#contact", variant: "gold" },
+          {
+            label: "Request a Consultation",
+            href: "/contact#booking-enquiry",
+            variant: "gold",
+          },
           { label: "All Services", href: "/services", variant: "outline" },
         ]}
       />
@@ -58,7 +62,7 @@ export default function SemiPermanentPage() {
           {pricingNote}
         </p>
         <div className="mt-6 text-center">
-          <a href="#contact" className="btn-gold">
+          <a href="/contact#booking-enquiry" className="btn-gold">
             Request a Consultation
           </a>
         </div>
@@ -69,7 +73,11 @@ export default function SemiPermanentPage() {
         heading="Request a semi-permanent beauty consultation"
         body="Contact us to arrange a private, no-obligation consultation at the studio."
         actions={[
-          { label: "Request a Consultation", href: "#contact", variant: "light" },
+          {
+            label: "Request a Consultation",
+            href: "/contact#booking-enquiry",
+            variant: "light",
+          },
           { label: "Contact Us", href: "/contact", variant: "outline-light" },
         ]}
       />

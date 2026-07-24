@@ -64,7 +64,11 @@ export default function GiftCardsPage() {
         image={siteImages.giftCards.src}
         imageAlt={siteImages.giftCards.alt}
         actions={[
-          { label: "Buy Gift Card", href: "#contact", variant: "gold" },
+          {
+            label: "Buy Gift Card",
+            href: "/contact#booking-enquiry",
+            variant: "gold",
+          },
           { label: "View Services", href: "/services", variant: "outline" },
         ]}
       />
@@ -88,7 +92,7 @@ export default function GiftCardsPage() {
               <div className="mt-6 flex items-center justify-between border-t border-beige/70 pt-5">
                 <span className="text-sm font-medium text-bronze">{idea.suggestion}</span>
                 <a
-                  href="#contact"
+                  href="/contact#booking-enquiry"
                   className="text-xs font-medium uppercase tracking-[0.2em] text-gold hover:text-bronze"
                 >
                   Gift This
@@ -157,7 +161,11 @@ export default function GiftCardsPage() {
         heading="Buy a Mend gift card today"
         body="Call or message us and we’ll arrange the perfect gift card for someone special."
         actions={[
-          { label: "Buy Gift Card", href: "#contact", variant: "light" },
+          {
+            label: "Buy Gift Card",
+            href: "/contact#booking-enquiry",
+            variant: "light",
+          },
           { label: "Contact Us", href: "/contact", variant: "outline-light" },
         ]}
       />

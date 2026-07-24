@@ -31,7 +31,7 @@ export default function ServicePage({
         image={category.image}
         imageAlt={category.imageAlt}
         actions={[
-          { label: "Book Now", href: "#contact", variant: "gold" },
+          { label: "Book Now", href: "/contact#booking-enquiry", variant: "gold" },
           { label: "All Services", href: "/services", variant: "outline" },
         ]}
       />
@@ -69,7 +69,7 @@ export default function ServicePage({
           {pricingNote}
         </p>
         <div className="mt-6 text-center">
-          <a href="#contact" className="btn-gold">
+          <a href="/contact#booking-enquiry" className="btn-gold">
             Book Now
           </a>
         </div>
@@ -80,7 +80,7 @@ export default function ServicePage({
         heading="Book your visit to Mend Beauty Studio — Balwyn"
         body="Call or message us to find a time that suits. Walk-in availability may be limited, so booking ahead is recommended."
         actions={[
-          { label: "Book Now", href: "#contact", variant: "light" },
+          { label: "Book Now", href: "/contact#booking-enquiry", variant: "light" },
           { label: "Gift Cards", href: "/gift-cards", variant: "outline-light" },
         ]}
       />
