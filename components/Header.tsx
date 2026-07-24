@@ -91,7 +91,7 @@ export default function Header() {
             )
           )}
           <a
-            href="#contact"
+            href="/contact#booking-enquiry"
             className="btn-book ml-2 px-5 py-2.5 text-sm xl:ml-3 xl:px-7 xl:py-3 xl:text-base"
           >
             Book Now
@@ -170,7 +170,11 @@ export default function Header() {
             </div>
 
             <div className="mt-5 space-y-3">
-              <a href="#contact" className="btn-book w-full py-3.5" onClick={closeMobile}>
+              <a
+                href="/contact#booking-enquiry"
+                className="btn-book w-full py-3.5"
+                onClick={closeMobile}
+              >
                 Book an Appointment
               </a>
               <a href={site.phoneHref} className="btn-outline w-full py-3.5 text-center">

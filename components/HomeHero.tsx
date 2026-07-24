@@ -43,7 +43,10 @@ export default function HomeHero() {
           Premium hair, head spa, skin and beauty care in Balwyn.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
-          <a href="#contact" className="btn-gold w-full py-3.5 sm:w-auto">
+          <a
+            href="/contact#booking-enquiry"
+            className="btn-gold w-full py-3.5 sm:w-auto"
+          >
             Book an Appointment
           </a>
           <Link href="/services" className="btn-outline-light w-full py-3.5 sm:w-auto">

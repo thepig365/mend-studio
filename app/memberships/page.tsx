@@ -23,7 +23,11 @@ export default function MembershipsPage() {
         image={siteImages.memberships.src}
         imageAlt={siteImages.memberships.alt}
         actions={[
-          { label: "Register Interest", href: "#contact", variant: "gold" },
+          {
+            label: "Register Interest",
+            href: "/contact#booking-enquiry",
+            variant: "gold",
+          },
           { label: "View Services", href: "/services", variant: "outline" },
         ]}
       />
@@ -50,7 +54,7 @@ export default function MembershipsPage() {
                 {plan.description}
               </p>
               <a
-                href="#contact"
+                href="/contact#booking-enquiry"
                 className="mt-6 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-gold hover:text-bronze"
               >
                 Register Interest
@@ -71,7 +75,11 @@ export default function MembershipsPage() {
         heading="Register your interest in Mend memberships"
         body="Leave your details and we’ll let you know as soon as membership plans open."
         actions={[
-          { label: "Register Interest", href: "#contact", variant: "light" },
+          {
+            label: "Register Interest",
+            href: "/contact#booking-enquiry",
+            variant: "light",
+          },
           { label: "Contact Us", href: "/contact", variant: "outline-light" },
         ]}
       />

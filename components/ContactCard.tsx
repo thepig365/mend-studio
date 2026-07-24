@@ -22,6 +22,12 @@ export default function ContactCard({ showHours = false }: ContactCardProps) {
         <p>
           WeChat: <span className="font-medium text-bronze">{site.wechat}</span>
         </p>
+        <p>
+          Email:{" "}
+          <a href={site.emailHref} className="font-medium text-bronze hover:text-gold">
+            {site.email}
+          </a>
+        </p>
       </address>
 
       {showHours && (
@@ -41,9 +47,14 @@ export default function ContactCard({ showHours = false }: ContactCardProps) {
         </div>
       )}
 
-      <a href={site.phoneHref} className="btn-primary mt-7 w-full sm:w-auto">
-        Book Now
-      </a>
+      <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact#booking-enquiry" className="btn-primary w-full sm:w-auto">
+          Book or enquire
+        </a>
+        <a href={site.phoneHref} className="btn-outline w-full sm:w-auto">
+          Call now
+        </a>
+      </div>
     </div>
   );
 }
