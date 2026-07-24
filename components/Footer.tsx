@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import SharePage from "@/components/SharePage";
 import { mainNav, servicesNav, site } from "@/lib/site";
 
 export default function Footer() {
@@ -74,11 +75,18 @@ export default function Footer() {
                 {site.phone}
               </a>
             </p>
+            <p>
+              Email:{" "}
+              <a href={site.emailHref} className="transition-colors hover:text-gold">
+                {site.email}
+              </a>
+            </p>
             <p>WeChat: {site.wechat}</p>
           </address>
-          <a href={site.phoneHref} className="btn-gold mt-6 px-6 py-2.5">
-            Book Now
+          <a href="/contact#booking-enquiry" className="btn-gold mt-6 px-6 py-2.5">
+            Book or enquire
           </a>
+          <SharePage />
         </div>
       </div>
 

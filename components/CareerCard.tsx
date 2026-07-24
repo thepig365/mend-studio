@@ -22,7 +22,10 @@ export default function CareerCard({ title, type, summary, highlights }: CareerC
         </ul>
       )}
       <div className="mt-auto pt-6">
-        <a href="#contact" className="btn-outline px-6 py-2.5 text-xs">
+        <a
+          href="/contact#booking-enquiry"
+          className="btn-outline px-6 py-2.5 text-xs"
+        >
           Express Interest
         </a>
       </div>
