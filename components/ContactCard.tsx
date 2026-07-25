@@ -48,8 +48,8 @@ export default function ContactCard({ showHours = false }: ContactCardProps) {
       )}
 
       <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact#booking-enquiry" className="btn-primary w-full sm:w-auto">
-          Book or enquire
+        <a href="/book" className="btn-primary w-full sm:w-auto">
+          Book an appointment
         </a>
         <a href={site.phoneHref} className="btn-outline w-full sm:w-auto">
           Call now

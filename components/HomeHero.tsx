@@ -44,7 +44,7 @@ export default function HomeHero() {
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
           <a
-            href="/contact#booking-enquiry"
+            href="/book"
             className="btn-gold w-full py-3.5 sm:w-auto"
           >
             Book an Appointment

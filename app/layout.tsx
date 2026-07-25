@@ -8,8 +8,7 @@ import { site } from "@/lib/site";
 import "./globals.css";
 
 // LocalBusiness structured data. Sourced entirely from lib/site.ts — do not
-// hardcode address/phone/name values here. Opening hours are deliberately
-// omitted until the hours are finalised (see site.hoursNote).
+// hardcode address, phone, name or opening-hours values here.
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "HairSalon",
@@ -19,6 +18,7 @@ const localBusinessJsonLd = {
   url: site.url,
   image: `${site.url}/images/mend-beauty-logo.png`,
   telephone: site.phoneHref.replace("tel:", ""),
+  openingHoursSpecification: site.structuredOpeningHours,
   address: {
     "@type": "PostalAddress",
     ...site.structuredAddress,

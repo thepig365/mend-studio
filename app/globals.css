@@ -75,6 +75,7 @@ body {
   .btn-light,
   .btn-outline-light {
     @apply inline-flex items-center justify-center rounded-full px-7 py-3 text-sm font-medium tracking-wide transition-colors duration-200;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
   }
   .btn-primary {
     @apply bg-charcoal text-cream hover:bg-cocoa;

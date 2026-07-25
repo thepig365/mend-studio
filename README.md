@@ -29,6 +29,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/gift-cards` | Gift Cards |
 | `/memberships` | Memberships (coming soon) |
 | `/careers` | Careers / Rent a Space |
+| `/book` | Branded handoff to live MaSe appointment availability |
 | `/contact` | Contact, booking enquiry and map directions |
 | `/policies` | Policies (draft) |
 
@@ -50,8 +51,11 @@ The approved canonical production host is `https://mendbeauty.com.au`. The value
 
 Vercel redirects, DNS changes, Search Console, analytics, and Google Business Profile configuration are managed outside this repository and remain separate approval-gated steps.
 
-- Booking, gift card, membership and careers calls to action lead to the enquiry
-  form at `/contact#booking-enquiry`.
+- Booking calls to action lead to the branded `/book` route, which hands customers
+  to MaSe for live availability. The provider URL is configured with
+  `NEXT_PUBLIC_MASE_BOOKING_URL` and has a verified non-secret fallback.
+- The contact form at `/contact#booking-enquiry` remains available for consultations,
+  gift cards, memberships and other enquiries.
 - The enquiry form validates required fields and opens a pre-addressed message in
   the visitor's email app. No personal information is stored by the website.
 - The footer provides native device sharing with a copy-link fallback.

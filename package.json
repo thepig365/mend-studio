@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "check:domain": "node scripts/check-domain-migration.mjs",
-    "check:functionality": "node scripts/check-customer-functions.mjs"
+    "check:functionality": "node scripts/check-customer-functions.mjs",
+    "check:booking": "node scripts/check-mase-booking.mjs"
   },
   "dependencies": {
     "next": "16.2.9",

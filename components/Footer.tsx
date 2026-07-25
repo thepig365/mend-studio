@@ -83,8 +83,8 @@ export default function Footer() {
             </p>
             <p>WeChat: {site.wechat}</p>
           </address>
-          <a href="/contact#booking-enquiry" className="btn-gold mt-6 px-6 py-2.5">
-            Book or enquire
+          <a href="/book" className="btn-gold mt-6 px-6 py-2.5">
+            Book an appointment
           </a>
           <SharePage />
         </div>
