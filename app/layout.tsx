@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileStickyBar from "@/components/MobileStickyBar";
 import Analytics from "@/components/Analytics";
 import { site } from "@/lib/site";
+import { chineseLocale } from "@/lib/i18n";
 import "./globals.css";
 
 // LocalBusiness structured data. Sourced entirely from lib/site.ts — do not
-// hardcode address/phone/name values here. Opening hours are deliberately
-// omitted until the hours are finalised (see site.hoursNote).
+// hardcode address, phone, name or opening-hours values here.
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "HairSalon",
@@ -19,6 +20,7 @@ const localBusinessJsonLd = {
   url: site.url,
   image: `${site.url}/images/mend-beauty-logo.png`,
   telephone: site.phoneHref.replace("tel:", ""),
+  openingHoursSpecification: site.structuredOpeningHours,
   address: {
     "@type": "PostalAddress",
     ...site.structuredAddress,
@@ -74,13 +76,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const locale =
+    requestHeaders.get("x-mend-locale") === chineseLocale
+      ? chineseLocale
+      : "en-AU";
+
   return (
-    <html lang="en" className={`${cormorant.variable} ${jost.variable}`}>
+    <html
+      lang={locale}
+      className={`${cormorant.variable} ${jost.variable}`}
+    >
       <body>
         <script
           type="application/ld+json"

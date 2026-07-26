@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "check:domain": "node scripts/check-domain-migration.mjs",
-    "check:functionality": "node scripts/check-customer-functions.mjs"
+    "check:functionality": "node scripts/check-customer-functions.mjs",
+    "check:booking": "node scripts/check-mase-booking.mjs",
+    "check:i18n": "node scripts/check-i18n.mjs"
   },
   "dependencies": {
-    "next": "16.2.9",
+    "next": "16.2.12",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -21,7 +23,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.9",
+    "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

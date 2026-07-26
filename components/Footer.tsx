@@ -1,24 +1,51 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
 import SharePage from "@/components/SharePage";
-import { mainNav, servicesNav, site } from "@/lib/site";
+import {
+  chineseLocale,
+  isChinesePath,
+  localePath,
+  navByLocale,
+  servicesNavByLocale,
+  ui,
+} from "@/lib/i18n";
+import { site } from "@/lib/site";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const locale = isChinesePath(pathname) ? chineseLocale : "en-AU";
+  const copy = ui[locale];
+  const mainNav = navByLocale[locale];
+  const servicesNav = servicesNavByLocale[locale];
+
   return (
     <footer className="bg-charcoal pb-20 text-cream lg:pb-0">
       {/* Contact anchor — Book Now buttons across the site land here */}
       <div id="contact" className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Logo variant="stacked" tone="light" />
+          <Logo
+            variant="stacked"
+            tone="light"
+            href={localePath("/", locale)}
+          />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/70">
-            {site.tagline}
+            {locale === chineseLocale
+              ? "修护秀发，焕亮肌肤，重拾自信光彩。"
+              : site.tagline}
           </p>
-          <p className="mt-3 text-sm text-cream/70">{site.positioning}</p>
+          <p className="mt-3 text-sm text-cream/70">
+            {locale === chineseLocale
+              ? "美发 · 头疗 · 皮肤管理 · 身体护理 · 眉睫"
+              : site.positioning}
+          </p>
         </div>
 
         <div>
           <h2 className="text-xs font-medium uppercase tracking-[0.28em] text-gold">
-            Services
+            {copy.services}
           </h2>
           <ul className="mt-5 space-y-2.5">
             {servicesNav.map((service) => (
@@ -36,7 +63,7 @@ export default function Footer() {
 
         <div>
           <h2 className="text-xs font-medium uppercase tracking-[0.28em] text-gold">
-            Explore
+            {locale === chineseLocale ? "网站导航" : "Explore"}
           </h2>
           <ul className="mt-5 space-y-2.5">
             {mainNav
@@ -53,10 +80,10 @@ export default function Footer() {
               ))}
             <li>
               <Link
-                href="/policies"
+                href={localePath("/policies", locale)}
                 className="text-sm text-cream/80 transition-colors hover:text-gold"
               >
-                Policies
+                {copy.policies}
               </Link>
             </li>
           </ul>
@@ -64,27 +91,27 @@ export default function Footer() {
 
         <div>
           <h2 className="text-xs font-medium uppercase tracking-[0.28em] text-gold">
-            Visit Us
+            {copy.visitUs}
           </h2>
           <address className="mt-5 space-y-2.5 text-sm not-italic text-cream/80">
             <p className="font-medium text-cream">{site.locationName}</p>
             <p>{site.address}</p>
             <p>
-              Phone:{" "}
+              {copy.phone}:{" "}
               <a href={site.phoneHref} className="transition-colors hover:text-gold">
                 {site.phone}
               </a>
             </p>
             <p>
-              Email:{" "}
+              {copy.email}:{" "}
               <a href={site.emailHref} className="transition-colors hover:text-gold">
                 {site.email}
               </a>
             </p>
             <p>WeChat: {site.wechat}</p>
           </address>
-          <a href="/contact#booking-enquiry" className="btn-gold mt-6 px-6 py-2.5">
-            Book or enquire
+          <a href={localePath("/book", locale)} className="btn-gold mt-6 px-6 py-2.5">
+            {copy.bookAppointment}
           </a>
           <SharePage />
         </div>
@@ -93,14 +120,13 @@ export default function Footer() {
       <div className="border-t border-cream/10">
         <div className="wrap flex flex-col gap-2 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. {copy.rights}
           </p>
           <p>{site.locationName} · {site.region}</p>
         </div>
         <div className="wrap pb-6">
           <p className="text-[0.65rem] leading-relaxed text-cream/40">
-            Some images are temporary stock images used for illustration only and will be
-            replaced with professional Mend Beauty Studio photography.
+            {copy.temporaryImages}
           </p>
         </div>
       </div>

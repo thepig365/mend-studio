@@ -118,7 +118,7 @@ export default function PoliciesPage() {
           { label: "Contact Us", href: "/contact", variant: "light" },
           {
             label: "Book Now",
-            href: "/contact#booking-enquiry",
+            href: "/book",
             variant: "outline-light",
           },
         ]}

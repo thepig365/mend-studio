@@ -4,7 +4,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
-import { mainNav, servicesNav, site } from "@/lib/site";
+import {
+  chineseLocale,
+  isChinesePath,
+  localePath,
+  navByLocale,
+  servicesNavByLocale,
+  ui,
+} from "@/lib/i18n";
+import { site } from "@/lib/site";
 
 function isNavActive(pathname: string, href: string, hasDropdown?: boolean) {
   if (href === "/") return pathname === "/";
@@ -15,6 +23,14 @@ function isNavActive(pathname: string, href: string, hasDropdown?: boolean) {
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const locale = isChinesePath(pathname) ? chineseLocale : "en-AU";
+  const copy = ui[locale];
+  const mainNav = navByLocale[locale];
+  const servicesNav = servicesNavByLocale[locale];
+  const languageHref = localePath(
+    pathname,
+    locale === chineseLocale ? "en-AU" : chineseLocale,
+  );
 
   const closeMobile = () => {
     setMobileOpen(false);
@@ -40,15 +56,19 @@ export default function Header() {
   return (
     <header className="site-header sticky top-0 z-[70] safe-top">
       <div className="wrap flex h-28 items-center justify-start gap-3 sm:h-32">
-        <Logo variant="horizontal" onClick={closeMobile} />
+        <Logo
+          variant="horizontal"
+          href={localePath("/", locale)}
+          onClick={closeMobile}
+        />
 
         {/* Desktop nav */}
         <nav
-          aria-label="Main navigation"
+          aria-label={copy.mainNavigation}
           className="ml-auto hidden min-w-0 items-center gap-1 lg:flex xl:gap-2 [&_.nav-link]:px-3.5 [&_.nav-link]:text-sm xl:[&_.nav-link]:px-[1.125rem] xl:[&_.nav-link]:py-2.5 xl:[&_.nav-link]:text-base"
         >
           {mainNav.map((item) =>
-            item.hasDropdown ? (
+            "hasDropdown" in item && item.hasDropdown ? (
               <div key={item.label} className="group relative">
                 <Link href={item.href} className={navLinkClass(item.href, true)}>
                   {item.label}
@@ -91,12 +111,23 @@ export default function Header() {
             )
           )}
           <a
-            href="/contact#booking-enquiry"
-            className="btn-book ml-2 px-5 py-2.5 text-sm xl:ml-3 xl:px-7 xl:py-3 xl:text-base"
+            href={localePath("/book", locale)}
+            className="btn-book ml-2 shrink-0 whitespace-nowrap px-5 py-2.5 text-sm xl:ml-3 xl:px-7 xl:py-3 xl:text-base"
           >
-            Book Now
+            {copy.bookNow}
           </a>
         </nav>
+
+        <Link
+          href={languageHref}
+          hrefLang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
+          lang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
+          aria-label={copy.switchLanguageLabel}
+          className="ml-1 shrink-0 rounded-full border border-beige/80 px-3 py-2 text-xs font-medium text-cocoa transition-colors hover:border-gold hover:text-bronze focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold lg:ml-2"
+          onClick={closeMobile}
+        >
+          {copy.switchLanguage}
+        </Link>
 
         {/* Mobile menu toggle — hamburger ↔ close */}
         <button
@@ -104,7 +135,7 @@ export default function Header() {
           className={`menu-toggle ml-auto shrink-0 lg:ml-4 ${mobileOpen ? "menu-toggle-open" : ""}`}
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-panel"
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-label={mobileOpen ? copy.closeMenu : copy.openMenu}
           onClick={() => setMobileOpen((open) => !open)}
         >
           <span className="relative block h-5 w-5" aria-hidden>
@@ -138,7 +169,7 @@ export default function Header() {
         aria-hidden={!mobileOpen}
       >
         <nav
-          aria-label="Mobile navigation"
+          aria-label={copy.mobileNavigation}
           className="flex flex-1 flex-col overflow-y-auto overscroll-contain"
         >
           <div className="wrap flex flex-col py-3 pb-28">
@@ -146,7 +177,10 @@ export default function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={mobileLinkClass(item.href, item.hasDropdown)}
+                className={mobileLinkClass(
+                  item.href,
+                  "hasDropdown" in item ? item.hasDropdown : undefined,
+                )}
                 onClick={closeMobile}
               >
                 {item.label}
@@ -155,7 +189,7 @@ export default function Header() {
 
             <div className="mobile-nav-card mt-3 flex flex-col gap-0.5 py-2">
               <p className="px-3 py-2 text-xs font-medium uppercase tracking-[0.24em] text-gold">
-                All Services
+                {copy.allServices}
               </p>
               {servicesNav.map((service) => (
                 <Link
@@ -171,14 +205,14 @@ export default function Header() {
 
             <div className="mt-5 space-y-3">
               <a
-                href="/contact#booking-enquiry"
+                href={localePath("/book", locale)}
                 className="btn-book w-full py-3.5"
                 onClick={closeMobile}
               >
-                Book an Appointment
+                {copy.bookAppointment}
               </a>
               <a href={site.phoneHref} className="btn-outline w-full py-3.5 text-center">
-                Call {site.phone}
+                {copy.call} {site.phone}
               </a>
             </div>
 

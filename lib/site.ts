@@ -26,12 +26,24 @@ export const site = {
   // hardcode this string elsewhere.
   url: "https://mendbeauty.com.au",
   hours: [
-    { days: "Monday", time: "Closed" },
-    { days: "Tuesday – Friday", time: "9:30 am – 6:30 pm" },
-    { days: "Saturday", time: "9:00 am – 5:30 pm" },
-    { days: "Sunday", time: "10:00 am – 4:00 pm" },
+    { days: "Monday – Tuesday", time: "9:00 am – 5:00 pm" },
+    { days: "Wednesday", time: "Closed" },
+    { days: "Thursday – Sunday", time: "9:00 am – 5:00 pm" },
   ],
-  hoursNote: "Opening hours are indicative and will be confirmed prior to opening.",
+  structuredOpeningHours: [
+    "Monday",
+    "Tuesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ].map((dayOfWeek) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek,
+    opens: "09:00",
+    closes: "17:00",
+  })),
+  hoursNote: "Appointments are recommended. Public holiday hours may vary.",
 };
 
 export const mainNav = [
