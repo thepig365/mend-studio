@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BookingEnquiryForm from "@/components/BookingEnquiryForm";
+import BrandManifestoPage from "@/components/BrandManifestoPage";
 import ContactCard from "@/components/ContactCard";
 import CTABlock from "@/components/CTABlock";
 import GalleryPreview from "@/components/GalleryPreview";
@@ -57,6 +58,11 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
     title: "联系我们",
     description: `联系 Mend Beauty Studio。电话 ${site.phone}，地址 ${site.address}。`,
   },
+  "/our-story": {
+    title: "品牌宣言",
+    description:
+      "了解 MEND 品牌宣言：以专业美容护理为基础，连接自信、平静、艺术、自然与社区的 Beauty & Mind 理念。",
+  },
   "/policies": {
     title: "服务政策",
     description: "查看 Mend Beauty Studio 的预约、取消、迟到、健康适用性、头疗、半永久美容及礼品卡政策。",
@@ -75,6 +81,7 @@ export function generateStaticParams() {
     { slug: ["memberships"] },
     { slug: ["careers"] },
     { slug: ["contact"] },
+    { slug: ["our-story"] },
     { slug: ["policies"] },
   ];
 }
@@ -117,6 +124,7 @@ export default async function ChinesePage({ params }: ChinesePageProps) {
   if (path === "/memberships") return <ChineseMemberships />;
   if (path === "/careers") return <ChineseCareers />;
   if (path === "/contact") return <ChineseContact />;
+  if (path === "/our-story") return <BrandManifestoPage locale="zh-Hans" />;
   if (path === "/policies") return <ChinesePolicies />;
 
   notFound();
@@ -133,6 +141,21 @@ function ChineseHome() {
           title="墨尔本东区一站式美容护理空间"
           body="从美发染护、头疗和头皮护理，到韩式皮肤管理、身体护理与眉睫美容，Mend Beauty Studio 在舒适雅致的环境中，为您安排完整的日常美容护理。"
         />
+      </section>
+
+      <section className="bg-linen py-16 sm:py-24">
+        <div className="wrap text-center">
+          <p className="eyebrow">品牌宣言</p>
+          <h2 className="mx-auto mt-4 max-w-3xl font-display text-3xl font-medium leading-tight text-charcoal sm:text-5xl">
+            MEND，意为修复。
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cocoa sm:text-lg">
+            我们修复的不只是头发与肌肤，也希望为自信、平静与重新连接留出空间。
+          </p>
+          <Link href="/zh/our-story" className="btn-outline mt-8">
+            了解 MEND 品牌理念
+          </Link>
+        </div>
       </section>
 
       <section className="bg-sand py-16 sm:py-24">

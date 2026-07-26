@@ -38,6 +38,7 @@ export const localizedRoutes = [
   "/memberships",
   "/careers",
   "/contact",
+  "/our-story",
   "/policies",
 ] as const;
 
