@@ -11,13 +11,17 @@ import HomeHero from "@/components/HomeHero";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
+import type { ServiceItem as MenuServiceItem } from "@/src/data/serviceMenu";
 import { booking } from "@/lib/booking";
 import { chinesePageMetadata } from "@/lib/seo";
 import { galleryImages } from "@/lib/services";
 import { site } from "@/lib/site";
 import {
+  getZhAnnaCategory,
+  getZhAnnaMenuItemsForCategory,
   getZhCategory,
   getZhMenuItemsForCategory,
+  zhAnnaServiceCategories,
   zhServiceCategories,
 } from "@/lib/zh-services";
 import { siteImages } from "@/src/data/images";
@@ -26,7 +30,13 @@ type ChinesePageProps = {
   params: Promise<{ slug?: string[] }>;
 };
 
-const serviceSlugs = new Set(zhServiceCategories.map((category) => category.slug));
+const annaServiceSlugs = new Set(
+  zhAnnaServiceCategories.map((category) => category.slug),
+);
+const serviceSlugs = new Set([
+  ...zhServiceCategories.map((category) => category.slug),
+  ...annaServiceSlugs,
+]);
 
 const routeMetadata: Record<string, { title: string; description: string }> = {
   "/": {
@@ -36,7 +46,8 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
   },
   "/services": {
     title: "服务项目",
-    description: "查看 Mend Beauty Studio 的美发、头疗、皮肤管理、身体护理、眉睫、男士理容、美甲及半永久美容服务。",
+    description:
+      "查看 Mend Beauty Studio 的美发设计、头皮健康管理、Head Spa、韩式肌肤管理、身体疗愈、男士理容、美甲及半永久美容项目、价格与时间。",
   },
   "/book": {
     title: "预约",
@@ -73,9 +84,7 @@ export function generateStaticParams() {
   return [
     { slug: [] },
     { slug: ["services"] },
-    ...zhServiceCategories.map((category) => ({
-      slug: ["services", category.slug],
-    })),
+    ...[...serviceSlugs].map((slug) => ({ slug: ["services", slug] })),
     { slug: ["book"] },
     { slug: ["gift-cards"] },
     { slug: ["memberships"] },
@@ -93,7 +102,9 @@ export async function generateMetadata({
   const path = `/${slug.join("/")}`.replace(/\/$/, "") || "/";
 
   if (slug[0] === "services" && slug[1] && serviceSlugs.has(slug[1])) {
-    const category = getZhCategory(slug[1]);
+    const category = annaServiceSlugs.has(slug[1])
+      ? getZhAnnaCategory(slug[1])
+      : getZhCategory(slug[1]);
     return chinesePageMetadata({
       title: category.title,
       description: category.excerpt,
@@ -235,8 +246,8 @@ function ChineseServices() {
     <>
       <Hero
         eyebrow="我们的服务"
-        title="一间工作室，满足您的日常美容护理需求"
-        body="美发、头疗、皮肤管理、身体护理、眉睫及更多服务，均以专业、舒适和细致的体验为核心。"
+        title="MEND 服务项目、价格与时间"
+        body="直接查看经批准的美发、头皮管理、头疗、肌肤管理、身体疗愈、男士理容、美甲及半永久美容项目。"
         actions={[
           { label: "预约", href: "/zh/book", variant: "gold" },
           { label: "礼品卡", href: "/zh/gift-cards", variant: "outline" },
@@ -244,7 +255,7 @@ function ChineseServices() {
       />
       <section className="wrap py-16 sm:py-24">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {zhServiceCategories.map((category) => (
+          {zhAnnaServiceCategories.map((category) => (
             <ServiceCard
               key={category.slug}
               title={category.cardTitle}
@@ -261,9 +272,9 @@ function ChineseServices() {
         </p>
       </section>
       <CTABlock
-        eyebrow="不确定从哪里开始？"
-        heading="告诉我们您的需要，我们会协助选择"
-        body="如需了解适合的美发、头皮、肌肤或美容项目，请致电或发送咨询。"
+        eyebrow="Mend Beauty Studio"
+        heading="预约服务或联系门店"
+        body="通过预约页面查看当前可预约时间，或联系门店咨询具体服务。"
         actions={[
           { label: "预约", href: "/zh/book", variant: "light" },
           { label: "联系我们", href: "/zh/contact", variant: "outline-light" },
@@ -274,9 +285,33 @@ function ChineseServices() {
 }
 
 function ChineseServiceDetail({ slug }: { slug: string }) {
-  const category = getZhCategory(slug);
-  const menu = getZhMenuItemsForCategory(slug);
+  const isAnnaCategory = annaServiceSlugs.has(slug);
+  const category = isAnnaCategory
+    ? getZhAnnaCategory(slug)
+    : getZhCategory(slug);
+  const menu = isAnnaCategory
+    ? getZhAnnaMenuItemsForCategory(slug)
+    : getZhMenuItemsForCategory(slug);
   const isSemiPermanent = slug === "semi-permanent";
+  const groupBySection = (
+    items: MenuServiceItem[],
+    fallbackTitle: string,
+  ) => {
+    const groups = new Map<string, MenuServiceItem[]>();
+    items.forEach((item) => {
+      const title = item.section ?? fallbackTitle;
+      groups.set(title, [...(groups.get(title) ?? []), item]);
+    });
+    return [...groups.entries()];
+  };
+  const primaryGroups = groupBySection(
+    menu.items,
+    isSemiPermanent ? "咨询与服务项目" : "项目与价格",
+  );
+  const secondaryGroups = groupBySection(
+    menu.secondaryItems,
+    category.secondaryTitle ?? "其他可选项目",
+  );
 
   return (
     <>
@@ -292,20 +327,24 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         ]}
       />
       <section className="wrap py-16 sm:py-20">
-        <ServiceMenuSection
-          items={menu.items}
-          title={isSemiPermanent ? "咨询与服务项目" : "项目与价格"}
-          locale="zh-Hans"
-        />
-        {menu.secondaryItems.length > 0 && (
-          <div className="mt-10">
+        {primaryGroups.map(([title, items], index) => (
+          <div key={title} className={index === 0 ? "" : "mt-10"}>
             <ServiceMenuSection
-              items={menu.secondaryItems}
-              title={category.secondaryTitle ?? "其他可选项目"}
+              items={items}
+              title={title}
               locale="zh-Hans"
             />
           </div>
-        )}
+        ))}
+        {secondaryGroups.map(([title, items]) => (
+          <div key={title} className="mt-10">
+            <ServiceMenuSection
+              items={items}
+              title={title}
+              locale="zh-Hans"
+            />
+          </div>
+        ))}
         {category.notes && category.notes.length > 0 && (
           <div className="mt-10 rounded-3xl bg-sand p-7 sm:p-8">
             {category.notes.map((note) => (

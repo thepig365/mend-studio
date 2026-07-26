@@ -26,6 +26,7 @@ export const localizedRoutes = [
   "/",
   "/services",
   "/services/hair",
+  "/services/hair-scalp-recovery",
   "/services/head-spa",
   "/services/skin-facial",
   "/services/body-care",
@@ -33,6 +34,7 @@ export const localizedRoutes = [
   "/services/mens-grooming",
   "/services/nails",
   "/services/semi-permanent",
+  "/services/nails-semi-permanent",
   "/book",
   "/gift-cards",
   "/memberships",
@@ -130,23 +132,33 @@ export const navByLocale = {
 
 export const servicesNavByLocale = {
   "en-AU": [
-    { label: "Hair Services", href: "/services/hair" },
-    { label: "Head Spa & Scalp Care", href: "/services/head-spa" },
-    { label: "Skin & Facial", href: "/services/skin-facial" },
-    { label: "Body Care", href: "/services/body-care" },
-    { label: "Brows & Lashes", href: "/services/brows-lashes" },
+    { label: "Hair Atelier", href: "/services/hair" },
+    {
+      label: "Hair & Scalp Recovery",
+      href: "/services/hair-scalp-recovery",
+    },
+    { label: "Scalp & Mind Wellness", href: "/services/head-spa" },
+    { label: "Skin Aesthetics", href: "/services/skin-facial" },
+    { label: "Body Wellness", href: "/services/body-care" },
     { label: "Men’s Grooming", href: "/services/mens-grooming" },
-    { label: "Nails", href: "/services/nails" },
-    { label: "Semi-Permanent Beauty", href: "/services/semi-permanent" },
+    {
+      label: "Nails & Semi-Permanent Beauty",
+      href: "/services/nails-semi-permanent",
+    },
   ],
   "zh-Hans": [
-    { label: "美发服务", href: "/zh/services/hair" },
-    { label: "头疗与头皮护理", href: "/zh/services/head-spa" },
-    { label: "皮肤管理与面部护理", href: "/zh/services/skin-facial" },
-    { label: "身体护理", href: "/zh/services/body-care" },
-    { label: "眉睫护理", href: "/zh/services/brows-lashes" },
+    { label: "美发设计中心", href: "/zh/services/hair" },
+    {
+      label: "头皮健康管理",
+      href: "/zh/services/hair-scalp-recovery",
+    },
+    { label: "头皮身心疗愈", href: "/zh/services/head-spa" },
+    { label: "肌肤管理", href: "/zh/services/skin-facial" },
+    { label: "身心疗愈", href: "/zh/services/body-care" },
     { label: "男士理容", href: "/zh/services/mens-grooming" },
-    { label: "美甲", href: "/zh/services/nails" },
-    { label: "半永久美容", href: "/zh/services/semi-permanent" },
+    {
+      label: "美甲与半永久美容",
+      href: "/zh/services/nails-semi-permanent",
+    },
   ],
 } as const;

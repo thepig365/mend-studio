@@ -22,13 +22,12 @@ const requiredRoutes = [
 
 const requiredServiceSlugs = [
   "hair",
+  "hair-scalp-recovery",
   "head-spa",
   "skin-facial",
   "body-care",
-  "brows-lashes",
   "mens-grooming",
-  "nails",
-  "semi-permanent",
+  "nails-semi-permanent",
 ];
 
 const failures = [];
