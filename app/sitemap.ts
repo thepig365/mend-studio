@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { services } from "@/lib/service-catalog";
 import { site } from "@/lib/site";
 
 // Keep in sync with the routes under app/. Homepage first, then services, then
@@ -6,10 +7,12 @@ import { site } from "@/lib/site";
 const routes: { path: string; priority: number }[] = [
   { path: "", priority: 1 },
   { path: "/services", priority: 0.8 },
+  { path: "/journey", priority: 0.8 },
   { path: "/services/hair", priority: 0.7 },
   { path: "/services/head-spa", priority: 0.7 },
-  { path: "/services/skin-facial", priority: 0.7 },
-  { path: "/services/body-care", priority: 0.7 },
+  { path: "/services/skin", priority: 0.7 },
+  { path: "/services/body", priority: 0.7 },
+  { path: "/services/signature-rituals", priority: 0.7 },
   { path: "/services/brows-lashes", priority: 0.7 },
   { path: "/services/mens-grooming", priority: 0.7 },
   { path: "/services/nails", priority: 0.7 },
@@ -21,6 +24,10 @@ const routes: { path: string; priority: number }[] = [
   { path: "/contact", priority: 0.6 },
   { path: "/our-story", priority: 0.6 },
   { path: "/policies", priority: 0.3 },
+  ...services.map((service) => ({
+    path: `/services/${service.category}/${service.slug}`,
+    priority: service.launchPhase === 1 ? 0.7 : 0.6,
+  })),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

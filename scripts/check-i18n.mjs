@@ -11,6 +11,7 @@ const files = {
 const requiredRoutes = [
   "/zh",
   "/zh/services",
+  "/zh/journey",
   "/zh/book",
   "/zh/gift-cards",
   "/zh/memberships",
@@ -23,12 +24,9 @@ const requiredRoutes = [
 const requiredServiceSlugs = [
   "hair",
   "head-spa",
-  "skin-facial",
-  "body-care",
-  "brows-lashes",
-  "mens-grooming",
-  "nails",
-  "semi-permanent",
+  "skin",
+  "body",
+  "signature-rituals",
 ];
 
 const failures = [];

@@ -56,7 +56,7 @@ export default function Header() {
   return (
     <>
       <header className="site-header sticky top-0 z-[70] safe-top">
-        <div className="wrap flex h-28 items-center justify-start gap-3 sm:h-32">
+        <div className="mx-auto flex h-28 w-full max-w-[90rem] items-center justify-start gap-2 px-4 sm:h-32 sm:px-6">
           <Logo
             variant="horizontal"
             href={localePath("/", locale)}
@@ -66,10 +66,10 @@ export default function Header() {
           {/* Desktop nav */}
           <nav
             aria-label={copy.mainNavigation}
-            className="ml-auto hidden min-w-0 items-center gap-1 lg:flex xl:gap-2 [&_.nav-link]:px-3.5 [&_.nav-link]:text-sm xl:[&_.nav-link]:px-[1.125rem] xl:[&_.nav-link]:py-2.5 xl:[&_.nav-link]:text-base"
+            className="ml-auto hidden min-w-0 items-center gap-0.5 lg:flex xl:gap-1 [&_.nav-link]:px-2 [&_.nav-link]:text-xs xl:[&_.nav-link]:px-2.5 xl:[&_.nav-link]:py-2.5 xl:[&_.nav-link]:text-sm"
           >
             {mainNav.map((item) =>
-              "hasDropdown" in item && item.hasDropdown ? (
+              "hasDropdown" in item && Boolean(item.hasDropdown) ? (
                 <div key={item.label} className="group relative">
                   <Link href={item.href} className={navLinkClass(item.href, true)}>
                     {item.label}
@@ -113,7 +113,7 @@ export default function Header() {
             )}
             <a
               href={localePath("/book", locale)}
-              className="btn-book ml-2 shrink-0 whitespace-nowrap px-5 py-2.5 text-sm xl:ml-3 xl:px-7 xl:py-3 xl:text-base"
+              className="btn-book ml-1 shrink-0 whitespace-nowrap px-4 py-2.5 text-xs xl:ml-2 xl:px-5 xl:text-sm"
             >
               {copy.bookNow}
             </a>
@@ -124,7 +124,7 @@ export default function Header() {
             hrefLang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
             lang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
             aria-label={copy.switchLanguageLabel}
-            className="ml-1 shrink-0 rounded-full border border-beige/80 px-3 py-2 text-xs font-medium text-cocoa transition-colors hover:border-gold hover:text-bronze focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold lg:ml-2"
+            className="ml-1 shrink-0 rounded-full border border-beige/80 px-2.5 py-2 text-xs font-medium text-cocoa transition-colors hover:border-gold hover:text-bronze focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
             onClick={closeMobile}
           >
             {copy.switchLanguage}
@@ -133,7 +133,7 @@ export default function Header() {
           {/* Mobile menu toggle — hamburger ↔ close */}
           <button
             type="button"
-            className={`menu-toggle ml-auto shrink-0 lg:ml-4 ${mobileOpen ? "menu-toggle-open" : ""}`}
+            className={`menu-toggle ml-auto shrink-0 lg:ml-1 ${mobileOpen ? "menu-toggle-open" : ""}`}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav-panel"
             aria-label={mobileOpen ? copy.closeMenu : copy.openMenu}
@@ -181,7 +181,7 @@ export default function Header() {
                 href={item.href}
                 className={mobileLinkClass(
                   item.href,
-                  "hasDropdown" in item ? item.hasDropdown : undefined,
+                  "hasDropdown" in item ? Boolean(item.hasDropdown) : undefined,
                 )}
                 onClick={closeMobile}
               >
