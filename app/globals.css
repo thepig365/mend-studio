@@ -205,6 +205,7 @@ html[lang="zh-Hans"] .eyebrow {
   }
 
   .mobile-nav-panel {
+    top: calc(7rem + env(safe-area-inset-top, 0px));
     background: linear-gradient(
       180deg,
       rgba(251, 248, 242, 0.98) 0%,
@@ -214,6 +215,12 @@ html[lang="zh-Hans"] .eyebrow {
     box-shadow: 0 -4px 24px -8px rgba(51, 46, 38, 0.08);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+  }
+
+  @media (min-width: 640px) {
+    .mobile-nav-panel {
+      top: calc(8rem + env(safe-area-inset-top, 0px));
+    }
   }
 
   .mobile-nav-link {
