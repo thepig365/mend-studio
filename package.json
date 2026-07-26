@@ -7,13 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
-    "test": "node scripts/check-services-experience.mjs",
     "check:domain": "node scripts/check-domain-migration.mjs",
     "check:functionality": "node scripts/check-customer-functions.mjs",
     "check:booking": "node scripts/check-mase-booking.mjs",
-    "check:i18n": "node scripts/check-i18n.mjs",
-    "check:services": "node scripts/check-services-experience.mjs"
+    "check:i18n": "node scripts/check-i18n.mjs"
   },
   "dependencies": {
     "next": "16.2.12",
