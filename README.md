@@ -67,9 +67,11 @@ The approved canonical production host is `https://mendbeauty.com.au`. The value
 
 Vercel redirects, DNS changes, Search Console, analytics, and Google Business Profile configuration are managed outside this repository and remain separate approval-gated steps.
 
-- Booking calls to action lead to the branded `/book` route, which hands customers
-  to MaSe for live availability. The provider URL is configured with
-  `NEXT_PUBLIC_MASE_BOOKING_URL` and has a verified non-secret fallback.
+- All booking calls to action use the single label `Book` / `预约` and lead to
+  `/book` or `/zh/book`. Those server routes immediately hand customers to MaSe
+  without rendering the provider's long URL in the website interface. The
+  destination is configured with server-side `MASE_BOOKING_URL` and has a
+  verified non-secret fallback.
 - The contact form at `/contact#booking-enquiry` remains available for consultations,
   gift cards, memberships and other enquiries.
 - The enquiry form validates required fields and opens a pre-addressed message in

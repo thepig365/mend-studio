@@ -47,7 +47,7 @@ export default function BrowsLashesPage() {
                 </span>
               </div>
               <a href="/book" className="btn-primary mt-6">
-                Book Now
+                Book
               </a>
             </div>
           </div>

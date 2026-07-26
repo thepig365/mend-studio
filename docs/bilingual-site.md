@@ -64,7 +64,7 @@ MaSe services:
 | Brows & Lashes | 眉睫护理 |
 | Men's Grooming | 男士理容 |
 | Semi-Permanent Beauty | 半永久美容 |
-| Book Now | 立即预约 |
+| Book | 预约 |
 | Gift Cards | 礼品卡 |
 
 Brand names, personal names, product names, addresses, prices, and legal

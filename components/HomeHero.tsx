@@ -57,7 +57,7 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
             href={isChinese ? "/zh/book" : "/book"}
             className="btn-gold w-full py-3.5 sm:w-auto"
           >
-            {isChinese ? "预约服务" : "Book an Appointment"}
+            {isChinese ? "预约" : "Book"}
           </a>
           <Link
             href={isChinese ? "/zh/services" : "/services"}
