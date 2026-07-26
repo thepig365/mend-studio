@@ -25,9 +25,29 @@ const routes: { path: string; priority: number }[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   // No lastModified field — we don't track real per-page modification dates,
   // and a build-time timestamp would be a fake signal to search engines.
-  return routes.map(({ path, priority }) => ({
-    url: `${site.url}${path}`,
-    changeFrequency: "monthly",
-    priority,
-  }));
+  return routes.flatMap(({ path, priority }) => {
+    const englishUrl = `${site.url}${path}`;
+    const chineseUrl = `${site.url}/zh${path}`;
+    const alternates = {
+      languages: {
+        "en-AU": englishUrl,
+        "zh-Hans": chineseUrl,
+      },
+    };
+
+    return [
+      {
+        url: englishUrl,
+        changeFrequency: "monthly" as const,
+        priority,
+        alternates,
+      },
+      {
+        url: chineseUrl,
+        changeFrequency: "monthly" as const,
+        priority: Math.max(priority - 0.1, 0.2),
+        alternates,
+      },
+    ];
+  });
 }

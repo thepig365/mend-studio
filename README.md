@@ -13,6 +13,21 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Bilingual website
+
+The established English URLs remain unprefixed. Simplified Chinese pages use
+the `/zh` prefix and share the same business facts, service prices, booking
+provider, and contact details.
+
+Translations are stored and reviewed in the repository; the website does not
+use a live translation widget or send visitor page content to a translation
+API. See [docs/bilingual-site.md](docs/bilingual-site.md) for the language
+model, glossary, SEO rules, review gate, and content workflow.
+
+```bash
+npm run check:i18n
+```
+
 ## Pages
 
 | Route | Page |
@@ -32,6 +47,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/book` | Branded handoff to live MaSe appointment availability |
 | `/contact` | Contact, booking enquiry and map directions |
 | `/policies` | Policies (draft) |
+| `/zh/...` | Simplified Chinese equivalent of every route above |
 
 ## Project structure
 

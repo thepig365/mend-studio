@@ -3,7 +3,13 @@ import Link from "next/link";
 import MendMonogram from "@/components/brand/MendMonogram";
 
 // Full-width homepage hero banner over the real Mend Beauty Studio interior photo.
-export default function HomeHero() {
+type HomeHeroProps = {
+  locale?: "en-AU" | "zh-Hans";
+};
+
+export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
+  const isChinese = locale === "zh-Hans";
+
   return (
     <section className="relative flex min-h-[72vh] items-end overflow-hidden sm:min-h-[78vh]">
       <Image
@@ -34,23 +40,30 @@ export default function HomeHero() {
       </div>
       <div className="wrap relative pb-12 pt-28 sm:pb-24 sm:pt-56">
         <p className="text-[0.65rem] font-medium uppercase tracking-[0.22em] text-cream/90 sm:text-xs sm:tracking-[0.25em]">
-          Mend Beauty Studio — Balwyn
+          {isChinese ? "Mend Beauty Studio — Deepdene" : "Mend Beauty Studio — Balwyn"}
         </p>
         <h1 className="mt-3 max-w-3xl font-display text-[1.75rem] font-medium leading-[1.15] text-cream sm:mt-4 sm:text-5xl sm:leading-tight lg:text-6xl">
-          Mend your hair. Refresh your skin. Renew your look.
+          {isChinese
+            ? "修护秀发，焕亮肌肤，重拾自信光彩。"
+            : "Mend your hair. Refresh your skin. Renew your look."}
         </h1>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/90 sm:mt-5 sm:text-lg">
-          Premium hair, head spa, skin and beauty care in Balwyn.
+          {isChinese
+            ? "位于 Deepdene 的专业美发、头疗、皮肤管理与美容护理。"
+            : "Premium hair, head spa, skin and beauty care in Balwyn."}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
           <a
-            href="/book"
+            href={isChinese ? "/zh/book" : "/book"}
             className="btn-gold w-full py-3.5 sm:w-auto"
           >
-            Book an Appointment
+            {isChinese ? "预约服务" : "Book an Appointment"}
           </a>
-          <Link href="/services" className="btn-outline-light w-full py-3.5 sm:w-auto">
-            Explore Services
+          <Link
+            href={isChinese ? "/zh/services" : "/services"}
+            className="btn-outline-light w-full py-3.5 sm:w-auto"
+          >
+            {isChinese ? "查看服务" : "Explore Services"}
           </Link>
         </div>
       </div>

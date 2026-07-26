@@ -11,9 +11,14 @@ import type { ServiceItem as ServiceItemType } from "@/src/data/serviceMenu";
 type ServiceMenuSectionProps = {
   items: ServiceItemType[];
   title?: string;
+  locale?: "en-AU" | "zh-Hans";
 };
 
-export default function ServiceMenuSection({ items, title }: ServiceMenuSectionProps) {
+export default function ServiceMenuSection({
+  items,
+  title,
+  locale = "en-AU",
+}: ServiceMenuSectionProps) {
   const [activeItem, setActiveItem] = useState<ServiceItemType | null>(null);
 
   return (
@@ -22,16 +27,27 @@ export default function ServiceMenuSection({ items, title }: ServiceMenuSectionP
         <h3 className="mb-4 font-display text-2xl font-medium text-charcoal">{title}</h3>
       )}
       <p className="mb-4 text-xs leading-relaxed text-taupe">
-        Hover over or tap a service to see what it looks like.
+        {locale === "zh-Hans"
+          ? "将鼠标移到服务上，或轻触服务，即可查看参考图片。"
+          : "Hover over or tap a service to see what it looks like."}
       </p>
       <ul className="divide-y divide-beige/70">
         {items.map((item) => (
-          <ServiceItem key={item.id} item={item} onOpen={setActiveItem} />
+          <ServiceItem
+            key={item.id}
+            item={item}
+            onOpen={setActiveItem}
+            locale={locale}
+          />
         ))}
       </ul>
 
       {activeItem && (
-        <ServiceImageModal item={activeItem} onClose={() => setActiveItem(null)} />
+        <ServiceImageModal
+          item={activeItem}
+          onClose={() => setActiveItem(null)}
+          locale={locale}
+        />
       )}
     </div>
   );
