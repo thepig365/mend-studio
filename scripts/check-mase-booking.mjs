@@ -16,18 +16,26 @@ const sourceFiles = [...filesUnder("app"), ...filesUnder("components")]
 const combinedSource = sourceFiles.map(({ source }) => source).join("\n");
 assert.doesNotMatch(
   combinedSource,
-  /(?:label:\s*"Book Now"|>\s*Book Now\s*<)[\s\S]{0,120}?\/contact#booking-enquiry/,
+  /(?:label:\s*"|>\s*)(?:Book Now|Book an Appointment|View available appointments|立即预约|预约服务|查看可预约时间)(?:"|\s*<)/,
 );
 assert.match(combinedSource, /href(?:=|:)\s*["']\/book["']/);
 
 const bookingPage = readFileSync("app/book/page.tsx", "utf8");
-assert.match(bookingPage, /booking\.url/);
-assert.match(bookingPage, /View available appointments/);
-assert.match(bookingPage, /Call \{site\.phone\}/);
-assert.match(bookingPage, /\/policies/);
+assert.match(bookingPage, /redirect\(booking\.url\)/);
+assert.doesNotMatch(bookingPage, /href=\{booking\.url\}/);
+
+const chinesePage = readFileSync("app/zh/[[...slug]]/page.tsx", "utf8");
+assert.match(chinesePage, /path === "\/book"\) redirect\(booking\.url\)/);
+
+const i18n = readFileSync("lib/i18n.ts", "utf8");
+assert.match(i18n, /bookNow: "Book"/);
+assert.match(i18n, /bookAppointment: "Book"/);
+assert.match(i18n, /bookNow: "预约"/);
+assert.match(i18n, /bookAppointment: "预约"/);
 
 const bookingConfig = readFileSync("lib/booking.ts", "utf8");
-assert.match(bookingConfig, /NEXT_PUBLIC_MASE_BOOKING_URL/);
+assert.match(bookingConfig, /process\.env\.MASE_BOOKING_URL/);
+assert.doesNotMatch(bookingConfig, /NEXT_PUBLIC_MASE_BOOKING_URL/);
 assert.match(bookingConfig, /clients\.mase\.cloud/);
 
 const siteConfig = readFileSync("lib/site.ts", "utf8");
@@ -42,5 +50,5 @@ const layout = readFileSync("app/layout.tsx", "utf8");
 assert.match(layout, /openingHoursSpecification: site\.structuredOpeningHours/);
 
 console.log(
-  "MaSe booking checks passed: branded route, unified calls to action, provider fallback, policies, phone fallback and approved hours.",
+  "MaSe booking checks passed: unified Book/预约 labels, server-side redirects, hidden provider link, provider fallback and approved hours.",
 );

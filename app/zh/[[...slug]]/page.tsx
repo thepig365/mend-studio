@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import BookingEnquiryForm from "@/components/BookingEnquiryForm";
 import BrandManifestoPage from "@/components/BrandManifestoPage";
 import ContactCard from "@/components/ContactCard";
@@ -39,7 +39,7 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
     description: "查看 Mend Beauty Studio 的美发、头疗、皮肤管理、身体护理、眉睫、男士理容、美甲及半永久美容服务。",
   },
   "/book": {
-    title: "预约服务",
+    title: "预约",
     description: "通过 MaSe 查看 Mend Beauty Studio 的可预约服务与时间。",
   },
   "/gift-cards": {
@@ -119,7 +119,7 @@ export default async function ChinesePage({ params }: ChinesePageProps) {
   if (slug[0] === "services" && slug[1] && serviceSlugs.has(slug[1])) {
     return <ChineseServiceDetail slug={slug[1]} />;
   }
-  if (path === "/book") return <ChineseBooking />;
+  if (path === "/book") redirect(booking.url);
   if (path === "/gift-cards") return <ChineseGiftCards />;
   if (path === "/memberships") return <ChineseMemberships />;
   if (path === "/careers") return <ChineseCareers />;
@@ -222,7 +222,7 @@ function ChineseHome() {
         heading="修护秀发，焕亮肌肤，重拾自信光彩。"
         body="现在预约美发、头疗、皮肤管理或美容护理。"
         actions={[
-          { label: "立即预约", href: "/zh/book", variant: "light" },
+          { label: "预约", href: "/zh/book", variant: "light" },
           { label: "查看服务", href: "/zh/services", variant: "outline-light" },
         ]}
       />
@@ -238,7 +238,7 @@ function ChineseServices() {
         title="一间工作室，满足您的日常美容护理需求"
         body="美发、头疗、皮肤管理、身体护理、眉睫及更多服务，均以专业、舒适和细致的体验为核心。"
         actions={[
-          { label: "立即预约", href: "/zh/book", variant: "gold" },
+          { label: "预约", href: "/zh/book", variant: "gold" },
           { label: "礼品卡", href: "/zh/gift-cards", variant: "outline" },
         ]}
       />
@@ -265,7 +265,7 @@ function ChineseServices() {
         heading="告诉我们您的需要，我们会协助选择"
         body="如需了解适合的美发、头皮、肌肤或美容项目，请致电或发送咨询。"
         actions={[
-          { label: "立即预约", href: "/zh/book", variant: "light" },
+          { label: "预约", href: "/zh/book", variant: "light" },
           { label: "联系我们", href: "/zh/contact", variant: "outline-light" },
         ]}
       />
@@ -287,7 +287,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         image={category.image}
         imageAlt={category.title}
         actions={[
-          { label: "立即预约", href: "/zh/book", variant: "gold" },
+          { label: "预约", href: "/zh/book", variant: "gold" },
           { label: "全部服务", href: "/zh/services", variant: "outline" },
         ]}
       />
@@ -320,7 +320,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         </p>
         <div className="mt-6 text-center">
           <Link href="/zh/book" className="btn-gold">
-            立即预约
+            预约
           </Link>
         </div>
       </section>
@@ -329,61 +329,10 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         heading="预约到访 Mend Beauty Studio"
         body="建议提前预约；如需协助选择项目，请先联系我们。"
         actions={[
-          { label: "立即预约", href: "/zh/book", variant: "light" },
+          { label: "预约", href: "/zh/book", variant: "light" },
           { label: "联系我们", href: "/zh/contact", variant: "outline-light" },
         ]}
       />
-    </>
-  );
-}
-
-function ChineseBooking() {
-  return (
-    <>
-      <section className="border-b border-beige/70 bg-linen">
-        <div className="wrap py-16 sm:py-24">
-          <p className="eyebrow">在线预约</p>
-          <h1 className="mt-4 max-w-3xl font-display text-4xl font-medium leading-tight text-charcoal sm:text-6xl">
-            选择服务与合适时间
-          </h1>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-cocoa sm:text-lg">
-            点击下方按钮前往安全的 MaSe 预约服务查看实时可预约时间。预约由 Mend Beauty Studio
-            管理，本网站不会储存您的预约资料。
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              className="btn-gold w-full text-center sm:w-auto"
-              href={booking.url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              查看可预约时间
-            </a>
-            <a className="btn-outline w-full text-center sm:w-auto" href={site.phoneHref}>
-              致电 {site.phone}
-            </a>
-          </div>
-        </div>
-      </section>
-      <section className="wrap grid gap-8 py-16 sm:py-20 lg:grid-cols-[1fr_0.9fr]">
-        <div className="rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-10">
-          <p className="eyebrow">预约须知</p>
-          <h2 className="mt-3 font-display text-3xl font-medium text-charcoal">
-            预约前请注意
-          </h2>
-          <ul className="mt-6 space-y-4 text-sm leading-relaxed text-cocoa">
-            <li>营业时间：星期一、星期二及星期四至星期日，上午 9:00 至下午 5:00；星期三休息。</li>
-            <li>如需取消或更改预约，请尽可能提前至少 24 小时通知我们。</li>
-            <li>如不确定适合的服务，请先致电或发送咨询。</li>
-            <li>在线可预约时间由 MaSe 提供；如服务暂时无法使用，请直接联系工作室。</li>
-          </ul>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link className="btn-primary" href="/zh/services">查看服务</Link>
-            <Link className="btn-outline" href="/zh/policies">查看服务政策</Link>
-          </div>
-        </div>
-        <ContactCard showHours locale="zh-Hans" />
-      </section>
     </>
   );
 }

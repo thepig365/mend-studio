@@ -219,7 +219,7 @@ export default function HomePage() {
         heading="Mend your hair. Refresh your skin. Renew your look."
         body="Book your next hair, head spa, skin or beauty visit today."
         actions={[
-          { label: "Book Now", href: "/book", variant: "light" },
+          { label: "Book", href: "/book", variant: "light" },
           { label: "View Services", href: "/services", variant: "outline-light" },
         ]}
       />

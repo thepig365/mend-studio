@@ -8,9 +8,11 @@ website does not store booking personal information.
 
 ## Customer flow
 
-1. A booking call to action opens `/book`.
-2. The branded page explains the handoff and provides phone and policy fallbacks.
-3. The customer continues to the configured MaSe booking URL in a new tab.
+1. Every booking call to action is labelled `Book` / `预约` and opens `/book`
+   or `/zh/book`.
+2. The server route immediately redirects to the configured MaSe booking URL,
+   so the long provider URL is not rendered in the Mend website interface.
+3. MaSe opens in the same browser tab and provides live service availability.
 4. MaSe owns service, staff, availability and customer-booking data.
 5. Consultation, gift-card, membership and non-booking questions remain on the
    zero-storage email enquiry flow.
@@ -20,7 +22,7 @@ website does not store booking personal information.
 | Record | Canonical source |
 | --- | --- |
 | Public business identity and contact details | `lib/site.ts` |
-| Website booking provider URL | `NEXT_PUBLIC_MASE_BOOKING_URL` |
+| Website booking provider URL | Server-side `MASE_BOOKING_URL` |
 | Live service price, duration and bookability | MaSe project management |
 | Staff service eligibility and working time | MaSe employee and roster settings |
 | Available appointment slots | MaSe scheduling |
@@ -67,7 +69,7 @@ These are recommendations, not approved production settings:
 ## Release acceptance
 
 - `/book` works on desktop and approximately 390 px mobile width.
-- Every public `Book Now` action reaches `/book`.
+- Every public `Book` / `预约` action reaches `/book` or `/zh/book`.
 - The MaSe handoff opens the correct Mend Beauty Studio booking page.
 - Wednesday exposes no appointment slots.
 - No slot begins or ends outside 09:00–17:00 on an open day.
@@ -81,6 +83,6 @@ These are recommendations, not approved production settings:
 If the MaSe handoff is unavailable or inaccurate:
 
 1. restore booking calls to action to the existing contact enquiry route;
-2. remove or unset `NEXT_PUBLIC_MASE_BOOKING_URL`;
+2. remove or unset `MASE_BOOKING_URL`;
 3. keep telephone and email enquiries active;
 4. do not delete MaSe customer, appointment or operating records.

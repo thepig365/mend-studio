@@ -117,7 +117,7 @@ export default function PoliciesPage() {
         actions={[
           { label: "Contact Us", href: "/contact", variant: "light" },
           {
-            label: "Book Now",
+            label: "Book",
             href: "/book",
             variant: "outline-light",
           },

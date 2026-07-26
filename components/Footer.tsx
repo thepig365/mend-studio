@@ -23,7 +23,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-charcoal pb-20 text-cream lg:pb-0">
-      {/* Contact anchor — Book Now buttons across the site land here */}
+      {/* Contact details and non-booking enquiry routes remain available here. */}
       <div id="contact" className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo
