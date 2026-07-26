@@ -35,7 +35,24 @@ export default function HomePage() {
         />
       </section>
 
-      {/* 3. Featured services */}
+      {/* 3. Brand philosophy */}
+      <section className="bg-linen py-16 sm:py-24">
+        <div className="wrap text-center">
+          <p className="eyebrow">Our Philosophy</p>
+          <h2 className="mx-auto mt-4 max-w-3xl font-display text-3xl font-medium leading-tight text-charcoal sm:text-5xl">
+            MEND means repair.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cocoa sm:text-lg">
+            We care for more than hair and skin—we create space for confidence,
+            calm and reconnection.
+          </p>
+          <Link href="/our-story" className="btn-outline mt-8">
+            Discover the MEND philosophy
+          </Link>
+        </div>
+      </section>
+
+      {/* 4. Featured services */}
       <section className="bg-sand py-16 sm:py-24">
         <div className="wrap">
           <SectionHeading
@@ -56,7 +73,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Signature experiences */}
+      {/* 5. Signature experiences */}
       <section className="wrap py-16 sm:py-24">
         <SectionHeading
           eyebrow="Signature Experiences"
@@ -74,7 +91,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Why Mend */}
+      {/* 6. Why Mend */}
       <section className="bg-espresso py-16 text-cream sm:py-24">
         <div className="wrap grid items-center gap-12 lg:grid-cols-2">
           <div>
@@ -105,7 +122,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Gift cards */}
+      {/* 7. Gift cards */}
       <section className="wrap py-16 sm:py-24">
         <div className="grid items-center gap-10 rounded-[2.5rem] bg-linen p-8 sm:p-14 lg:grid-cols-2">
           <div>
@@ -136,7 +153,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Memberships coming soon */}
+      {/* 8. Memberships coming soon */}
       <section className="wrap pb-16 sm:pb-24">
         <div className="rounded-[2.5rem] border border-beige/70 bg-white/60 px-8 py-14 text-center sm:px-14">
           <p className="eyebrow">Coming Soon</p>
@@ -154,7 +171,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. Careers / Rent a space */}
+      {/* 9. Careers / Rent a space */}
       <section className="bg-sand py-16 sm:py-24">
         <div className="wrap">
           <SectionHeading
@@ -183,7 +200,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 9. Contact CTA */}
+      {/* 10. Contact CTA */}
       <section className="wrap grid gap-10 py-16 sm:py-24 lg:grid-cols-2 lg:items-center">
         <div>
           <SectionHeading

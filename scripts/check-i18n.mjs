@@ -16,6 +16,7 @@ const requiredRoutes = [
   "/zh/memberships",
   "/zh/careers",
   "/zh/contact",
+  "/zh/our-story",
   "/zh/policies",
 ];
 

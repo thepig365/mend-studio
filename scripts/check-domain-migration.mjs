@@ -19,6 +19,7 @@ const expectedRoutes = [
   "/memberships",
   "/careers",
   "/contact",
+  "/our-story",
   "/policies",
 ];
 

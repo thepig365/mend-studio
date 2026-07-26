@@ -80,6 +80,14 @@ export default function Footer() {
               ))}
             <li>
               <Link
+                href={localePath("/our-story", locale)}
+                className="text-sm text-cream/80 transition-colors hover:text-gold"
+              >
+                {locale === chineseLocale ? "品牌宣言" : "Our Philosophy"}
+              </Link>
+            </li>
+            <li>
+              <Link
                 href={localePath("/policies", locale)}
                 className="text-sm text-cream/80 transition-colors hover:text-gold"
               >
