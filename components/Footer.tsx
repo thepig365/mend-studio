@@ -38,8 +38,8 @@ export default function Footer() {
           </p>
           <p className="mt-3 text-sm text-cream/70">
             {locale === chineseLocale
-              ? "美发 · 头疗 · 皮肤管理 · 身体护理 · 眉睫"
-              : site.positioning}
+              ? "美发 · 头疗与头皮管理 · 肌肤管理 · 身体放松 · MEND 招牌疗程"
+              : "Hair · Head Spa · Skin · Body · MEND Signature Rituals"}
           </p>
         </div>
 
@@ -67,7 +67,7 @@ export default function Footer() {
           </h2>
           <ul className="mt-5 space-y-2.5">
             {mainNav
-              .filter((item) => item.label !== "Home")
+              .filter((item) => item.href !== "/" && item.href !== "/zh")
               .map((item) => (
                 <li key={item.label}>
                   <Link

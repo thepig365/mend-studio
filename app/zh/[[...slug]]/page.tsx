@@ -11,8 +11,18 @@ import HomeHero from "@/components/HomeHero";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
+import CategoryExperience from "@/components/services/CategoryExperience";
+import JourneyPage from "@/components/services/JourneyPage";
+import ServiceExperience from "@/components/services/ServiceExperience";
+import ServicesLanding from "@/components/services/ServicesLanding";
 import { booking } from "@/lib/booking";
 import { chinesePageMetadata } from "@/lib/seo";
+import {
+  getCategory as getExperienceCategory,
+  getService as getExperienceService,
+  serviceCategories as experienceCategories,
+  services as experienceServices,
+} from "@/lib/service-catalog";
 import { galleryImages } from "@/lib/services";
 import { site } from "@/lib/site";
 import {
@@ -27,6 +37,9 @@ type ChinesePageProps = {
 };
 
 const serviceSlugs = new Set(zhServiceCategories.map((category) => category.slug));
+const experienceCategorySlugs = new Set<string>(
+  experienceCategories.map((category) => category.id),
+);
 
 const routeMetadata: Record<string, { title: string; description: string }> = {
   "/": {
@@ -37,6 +50,10 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
   "/services": {
     title: "服务项目",
     description: "查看 Mend Beauty Studio 的美发、头疗、皮肤管理、身体护理、眉睫、男士理容、美甲及半永久美容服务。",
+  },
+  "/journey": {
+    title: "我的护理方向",
+    description: "通过三个简单选择，了解可能适合您的 MEND 美发、头疗、肌肤、身体或招牌护理方向。",
   },
   "/book": {
     title: "预约",
@@ -73,9 +90,18 @@ export function generateStaticParams() {
   return [
     { slug: [] },
     { slug: ["services"] },
-    ...zhServiceCategories.map((category) => ({
-      slug: ["services", category.slug],
+    { slug: ["journey"] },
+    ...experienceCategories.map((category) => ({
+      slug: ["services", category.id],
     })),
+    ...experienceServices.map((service) => ({
+      slug: ["services", service.category, service.slug],
+    })),
+    ...zhServiceCategories
+      .filter((category) => !experienceCategorySlugs.has(category.slug))
+      .map((category) => ({
+        slug: ["services", category.slug],
+      })),
     { slug: ["book"] },
     { slug: ["gift-cards"] },
     { slug: ["memberships"] },
@@ -91,6 +117,35 @@ export async function generateMetadata({
 }: ChinesePageProps): Promise<Metadata> {
   const { slug = [] } = await params;
   const path = `/${slug.join("/")}`.replace(/\/$/, "") || "/";
+
+  if (
+    slug[0] === "services" &&
+    slug[1] &&
+    slug[2] &&
+    experienceCategorySlugs.has(slug[1])
+  ) {
+    const service = getExperienceService(slug[1], slug[2]);
+    if (!service) return {};
+    return chinesePageMetadata({
+      title: service.name.zh,
+      description: `${service.summary.zh} ${service.duration.zh}；${service.price.display.zh}。`,
+      path: `/services/${slug[1]}/${slug[2]}`,
+    });
+  }
+
+  if (
+    slug[0] === "services" &&
+    slug[1] &&
+    experienceCategorySlugs.has(slug[1])
+  ) {
+    const category = getExperienceCategory(slug[1]);
+    if (!category) return {};
+    return chinesePageMetadata({
+      title: category.title.zh,
+      description: category.summary.zh,
+      path: `/services/${slug[1]}`,
+    });
+  }
 
   if (slug[0] === "services" && slug[1] && serviceSlugs.has(slug[1])) {
     const category = getZhCategory(slug[1]);
@@ -115,7 +170,27 @@ export default async function ChinesePage({ params }: ChinesePageProps) {
   const path = `/${slug.join("/")}`.replace(/\/$/, "") || "/";
 
   if (path === "/") return <ChineseHome />;
-  if (path === "/services") return <ChineseServices />;
+  if (path === "/services") return <ServicesLanding language="zh" />;
+  if (path === "/journey") return <JourneyPage language="zh" />;
+  if (path === "/services/skin-facial") redirect("/zh/services/skin");
+  if (path === "/services/body-care") redirect("/zh/services/body");
+  if (
+    slug[0] === "services" &&
+    slug[1] &&
+    slug[2] &&
+    experienceCategorySlugs.has(slug[1])
+  ) {
+    const service = getExperienceService(slug[1], slug[2]);
+    if (!service) notFound();
+    return <ServiceExperience service={service} language="zh" />;
+  }
+  if (
+    slug[0] === "services" &&
+    slug[1] &&
+    experienceCategorySlugs.has(slug[1])
+  ) {
+    return <CategoryExperience categoryId={slug[1]} language="zh" />;
+  }
   if (slug[0] === "services" && slug[1] && serviceSlugs.has(slug[1])) {
     return <ChineseServiceDetail slug={slug[1]} />;
   }
@@ -224,49 +299,6 @@ function ChineseHome() {
         actions={[
           { label: "预约", href: "/zh/book", variant: "light" },
           { label: "查看服务", href: "/zh/services", variant: "outline-light" },
-        ]}
-      />
-    </>
-  );
-}
-
-function ChineseServices() {
-  return (
-    <>
-      <Hero
-        eyebrow="我们的服务"
-        title="一间工作室，满足您的日常美容护理需求"
-        body="美发、头疗、皮肤管理、身体护理、眉睫及更多服务，均以专业、舒适和细致的体验为核心。"
-        actions={[
-          { label: "预约", href: "/zh/book", variant: "gold" },
-          { label: "礼品卡", href: "/zh/gift-cards", variant: "outline" },
-        ]}
-      />
-      <section className="wrap py-16 sm:py-24">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {zhServiceCategories.map((category) => (
-            <ServiceCard
-              key={category.slug}
-              title={category.cardTitle}
-              description={category.excerpt}
-              href={`/zh/services/${category.slug}`}
-              image={category.image}
-              imageAlt={category.title}
-              linkLabel="查看服务"
-            />
-          ))}
-        </div>
-        <p className="mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-taupe">
-          所有价格均含 GST。最终价格可能根据服务复杂度、头发长度、产品用量及个人适用性在咨询后调整。
-        </p>
-      </section>
-      <CTABlock
-        eyebrow="不确定从哪里开始？"
-        heading="告诉我们您的需要，我们会协助选择"
-        body="如需了解适合的美发、头皮、肌肤或美容项目，请致电或发送咨询。"
-        actions={[
-          { label: "预约", href: "/zh/book", variant: "light" },
-          { label: "联系我们", href: "/zh/contact", variant: "outline-light" },
         ]}
       />
     </>
