@@ -10,17 +10,19 @@ type LogoProps = {
   tone?: "dark" | "light";
   className?: string;
   onClick?: () => void;
+  href?: string;
 };
 
 export default function Logo({
   variant = "horizontal",
   className = "",
   onClick,
+  href = "/",
 }: LogoProps) {
   if (variant === "icon") {
     return (
       <Link
-        href="/"
+        href={href}
         className={`inline-flex shrink-0 items-center ${className}`}
         onClick={onClick}
         aria-label="Mend Beauty Studio — Home"
@@ -39,7 +41,7 @@ export default function Logo({
   if (variant === "stacked") {
     return (
       <Link
-        href="/"
+        href={href}
         className={`inline-flex shrink-0 flex-col items-center text-center ${className}`}
         onClick={onClick}
         aria-label="Mend Beauty Studio — Home"
@@ -57,7 +59,7 @@ export default function Logo({
 
   return (
     <Link
-      href="/"
+      href={href}
       className={`group inline-flex shrink-0 items-center ${className}`}
       onClick={onClick}
       aria-label="Mend Beauty Studio — Home"

@@ -11,9 +11,14 @@ import type { ServiceItem as ServiceItemType } from "@/src/data/serviceMenu";
 type ServiceItemProps = {
   item: ServiceItemType;
   onOpen: (item: ServiceItemType) => void;
+  locale?: "en-AU" | "zh-Hans";
 };
 
-export default function ServiceItem({ item, onOpen }: ServiceItemProps) {
+export default function ServiceItem({
+  item,
+  onOpen,
+  locale = "en-AU",
+}: ServiceItemProps) {
   const [showPreview, setShowPreview] = useState(false);
 
   return (
@@ -34,7 +39,9 @@ export default function ServiceItem({ item, onOpen }: ServiceItemProps) {
         onMouseEnter={() => setShowPreview(true)}
         onMouseLeave={() => setShowPreview(false)}
         aria-haspopup="dialog"
-        aria-label={`${item.name} — view photo and details`}
+        aria-label={`${item.name} — ${
+          locale === "zh-Hans" ? "查看图片与详情" : "view photo and details"
+        }`}
         className="-mx-3 flex w-[calc(100%+1.5rem)] cursor-pointer flex-col gap-1 rounded-2xl px-3 py-5 text-left transition-colors duration-200 hover:bg-sand/70 focus-visible:bg-sand/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
       >
         <span className="flex items-baseline justify-between gap-4">

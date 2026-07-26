@@ -11,9 +11,15 @@ import type { ServiceItem } from "@/src/data/serviceMenu";
 type ServiceImageModalProps = {
   item: ServiceItem;
   onClose: () => void;
+  locale?: "en-AU" | "zh-Hans";
 };
 
-export default function ServiceImageModal({ item, onClose }: ServiceImageModalProps) {
+export default function ServiceImageModal({
+  item,
+  onClose,
+  locale = "en-AU",
+}: ServiceImageModalProps) {
+  const isChinese = locale === "zh-Hans";
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -45,7 +51,7 @@ export default function ServiceImageModal({ item, onClose }: ServiceImageModalPr
       {/* Backdrop */}
       <button
         type="button"
-        aria-label="Close"
+        aria-label={isChinese ? "关闭" : "Close"}
         onClick={onClose}
         className="absolute inset-0 animate-fade-in cursor-default bg-charcoal/50 backdrop-blur-[2px]"
         tabIndex={-1}
@@ -66,7 +72,7 @@ export default function ServiceImageModal({ item, onClose }: ServiceImageModalPr
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={isChinese ? "关闭" : "Close"}
             className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-charcoal/55 text-cream backdrop-blur transition-colors hover:bg-charcoal/75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
           >
             <svg
@@ -109,16 +115,22 @@ export default function ServiceImageModal({ item, onClose }: ServiceImageModalPr
           )}
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a href="#contact" onClick={onClose} className="btn-gold flex-1">
-              Book Now
+            <a
+              href={isChinese ? "/zh/book" : "/book"}
+              onClick={onClose}
+              className="btn-gold flex-1"
+            >
+              {isChinese ? "立即预约" : "Book Now"}
             </a>
             <button type="button" onClick={onClose} className="btn-outline flex-1">
-              Close
+              {isChinese ? "关闭" : "Close"}
             </button>
           </div>
 
           <p className="mt-5 text-center text-[0.65rem] leading-relaxed text-taupe">
-            Temporary stock image via {item.image.sourceName} — for illustration only.
+            {isChinese
+              ? `临时参考图片，来源：${item.image.sourceName}；仅作说明用途。`
+              : `Temporary stock image via ${item.image.sourceName} — for illustration only.`}
           </p>
         </div>
       </div>

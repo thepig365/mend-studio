@@ -53,6 +53,22 @@ body {
   overflow-x: hidden;
 }
 
+html[lang="zh-Hans"] body {
+  font-family:
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
+    var(--font-sans);
+}
+
+html[lang="zh-Hans"] .font-display {
+  font-family:
+    "Songti SC", "STSong", "Noto Serif CJK SC", "PingFang SC", serif;
+  letter-spacing: 0.01em;
+}
+
+html[lang="zh-Hans"] .eyebrow {
+  letter-spacing: 0.18em;
+}
+
 /* iOS safe-area insets for notched devices */
 .safe-top {
   padding-top: env(safe-area-inset-top, 0px);
@@ -124,7 +140,7 @@ body {
   }
 
   .nav-link {
-    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm tracking-wide text-cocoa transition-all duration-200 ease-out;
+    @apply inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-2 text-sm tracking-wide text-cocoa transition-all duration-200 ease-out;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/35 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
   }
 

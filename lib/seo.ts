@@ -16,6 +16,11 @@ type PageMetadataInput = {
   absoluteTitle?: boolean;
 };
 
+type ChinesePageMetadataInput = Omit<PageMetadataInput, "path"> & {
+  /** English route path. The Chinese canonical is generated under /zh. */
+  path: string;
+};
+
 const socialImage = {
   url: `${site.url}/images/mend-beauty-logo.png`,
   width: 1024,
@@ -31,6 +36,8 @@ export function pageMetadata({
   absoluteTitle,
 }: PageMetadataInput): Metadata {
   const canonical = path === "/" ? site.url : `${site.url}${path}`;
+  const chineseUrl =
+    path === "/" ? `${site.url}/zh` : `${site.url}/zh${path}`;
   const socialTitle = absoluteTitle ? title : `${title} | ${site.name}`;
 
   return {
@@ -38,6 +45,11 @@ export function pageMetadata({
     description,
     alternates: {
       canonical,
+      languages: {
+        "en-AU": canonical,
+        "zh-Hans": chineseUrl,
+        "x-default": canonical,
+      },
     },
     openGraph: {
       title: socialTitle,
@@ -45,6 +57,47 @@ export function pageMetadata({
       url: canonical,
       siteName: site.name,
       locale: "en_AU",
+      type: "website",
+      images: [socialImage],
+    },
+    twitter: {
+      card: "summary",
+      title: socialTitle,
+      description,
+      images: [socialImage.url],
+    },
+  };
+}
+
+export function chinesePageMetadata({
+  title,
+  description,
+  path,
+  absoluteTitle,
+}: ChinesePageMetadataInput): Metadata {
+  const englishUrl = path === "/" ? site.url : `${site.url}${path}`;
+  const chinesePath = path === "/" ? "/zh" : `/zh${path}`;
+  const canonical = `${site.url}${chinesePath}`;
+  const socialTitle = absoluteTitle ? title : `${title} | ${site.name}`;
+
+  return {
+    title: absoluteTitle ? { absolute: title } : title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        "en-AU": englishUrl,
+        "zh-Hans": canonical,
+        "x-default": englishUrl,
+      },
+    },
+    openGraph: {
+      title: socialTitle,
+      description,
+      url: canonical,
+      siteName: site.name,
+      locale: "zh_CN",
+      alternateLocale: ["en_AU"],
       type: "website",
       images: [socialImage],
     },
