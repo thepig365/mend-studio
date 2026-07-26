@@ -11,15 +11,25 @@
 // =============================================================================
 
 import { serviceCategories } from "@/lib/services";
+import { getAnnaCategory } from "@/lib/anna-services";
 import { getServiceImage, type ServiceImage } from "./serviceImages";
 
 export type ServiceItem = {
   id: string;
   name: string;
+  nameEn?: string;
+  nameZh?: string;
   category: string;
   price: string;
   time?: string;
   description: string;
+  descriptionEn?: string;
+  descriptionZh?: string;
+  section?: string;
+  sectionZh?: string;
+  details?: string[];
+  detailsZh?: string[];
+  signature?: boolean;
   image: ServiceImage;
   bookingNote?: string;
 };
@@ -172,6 +182,62 @@ export function getMenuItemsForCategory(slug: string): {
   return {
     items: buildItems(slug, "items"),
     secondaryItems: buildItems(slug, "secondaryItems"),
+  };
+}
+
+function buildAnnaItems(
+  slug: string,
+  list: "items" | "secondaryItems",
+): ServiceItem[] {
+  if (slug === "mens-grooming") {
+    return getMenuItemsForCategory(slug)[list];
+  }
+
+  const category = getAnnaCategory(slug);
+  const source = category[list] ?? [];
+
+  return source.map((item, index) => {
+    const id = item.id ?? `${slug}-${list}-${index + 1}`;
+    const imageId = item.imageId ?? id;
+
+    return {
+      id,
+      name: item.name,
+      nameEn: item.name,
+      nameZh: item.nameZh,
+      category: category.title,
+      price: item.price ?? "Price on consultation",
+      time: item.duration,
+      description: item.description ?? "",
+      descriptionEn: item.description,
+      descriptionZh: item.descriptionZh,
+      section: item.section,
+      sectionZh: item.sectionZh,
+      details: item.details,
+      detailsZh: item.detailsZh,
+      signature: item.signature,
+      image: getServiceImage(imageId),
+      // MaSe does not expose a verified per-service URL mapping in this
+      // repository. Every row therefore uses the existing server-side /book
+      // handoff to the general MaSe booking page; no URL is invented here.
+      bookingNote:
+        slug === "nails-semi-permanent" &&
+        list === "secondaryItems"
+          ? "Available by consultation only and subject to suitability assessment."
+          : slug === "nails-semi-permanent"
+            ? "Nail services may be available through our in-house partner — please contact us for availability."
+            : undefined,
+    };
+  });
+}
+
+export function getAnnaMenuItemsForCategory(slug: string): {
+  items: ServiceItem[];
+  secondaryItems: ServiceItem[];
+} {
+  return {
+    items: buildAnnaItems(slug, "items"),
+    secondaryItems: buildAnnaItems(slug, "secondaryItems"),
   };
 }
 

@@ -3,10 +3,19 @@
 import { siteImages, signatureImages, galleryStockImages } from "@/src/data/images";
 
 export type ServiceItem = {
+  id?: string;
+  imageId?: string;
   name: string;
+  nameZh?: string;
   price?: string;
   duration?: string;
   description?: string;
+  descriptionZh?: string;
+  section?: string;
+  sectionZh?: string;
+  details?: string[];
+  detailsZh?: string[];
+  signature?: boolean;
 };
 
 export type ServiceCategory = {

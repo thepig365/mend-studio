@@ -1,15 +1,22 @@
 import ServicePage from "@/components/ServicePage";
-import { getCategory } from "@/lib/services";
+import { getAnnaCategory } from "@/lib/anna-services";
 import { pageMetadata } from "@/lib/seo";
+import { getAnnaMenuItemsForCategory } from "@/src/data/serviceMenu";
 
 export const metadata = pageMetadata({
-  title: "Skin & Facial",
+  title: "Skin Aesthetics",
   description:
-    "Korean skin management, hydration facials, glass skin facials and barrier repair at Mend Beauty Studio, Balwyn — in private treatment rooms.",
+    "Korean facial and skin aesthetics treatments in Deepdene using professional skincare products and devices.",
   path: "/services/skin-facial",
 });
 
 export default function SkinFacialPage() {
-  const category = getCategory("skin-facial");
-  return <ServicePage category={category} subtitle="Korean Skin Management" />;
+  const category = getAnnaCategory("skin-facial");
+  return (
+    <ServicePage
+      category={category}
+      subtitle="Korean Professional Skincare"
+      menuOverride={getAnnaMenuItemsForCategory("skin-facial")}
+    />
+  );
 }

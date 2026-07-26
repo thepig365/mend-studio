@@ -4,7 +4,14 @@ import {
   type ServiceCategory,
   type ServiceItem,
 } from "@/lib/services";
-import { getMenuItemsForCategory } from "@/src/data/serviceMenu";
+import {
+  annaServiceCategories,
+  getAnnaCategory,
+} from "@/lib/anna-services";
+import {
+  getAnnaMenuItemsForCategory,
+  getMenuItemsForCategory,
+} from "@/src/data/serviceMenu";
 
 type ItemTranslation = {
   name: string;
@@ -378,5 +385,155 @@ export function getZhMenuItemsForCategory(slug: string) {
         category.secondaryItems?.[index]?.description ?? item.description,
       category: category.title,
     })),
+  };
+}
+
+const annaCategoryTranslations: Record<
+  string,
+  Pick<ServiceCategory, "title" | "cardTitle" | "excerpt" | "intro"> & {
+    notes?: string[];
+    secondaryTitle?: string;
+  }
+> = {
+  hair: {
+    title: "美发设计中心",
+    cardTitle: "美发设计中心",
+    excerpt: "头皮检测、剪裁设计、染发设计与烫发设计。",
+    intro: "查看经批准的头皮检测、剪裁、染发与烫发项目、价格及时间。",
+  },
+  "hair-scalp-recovery": {
+    title: "头皮健康管理",
+    cardTitle: "头皮健康管理",
+    excerpt: "针对头皮与发质状态的护理项目。",
+    intro: "专注头皮状态、发质状态及修护护理的经批准项目。",
+    notes: ["头皮与发质护理属于美容与健康支持服务，并非医疗诊断或治疗。"],
+  },
+  "head-spa": {
+    title: "头皮身心疗愈",
+    cardTitle: "头皮身心疗愈",
+    excerpt: "沉浸式头疗与放松体验。",
+    intro: "以头皮护理与放松为重点的经批准沉浸式头疗服务。",
+    notes: ["头疗支持美容型头皮护理与放松，不诊断或治疗睡眠及其他医疗问题。"],
+  },
+  "skin-facial": {
+    title: "肌肤管理",
+    cardTitle: "肌肤管理",
+    excerpt: "韩式专业护肤产品与设备护理。",
+    intro: "采用客观、非医疗描述的经批准韩式专业肌肤管理项目。",
+    notes: [
+      "肌肤管理属于美容护理，效果因人而异；不作医疗、祛斑保证、注射、独家性或抗衰保证声明。",
+    ],
+  },
+  "body-care": {
+    title: "身心疗愈",
+    cardTitle: "身心疗愈",
+    excerpt: "身体调理与放松护理。",
+    intro: "使用谨慎、非医疗语言介绍的经批准身体调理与放松服务。",
+    notes: [
+      "身体护理支持放松与身心舒适，不诊断或治疗循环障碍、失眠或其他医疗问题，也不作医疗排毒声明。",
+    ],
+  },
+  "nails-semi-permanent": {
+    title: "美甲与半永久美容",
+    cardTitle: "美甲与半永久美容",
+    excerpt: "保留现有美甲及需咨询的半永久美容项目。",
+    intro: "完整保留现有美甲与半永久美容项目、价格及预约要求。",
+    secondaryTitle: "半永久美容",
+  },
+};
+
+function translateAnnaItem(item: ServiceItem): ServiceItem {
+  return {
+    ...item,
+    name: item.nameZh ?? item.name,
+    description: item.descriptionZh ?? item.description,
+    section: item.sectionZh ?? item.section,
+    details: item.detailsZh ?? item.details,
+  };
+}
+
+function translateAnnaCategory(category: ServiceCategory): ServiceCategory {
+  if (category.slug === "mens-grooming") {
+    return getZhCategory("mens-grooming");
+  }
+
+  if (category.slug === "nails-semi-permanent") {
+    const zhNails = getZhCategory("nails");
+    const zhSemiPermanent = getZhCategory("semi-permanent");
+    const translated = annaCategoryTranslations[category.slug];
+    return {
+      ...category,
+      ...translated,
+      items: category.items.map((item, index) => ({
+        ...item,
+        name: zhNails.items[index]?.name ?? item.name,
+        nameZh: zhNails.items[index]?.name,
+        description:
+          zhNails.items[index]?.description ?? item.description,
+        descriptionZh: zhNails.items[index]?.description,
+        section: "美甲",
+      })),
+      secondaryItems: category.secondaryItems?.map((item, index) => ({
+        ...item,
+        name: zhSemiPermanent.items[index]?.name ?? item.name,
+        nameZh: zhSemiPermanent.items[index]?.name,
+        description:
+          zhSemiPermanent.items[index]?.description ?? item.description,
+        descriptionZh: zhSemiPermanent.items[index]?.description,
+        section: "半永久美容",
+      })),
+      notes: [
+        ...(zhNails.notes ?? []),
+        ...(zhSemiPermanent.notes ?? []),
+      ],
+    };
+  }
+
+  const translated = annaCategoryTranslations[category.slug];
+  return {
+    ...category,
+    ...translated,
+    items: category.items.map(translateAnnaItem),
+    secondaryItems: category.secondaryItems?.map(translateAnnaItem),
+  };
+}
+
+export const zhAnnaServiceCategories =
+  annaServiceCategories.map(translateAnnaCategory);
+
+export function getZhAnnaCategory(slug: string) {
+  return translateAnnaCategory(getAnnaCategory(slug));
+}
+
+export function getZhAnnaMenuItemsForCategory(slug: string) {
+  const source = getAnnaMenuItemsForCategory(slug);
+  const category = getZhAnnaCategory(slug);
+
+  const localise = (
+    item: (typeof source.items)[number],
+    translatedItem: ServiceItem | undefined,
+  ) => ({
+    ...item,
+    name: translatedItem?.name ?? item.name,
+    nameEn: item.nameEn ?? item.name,
+    nameZh: translatedItem?.name ?? item.nameZh,
+    description:
+      translatedItem?.description ?? item.descriptionZh ?? item.description,
+    section: translatedItem?.section ?? item.sectionZh ?? item.section,
+    details: translatedItem?.details ?? item.detailsZh ?? item.details,
+    category: category.title,
+    bookingNote:
+      slug === "nails-semi-permanent"
+        ? "美甲服务视预约情况提供；半永久美容项目仅限咨询后预约，并需完成适用性评估。"
+        : item.bookingNote,
+  });
+
+  return {
+    items: source.items.map((item, index) =>
+      localise(item, category.items[index]),
+    ),
+    secondaryItems: source.secondaryItems.map((item, index) =>
+      localise(item, category.secondaryItems?.[index]),
+    ),
   };
 }

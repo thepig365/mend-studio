@@ -1,29 +1,22 @@
 import ServicePage from "@/components/ServicePage";
-import { getCategory } from "@/lib/services";
+import { getAnnaCategory } from "@/lib/anna-services";
 import { pageMetadata } from "@/lib/seo";
+import { getAnnaMenuItemsForCategory } from "@/src/data/serviceMenu";
 
 export const metadata = pageMetadata({
-  title: "Head Spa & Scalp Care",
+  title: "Scalp & Mind Wellness",
   description:
-    "Luxury head spa rituals, scalp cleansing and scalp health support at Mend Beauty Studio, Balwyn. Two dedicated head spa stations in a calm, premium setting.",
+    "Head Spa in Melbourne and Deepdene, including approved immersive scalp-care and relaxation services at Mend Beauty Studio.",
   path: "/services/head-spa",
 });
 
 export default function HeadSpaPage() {
-  const category = getCategory("head-spa");
+  const category = getAnnaCategory("head-spa");
   return (
-    <ServicePage category={category} subtitle="Scalp Wellness & Relaxation Rituals">
-      <div className="mt-10 rounded-3xl bg-linen p-7 sm:p-8">
-        <h3 className="font-display text-xl font-medium text-charcoal">
-          Scalp health support, honestly described
-        </h3>
-        <p className="mt-2 text-sm leading-relaxed text-cocoa">
-          Our scalp care services focus on cleansing, circulation-supporting massage and a
-          calm environment for the scalp — including support for clients concerned about
-          thinning-prone hair. We support scalp health; we do not claim to treat or cure
-          hair loss, and individual results vary.
-        </p>
-      </div>
-    </ServicePage>
+    <ServicePage
+      category={category}
+      subtitle="Immersive Head Spa"
+      menuOverride={getAnnaMenuItemsForCategory("head-spa")}
+    />
   );
 }

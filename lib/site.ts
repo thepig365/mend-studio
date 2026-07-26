@@ -57,14 +57,19 @@ export const mainNav = [
 ];
 
 export const servicesNav = [
-  { label: "Hair Services", href: "/services/hair" },
-  { label: "Head Spa & Scalp Care", href: "/services/head-spa" },
-  { label: "Skin & Facial", href: "/services/skin-facial" },
-  { label: "Body Care", href: "/services/body-care" },
-  { label: "Brows & Lashes", href: "/services/brows-lashes" },
+  { label: "Hair Atelier", href: "/services/hair" },
+  {
+    label: "Hair & Scalp Recovery",
+    href: "/services/hair-scalp-recovery",
+  },
+  { label: "Scalp & Mind Wellness", href: "/services/head-spa" },
+  { label: "Skin Aesthetics", href: "/services/skin-facial" },
+  { label: "Body Wellness", href: "/services/body-care" },
   { label: "Men’s Grooming", href: "/services/mens-grooming" },
-  { label: "Nails", href: "/services/nails" },
-  { label: "Semi-Permanent Beauty", href: "/services/semi-permanent" },
+  {
+    label: "Nails & Semi-Permanent Beauty",
+    href: "/services/nails-semi-permanent",
+  },
 ];
 
 export const whyMend = [

@@ -3,7 +3,10 @@ import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import { pricingNote, type ServiceCategory } from "@/lib/services";
-import { getMenuItemsForCategory } from "@/src/data/serviceMenu";
+import {
+  getMenuItemsForCategory,
+  type ServiceItem as MenuServiceItem,
+} from "@/src/data/serviceMenu";
 
 type ServicePageProps = {
   category: ServiceCategory;
@@ -11,7 +14,20 @@ type ServicePageProps = {
   subtitle?: string;
   children?: ReactNode;
   hidePriceList?: boolean;
+  menuOverride?: {
+    items: MenuServiceItem[];
+    secondaryItems: MenuServiceItem[];
+  };
 };
+
+function groupBySection(items: MenuServiceItem[], fallbackTitle: string) {
+  const groups = new Map<string, MenuServiceItem[]>();
+  items.forEach((item) => {
+    const title = item.section ?? fallbackTitle;
+    groups.set(title, [...(groups.get(title) ?? []), item]);
+  });
+  return [...groups.entries()];
+}
 
 export default function ServicePage({
   category,
@@ -19,8 +35,14 @@ export default function ServicePage({
   subtitle,
   children,
   hidePriceList = false,
+  menuOverride,
 }: ServicePageProps) {
-  const menu = getMenuItemsForCategory(category.slug);
+  const menu = menuOverride ?? getMenuItemsForCategory(category.slug);
+  const primaryGroups = groupBySection(menu.items, "Menu & Pricing");
+  const secondaryGroups = groupBySection(
+    menu.secondaryItems,
+    category.secondaryTitle ?? "Also available",
+  );
   return (
     <>
       <Hero
@@ -37,20 +59,20 @@ export default function ServicePage({
       />
 
       <section className="wrap py-16 sm:py-20">
-        {!hidePriceList && (
-          <ServiceMenuSection items={menu.items} title="Menu & Pricing" />
-        )}
+        {!hidePriceList &&
+          primaryGroups.map(([title, items], index) => (
+            <div key={title} className={index === 0 ? "" : "mt-10"}>
+              <ServiceMenuSection items={items} title={title} />
+            </div>
+          ))}
 
         {children}
 
-        {menu.secondaryItems.length > 0 && (
-          <div className="mt-10">
-            <ServiceMenuSection
-              items={menu.secondaryItems}
-              title={category.secondaryTitle ?? "Also available"}
-            />
+        {secondaryGroups.map(([title, items]) => (
+          <div key={title} className="mt-10">
+            <ServiceMenuSection items={items} title={title} />
           </div>
-        )}
+        ))}
 
         {category.notes && category.notes.length > 0 && (
           <div className="mt-10 rounded-3xl bg-sand p-7 sm:p-8">
