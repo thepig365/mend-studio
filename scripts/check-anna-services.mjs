@@ -67,9 +67,11 @@ for (const [start, end, expected] of expectedCategoryCounts) {
 }
 
 const imageKeys = new Set(
-  [...imageRegistry.matchAll(/^  "?([a-z0-9-]+)"?: (?:unsplash|pexels)\(/gm)].map(
-    (match) => match[1],
-  ),
+  [
+    ...imageRegistry.matchAll(
+      /^  "?([a-z0-9-]+)"?: (?:unsplash|pexels|mendOriginal)\(/gm,
+    ),
+  ].map((match) => match[1]),
 );
 for (const item of approvedItems) {
   assert(
@@ -108,18 +110,26 @@ const protectedHashes = {
   "src/data/images.ts":
     "b87774da0172663b940c9de708a999d18553b3c966ad4c85d2796aae350a2462",
   "src/data/serviceImages.ts":
-    "deccb176895d2084542c79b5c75439b6215c9d3be27216bef484d5582b45fc08",
+    "a5128ed1eee8a4df2f48aa7b2efe32cd5b03c9cda2f64c7087a3548691df4b5f",
   "components/ServiceCard.tsx":
     "16ef9183493012406ba231d85581902fce3891011794f37b325e9873dee6cb30",
   "src/components/ServiceImagePreview.tsx":
     "59e2dfcacd22566afa67d038a46cda4a82e0327c90e815950975c151b919dd94",
   "src/components/ServiceImageModal.tsx":
-    "790f6c9666cd88b4e11f70ad15b7a306565004b1ba939f5d5182117ea236c044",
+    "18cd9e952d6b530a44e05909516d81e66aba0c6f7a70518bf75c65ed24092ede",
+  "public/images/services/headspa-wash.jpg":
+    "5d15fe4607f9f44ccca2e887166d5b00290c275c1ccffbd95909c7a73dc17ca1",
+  "public/images/services/headspa-signature-mend.webp":
+    "283d99697f97b019fa6522acd4287f562dcad441531bb1f61ddb3f7adfce4377",
+  "public/images/services/headspa-aroma-sleep-mend.webp":
+    "51c06ac30c1afc416f0094fe17038e4e9309ae9d150582ed6b8a623b167b3136",
+  "public/images/services/headspa-signature-ritual-mend.webp":
+    "54810586a7aac2cbac3506fd65069ee3ccb8944d3338dd1a4aff58a67e436ef1",
 };
 for (const [path, expected] of Object.entries(protectedHashes)) {
   assert.equal(hash(path), expected, `Protected image/presentation file changed: ${path}`);
 }
 
 console.log(
-  "Anna services checks passed: 7 categories, 67 total services, 45 approved Anna items, protected legacy data, existing images, bilingual content and general MaSe booking handoff.",
+  "Anna services checks passed: 7 categories, 67 total services, 45 approved Anna items, protected legacy data, approved Head Spa imagery, bilingual content and general MaSe booking handoff.",
 );
