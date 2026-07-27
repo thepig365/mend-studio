@@ -6,7 +6,7 @@
 // matching image to every item, in the shape required by the interactive
 // service image system (hover preview + tap modal).
 //
-// Temporary stock images — replace with professional Mend Beauty Studio
+// Service imagery includes review-approved MEND originals and temporary stock
 // photography. See src/data/serviceImages.ts for sources and credits.
 // =============================================================================
 

@@ -127,11 +127,13 @@ export default function ServiceImageModal({
             </button>
           </div>
 
-          <p className="mt-5 text-center text-[0.65rem] leading-relaxed text-taupe">
-            {isChinese
-              ? `临时参考图片，来源：${item.image.sourceName}；仅作说明用途。`
-              : `Temporary stock image via ${item.image.sourceName} — for illustration only.`}
-          </p>
+          {item.image.temporary && (
+            <p className="mt-5 text-center text-[0.65rem] leading-relaxed text-taupe">
+              {isChinese
+                ? `临时参考图片，来源：${item.image.sourceName}；仅作说明用途。`
+                : `Temporary stock image via ${item.image.sourceName} — for illustration only.`}
+            </p>
+          )}
         </div>
       </div>
     </div>

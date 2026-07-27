@@ -1,11 +1,12 @@
 // =============================================================================
-// Temporary stock image — replace with professional Mend Beauty Studio photography.
+// Service imagery for the public menu.
 //
 // Every service item on the menu has a matching image below. All photos are
-// free commercial-use stock images from Unsplash or Pexels, hand-reviewed to be
-// warm, premium, clean and neutral-toned, with no visible salon names, product
-// logos, watermarks or competitor branding. Models shown do NOT endorse
-// Mend Beauty Studio.
+// either original MEND review-approved imagery or free commercial-use stock
+// images from Unsplash or Pexels. Images are hand-reviewed to be warm, premium,
+// clean and neutral-toned, with no visible salon names, product logos,
+// watermarks or competitor branding. Models shown do NOT endorse Mend Beauty
+// Studio.
 //
 // Every image has been audited against the exact service name, description,
 // price and time (see IMAGE_AUDIT.md). `imageMatchQuality` records how closely
@@ -25,11 +26,11 @@ export type ImageMatchQuality = "exact" | "close" | "generic-safe";
 export type ServiceImage = {
   src: string;
   alt: string;
-  sourceName: "Pexels" | "Unsplash";
+  sourceName: "Pexels" | "Unsplash" | "MEND Original";
   sourceUrl: string;
   credit?: string;
   imageMatchQuality: ImageMatchQuality;
-  temporary: true;
+  temporary: boolean;
 };
 
 // Temporary stock image — replace with professional Mend Beauty Studio photography.
@@ -62,6 +63,20 @@ const pexels = (
   credit: "Temporary stock image via Pexels",
   imageMatchQuality,
   temporary: true,
+});
+
+const mendOriginal = (
+  file: string,
+  alt: string,
+  imageMatchQuality: ImageMatchQuality
+): ServiceImage => ({
+  src: `/images/services/${file}.webp`,
+  alt,
+  sourceName: "MEND Original",
+  sourceUrl: `/images/services/${file}.webp`,
+  credit: "Original review-approved MEND imagery",
+  imageMatchQuality,
+  temporary: false,
 });
 
 /**
@@ -169,22 +184,19 @@ export const serviceImages: Record<string, ServiceImage> = {
     3993449,
     "exact"
   ),
-  "signature-head-spa": pexels(
-    "headspa-massage",
-    "Therapist gently massaging a client’s head during a head spa ritual",
-    5794044,
+  "signature-head-spa": mendOriginal(
+    "headspa-signature-mend",
+    "Therapist performing a Korean-style water-halo Head Spa treatment",
     "exact"
   ),
-  "premium-head-spa-ritual": pexels(
-    "headspa-ritual",
-    "Client relaxing during a soothing head massage in a bright spa room",
-    5659011,
+  "premium-head-spa-ritual": mendOriginal(
+    "headspa-aroma-sleep-mend",
+    "Client wearing an eye mask during a warm aromatherapy sleep Head Spa",
     "exact"
   ),
-  "deluxe-head-spa-ritual": pexels(
-    "headspa-deluxe",
-    "Warm, unhurried scalp and head massage during a deluxe spa ritual",
-    6663371,
+  "deluxe-head-spa-ritual": mendOriginal(
+    "headspa-signature-ritual-mend",
+    "Premium MEND Head Spa ritual with water halo, serum, hair mask and hot stones",
     "exact"
   ),
   "scalp-cleansing-treatment": unsplash(
