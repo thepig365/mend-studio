@@ -339,8 +339,9 @@ const scalpMindWellness: ServiceCategory = {
   excerpt: "Immersive Head Spa and relaxation experiences.",
   intro:
     "Approved immersive Head Spa services focused on scalp care and relaxation.",
-  image: legacyHeadSpa.image,
-  imageAlt: legacyHeadSpa.imageAlt,
+  image: "/images/head-spa-water-halo.webp",
+  imageAlt:
+    "Client wearing an eye mask during a professional water-halo Head Spa treatment",
   items: [
     approvedItem(
       "express-head-spa",
