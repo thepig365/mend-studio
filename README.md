@@ -33,14 +33,16 @@ npm run check:i18n
 | Route | Page |
 | --- | --- |
 | `/` | Home |
-| `/services` | Services overview (incl. Nails note) |
+| `/services` | Services overview with separate Nails and Semi-Permanent Beauty categories |
 | `/services/hair` | Hair Services |
 | `/services/head-spa` | Head Spa & Scalp Care |
 | `/services/skin-facial` | Skin & Facial |
 | `/services/body-care` | Body Care |
 | `/services/brows-lashes` | Brows & Lashes |
 | `/services/mens-grooming` | Men’s Grooming |
+| `/services/nails` | Nails |
 | `/services/semi-permanent` | Semi-Permanent Beauty (consultation only) |
+| `/services/nails-semi-permanent` | Compatibility page linking to the two separate categories |
 | `/gift-cards` | Gift Cards |
 | `/memberships` | Memberships (coming soon) |
 | `/careers` | Careers / Rent a Space |

@@ -27,7 +27,8 @@ const requiredServiceSlugs = [
   "skin-facial",
   "body-care",
   "mens-grooming",
-  "nails-semi-permanent",
+  "nails",
+  "semi-permanent",
 ];
 
 const failures = [];

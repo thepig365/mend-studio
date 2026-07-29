@@ -12,6 +12,8 @@ const chinese = read("app/zh/[[...slug]]/page.tsx");
 const menu = read("src/data/serviceMenu.ts");
 const row = read("src/components/ServiceItem.tsx");
 const imageRegistry = read("src/data/serviceImages.ts");
+const splitPage = read("app/services/nails-semi-permanent/page.tsx");
+const i18n = read("lib/i18n.ts");
 
 const categoryReferences = [
   "hairAtelier",
@@ -20,7 +22,8 @@ const categoryReferences = [
   "skinAesthetics",
   "bodyWellness",
   "legacyMens",
-  "nailsSemiPermanent",
+  "legacyNails",
+  "legacySemiPermanent",
 ];
 const categoryArray = anna.match(
   /export const annaServiceCategories:[\s\S]*?= \[([\s\S]*?)\];/,
@@ -89,6 +92,24 @@ for (const item of approvedItems) {
 assert.match(anna, /const nailsIds = \[[\s\S]*?"nail-removal"/);
 assert.match(anna, /const semiPermanentIds = \[[\s\S]*?"annual-refresh"/);
 assert.match(anna, /legacyMens/);
+assert.match(
+  anna,
+  /export const annaServiceCategories:[\s\S]*?legacyNails,[\s\S]*?legacySemiPermanent/,
+);
+assert.doesNotMatch(
+  categoryArray,
+  /nailsSemiPermanent/,
+  "The combined category must not appear on the services overview",
+);
+assert.match(splitPage, /href: "\/services\/nails"/);
+assert.match(splitPage, /href: "\/services\/semi-permanent"/);
+assert.match(chinese, /href: "\/zh\/services\/nails"/);
+assert.match(chinese, /href: "\/zh\/services\/semi-permanent"/);
+assert.match(i18n, /label: "Nails", href: "\/services\/nails"/);
+assert.match(
+  i18n,
+  /label: "Semi-Permanent Beauty", href: "\/services\/semi-permanent"/,
+);
 assert.match(landing, /annaServiceCategories\.map/);
 assert.match(chinese, /zhAnnaServiceCategories\.map/);
 assert.doesNotMatch(landing, /Find My Treatment|treatment finder|questionnaire/i);
@@ -131,5 +152,5 @@ for (const [path, expected] of Object.entries(protectedHashes)) {
 }
 
 console.log(
-  "Anna services checks passed: 7 categories, 67 total services, 45 approved Anna items, protected legacy data, approved Head Spa imagery, bilingual content and general MaSe booking handoff.",
+  "Anna services checks passed: 8 categories, 67 total services, 45 approved Anna items, split nails and semi-permanent categories, protected legacy data, approved Head Spa imagery, bilingual content and general MaSe booking handoff.",
 );

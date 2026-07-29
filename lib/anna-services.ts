@@ -767,15 +767,23 @@ export const annaServiceCategories: ServiceCategory[] = [
   skinAesthetics,
   bodyWellness,
   legacyMens,
+  legacyNails,
+  legacySemiPermanent,
+];
+
+const annaServiceDetailCategories = [
+  ...annaServiceCategories,
   nailsSemiPermanent,
 ];
 
 export const annaServiceSlugs = new Set(
-  annaServiceCategories.map((category) => category.slug),
+  annaServiceDetailCategories.map((category) => category.slug),
 );
 
 export function getAnnaCategory(slug: string): ServiceCategory {
-  const category = annaServiceCategories.find((entry) => entry.slug === slug);
+  const category = annaServiceDetailCategories.find(
+    (entry) => entry.slug === slug,
+  );
   if (!category) throw new Error(`Unknown Anna service category: ${slug}`);
   return category;
 }

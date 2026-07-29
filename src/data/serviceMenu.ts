@@ -189,7 +189,11 @@ function buildAnnaItems(
   slug: string,
   list: "items" | "secondaryItems",
 ): ServiceItem[] {
-  if (slug === "mens-grooming") {
+  if (
+    slug === "mens-grooming" ||
+    slug === "nails" ||
+    slug === "semi-permanent"
+  ) {
     return getMenuItemsForCategory(slug)[list];
   }
 

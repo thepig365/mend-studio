@@ -141,10 +141,8 @@ export const servicesNavByLocale = {
     { label: "Skin Aesthetics", href: "/services/skin-facial" },
     { label: "Body Wellness", href: "/services/body-care" },
     { label: "Men’s Grooming", href: "/services/mens-grooming" },
-    {
-      label: "Nails & Semi-Permanent Beauty",
-      href: "/services/nails-semi-permanent",
-    },
+    { label: "Nails", href: "/services/nails" },
+    { label: "Semi-Permanent Beauty", href: "/services/semi-permanent" },
   ],
   "zh-Hans": [
     { label: "美发设计中心", href: "/zh/services/hair" },
@@ -156,9 +154,7 @@ export const servicesNavByLocale = {
     { label: "肌肤管理", href: "/zh/services/skin-facial" },
     { label: "身心疗愈", href: "/zh/services/body-care" },
     { label: "男士理容", href: "/zh/services/mens-grooming" },
-    {
-      label: "美甲与半永久美容",
-      href: "/zh/services/nails-semi-permanent",
-    },
+    { label: "美甲", href: "/zh/services/nails" },
+    { label: "半永久美容", href: "/zh/services/semi-permanent" },
   ],
 } as const;

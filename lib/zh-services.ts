@@ -453,8 +453,12 @@ function translateAnnaItem(item: ServiceItem): ServiceItem {
 }
 
 function translateAnnaCategory(category: ServiceCategory): ServiceCategory {
-  if (category.slug === "mens-grooming") {
-    return getZhCategory("mens-grooming");
+  if (
+    category.slug === "mens-grooming" ||
+    category.slug === "nails" ||
+    category.slug === "semi-permanent"
+  ) {
+    return getZhCategory(category.slug);
   }
 
   if (category.slug === "nails-semi-permanent") {
