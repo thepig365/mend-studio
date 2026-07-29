@@ -38,13 +38,20 @@ client secrets, access tokens or passwords.
 - Content and keywords: customer-useful content and keyword briefs
 - Social and campaigns: approved Meta campaign coordination
 - Services and retention: confirmed MaSe source information
-- AI task desk: minimal draft briefs for ChatGPT or Claude
+- AI task desk: minimal draft briefs for ChatGPT, Codex or Claude
+- Landing Page Studio: controlled briefs for service, offer, event,
+  educational SEO and seasonal campaign pages
 
 ## AI boundary
 
 The first release does not call an AI API. A brief is generated locally in the
 authorised user’s browser and is sent nowhere until that user deliberately
-copies it into ChatGPT or Claude.
+copies it into ChatGPT, Codex or Claude.
+
+The Landing Page Studio requires a working title and confirmed facts before a
+brief can be copied. It prepares bilingual page structure, copy, SEO,
+accessibility and review requirements while preserving the existing MEND
+design and booking flow. It does not edit the repository or publish a page.
 
 Do not include customer records, passwords, full conversations or secrets.
 AI output remains draft. It cannot approve or publish content, run advertising,
