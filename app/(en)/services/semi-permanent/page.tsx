@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Semi-Permanent Beauty",
   description:
-    "Semi-permanent brows, lip blush and lash line enhancement at Mend Beauty Studio, Balwyn — available by consultation only and subject to suitability assessment.",
+    "Semi-permanent brows, lip blush and lash line enhancement at Mend Beauty Studio, Deepdene — available by consultation only and subject to suitability assessment.",
   path: "/services/semi-permanent",
 });
 

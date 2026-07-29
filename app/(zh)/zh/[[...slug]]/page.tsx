@@ -10,6 +10,7 @@ import Hero from "@/components/Hero";
 import HomeHero from "@/components/HomeHero";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
+import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import type { ServiceItem as MenuServiceItem } from "@/src/data/serviceMenu";
 import { booking } from "@/lib/booking";
@@ -319,9 +320,15 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
     menu.secondaryItems,
     category.secondaryTitle ?? "其他可选项目",
   );
+  const allItems = [...menu.items, ...menu.secondaryItems];
 
   return (
     <>
+      <ServiceStructuredData
+        categoryName={category.title}
+        items={allItems}
+        path={`/zh/services/${slug}`}
+      />
       <Hero
         eyebrow="服务项目"
         title={category.title}
@@ -621,6 +628,13 @@ const policies = [
       "礼品卡有效期以购买时注明为准，并遵守澳大利亚礼品卡规定；不可兑换现金，遗失或被盗的礼品卡可能无法补发。",
     ],
   },
+  {
+    title: "隐私与可选网站分析",
+    paragraphs: [
+      "启用可选网站分析后，Mend 会用它了解哪些页面帮助访客找到服务，以及访客是否点击预约、电话、邮件或路线。只有访客明确选择允许后，网站才会加载分析功能。",
+      "网站不会把服务咨询内容、密码、付款资料或 MaSe 顾客记录发送到分析系统。访客可以拒绝可选分析，并继续正常使用网站。",
+    ],
+  },
 ];
 
 function ChinesePolicies() {
@@ -629,7 +643,7 @@ function ChinesePolicies() {
       <Hero
         eyebrow="工作室政策"
         title="服务政策"
-        body="以下清晰、公平的安排帮助我们照顾每位顾客。政策目前仍处于审核稿阶段，并可能在正式开业前后更新。"
+        body="以下清晰、公平的安排帮助我们照顾每位顾客。请在预约前阅读；如有疑问，请先联系门店。"
       />
       <section className="wrap py-16 sm:py-20">
         <div className="space-y-10">
@@ -643,7 +657,7 @@ function ChinesePolicies() {
           ))}
         </div>
         <p className="mt-12 text-xs leading-relaxed text-taupe">
-          最后更新：审核稿。如对政策有疑问，请在到店前联系我们。
+          最后更新：2026 年 7 月 29 日。如对政策有疑问，请在到店前联系我们。
         </p>
       </section>
     </>

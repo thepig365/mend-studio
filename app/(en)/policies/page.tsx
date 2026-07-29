@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Policies",
   description:
-    "Booking, cancellation, gift card and service policies for Mend Beauty Studio — Balwyn, including head spa and semi-permanent beauty consultation policies.",
+    "Booking, cancellation, gift card and service policies for Mend Beauty Studio — Deepdene, including Head Spa and semi-permanent beauty consultation policies.",
   path: "/policies",
 });
 
@@ -56,8 +56,15 @@ const policies = [
   {
     title: "Gift Card Policy",
     paragraphs: [
-      "Mend gift cards can be used across our service menu at Mend Beauty Studio — Balwyn, subject to availability and booking.",
+      "Mend gift cards can be used across our service menu at Mend Beauty Studio — Deepdene, subject to availability and booking.",
       "Gift cards are valid for the period stated at the time of purchase (in accordance with Australian gift card regulations), are not redeemable for cash, and lost or stolen cards may not be replaceable. Please present your gift card at the time of your visit.",
+    ],
+  },
+  {
+    title: "Privacy & Optional Website Analytics",
+    paragraphs: [
+      "When optional website analytics is enabled, Mend uses it to understand which pages help visitors find services and reach the booking, phone, email or directions actions. Analytics is not loaded until a visitor chooses to allow it.",
+      "The website does not send service enquiry text, passwords, payment details or MaSe customer records to analytics. Visitors can decline optional analytics and continue using the website normally.",
     ],
   },
 ];
@@ -68,7 +75,7 @@ export default function PoliciesPage() {
       <Hero
         eyebrow="Studio Policies"
         title="Policies"
-        body="Clear, fair guidelines that help us look after every client well. These policies are in draft form and may be updated before and after opening."
+        body="Clear, fair guidelines that help us look after every client well. Please review them before booking and contact the studio if anything is unclear."
       />
 
       <section className="wrap py-16 sm:py-20">
@@ -105,8 +112,8 @@ export default function PoliciesPage() {
         </div>
 
         <p className="mt-12 text-xs leading-relaxed text-taupe">
-          Last updated: draft for review. If you have any questions about these policies,
-          please contact us before your visit.
+          Last updated: 29 July 2026. If you have any questions about these
+          policies, please contact us before your visit.
         </p>
       </section>
 

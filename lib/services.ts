@@ -665,7 +665,7 @@ export const careerOpportunities = [
     title: "Salon Manager",
     type: "Full time · Leadership",
     summary:
-      "An experienced, reliable and business-minded Salon Manager to help lead and grow our premium hair and beauty studio in Balwyn.",
+      "An experienced, reliable and business-minded Salon Manager to help lead and grow our hair and beauty studio in Deepdene.",
     highlights: [
       "Competitive salary package",
       "Performance-based incentives and team target bonus",
@@ -687,7 +687,7 @@ export const careerOpportunities = [
     title: "Rent a Chair",
     type: "Independent operator",
     summary:
-      "Established hairdressers looking for a premium chair in Balwyn with head spa, skin and beauty services around them.",
+      "Established hairdressers looking for a premium chair in Deepdene with Head Spa, skin and beauty services around them.",
     highlights: [
       "Professional hair station in a premium studio",
       "Flexible arrangements by discussion",
@@ -701,7 +701,7 @@ export const careerOpportunities = [
       "Private treatment rooms for beauty professionals — skin, body, brows and lashes, or nail services through an in-house partnership.",
     highlights: [
       "Private, fitted treatment rooms",
-      "Premium street presence in Balwyn",
+      "Street presence in Deepdene",
       "Terms tailored to your service offering",
     ],
   },

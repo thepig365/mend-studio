@@ -9,7 +9,7 @@ import { siteImages } from "@/src/data/images";
 export const metadata = pageMetadata({
   title: "Memberships — Coming Soon",
   description:
-    "Monthly head spa, skin glow, hair colour maintenance and beauty refresh membership plans are coming soon to Mend Beauty Studio, Balwyn.",
+    "Head Spa, skin, hair colour maintenance and beauty membership plans are coming soon to Mend Beauty Studio, Deepdene.",
   path: "/memberships",
 });
 

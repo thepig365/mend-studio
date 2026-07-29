@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Brows & Lashes",
   description:
-    "Korean lash lift, brow lamination, tinting and eyelash extensions at Mend Beauty Studio, Balwyn. Natural, low-maintenance eye beauty.",
+    "Korean lash lift, brow lamination, tinting and eyelash extensions at Mend Beauty Studio, Deepdene. Natural, low-maintenance eye beauty.",
   path: "/services/brows-lashes",
 });
 

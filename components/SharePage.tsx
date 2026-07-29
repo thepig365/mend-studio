@@ -12,7 +12,7 @@ export default function SharePage() {
   async function share() {
     const shareData = {
       title: document.title,
-      text: isChinese ? "Mend Beauty Studio — Deepdene" : "Mend Beauty Studio — Balwyn",
+      text: "Mend Beauty Studio — Deepdene",
       url: window.location.href,
     };
 

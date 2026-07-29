@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Men’s Grooming",
   description:
-    "Men’s cuts, skin fades, beard trims, grey blending, scalp detox and men’s head spa at Mend Beauty Studio, Balwyn.",
+    "Men’s cuts, skin fades, beard trims, grey blending, scalp detox and men’s Head Spa at Mend Beauty Studio, Deepdene.",
   path: "/services/mens-grooming",
 });
 

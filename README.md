@@ -1,6 +1,6 @@
 # Mend Beauty Studio — Website
 
-A premium hair and beauty studio website for **Mend Beauty Studio — Balwyn**, built with Next.js (App Router), TypeScript and Tailwind CSS.
+A premium hair and beauty studio website for **Mend Beauty Studio — Deepdene**, built with Next.js (App Router), TypeScript and Tailwind CSS.
 
 > Mend your hair. Refresh your skin. Renew your look.
 

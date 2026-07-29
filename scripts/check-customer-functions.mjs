@@ -26,7 +26,10 @@ assert.equal(
     .join(", ")}`,
 );
 assert.match(combinedSource, /\/contact#booking-enquiry/);
-assert.match(readFileSync("app/contact/page.tsx", "utf8"), /BookingEnquiryForm/);
+assert.match(
+  readFileSync("app/(en)/contact/page.tsx", "utf8"),
+  /BookingEnquiryForm/,
+);
 
 const formSource = readFileSync("components/BookingEnquiryForm.tsx", "utf8");
 assert.match(formSource, /hello@mendbeauty\.com\.au|site\.emailHref/);

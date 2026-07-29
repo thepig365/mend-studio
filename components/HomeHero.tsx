@@ -14,7 +14,7 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
     <section className="relative flex min-h-[72vh] items-end overflow-hidden sm:min-h-[78vh]">
       <Image
         src="/images/mend-beauty-hero.png"
-        alt="Mend Beauty Studio Balwyn salon interior"
+        alt="Mend Beauty Studio Deepdene salon interior"
         fill
         priority
         sizes="100vw"
@@ -40,7 +40,7 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
       </div>
       <div className="wrap relative pb-12 pt-28 sm:pb-24 sm:pt-56">
         <p className="text-[0.65rem] font-medium uppercase tracking-[0.22em] text-cream/90 sm:text-xs sm:tracking-[0.25em]">
-          {isChinese ? "Mend Beauty Studio — Deepdene" : "Mend Beauty Studio — Balwyn"}
+          Mend Beauty Studio — Deepdene
         </p>
         <h1 className="mt-3 max-w-3xl font-display text-[1.75rem] font-medium leading-[1.15] text-cream sm:mt-4 sm:text-5xl sm:leading-tight lg:text-6xl">
           {isChinese
@@ -50,7 +50,7 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/90 sm:mt-5 sm:text-lg">
           {isChinese
             ? "位于 Deepdene 的专业美发、头疗、皮肤管理与美容护理。"
-            : "Premium hair, head spa, skin and beauty care in Balwyn."}
+            : "Premium hair, Head Spa, skin and beauty care in Deepdene."}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
           <a
