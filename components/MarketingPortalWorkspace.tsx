@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import LandingPageStudio from "@/components/LandingPageStudio";
 
 const workspaces = [
   {
@@ -64,7 +65,13 @@ const workspaces = [
   },
 ] as const;
 
-type Provider = "ChatGPT" | "Claude";
+type Provider = "ChatGPT" | "Codex" | "Claude";
+
+const providerLinks: Record<Provider, string> = {
+  ChatGPT: "https://chatgpt.com/",
+  Codex: "https://chatgpt.com/codex",
+  Claude: "https://claude.ai/",
+};
 
 export default function MarketingPortalWorkspace() {
   const [provider, setProvider] = useState<Provider>("ChatGPT");
@@ -97,8 +104,7 @@ export default function MarketingPortalWorkspace() {
     window.setTimeout(() => setCopied(false), 2000);
   }
 
-  const providerHref =
-    provider === "ChatGPT" ? "https://chatgpt.com/" : "https://claude.ai/";
+  const providerHref = providerLinks[provider];
 
   return (
     <>
@@ -163,6 +169,7 @@ export default function MarketingPortalWorkspace() {
               className="mt-2 w-full rounded-xl border border-beige bg-cream px-4 py-3 font-normal outline-none focus:border-gold focus:ring-2 focus:ring-gold/20"
             >
               <option>ChatGPT</option>
+              <option>Codex</option>
               <option>Claude</option>
             </select>
           </label>
@@ -227,6 +234,8 @@ export default function MarketingPortalWorkspace() {
           </a>
         </div>
       </section>
+
+      <LandingPageStudio />
     </>
   );
 }
