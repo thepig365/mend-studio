@@ -95,6 +95,14 @@ export default function Footer() {
                 {copy.policies}
               </Link>
             </li>
+            <li>
+              <Link
+                href="/marketing"
+                className="text-sm text-cream/80 transition-colors hover:text-gold"
+              >
+                Marketing Portal
+              </Link>
+            </li>
           </ul>
         </div>
 
