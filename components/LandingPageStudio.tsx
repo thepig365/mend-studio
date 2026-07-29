@@ -37,6 +37,13 @@ export default function LandingPageStudio() {
   const [seoFocus, setSeoFocus] = useState("");
   const [creativeNotes, setCreativeNotes] = useState("");
   const [copied, setCopied] = useState(false);
+  const [pagePath, setPagePath] = useState("");
+  const [reviewUrl, setReviewUrl] = useState("");
+  const [publicationApproved, setPublicationApproved] = useState(false);
+  const [productionVerified, setProductionVerified] = useState(false);
+  const [releaseAction, setReleaseAction] = useState<
+    "publish" | "search" | "analytics" | null
+  >(null);
 
   const providerInstruction = useMemo(
     () =>
@@ -113,6 +120,42 @@ export default function LandingPageStudio() {
 
   const readyToCopy =
     pageTitle.trim().length > 0 && confirmedFacts.trim().length > 0;
+  const normalizedPagePath = pagePath.trim().startsWith("/")
+    ? pagePath.trim()
+    : `/${pagePath.trim()}`;
+  const validPagePath =
+    pagePath.trim().length > 1 &&
+    /^\/[a-z0-9]+(?:[a-z0-9-/]*[a-z0-9])?$/i.test(normalizedPagePath);
+  const productionUrl = validPagePath
+    ? `https://mendbeauty.com.au${normalizedPagePath}`
+    : "";
+  const validReviewUrl = /^https:\/\/[^\s]+$/i.test(reviewUrl.trim());
+  const readyToPublish =
+    readyToCopy &&
+    validPagePath &&
+    validReviewUrl &&
+    publicationApproved;
+
+  const releaseBrief = useMemo(
+    () =>
+      [
+        "MEND LANDING PAGE RELEASE — LEON APPROVED",
+        `Production route: ${productionUrl || "[required]"}`,
+        `Review URL: ${reviewUrl.trim() || "[required]"}`,
+        "",
+        "Use the existing thepig365/mend-studio repository and current production workflow.",
+        "Verify the reviewed page matches the approved preview and confirmed facts.",
+        "Run lint, type-check, tests and the production build.",
+        "Confirm metadata, canonical URL, language alternates, sitemap coverage, analytics instrumentation and mobile layout.",
+        "Do not change unrelated pages, prices, services, DNS, payments, advertising or account settings.",
+        "Publish only this approved landing page through a focused PR and the existing Vercel production process.",
+        "After deployment, verify the production URL, sitemap entry and consented GA4 page-view instrumentation.",
+        "",
+        "APPROVED BUILD BRIEF",
+        prompt,
+      ].join("\n"),
+    [productionUrl, prompt, reviewUrl],
+  );
 
   async function copyBuildBrief() {
     if (!readyToCopy) {
@@ -122,6 +165,17 @@ export default function LandingPageStudio() {
     await navigator.clipboard.writeText(prompt);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2000);
+  }
+
+  async function copyAndOpen(
+    action: "publish" | "search" | "analytics",
+    text: string,
+    href: string,
+  ) {
+    window.open(href, "_blank", "noopener,noreferrer");
+    await navigator.clipboard.writeText(text);
+    setReleaseAction(action);
+    window.setTimeout(() => setReleaseAction(null), 2500);
   }
 
   return (
@@ -311,6 +365,158 @@ export default function LandingPageStudio() {
           preview before any production publication.
         </p>
       </div>
+
+      <section className="mt-8 border-t border-beige pt-8">
+        <div className="max-w-3xl">
+          <p className="eyebrow">Release Console</p>
+          <h3 className="mt-3 font-display text-2xl font-medium text-charcoal">
+            Publish, submit to Google and verify analytics
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-cocoa">
+            These controls keep the human approval gate. Publishing opens
+            Codex with the approved release brief; Google submission opens the
+            verified Search Console property; Analytics opens the live GA4
+            report. A button never reports success until the destination
+            system confirms it.
+          </p>
+        </div>
+
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
+          <label className="text-sm font-medium text-charcoal">
+            Production page path
+            <input
+              value={pagePath}
+              onChange={(event) => {
+                setPagePath(event.target.value);
+                setProductionVerified(false);
+              }}
+              className="mt-2 w-full rounded-xl border border-beige bg-cream px-4 py-3 font-normal outline-none focus:border-gold focus:ring-2 focus:ring-gold/20"
+              placeholder="/offers/winter-head-spa"
+            />
+            <span className="mt-2 block text-xs font-normal text-cocoa">
+              {productionUrl || "Use a unique website path beginning with /."}
+            </span>
+          </label>
+          <label className="text-sm font-medium text-charcoal">
+            Approved review URL
+            <input
+              type="url"
+              value={reviewUrl}
+              onChange={(event) => setReviewUrl(event.target.value)}
+              className="mt-2 w-full rounded-xl border border-beige bg-cream px-4 py-3 font-normal outline-none focus:border-gold focus:ring-2 focus:ring-gold/20"
+              placeholder="https://preview.example.vercel.app/offers/..."
+            />
+            <span className="mt-2 block text-xs font-normal text-cocoa">
+              Paste the exact Vercel Preview reviewed by Leon.
+            </span>
+          </label>
+        </div>
+
+        <label className="mt-5 flex items-start gap-3 rounded-2xl border border-gold/40 bg-sand/45 p-4 text-sm leading-relaxed text-cocoa">
+          <input
+            type="checkbox"
+            checked={publicationApproved}
+            onChange={(event) => setPublicationApproved(event.target.checked)}
+            className="mt-1 h-4 w-4 accent-charcoal"
+          />
+          <span>
+            <strong className="text-charcoal">Leon publication approval:</strong>{" "}
+            I have reviewed this exact preview and approve this page for
+            production publication.
+          </span>
+        </label>
+
+        <label className="mt-3 flex items-start gap-3 rounded-2xl border border-beige bg-cream p-4 text-sm leading-relaxed text-cocoa">
+          <input
+            type="checkbox"
+            checked={productionVerified}
+            disabled={!readyToPublish}
+            onChange={(event) => setProductionVerified(event.target.checked)}
+            className="mt-1 h-4 w-4 accent-charcoal disabled:cursor-not-allowed"
+          />
+          <span>
+            <strong className="text-charcoal">
+              Production page verified:
+            </strong>{" "}
+            I opened the exact production URL above and confirmed that the
+            approved page loads correctly.
+          </span>
+        </label>
+
+        {!readyToPublish ? (
+          <p className="mt-4 text-xs leading-relaxed text-cocoa" role="status">
+            Add the required landing-page facts, a valid production path, an
+            HTTPS review URL and Leon&apos;s publication approval to unlock the
+            release action.
+          </p>
+        ) : null}
+
+        <div className="mt-5 grid gap-3 lg:grid-cols-3">
+          <button
+            type="button"
+            disabled={!readyToPublish}
+            onClick={() =>
+              copyAndOpen(
+                "publish",
+                releaseBrief,
+                providerLinks.Codex,
+              )
+            }
+            className="btn-primary disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            {releaseAction === "publish"
+              ? "Release brief copied"
+              : "1. Publish approved page"}
+          </button>
+          <button
+            type="button"
+            disabled={!productionVerified}
+            onClick={() =>
+              copyAndOpen(
+                "search",
+                `${productionUrl}\nhttps://mendbeauty.com.au/sitemap.xml`,
+                "https://search.google.com/search-console?resource_id=sc-domain:mendbeauty.com.au",
+              )
+            }
+            className="btn-outline disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            {releaseAction === "search"
+              ? "Page and sitemap copied"
+              : "2. Submit to Google"}
+          </button>
+          <button
+            type="button"
+            disabled={!productionVerified}
+            onClick={() =>
+              copyAndOpen(
+                "analytics",
+                productionUrl,
+                "https://analytics.google.com/",
+              )
+            }
+            className="btn-outline disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            {releaseAction === "analytics"
+              ? "Page URL copied"
+              : "3. Verify in Analytics"}
+          </button>
+        </div>
+
+        <div className="mt-5 rounded-2xl bg-cream p-4 text-xs leading-relaxed text-cocoa">
+          <p>
+            <strong className="text-charcoal">Google indexing:</strong> Google
+            does not provide a general one-click indexing API for ordinary
+            landing pages. The correct action is to publish the page, include
+            it in the sitemap and submit or inspect it in Search Console.
+          </p>
+          <p className="mt-2">
+            <strong className="text-charcoal">Google Analytics:</strong> GA4
+            already tracks consented page views across this website. A new
+            landing page is not added manually; use the third button to verify
+            that the live page is appearing in the report.
+          </p>
+        </div>
+      </section>
     </section>
   );
 }

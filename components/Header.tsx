@@ -27,6 +27,7 @@ export default function Header() {
   const copy = ui[locale];
   const mainNav = navByLocale[locale];
   const servicesNav = servicesNavByLocale[locale];
+  const showLanguageSwitch = !pathname.startsWith("/marketing");
   const languageHref = localePath(
     pathname,
     locale === chineseLocale ? "en-AU" : chineseLocale,
@@ -119,16 +120,18 @@ export default function Header() {
             </a>
           </nav>
 
-          <Link
-            href={languageHref}
-            hrefLang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
-            lang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
-            aria-label={copy.switchLanguageLabel}
-            className="ml-1 shrink-0 rounded-full border border-beige/80 px-3 py-2 text-xs font-medium text-cocoa transition-colors hover:border-gold hover:text-bronze focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold lg:ml-2"
-            onClick={closeMobile}
-          >
-            {copy.switchLanguage}
-          </Link>
+          {showLanguageSwitch ? (
+            <Link
+              href={languageHref}
+              hrefLang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
+              lang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
+              aria-label={copy.switchLanguageLabel}
+              className="ml-1 shrink-0 rounded-full border border-beige/80 px-3 py-2 text-xs font-medium text-cocoa transition-colors hover:border-gold hover:text-bronze focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold lg:ml-2"
+              onClick={closeMobile}
+            >
+              {copy.switchLanguage}
+            </Link>
+          ) : null}
 
           {/* Mobile menu toggle — hamburger ↔ close */}
           <button

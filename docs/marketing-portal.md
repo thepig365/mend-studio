@@ -9,6 +9,10 @@ authoritative services and prepares minimal, reviewable AI task briefs.
 The public footer contains a restrained `Marketing Portal` link. The portal and
 its sign-in route are excluded from search indexing.
 
+The private workspace is currently English-only. Its header does not show the
+public bilingual switch because no `/zh/marketing` or `/zh/marketing/login`
+route exists; this prevents operators being sent to a false 404 destination.
+
 ## Access
 
 Access uses Google OAuth and is restricted to:
@@ -41,6 +45,9 @@ client secrets, access tokens or passwords.
 - AI task desk: minimal draft briefs for ChatGPT, Codex or Claude
 - Landing Page Studio: controlled briefs for service, offer, event,
   educational SEO and seasonal campaign pages
+- Release Console: human-gated handoff to publish an approved review build,
+  submit or inspect the production URL in Search Console, and verify the page
+  in Google Analytics
 
 ## AI boundary
 
@@ -53,13 +60,32 @@ brief can be copied. It prepares bilingual page structure, copy, SEO,
 accessibility and review requirements while preserving the existing MEND
 design and booking flow. It does not edit the repository or publish a page.
 
+The Release Console becomes available only after a production path, an HTTPS
+review URL and Leon's explicit publication checkbox are present. The publish
+button copies a repository-aware release brief and opens Codex; Codex must
+still verify the exact reviewed page, run the repository checks and use the
+existing focused PR and Vercel workflow.
+
+For ordinary landing pages, Google does not offer a general-purpose indexing
+API. The Search Console action therefore copies the exact production URL and
+the canonical sitemap URL, then opens the verified domain property for sitemap
+submission or URL inspection. It does not claim that Google has indexed the
+page. Search Console and Analytics remain locked until the authorised operator
+confirms that the exact production URL loads correctly.
+
+The website already has consent-controlled GA4 page-view instrumentation.
+New landing pages do not need to be registered individually. The Analytics
+action copies the production URL and opens GA4 so an authorised user can
+confirm the live page in Realtime or DebugView.
+
 Do not include customer records, passwords, full conversations or secrets.
 AI output remains draft. It cannot approve or publish content, run advertising,
 change production settings or spend money.
 
 ## Deliberately excluded
 
-- automatic publishing or account mutation;
+- unattended automatic publishing or account mutation;
+- false indexing-success or analytics-success claims;
 - advertising purchases or paid SEO subscriptions;
 - direct Search Console, Analytics, Meta or MaSe data ingestion;
 - customer-data replication;
