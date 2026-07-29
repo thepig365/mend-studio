@@ -7,12 +7,12 @@ const hash = (path) =>
   createHash("sha256").update(readFileSync(path)).digest("hex");
 
 const anna = read("lib/anna-services.ts");
-const landing = read("app/services/page.tsx");
-const chinese = read("app/zh/[[...slug]]/page.tsx");
+const landing = read("app/(en)/services/page.tsx");
+const chinese = read("app/(zh)/zh/[[...slug]]/page.tsx");
 const menu = read("src/data/serviceMenu.ts");
 const row = read("src/components/ServiceItem.tsx");
 const imageRegistry = read("src/data/serviceImages.ts");
-const splitPage = read("app/services/nails-semi-permanent/page.tsx");
+const splitPage = read("app/(en)/services/nails-semi-permanent/page.tsx");
 const i18n = read("lib/i18n.ts");
 
 const categoryReferences = [

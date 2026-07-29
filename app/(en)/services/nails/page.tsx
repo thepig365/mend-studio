@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Nails",
   description:
-    "Classic and gel manicures, pedicures and nail art at Mend Beauty Studio, Balwyn — available through our in-house partner. Contact us for availability.",
+    "Classic and gel manicures, pedicures and nail art at Mend Beauty Studio, Deepdene — available through our in-house partner. Contact us for availability.",
   path: "/services/nails",
 });
 

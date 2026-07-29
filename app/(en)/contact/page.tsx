@@ -8,7 +8,7 @@ import { siteImages } from "@/src/data/images";
 
 export const metadata = pageMetadata({
   title: "Contact",
-  description: `Contact Mend Beauty Studio — Balwyn. Phone ${site.phone}, WeChat ${site.wechat}. ${site.address}. Book hair, head spa, skin, body, brows and lashes services.`,
+  description: `Contact Mend Beauty Studio — Deepdene. Phone ${site.phone}, WeChat ${site.wechat}. ${site.address}. Book hair, Head Spa, skin, body, nails and beauty services.`,
   path: "/contact",
 });
 

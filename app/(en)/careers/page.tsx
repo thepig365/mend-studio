@@ -10,7 +10,7 @@ import { siteImages } from "@/src/data/images";
 export const metadata = pageMetadata({
   title: "Careers & Rent a Space",
   description:
-    "Salon manager and hairdresser roles, rent-a-chair and beauty room rental opportunities at Mend Beauty Studio, a premium hair and beauty studio in Balwyn.",
+    "Salon manager and hairdresser roles, rent-a-chair and beauty room rental opportunities at Mend Beauty Studio in Deepdene.",
   path: "/careers",
 });
 
@@ -28,7 +28,7 @@ export default function CareersPage() {
       <Hero
         eyebrow="Careers & Rent a Space"
         title="Join Mend Beauty Studio"
-        body="We are currently welcoming expressions of interest from salon managers, hairdressers, beauty professionals and independent operators looking for a premium space in Balwyn."
+        body="We are currently welcoming expressions of interest from salon managers, hairdressers, beauty professionals and independent operators looking for a premium space in Deepdene."
         image={siteImages.careers.src}
         imageAlt={siteImages.careers.alt}
         actions={[
@@ -62,7 +62,7 @@ export default function CareersPage() {
             <SectionHeading
               eyebrow="Featured Role"
               title="Salon Manager Wanted"
-              body="We are looking for an experienced, reliable and business-minded Salon Manager to help lead and grow our premium hair and beauty studio in Balwyn."
+              body="We are looking for an experienced, reliable and business-minded Salon Manager to help lead and grow our hair and beauty studio in Deepdene."
               align="left"
             />
             <ul className="mt-8 space-y-3">
@@ -110,7 +110,7 @@ export default function CareersPage() {
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-cocoa">
                 8 professional hair stations, 2 dedicated head spa stations and 3 private
-                treatment rooms in a premium, calm studio environment in Balwyn —
+                treatment rooms in a premium, calm studio environment in Deepdene —
                 designed to grow.
               </p>
             </div>

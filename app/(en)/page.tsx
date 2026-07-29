@@ -13,9 +13,9 @@ import { pageMetadata } from "@/lib/seo";
 import { siteImages } from "@/src/data/images";
 
 export const metadata = pageMetadata({
-  title: "Mend Beauty Studio Balwyn | Hair, Head Spa, Skin & Beauty",
+  title: "Mend Beauty Studio Deepdene | Hair, Head Spa, Skin & Beauty",
   description:
-    "Mend Beauty Studio in Balwyn offers premium hair, head spa, scalp wellness, Korean skin care, brows, lashes and beauty refresh services in a calm, modern salon space.",
+    "Mend Beauty Studio in Deepdene offers hair, Head Spa, scalp wellness, Korean skin care, body wellness, nails and beauty services in a calm, modern salon space.",
   path: "/",
   absoluteTitle: true,
 });
@@ -177,7 +177,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Careers & Rent a Space"
             title="Join Mend Beauty Studio"
-            body="We are currently welcoming expressions of interest from salon managers, hairdressers, beauty professionals and independent operators looking for a premium space in Balwyn."
+            body="We are currently welcoming expressions of interest from salon managers, hairdressers, beauty professionals and independent operators looking for a premium space in Deepdene."
           />
           <div className="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
             {["Salon Manager", "Hairdresser", "Rent a Chair", "Beauty Room / Treatment Room Rental"].map(
@@ -205,7 +205,7 @@ export default function HomePage() {
         <div>
           <SectionHeading
             eyebrow="Visit Us"
-            title="Find us in Balwyn"
+            title="Find us in Deepdene"
             body="Call, message or visit — we would love to welcome you to the studio."
             align="left"
           />
@@ -215,7 +215,7 @@ export default function HomePage() {
       </section>
 
       <CTABlock
-        eyebrow="Mend Beauty Studio — Balwyn"
+        eyebrow="Mend Beauty Studio — Deepdene"
         heading="Mend your hair. Refresh your skin. Renew your look."
         body="Book your next hair, head spa, skin or beauty visit today."
         actions={[

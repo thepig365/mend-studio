@@ -2,9 +2,10 @@ import { readFileSync } from "node:fs";
 
 const files = {
   locales: readFileSync("lib/i18n.ts", "utf8"),
-  chinesePage: readFileSync("app/zh/[[...slug]]/page.tsx", "utf8"),
+  chinesePage: readFileSync("app/(zh)/zh/[[...slug]]/page.tsx", "utf8"),
   sitemap: readFileSync("app/sitemap.ts", "utf8"),
-  proxy: readFileSync("proxy.ts", "utf8"),
+  englishLayout: readFileSync("app/(en)/layout.tsx", "utf8"),
+  chineseLayout: readFileSync("app/(zh)/zh/layout.tsx", "utf8"),
   seo: readFileSync("lib/seo.ts", "utf8"),
 };
 
@@ -55,8 +56,12 @@ for (const marker of ['"zh-Hans"', '"en-AU"', '"x-default"', "chineseUrl"]) {
   }
 }
 
-if (!files.proxy.includes('requestHeaders.set("x-mend-locale"')) {
-  failures.push("Proxy does not set the HTML locale request header.");
+if (!files.englishLayout.includes('lang="en-AU"')) {
+  failures.push("English root layout does not set the English HTML language.");
+}
+
+if (!files.chineseLayout.includes('lang="zh-Hans"')) {
+  failures.push("Chinese root layout does not set the Chinese HTML language.");
 }
 
 if (failures.length > 0) {

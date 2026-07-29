@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
 import SharePage from "@/components/SharePage";
+import SocialLinks from "@/components/SocialLinks";
 import {
   chineseLocale,
   isChinesePath,
@@ -122,6 +123,7 @@ export default function Footer() {
             {copy.bookAppointment}
           </a>
           <SharePage />
+          <SocialLinks locale={locale} />
         </div>
       </div>
 

@@ -20,11 +20,11 @@ assert.doesNotMatch(
 );
 assert.match(combinedSource, /href(?:=|:)\s*["']\/book["']/);
 
-const bookingPage = readFileSync("app/book/page.tsx", "utf8");
+const bookingPage = readFileSync("app/(en)/book/page.tsx", "utf8");
 assert.match(bookingPage, /redirect\(booking\.url\)/);
 assert.doesNotMatch(bookingPage, /href=\{booking\.url\}/);
 
-const chinesePage = readFileSync("app/zh/[[...slug]]/page.tsx", "utf8");
+const chinesePage = readFileSync("app/(zh)/zh/[[...slug]]/page.tsx", "utf8");
 assert.match(chinesePage, /path === "\/book"\) redirect\(booking\.url\)/);
 
 const i18n = readFileSync("lib/i18n.ts", "utf8");
@@ -46,8 +46,8 @@ assert.match(siteConfig, /structuredOpeningHours/);
 const sitemap = readFileSync("app/sitemap.ts", "utf8");
 assert.match(sitemap, /path: "\/book"/);
 
-const layout = readFileSync("app/layout.tsx", "utf8");
-assert.match(layout, /openingHoursSpecification: site\.structuredOpeningHours/);
+const schema = readFileSync("lib/local-business-schema.ts", "utf8");
+assert.match(schema, /openingHoursSpecification: site\.structuredOpeningHours/);
 
 console.log(
   "MaSe booking checks passed: unified Book/预约 labels, server-side redirects, hidden provider link, provider fallback and approved hours.",

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
+import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import { pricingNote, type ServiceCategory } from "@/lib/services";
 import {
@@ -38,6 +39,7 @@ export default function ServicePage({
   menuOverride,
 }: ServicePageProps) {
   const menu = menuOverride ?? getMenuItemsForCategory(category.slug);
+  const allItems = [...menu.items, ...menu.secondaryItems];
   const primaryGroups = groupBySection(menu.items, "Menu & Pricing");
   const secondaryGroups = groupBySection(
     menu.secondaryItems,
@@ -45,6 +47,11 @@ export default function ServicePage({
   );
   return (
     <>
+      <ServiceStructuredData
+        categoryName={category.title}
+        items={allItems}
+        path={`/services/${category.slug}`}
+      />
       <Hero
         eyebrow={eyebrow}
         title={category.title}
@@ -99,7 +106,7 @@ export default function ServicePage({
 
       <CTABlock
         eyebrow="Ready when you are"
-        heading="Book your visit to Mend Beauty Studio — Balwyn"
+        heading="Book your visit to Mend Beauty Studio — Deepdene"
         body="Call or message us to find a time that suits. Walk-in availability may be limited, so booking ahead is recommended."
         actions={[
           { label: "Book", href: "/book", variant: "light" },

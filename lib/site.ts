@@ -1,6 +1,6 @@
 export const site = {
   name: "Mend Beauty Studio",
-  locationName: "Mend Beauty Studio — Balwyn",
+  locationName: "Mend Beauty Studio — Deepdene",
   tagline: "Mend your hair. Refresh your skin. Renew your look.",
   positioning: "Hair • Head Spa • Skin • Body • Brows & Lashes",
   phone: "0499 66 88 99",
@@ -11,6 +11,10 @@ export const site = {
   address: "74 Whitehorse Road, Deepdene VIC 3103, Australia",
   mapsHref:
     "https://www.google.com/maps/search/?api=1&query=74%20Whitehorse%20Road%2C%20Deepdene%20VIC%203103%2C%20Australia",
+  socialProfiles: {
+    facebook: "https://www.facebook.com/mendbeauty365",
+    instagram: "https://www.instagram.com/mendbeauty365/",
+  },
   // Structured components of the address above, for JSON-LD only. Values must always
   // match the `address` string exactly — do not edit one without the other.
   structuredAddress: {

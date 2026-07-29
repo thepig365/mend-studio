@@ -8,12 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "type-check": "tsc --noEmit",
-    "test": "npm run check:domain && npm run check:functionality && npm run check:booking && npm run check:i18n && npm run check:anna-services",
+    "test": "npm run check:domain && npm run check:functionality && npm run check:booking && npm run check:i18n && npm run check:anna-services && npm run check:growth-seo",
     "check:domain": "node scripts/check-domain-migration.mjs",
     "check:functionality": "node scripts/check-customer-functions.mjs",
     "check:booking": "node scripts/check-mase-booking.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
-    "check:anna-services": "node scripts/check-anna-services.mjs"
+    "check:anna-services": "node scripts/check-anna-services.mjs",
+    "check:growth-seo": "node scripts/check-growth-seo.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

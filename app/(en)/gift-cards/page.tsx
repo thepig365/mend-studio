@@ -11,7 +11,7 @@ import { siteImages } from "@/src/data/images";
 export const metadata = pageMetadata({
   title: "Gift Cards",
   description:
-    "Give the gift of refreshment — Mend Beauty Studio gift cards for head spa, facials, body care, hair repair and beauty refresh experiences in Balwyn.",
+    "Give the gift of refreshment — Mend Beauty Studio gift cards for Head Spa, facials, body care, hair repair and beauty services in Deepdene.",
   path: "/gift-cards",
 });
 
