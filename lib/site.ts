@@ -66,10 +66,8 @@ export const servicesNav = [
   { label: "Skin Aesthetics", href: "/services/skin-facial" },
   { label: "Body Wellness", href: "/services/body-care" },
   { label: "Men’s Grooming", href: "/services/mens-grooming" },
-  {
-    label: "Nails & Semi-Permanent Beauty",
-    href: "/services/nails-semi-permanent",
-  },
+  { label: "Nails", href: "/services/nails" },
+  { label: "Semi-Permanent Beauty", href: "/services/semi-permanent" },
 ];
 
 export const whyMend = [

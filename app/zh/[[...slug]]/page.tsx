@@ -31,7 +31,10 @@ type ChinesePageProps = {
 };
 
 const annaServiceSlugs = new Set(
-  zhAnnaServiceCategories.map((category) => category.slug),
+  [
+    ...zhAnnaServiceCategories.map((category) => category.slug),
+    "nails-semi-permanent",
+  ],
 );
 const serviceSlugs = new Set([
   ...zhServiceCategories.map((category) => category.slug),
@@ -285,6 +288,10 @@ function ChineseServices() {
 }
 
 function ChineseServiceDetail({ slug }: { slug: string }) {
+  if (slug === "nails-semi-permanent") {
+    return <ChineseNailsSemiPermanentIndex />;
+  }
+
   const isAnnaCategory = annaServiceSlugs.has(slug);
   const category = isAnnaCategory
     ? getZhAnnaCategory(slug)
@@ -370,6 +377,59 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         actions={[
           { label: "预约", href: "/zh/book", variant: "light" },
           { label: "联系我们", href: "/zh/contact", variant: "outline-light" },
+        ]}
+      />
+    </>
+  );
+}
+
+function ChineseNailsSemiPermanentIndex() {
+  const categories = [
+    getZhCategory("nails"),
+    getZhCategory("semi-permanent"),
+  ];
+
+  return (
+    <>
+      <Hero
+        eyebrow="服务项目"
+        title="美甲与半永久美容"
+        body="现已分为两个独立类别。请选择类别查看全部现有项目、价格、时长及预约要求。"
+        actions={[
+          { label: "美甲", href: "/zh/services/nails", variant: "gold" },
+          {
+            label: "半永久美容",
+            href: "/zh/services/semi-permanent",
+            variant: "outline",
+          },
+        ]}
+      />
+      <section className="wrap py-16 sm:py-24">
+        <div className="grid gap-6 sm:grid-cols-2">
+          {categories.map((category) => (
+            <ServiceCard
+              key={category.slug}
+              title={category.cardTitle}
+              description={category.excerpt}
+              href={`/zh/services/${category.slug}`}
+              image={category.image}
+              imageAlt={category.imageAlt}
+              linkLabel="查看项目"
+            />
+          ))}
+        </div>
+      </section>
+      <CTABlock
+        eyebrow="Mend Beauty Studio"
+        heading="请选择所需服务类别"
+        body="美甲与半永久美容保持独立分类，所有原有项目及咨询要求均予保留。"
+        actions={[
+          { label: "美甲", href: "/zh/services/nails", variant: "light" },
+          {
+            label: "半永久美容",
+            href: "/zh/services/semi-permanent",
+            variant: "outline-light",
+          },
         ]}
       />
     </>

@@ -65,5 +65,6 @@ pending exact MaSe item mapping:
 - Deep Sleep Massage
 - MEND Signature Body Ritual
 
-The protected Men’s Grooming and Nails & Semi-Permanent Beauty entries retain
-their existing central booking behavior.
+The protected Men’s Grooming, Nails and Semi-Permanent Beauty entries retain
+their existing central booking behavior. Nails and Semi-Permanent Beauty are
+presented as separate website categories without changing any existing item.
