@@ -19,6 +19,12 @@ Access uses Google OAuth and is restricted to:
 
 `hello@mendbeauty.com.au`
 
+Google is given an account-selection hint for the authorised identity and the
+`mendbeauty.com.au` Workspace domain. The server still verifies the exact,
+Google-verified email address; the hint is not the access-control boundary.
+Rejected or incomplete sign-in attempts return a clear message on the login
+page instead of silently appearing to restart the flow.
+
 The website never receives or stores the Google password. Configure these
 values only as server-side Vercel environment variables:
 

@@ -29,11 +29,16 @@ const [
 assert.match(auth, /hello@mendbeauty\.com\.au/);
 assert.match(auth, /email_verified/);
 assert.match(auth, /maxAge: 8 \* 60 \* 60/);
+assert.match(auth, /prompt: "select_account"/);
+assert.match(auth, /login_hint: marketingPortalEmail/);
+assert.match(auth, /hd: marketingPortalEmail\.split\("@"\)\[1\]/);
 assert.match(footer, /href="\/marketing"/);
 assert.match(footer, /Marketing Portal/);
 assert.match(header, /showLanguageSwitch = !pathname\.startsWith\("\/marketing"\)/);
 assert.match(header, /\{showLanguageSwitch \? \(/);
 assert.match(login, /Google verifies the account/);
+assert.match(login, /role="alert"/);
+assert.match(login, /Access was not granted/);
 assert.match(portal, /redirect\("\/marketing\/login"\)/);
 assert.match(portal, /AI can[\s\S]*cannot approve, publish/);
 assert.match(workspace, /does not transmit or[\s\S]*save the text/);
