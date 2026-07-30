@@ -7,6 +7,22 @@ import {
 } from "@/auth";
 import { signInToMarketingPortal } from "../actions";
 
+type MarketingLoginPageProps = {
+  searchParams: Promise<{
+    error?: string;
+  }>;
+};
+
+const marketingLoginErrors: Record<string, string> = {
+  AccessDenied:
+    "Access was not granted. Choose hello@mendbeauty.com.au and try again.",
+  OAuthAccountNotLinked:
+    "This Google account is not linked to the authorised Marketing Portal identity.",
+  OAuthCallback:
+    "Google returned an incomplete sign-in response. Please try again.",
+  OAuthSignin: "Google sign-in could not be started. Please try again.",
+};
+
 export const metadata: Metadata = {
   title: "Marketing Portal Sign In",
   description: "Private marketing workspace for Mend Beauty Studio.",
@@ -17,7 +33,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function MarketingLoginPage() {
+export default async function MarketingLoginPage({
+  searchParams,
+}: MarketingLoginPageProps) {
+  const { error } = await searchParams;
   const configured = isMarketingAuthConfigured();
   const session = configured ? await auth() : null;
 
@@ -49,6 +68,16 @@ export default async function MarketingLoginPage() {
             Google password.
           </p>
         </div>
+
+        {error ? (
+          <div
+            role="alert"
+            className="mt-6 rounded-2xl border border-gold/50 bg-gold/10 p-5 text-sm leading-relaxed text-charcoal"
+          >
+            {marketingLoginErrors[error] ||
+              "Google sign-in could not be completed. Please try again with the authorised account."}
+          </div>
+        ) : null}
 
         {configured ? (
           <form action={signInToMarketingPortal} className="mt-8">

@@ -6,7 +6,17 @@ export const marketingPortalEmail =
   "hello@mendbeauty.com.au";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [Google],
+  providers: [
+    Google({
+      authorization: {
+        params: {
+          prompt: "select_account",
+          login_hint: marketingPortalEmail,
+          hd: marketingPortalEmail.split("@")[1],
+        },
+      },
+    }),
+  ],
   pages: {
     signIn: "/marketing/login",
     error: "/marketing/login",
