@@ -23,6 +23,7 @@ const routes: { path: string; priority: number }[] = [
   { path: "/contact", priority: 0.6 },
   { path: "/our-story", priority: 0.6 },
   { path: "/policies", priority: 0.3 },
+  { path: "/team/mejin-shick", priority: 0.6 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

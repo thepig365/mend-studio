@@ -1,4 +1,5 @@
 import ServicePage from "@/components/ServicePage";
+import MejinProfileFeature from "@/components/MejinProfileFeature";
 import { getAnnaCategory } from "@/lib/anna-services";
 import { pageMetadata } from "@/lib/seo";
 import { getAnnaMenuItemsForCategory } from "@/src/data/serviceMenu";
@@ -17,6 +18,7 @@ export default function HairServicesPage() {
       category={category}
       subtitle="Scalp Assessment · Cutting · Colour · Perm Design"
       menuOverride={getAnnaMenuItemsForCategory("hair")}
+      afterMenuContent={<MejinProfileFeature locale="en-AU" />}
     />
   );
 }
