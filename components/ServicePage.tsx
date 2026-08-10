@@ -14,6 +14,7 @@ type ServicePageProps = {
   eyebrow?: string;
   subtitle?: string;
   children?: ReactNode;
+  afterMenuContent?: ReactNode;
   hidePriceList?: boolean;
   menuOverride?: {
     items: MenuServiceItem[];
@@ -35,6 +36,7 @@ export default function ServicePage({
   eyebrow = "Services",
   subtitle,
   children,
+  afterMenuContent,
   hidePriceList = false,
   menuOverride,
 }: ServicePageProps) {
@@ -103,6 +105,8 @@ export default function ServicePage({
           </a>
         </div>
       </section>
+
+      {afterMenuContent}
 
       <CTABlock
         eyebrow="Ready when you are"

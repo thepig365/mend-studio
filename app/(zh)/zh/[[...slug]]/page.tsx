@@ -8,6 +8,7 @@ import CTABlock from "@/components/CTABlock";
 import GalleryPreview from "@/components/GalleryPreview";
 import Hero from "@/components/Hero";
 import HomeHero from "@/components/HomeHero";
+import MejinProfileFeature from "@/components/MejinProfileFeature";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceStructuredData from "@/components/ServiceStructuredData";
@@ -377,6 +378,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
           </Link>
         </div>
       </section>
+      {slug === "hair" ? <MejinProfileFeature locale="zh-Hans" /> : null}
       <CTABlock
         eyebrow="准备好了吗？"
         heading="预约到访 Mend Beauty Studio"

@@ -42,6 +42,7 @@ export const localizedRoutes = [
   "/contact",
   "/our-story",
   "/policies",
+  "/team/mejin-shick",
 ] as const;
 
 export const ui = {
