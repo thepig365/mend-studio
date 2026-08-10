@@ -2,9 +2,9 @@ import MejinProfilePage from "@/components/MejinProfilePage";
 import { chinesePageMetadata } from "@/lib/seo";
 
 export const metadata = chinesePageMetadata({
-  title: "Mejin Shick｜MEND 招牌发型师",
+  title: "Mejin Shick｜资深设计师",
   description:
-    "认识 MEND 招牌发型师 Mejin Shick。她拥有超过二十五年的美发经验，擅长剪发、染发、拉直、发型改造及注重头皮健康的头发护理。",
+    "Mejin Shick 拥有超过 25 年专业美发经验，擅长自然效果拉直、创意染发、个性化发色设计及短发剪裁。",
   path: "/team/mejin-shick",
 });
 

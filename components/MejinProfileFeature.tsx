@@ -18,14 +18,14 @@ export default function MejinProfileFeature({ locale }: { locale: Locale }) {
         />
         <div>
           <p className="eyebrow">
-            {isChinese ? "认识我们的招牌发型师" : "Meet our Signature Hairdresser"}
+            {isChinese ? "认识我们的资深设计师" : "Meet our Signature Hairdresser"}
           </p>
           <h2 className="mt-3 font-display text-3xl font-medium text-charcoal sm:text-4xl">
             Mejin Shick
           </h2>
           <p className="mt-5 max-w-2xl leading-relaxed text-cocoa">
             {isChinese
-              ? "超过二十五年的美发经验，擅长剪发、染发、拉直、发型改造及注重头皮健康的头发护理。"
+              ? "拥有超过 25 年专业美发经验，擅长自然效果拉直、创意染发、个性化发色设计及短发剪裁。"
               : "More than 25 years of hairdressing experience, with strengths in cutting, colour, straightening, transformations and scalp-aware hair care."}
           </p>
           <Link
