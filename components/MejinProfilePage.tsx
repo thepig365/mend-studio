@@ -16,7 +16,7 @@ export default function MejinProfilePage({ locale }: { locale: Locale }) {
     mainEntity: {
       "@type": "Person",
       name: "Mejin Shick",
-      jobTitle: isChinese ? "招牌发型师" : "Signature Hairdresser",
+      jobTitle: isChinese ? "资深设计师" : "Signature Hairdresser",
       worksFor: {
         "@type": "BeautySalon",
         name: "Mend Beauty Studio",
@@ -108,34 +108,27 @@ export default function MejinProfilePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="bg-sand py-16 sm:py-20">
-        <div className="wrap">
-          <div className="mx-auto max-w-5xl text-center">
-            <p className="eyebrow">{copy.galleryEyebrow}</p>
-            <h2 className="mt-3 font-display text-3xl font-medium text-charcoal sm:text-4xl">
-              {copy.galleryTitle}
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-cocoa">
-              {copy.galleryIntroduction}
-            </p>
-          </div>
-          <div className="mx-auto mt-10 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {mejinImages.gallery.map((image, index) => (
-              <figure key={image} className="rounded-[2rem] bg-white p-3">
+      {isChinese ? (
+        <section className="bg-sand py-16 sm:py-20">
+          <div className="wrap">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="eyebrow">资深设计师介绍</p>
+              <h2 className="mt-3 font-display text-3xl font-medium text-charcoal sm:text-4xl">
+                Mejin Shick｜资深设计师
+              </h2>
+              <div className="mt-10 rounded-[2rem] bg-white p-3 shadow-xl shadow-charcoal/10">
                 <ResponsiveImage
-                  src={image}
-                  alt={copy.galleryCaptions[index]}
-                  aspect="aspect-[4/5]"
+                  src={mejinImages.chinesePoster}
+                  alt="Mejin Shick 资深设计师中文介绍海报"
+                  aspect="aspect-[2/3]"
                   rounded="rounded-[1.5rem]"
+                  sizes="(max-width: 768px) 100vw, 768px"
                 />
-                <figcaption className="px-3 pb-2 pt-4 text-sm leading-relaxed text-cocoa">
-                  {copy.galleryCaptions[index]}
-                </figcaption>
-              </figure>
-            ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <CTABlock
         eyebrow={copy.ctaEyebrow}

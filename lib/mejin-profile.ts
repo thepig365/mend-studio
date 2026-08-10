@@ -15,10 +15,6 @@ export type MejinProfileCopy = {
   journeyTitle: string;
   journeyIntroduction: string;
   career: string[];
-  galleryEyebrow: string;
-  galleryTitle: string;
-  galleryIntroduction: string;
-  galleryCaptions: string[];
   ctaEyebrow: string;
   ctaTitle: string;
   ctaBody: string;
@@ -27,13 +23,8 @@ export type MejinProfileCopy = {
 };
 
 export const mejinImages = {
-  portrait: "/images/team/mejin-shick/mejin-portrait.jpeg",
-  gallery: [
-    "/images/team/mejin-shick/creative-colour.jpeg",
-    "/images/team/mejin-shick/warm-short-style.jpeg",
-    "/images/team/mejin-shick/textured-short-style.jpeg",
-    "/images/team/mejin-shick/copper-short-style.jpeg",
-  ],
+  portrait: "/images/team/mejin-shick/mejin-professional-portrait.png",
+  chinesePoster: "/images/team/mejin-shick/mejin-chinese-profile-poster.png",
 } as const;
 
 export const mejinProfile: Record<Locale, MejinProfileCopy> = {
@@ -74,16 +65,6 @@ export const mejinProfile: Record<Locale, MejinProfileCopy> = {
       "2007–2017 — Opened and operated two hair salons in Malaysia.",
       "From 2017 — Continued her career in Melbourne, including roles at Two Birds Salon and Just Cuts.",
     ],
-    galleryEyebrow: "Personal style",
-    galleryTitle: "Colour, shape and self-expression",
-    galleryIntroduction:
-      "A look at Mejin’s personal expression through creative colour and versatile short-hair styling.",
-    galleryCaptions: [
-      "Creative multi-tone colour with a soft, expressive finish.",
-      "A warm-toned short style designed for easy everyday wear.",
-      "Soft texture and movement through a versatile short cut.",
-      "Copper tones paired with a clean, shaped short style.",
-    ],
     ctaEyebrow: "Book with Mejin",
     ctaTitle: "Start with an honest hair consultation",
     ctaBody:
@@ -92,11 +73,11 @@ export const mejinProfile: Record<Locale, MejinProfileCopy> = {
     hairLabel: "View Hair Services",
   },
   "zh-Hans": {
-    eyebrow: "招牌发型师",
-    title: "认识 Mejin Shick",
+    eyebrow: "资深设计师",
+    title: "Mejin Shick｜资深设计师",
     audience: "在 Deepdene 为您提供剪发、染发、拉直及注重头皮健康的美发服务",
     introduction:
-      "Mejin 拥有超过二十五年的美发经验，重视诚实沟通与实用的头发、头皮护理知识，帮助客人选择适合自己、喜欢并容易日常打理的发型。",
+      "拥有超过 25 年专业美发经验，Mejin 始终相信，真正适合的发型，不只是当下好看，更应该与一个人的脸型、气质、生活方式及日常打理习惯自然融合。",
     expertiseEyebrow: "专业特长",
     expertiseTitle: "Mejin 擅长的项目",
     specialties: [
@@ -108,12 +89,12 @@ export const mejinProfile: Record<Locale, MejinProfileCopy> = {
       "诚实、清晰并容易理解的咨询",
     ],
     approachEyebrow: "服务理念",
-    approachTitle: "丰富经验，加上诚实实用的建议",
+    approachTitle: "真正适合你的设计，应该自然融入你的生活",
     paragraphs: [
-      "Mejin 自 2000 年进入美发行业，曾在吉隆坡、新加坡及墨尔本工作。她的经历包括资深发型师岗位、头皮护理培训，以及多年经营自己发廊的经验。",
-      "她特别擅长头发拉直、自然效果拉直、创意染发、头皮与头发护理，以及根据客人需要进行个性化发型改造。",
-      "Mejin 认为，客人应该真正了解自己的头发，而不只是被推销一项服务。她会用简单易懂的方式解释头发与头皮状况，并分享实用的居家护理方法，帮助客人在两次到店之间维持理想效果。",
-      "她的服务理念很简单：认真聆听、诚实说明可实现的效果，并对自己的服务质量负责。",
+      "多年一线经验，让她在剪发、染发、拉直、发型改造以及头发与头皮护理方面积累了扎实而全面的专业能力。她尤其擅长自然效果拉直、创意染发、个性化发色设计及短发剪裁，并会结合客人的发质、发量、脸型与个人风格，找到真正适合且容易日常打理的设计方向。",
+      "Mejin 同样重视头发与头皮的长期健康，在追求造型与质感的同时，也会根据实际情况给予专业的护理及居家养护建议。",
+      "在沟通上，她更愿意先倾听客人的需求，不盲目追逐潮流，也不会为了改变而改变，而是在专业建议与个人喜好之间找到最舒服的平衡。",
+      "她希望每一次改变，都不是把你变成另一个人，而是让你看起来依然是自己，却更加自信、有质感。",
     ],
     journeyEyebrow: "专业历程",
     journeyTitle: "超过二十五年的美发经验",
@@ -126,16 +107,6 @@ export const mejinProfile: Record<Locale, MejinProfileCopy> = {
       "2005–2007 年 — 在新加坡担任资深发型师。",
       "2007–2017 年 — 在马来西亚开设并经营两家发廊。",
       "2017 年起 — 在墨尔本继续发展，包括曾任职于 Two Birds Salon 与 Just Cuts。",
-    ],
-    galleryEyebrow: "个人风格",
-    galleryTitle: "发色、轮廓与个性表达",
-    galleryIntroduction:
-      "从创意发色到多种短发造型，展现 Mejin 对色彩与个人风格的理解。",
-    galleryCaptions: [
-      "柔和而富有表现力的多色创意染发。",
-      "温暖发色搭配容易日常打理的短发造型。",
-      "通过层次与纹理，让短发呈现自然动感。",
-      "铜色调搭配干净利落的短发轮廓。",
     ],
     ctaEyebrow: "预约 Mejin",
     ctaTitle: "从一次诚实的美发咨询开始",
