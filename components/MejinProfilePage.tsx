@@ -96,14 +96,25 @@ export default function MejinProfilePage({ locale }: { locale: Locale }) {
             </p>
           </div>
           <ol className="space-y-4">
-            {copy.career.map((highlight) => (
-              <li
-                key={highlight}
-                className="rounded-2xl border border-beige bg-sand px-6 py-5 text-sm leading-relaxed text-cocoa"
-              >
-                {highlight}
-              </li>
-            ))}
+            {copy.career.map((highlight) => {
+              const [heading, detail] = highlight.split("\n");
+
+              return (
+                <li
+                  key={highlight}
+                  className="rounded-2xl border border-beige bg-sand px-6 py-5 text-sm leading-relaxed text-cocoa"
+                >
+                  {detail ? (
+                    <>
+                      <p className="font-medium text-charcoal">{heading}</p>
+                      <p className="mt-2">{detail}</p>
+                    </>
+                  ) : (
+                    highlight
+                  )}
+                </li>
+              );
+            })}
           </ol>
         </div>
       </section>
