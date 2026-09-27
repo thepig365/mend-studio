@@ -5,6 +5,7 @@ import { siteImages, signatureImages, galleryStockImages } from "@/src/data/imag
 export type ServiceItem = {
   id?: string;
   imageId?: string;
+  hideImage?: boolean;
   name: string;
   nameZh?: string;
   price?: string;

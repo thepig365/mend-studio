@@ -88,6 +88,26 @@ for (const item of posterItems) {
   assert(item.price.includes("$"), `${item.id} has an invalid price`);
 }
 
+for (const [serviceId, imageId] of [
+  ["hair-reduction-upper-lip", "hair-reduction-upper-lip"],
+  ["hair-reduction-underarms", "hair-reduction-underarms"],
+  ["hair-reduction-full-face", "hair-reduction-full-face"],
+  ["hair-reduction-half-arms-lower-legs", "hair-reduction-half-arms-lower-legs"],
+  ["hair-reduction-full-arms-legs", "hair-reduction-full-arms-legs"],
+  ["hair-reduction-full-back", "body-care-head-spa-package"],
+]) {
+  assert(
+    posterItems.some((item) => item.id === serviceId && item.imageId === imageId),
+    `Incorrect Hair Reduction image mapping: ${serviceId}`,
+  );
+}
+assert.match(
+  anna,
+  /item\("hair-reduction-bikini-line"[\s\S]*?\{ hideImage: true \}\)/,
+  "Bikini Line must not expose an image",
+);
+assert.match(row, /const hasImage = !item\.hideImage/);
+
 assert.match(anna, /advanced devices, injectables and skin boosters remain withheld/i);
 assert.match(anna, /Chinese source says 全手臂／全小腿/);
 
@@ -181,7 +201,7 @@ const protectedHashes = {
   "src/data/images.ts":
     "b87774da0172663b940c9de708a999d18553b3c966ad4c85d2796aae350a2462",
   "src/data/serviceImages.ts":
-    "a5128ed1eee8a4df2f48aa7b2efe32cd5b03c9cda2f64c7087a3548691df4b5f",
+    "a1359168fe4e2f29c6394963d6ea9c446c7b1fd337416c9f375d4bee3e4d766e",
   "components/ServiceCard.tsx":
     "16ef9183493012406ba231d85581902fce3891011794f37b325e9873dee6cb30",
   "src/components/ServiceImagePreview.tsx":
@@ -196,11 +216,21 @@ const protectedHashes = {
     "51c06ac30c1afc416f0094fe17038e4e9309ae9d150582ed6b8a623b167b3136",
   "public/images/services/headspa-signature-ritual-mend.webp":
     "54810586a7aac2cbac3506fd65069ee3ccb8944d3338dd1a4aff58a67e436ef1",
+  "public/images/services/hair-reduction-upper-lip.webp":
+    "bae11e3c4f6728de205c63de6ee3047079c5211822c917b796df36e5b4f8a743",
+  "public/images/services/hair-reduction-underarms.webp":
+    "d8ec53f07a1e7a6ccc381a9ea846add9a3d9ea3892ec60f07ab0448bcda61205",
+  "public/images/services/hair-reduction-full-face.webp":
+    "c2469c29aabc823f22d551af0f3205782085ec54ae8ef7906f63d0915ad96aff",
+  "public/images/services/hair-reduction-half-arms-lower-legs.webp":
+    "a5b26d8010d122116fabc757722e634b4c86a8d9c254f4a3d5d85340aa0c40e9",
+  "public/images/services/hair-reduction-full-arms-legs.webp":
+    "8145450e593e79abd80e30ec00e806184d3555e9041c14461f81edba2d3146b5",
 };
 for (const [path, expected] of Object.entries(protectedHashes)) {
   assert.equal(hash(path), expected, `Protected image/presentation file changed: ${path}`);
 }
 
 console.log(
-  "Poster update checks passed: 8 public categories, 45 source-poster declarations, exact bilingual values, membership wording and gifts, distinct hair-reduction image, QR placements, protected original assets and MaSe booking handoff.",
+  "Poster update checks passed: 8 public categories, 45 source-poster declarations, exact bilingual values, original Hair Reduction imagery with Bikini Line hidden, membership wording and gifts, QR placements, protected assets and MaSe booking handoff.",
 );

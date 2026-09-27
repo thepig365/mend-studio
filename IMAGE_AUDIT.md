@@ -9,6 +9,23 @@ price and time. Weak, mismatched, misleading, low-quality, off-brand or
 too-generic images were actively replaced with better Pexels/Unsplash photos —
 not merely re-labelled.
 
+### Hair Reduction update — 27 September 2026
+
+The poster-led Hair Reduction menu was reviewed separately after publication.
+Five mismatched shared stock photos were replaced with original images created
+for Mend Beauty Studio and stored locally under `/public/images/services/`:
+
+- Upper Lip
+- Underarms
+- Full Face
+- Arms (Half) / Lower Legs
+- Arms (Full) / Full Legs
+
+The Bikini Line item intentionally has no image or image interaction. The Full
+Back item retains its existing approved image at the owner's direction. The new
+images contain no third-party branding, text or watermark and do not depend on
+an external image CDN.
+
 ---
 
 ## 1. Totals
@@ -127,7 +144,7 @@ real Mend photography (currently shared or category-level photos):
 
 ## 5. Confirmations
 
-- [x] **All images are from Pexels or Unsplash only.** Every entry in `serviceImages.ts` is built by the `pexels()` or `unsplash()` helper with a pexels.com / images.unsplash.com source URL; files are self-hosted under `/public/images/services/`.
+- [x] **Images are properly sourced and self-hosted.** Stock entries use Pexels or Unsplash; review-approved original Mend website imagery uses the `mendOriginal()` helper. All files are stored under `/public/images/services/`.
 - [x] **No competitor website images were used.** All photos sourced exclusively from the two free stock libraries above; none show identifiable salon names or competitor signage (two studio-branded photos found during audit were replaced for this exact reason).
 - [x] **All images have meaningful alt text.** Every entry carries a descriptive, service-specific `alt` written for screen readers (verified — no empty or filename-style alts).
 - [x] **Desktop hover preview works.** Verified on the production build: hovering a service row shows the floating image preview card; it dismisses on mouse-out and when the modal opens.

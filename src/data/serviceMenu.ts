@@ -31,6 +31,7 @@ export type ServiceItem = {
   detailsZh?: string[];
   signature?: boolean;
   image: ServiceImage;
+  hideImage?: boolean;
   bookingNote?: string;
 };
 
@@ -221,6 +222,7 @@ function buildAnnaItems(
       detailsZh: item.detailsZh,
       signature: item.signature,
       image: getServiceImage(imageId),
+      hideImage: item.hideImage,
       // MaSe does not expose a verified per-service URL mapping in this
       // repository. Every row therefore uses the existing server-side /book
       // handoff to the general MaSe booking page; no URL is invented here.

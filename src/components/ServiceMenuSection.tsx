@@ -28,8 +28,8 @@ export default function ServiceMenuSection({
       )}
       <p className="mb-4 text-xs leading-relaxed text-taupe">
         {locale === "zh-Hans"
-          ? "将鼠标移到服务上，或轻触服务，即可查看参考图片。"
-          : "Hover over or tap a service to see what it looks like."}
+          ? "将鼠标移到带图片的服务上，或轻触服务，即可查看参考图片。"
+          : "Hover over or tap a service with an image to preview it."}
       </p>
       <ul className="divide-y divide-beige/70">
         {items.map((item) => (

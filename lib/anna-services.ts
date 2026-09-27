@@ -1,6 +1,6 @@
 import { getCategory, type ServiceCategory, type ServiceItem } from "@/lib/services";
 
-type ItemOptions = Pick<ServiceItem, "description" | "descriptionZh" | "section" | "sectionZh" | "details" | "detailsZh" | "signature">;
+type ItemOptions = Pick<ServiceItem, "description" | "descriptionZh" | "section" | "sectionZh" | "details" | "detailsZh" | "signature" | "hideImage">;
 
 function item(id: string, imageId: string, name: string, nameZh: string, price: string, duration?: string, options: ItemOptions = {}): ServiceItem {
   return { id, imageId, name, nameZh, price, duration, ...options };
@@ -105,12 +105,12 @@ const hairReduction: ServiceCategory = {
   intro: "Hair-reduction prices transcribed from the supplied menu. The disputed full-arm/full-leg wording is clearly flagged for confirmation.",
   image: "/images/hair-reduction-menu.jpg", imageAlt: "MEND Hair Reduction service menu",
   items: [
-    item("hair-reduction-upper-lip", "brow-shape", "Upper Lip", "唇部", "$39 single · $199 / 6 sessions", "15 mins"),
-    item("hair-reduction-underarms", "brow-shape", "Underarms", "腋下", "$59 single · $299 / 6 sessions", "15 mins"),
-    item("hair-reduction-full-face", "korean-lash-lift-tint", "Full Face", "全脸", "$99 single · $499 / 6 sessions", "30 mins"),
-    item("hair-reduction-half-arms-lower-legs", "body-scrub", "Arms (Half) / Lower Legs", "半手臂／小腿", "$119 single · $599 / 6 sessions", "45 mins"),
-    item("hair-reduction-bikini-line", "body-scrub", "Bikini Line", "比基尼线", "$119 single · $599 / 6 sessions", "30 mins"),
-    item("hair-reduction-full-arms-legs", "body-scrub-hydration", "Arms (Full) / Full Legs", "全手臂／全小腿", "$139 single · $699 / 6 sessions", "60 mins"),
+    item("hair-reduction-upper-lip", "hair-reduction-upper-lip", "Upper Lip", "唇部", "$39 single · $199 / 6 sessions", "15 mins"),
+    item("hair-reduction-underarms", "hair-reduction-underarms", "Underarms", "腋下", "$59 single · $299 / 6 sessions", "15 mins"),
+    item("hair-reduction-full-face", "hair-reduction-full-face", "Full Face", "全脸", "$99 single · $499 / 6 sessions", "30 mins"),
+    item("hair-reduction-half-arms-lower-legs", "hair-reduction-half-arms-lower-legs", "Arms (Half) / Lower Legs", "半手臂／小腿", "$119 single · $599 / 6 sessions", "45 mins"),
+    item("hair-reduction-bikini-line", "body-scrub", "Bikini Line", "比基尼线", "$119 single · $599 / 6 sessions", "30 mins", { hideImage: true }),
+    item("hair-reduction-full-arms-legs", "hair-reduction-full-arms-legs", "Arms (Full) / Full Legs", "全手臂／全小腿", "$139 single · $699 / 6 sessions", "60 mins"),
     item("hair-reduction-full-back", "body-care-head-spa-package", "Full Back", "全后背", "$139 single · $699 / 6 sessions", "60 mins"),
   ],
   notes: ["Owner confirmation required: the Chinese source says 全手臂／全小腿, while the English source says Arms (Full) / Full Legs. No interpretation has been made.", "Suitability, contraindications and expected results must be discussed before treatment. No universal suitability or guaranteed outcome is promised."],
