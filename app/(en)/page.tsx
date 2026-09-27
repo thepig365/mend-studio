@@ -6,8 +6,10 @@ import CTABlock from "@/components/CTABlock";
 import GalleryPreview from "@/components/GalleryPreview";
 import ContactCard from "@/components/ContactCard";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import QrCodePanel from "@/components/QrCodePanel";
 import { site, whyMend } from "@/lib/site";
-import { featuredServices, signatureExperiences, galleryImages } from "@/lib/services";
+import { signatureExperiences, galleryImages } from "@/lib/services";
+import { annaServiceCategories } from "@/lib/anna-services";
 import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
 import { siteImages } from "@/src/data/images";
@@ -58,11 +60,18 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="What We Do"
             title="Our Services"
-            body="Six considered service areas, one calm and elegant studio."
+            body="Five newly updated menu groups, alongside our existing grooming, nail and semi-permanent beauty offerings."
           />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredServices.map((service) => (
-              <ServiceCard key={service.title} {...service} />
+            {annaServiceCategories.slice(0, 5).map((service) => (
+              <ServiceCard
+                key={service.slug}
+                title={service.cardTitle}
+                description={service.excerpt}
+                href={`/services/${service.slug}`}
+                image={service.image}
+                imageAlt={service.imageAlt}
+              />
             ))}
           </div>
           <div className="mt-10 text-center">
@@ -153,15 +162,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. Memberships coming soon */}
+      {/* 8. Memberships */}
       <section className="wrap pb-16 sm:pb-24">
         <div className="rounded-[2.5rem] border border-beige/70 bg-white/60 px-8 py-14 text-center sm:px-14">
-          <p className="eyebrow">Coming Soon</p>
+          <p className="eyebrow">Membership Recharge Plan</p>
           <h2 className="mx-auto mt-3 max-w-xl font-display text-3xl font-medium leading-tight text-charcoal sm:text-4xl">
-            Memberships Coming Soon
+            More rewards, with the details kept clear
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-cocoa">
-            Monthly head spa, skin glow and beauty maintenance plans will be available soon.
+            Compare the advertised top-up tiers, bonus credit and gifted-service values. Final terms are clearly marked for confirmation.
           </p>
           <div className="mt-7">
             <Link href="/memberships" className="btn-outline">
@@ -212,6 +221,10 @@ export default function HomePage() {
           <CTABlockInline />
         </div>
         <ContactCard showHours />
+      </section>
+
+      <section className="wrap pb-16 sm:pb-24">
+        <QrCodePanel />
       </section>
 
       <CTABlock

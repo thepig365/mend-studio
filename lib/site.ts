@@ -62,13 +62,10 @@ export const mainNav = [
 
 export const servicesNav = [
   { label: "Hair Atelier", href: "/services/hair" },
-  {
-    label: "Hair & Scalp Recovery",
-    href: "/services/hair-scalp-recovery",
-  },
   { label: "Scalp & Mind Wellness", href: "/services/head-spa" },
   { label: "Skin Aesthetics", href: "/services/skin-facial" },
-  { label: "Body Wellness", href: "/services/body-care" },
+  { label: "Eastern Wellness & Therapy", href: "/services/body-care" },
+  { label: "Hair Reduction", href: "/services/hair-reduction" },
   { label: "Men’s Grooming", href: "/services/mens-grooming" },
   { label: "Nails", href: "/services/nails" },
   { label: "Semi-Permanent Beauty", href: "/services/semi-permanent" },

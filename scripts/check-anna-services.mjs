@@ -14,13 +14,20 @@ const row = read("src/components/ServiceItem.tsx");
 const imageRegistry = read("src/data/serviceImages.ts");
 const splitPage = read("app/(en)/services/nails-semi-permanent/page.tsx");
 const i18n = read("lib/i18n.ts");
+const qrPanel = read("components/QrCodePanel.tsx");
+const qrData = read("lib/qr-codes.ts");
+const englishHome = read("app/(en)/page.tsx");
+const englishContact = read("app/(en)/contact/page.tsx");
+const footer = read("components/Footer.tsx");
+const memberships = read("lib/memberships.ts");
+const membershipPage = read("components/MembershipPlans.tsx");
 
 const categoryReferences = [
   "hairAtelier",
-  "hairScalpRecovery",
-  "scalpMindWellness",
   "skinAesthetics",
+  "scalpMindWellness",
   "bodyWellness",
+  "hairReduction",
   "legacyMens",
   "legacyNails",
   "legacySemiPermanent",
@@ -36,9 +43,9 @@ for (const category of categoryReferences) {
   previousIndex = index;
 }
 
-const approvedItems = [
+const posterItems = [
   ...anna.matchAll(
-    /approvedItem\(\s*"([^"]+)",\s*"([^"]+)",\s*"([^"]+)",\s*"([^"]+)",\s*"([^"]+)",\s*"([^"]+)"/g,
+    /item\(\s*"([^"]+)",\s*"([^"]+)",\s*"([^"]+)",\s*"([^"]+)",\s*"([^"]+)"/g,
   ),
 ].map((match) => ({
   id: match[1],
@@ -46,27 +53,24 @@ const approvedItems = [
   nameEn: match[3],
   nameZh: match[4],
   price: match[5],
-  duration: match[6],
 }));
 
-assert.equal(approvedItems.length, 45, "Expected 45 Anna-supplied service items");
+assert.equal(posterItems.length, 45, "Expected 45 source-poster service declarations");
 assert.equal(
-  new Set(approvedItems.map((item) => item.id)).size,
+  new Set(posterItems.map((item) => item.id)).size,
   45,
-  "Anna service ids must be unique",
+  "Source-poster service ids must be unique",
 );
 
-const expectedCategoryCounts = [
-  ["const hairAtelier", "const hairScalpRecovery", 14],
-  ["const hairScalpRecovery", "const scalpMindWellness", 7],
-  ["const scalpMindWellness", "const skinAesthetics", 4],
-  ["const skinAesthetics", "const bodyWellness", 11],
-  ["const bodyWellness", "const nailsIds", 9],
-];
-for (const [start, end, expected] of expectedCategoryCounts) {
-  const block = anna.slice(anna.indexOf(start), anna.indexOf(end));
-  const count = [...block.matchAll(/approvedItem\(/g)].length;
-  assert.equal(count, expected, `${start} expected ${expected} services`);
+for (const marker of [
+  '"Gentleman’s Precision Cut", "男士精剪", "$65"',
+  '"Root Refresh", "局部补染", "$138"',
+  '"Hair Growth Ritual", "脱发焕活护理", "$269", "90 mins"',
+  '"LHALA Glass Skin Peel", "韩国水光焕肤酸疗", "$69", "20 mins"',
+  '"MEND Signature Body Ritual", "全身焕活身心能量管理", "$348", "120 mins"',
+  '"Arms (Full) / Full Legs", "全手臂／全小腿", "$139 single · $699 / 6 sessions"',
+]) {
+  assert(anna.includes(marker), `Missing exact poster value: ${marker}`);
 }
 
 const imageKeys = new Set(
@@ -76,18 +80,31 @@ const imageKeys = new Set(
     ),
   ].map((match) => match[1]),
 );
-for (const item of approvedItems) {
+for (const item of posterItems) {
   assert(
     imageKeys.has(item.imageId),
     `${item.id} references an unknown existing image id: ${item.imageId}`,
   );
-  assert(item.price.startsWith("$"), `${item.id} has an invalid price`);
-  assert(
-    item.duration.includes("mins") ||
-      item.duration === "Customised three-month program",
-    `${item.id} has an invalid duration format`,
-  );
+  assert(item.price.includes("$"), `${item.id} has an invalid price`);
 }
+
+assert.match(anna, /advanced devices, injectables and skin boosters remain withheld/i);
+assert.match(anna, /Chinese source says 全手臂／全小腿/);
+
+assert.match(qrData, /https:\/\/u\.wechat\.com\/kNVC5BSGLv-TksATEKFVjKs\?s=2/);
+assert.match(qrData, /https:\/\/mendbeauty\.com\.au\//);
+for (const source of [englishHome, englishContact, chinese, footer]) {
+  assert.match(source, /QrCodePanel/, "QR panel missing from a required placement");
+}
+assert.match(qrPanel, /WeChat code, open WeChat Scan/);
+assert.match(qrPanel, /download/);
+assert.match(qrPanel, /unoptimized/);
+
+for (const value of [999, 100, 2000, 268, 248, 5000, 788, 515, 10000, 1999, 985]) {
+  assert(memberships.includes(String(value)), `Missing membership value: ${value}`);
+}
+assert.match(membershipPage, /Gifted-service value is not cash credit/);
+assert.match(membershipPage, /membershipReviewItems/);
 
 assert.match(anna, /const nailsIds = \[[\s\S]*?"nail-removal"/);
 assert.match(anna, /const semiPermanentIds = \[[\s\S]*?"annual-refresh"/);
@@ -128,6 +145,20 @@ for (const unsupported of [
 assert(!anna.includes("30% discount"), "Unapproved birthday discount was published");
 
 const protectedHashes = {
+  "docs/source-posters/hair-menu.jpg":
+    "e79f38b51d9918050affc6e9f4487951d6e0904abb3791f7023e0b0cf38f7b5a",
+  "docs/source-posters/hair-reduction-menu.jpg":
+    "dbb6306c8491277c674200d9b03d1eaf1aaddc3f41d123a1827905a2d46291c5",
+  "docs/source-posters/membership-plan.jpg":
+    "63b0d54addea694335be9927827952d9a874cfbdc8b7c1a020e3e2f9ebedadf4",
+  "docs/source-posters/scalp-body-menu.jpg":
+    "cf3be5f45779b819c4a4c6e4248ec9ab667f8eb2d05832bb402a9f36da2425e9",
+  "docs/source-posters/skin-menu.jpg":
+    "ec672035a49dfdcce0e342dc70e3f87e3ccc491257e2b80d8a53d319fa6b264a",
+  "public/qr/official-website-qr.jpg":
+    "0d7dd61b0bb7b924730e8cdd106214e1b9bca12021aa93732e4ab89300e6d1ef",
+  "public/qr/wechat-booking-qr.jpg":
+    "ce44ca231b58ae544e1292d5348dddabc7a47d5a93b576af1795cb35ad13a44e",
   "src/data/images.ts":
     "b87774da0172663b940c9de708a999d18553b3c966ad4c85d2796aae350a2462",
   "src/data/serviceImages.ts":
@@ -152,5 +183,5 @@ for (const [path, expected] of Object.entries(protectedHashes)) {
 }
 
 console.log(
-  "Anna services checks passed: 8 categories, 67 total services, 45 approved Anna items, split nails and semi-permanent categories, protected legacy data, approved Head Spa imagery, bilingual content and general MaSe booking handoff.",
+  "Poster update checks passed: 8 public categories, 45 source-poster declarations, exact bilingual values, QR payloads and placements, membership review notes, protected original assets and general MaSe booking handoff.",
 );

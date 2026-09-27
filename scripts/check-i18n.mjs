@@ -27,6 +27,7 @@ const requiredServiceSlugs = [
   "head-spa",
   "skin-facial",
   "body-care",
+  "hair-reduction",
   "mens-grooming",
   "nails",
   "semi-permanent",
@@ -45,8 +46,8 @@ for (const route of requiredRoutes) {
 }
 
 for (const slug of requiredServiceSlugs) {
-  if (!files.locales.includes(`/zh/services/${slug}`)) {
-    failures.push(`Missing Chinese service navigation route: ${slug}`);
+  if (!files.locales.includes(`"/services/${slug}"`)) {
+    failures.push(`Missing localized service route declaration: ${slug}`);
   }
 }
 

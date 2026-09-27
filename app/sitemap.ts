@@ -11,6 +11,7 @@ const routes: { path: string; priority: number }[] = [
   { path: "/services/head-spa", priority: 0.7 },
   { path: "/services/skin-facial", priority: 0.7 },
   { path: "/services/body-care", priority: 0.7 },
+  { path: "/services/hair-reduction", priority: 0.7 },
   { path: "/services/brows-lashes", priority: 0.7 },
   { path: "/services/mens-grooming", priority: 0.7 },
   { path: "/services/nails", priority: 0.7 },

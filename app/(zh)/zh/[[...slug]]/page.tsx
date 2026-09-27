@@ -9,7 +9,9 @@ import GalleryPreview from "@/components/GalleryPreview";
 import Hero from "@/components/Hero";
 import HomeHero from "@/components/HomeHero";
 import MejinProfileFeature from "@/components/MejinProfileFeature";
+import MembershipPlans from "@/components/MembershipPlans";
 import SectionHeading from "@/components/SectionHeading";
+import QrCodePanel from "@/components/QrCodePanel";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
@@ -63,8 +65,8 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
     description: "选购 Mend Beauty Studio 礼品卡，为亲友送上美发、美容与放松护理体验。",
   },
   "/memberships": {
-    title: "会员计划｜即将推出",
-    description: "登记 Mend Beauty Studio 头疗、皮肤管理及日常美容维护会员计划的意向。",
+    title: "会员充值计划",
+    description: "查看 Mend Beauty Studio 会员充值金额、广告赠送金额、服务赠礼价值及待确认条款。",
   },
   "/careers": {
     title: "招聘与场地合作",
@@ -179,10 +181,10 @@ function ChineseHome() {
           <SectionHeading
             eyebrow="服务范围"
             title="我们的服务"
-            body="八大服务类别，在一个安静、舒适而专业的空间内完成。"
+            body="五组最新菜单，加上现有男士理容、美甲及半永久美容服务。"
           />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {zhServiceCategories.slice(0, 6).map((category) => (
+            {zhAnnaServiceCategories.slice(0, 5).map((category) => (
               <ServiceCard
                 key={category.slug}
                 title={category.cardTitle}
@@ -233,6 +235,10 @@ function ChineseHome() {
         <ContactCard showHours locale="zh-Hans" />
       </section>
 
+      <section className="wrap pb-16 sm:pb-24">
+        <QrCodePanel locale="zh-Hans" />
+      </section>
+
       <CTABlock
         eyebrow="Mend Beauty Studio"
         heading="修护秀发，焕亮肌肤，重拾自信光彩。"
@@ -273,7 +279,7 @@ function ChineseServices() {
           ))}
         </div>
         <p className="mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-taupe">
-          所有价格均含 GST。最终价格可能根据服务复杂度、头发长度、产品用量及个人适用性在咨询后调整。
+          所示价格均为澳元；最终价格可能根据服务复杂度、头发长度、产品用量及个人适用性在咨询后调整。除展示价格外，不对税务处理作额外声明。
         </p>
       </section>
       <CTABlock
@@ -370,7 +376,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
           </div>
         )}
         <p className="mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed text-taupe">
-          所有价格均含 GST。最终价格可能根据服务复杂度、头发长度、产品用量及个人适用性在咨询后调整。
+          所示价格均为澳元；最终价格可能根据服务复杂度、头发长度、产品用量及个人适用性在咨询后调整。除展示价格外，不对税务处理作额外声明。
         </p>
         <div className="mt-6 text-center">
           <Link href="/zh/book" className="btn-gold">
@@ -489,23 +495,17 @@ function ChineseMemberships() {
   return (
     <>
       <Hero
-        eyebrow="即将推出"
-        title="会员计划即将推出"
-        body="头疗、皮肤焕亮、美发维护及日常美容会员计划正在准备中。您可以先登记意向，计划开放后我们会通知您。"
+        eyebrow="会员充值计划"
+        title="优惠更清楚，权益不混淆"
+        body="查看海报所列充值档位、广告赠送金额与服务赠礼价值；完整条款确认期间，请先向门店咨询。"
         image={siteImages.memberships.src}
         imageAlt="Mend Beauty Studio 会员计划"
         actions={[
-          { label: "登记意向", href: "/zh/contact#booking-enquiry", variant: "gold" },
+          { label: "咨询会员计划", href: "/zh/contact#booking-enquiry", variant: "gold" },
           { label: "查看服务", href: "/zh/services", variant: "outline" },
         ]}
       />
-      <section className="wrap py-16 sm:py-24">
-        <SectionHeading
-          eyebrow="计划中的会员项目"
-          title="让日常美容维护更轻松"
-          body="计划中的方向包括头疗、皮肤焕亮、美发颜色维护与日常美容护理。具体内容、价格和权益将在推出前公布。"
-        />
-      </section>
+      <MembershipPlans locale="zh-Hans" />
     </>
   );
 }
@@ -575,6 +575,9 @@ function ChineseContact() {
           </div>
         </div>
         <BookingEnquiryForm locale="zh-Hans" />
+      </section>
+      <section className="wrap pb-16 sm:pb-24">
+        <QrCodePanel locale="zh-Hans" />
       </section>
     </>
   );
