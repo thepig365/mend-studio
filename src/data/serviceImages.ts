@@ -312,6 +312,33 @@ export const serviceImages: Record<string, ServiceImage> = {
     "close"
   ),
 
+  // --- Hair Reduction ---------------------------------------------------------
+  "hair-reduction-upper-lip": mendOriginal(
+    "hair-reduction-upper-lip",
+    "Professional upper-lip hair-reduction treatment in a warm beauty studio",
+    "exact"
+  ),
+  "hair-reduction-underarms": mendOriginal(
+    "hair-reduction-underarms",
+    "Professional underarm hair-reduction treatment with modest draping",
+    "exact"
+  ),
+  "hair-reduction-full-face": mendOriginal(
+    "hair-reduction-full-face",
+    "Professional full-face hair-reduction treatment with eye protection",
+    "exact"
+  ),
+  "hair-reduction-half-arms-lower-legs": mendOriginal(
+    "hair-reduction-half-arms-lower-legs",
+    "Professional lower-leg hair-reduction treatment in a warm beauty studio",
+    "exact"
+  ),
+  "hair-reduction-full-arms-legs": mendOriginal(
+    "hair-reduction-full-arms-legs",
+    "Professional full-leg hair-reduction treatment with modest draping",
+    "exact"
+  ),
+
   // --- Brows & Lashes ----------------------------------------------------------
   "korean-lash-lift-tint": unsplash(
     "lash-lift",

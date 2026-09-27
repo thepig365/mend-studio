@@ -21,11 +21,12 @@ export default function ServiceItem({
   locale = "en-AU",
 }: ServiceItemProps) {
   const [showPreview, setShowPreview] = useState(false);
+  const hasImage = !item.hideImage;
 
   return (
     <li className="relative">
       {/* Hover preview — pointer devices only, never blocks nearby text */}
-      {showPreview && (
+      {showPreview && hasImage && (
         <span className="hidden [@media(hover:hover)_and_(pointer:fine)]:inline">
           <ServiceImagePreview item={item} />
         </span>
@@ -35,16 +36,19 @@ export default function ServiceItem({
         <button
           type="button"
           onClick={() => {
+            if (!hasImage) return;
             setShowPreview(false);
             onOpen(item);
           }}
-          onMouseEnter={() => setShowPreview(true)}
+          onMouseEnter={() => hasImage && setShowPreview(true)}
           onMouseLeave={() => setShowPreview(false)}
-          aria-haspopup="dialog"
-          aria-label={`${item.name} — ${
+          aria-haspopup={hasImage ? "dialog" : undefined}
+          aria-disabled={!hasImage}
+          tabIndex={hasImage ? 0 : -1}
+          aria-label={hasImage ? `${item.name} — ${
             locale === "zh-Hans" ? "查看图片与详情" : "view photo and details"
-          }`}
-          className="min-w-0 flex-1 cursor-pointer rounded-xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
+          }` : item.name}
+          className={`min-w-0 flex-1 rounded-xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${hasImage ? "cursor-pointer" : "cursor-default"}`}
         >
           {item.signature && (
             <span className="mb-2 inline-flex rounded-full border border-gold/50 px-3 py-1 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-bronze">
