@@ -103,8 +103,27 @@ assert.match(qrPanel, /unoptimized/);
 for (const value of [999, 100, 2000, 268, 248, 5000, 788, 515, 10000, 1999, 985]) {
   assert(memberships.includes(String(value)), `Missing membership value: ${value}`);
 }
-assert.match(membershipPage, /Gifted-service value is not cash credit/);
-assert.match(membershipPage, /membershipReviewItems/);
+for (const wording of [
+  "尊享优惠",
+  "会员赠送福利",
+  "充值越多 · 尊享越多 · 美丽加倍",
+  "所有会员生日当月可到店领取生日伴手礼一份",
+]) {
+  assert(membershipPage.includes(wording), `Missing Anna membership wording: ${wording}`);
+}
+for (const gift of [
+  "1次皮肤检测",
+  "1次75mins韩式经典头疗",
+  "1次30mins韩国水光焕肤酸疗",
+  "1次75mins韩式徒手小颜护理",
+  "1次75mins脱发焕活护理",
+  "1次90mins韩式水光炸弹管理",
+  "1次120mins全身燃脂身心重启管理",
+]) {
+  assert(memberships.includes(gift), `Missing membership gift: ${gift}`);
+}
+assert.doesNotMatch(membershipPage, /广告|Advertised|advertised/);
+assert.match(anna, /image: "\/images\/hair-reduction-menu\.jpg"/);
 
 assert.match(anna, /const nailsIds = \[[\s\S]*?"nail-removal"/);
 assert.match(anna, /const semiPermanentIds = \[[\s\S]*?"annual-refresh"/);
@@ -183,5 +202,5 @@ for (const [path, expected] of Object.entries(protectedHashes)) {
 }
 
 console.log(
-  "Poster update checks passed: 8 public categories, 45 source-poster declarations, exact bilingual values, QR payloads and placements, membership review notes, protected original assets and general MaSe booking handoff.",
+  "Poster update checks passed: 8 public categories, 45 source-poster declarations, exact bilingual values, membership wording and gifts, distinct hair-reduction image, QR placements, protected original assets and MaSe booking handoff.",
 );

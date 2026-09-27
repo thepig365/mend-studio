@@ -66,7 +66,7 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
   },
   "/memberships": {
     title: "会员充值计划",
-    description: "查看 Mend Beauty Studio 会员充值金额、广告赠送金额、服务赠礼价值及待确认条款。",
+    description: "查看 Mend Beauty Studio 会员充值金额、尊享优惠、会员赠送福利及生日专属礼遇。",
   },
   "/careers": {
     title: "招聘与场地合作",
@@ -496,8 +496,8 @@ function ChineseMemberships() {
     <>
       <Hero
         eyebrow="会员充值计划"
-        title="优惠更清楚，权益不混淆"
-        body="查看海报所列充值档位、广告赠送金额与服务赠礼价值；完整条款确认期间，请先向门店咨询。"
+        title="充值越多 · 尊享越多 · 美丽加倍"
+        body="专属尊享优惠、升级美丽体验、生日专属礼遇与更贴心的服务。"
         image={siteImages.memberships.src}
         imageAlt="Mend Beauty Studio 会员计划"
         actions={[

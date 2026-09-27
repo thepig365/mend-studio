@@ -167,10 +167,10 @@ export default function HomePage() {
         <div className="rounded-[2.5rem] border border-beige/70 bg-white/60 px-8 py-14 text-center sm:px-14">
           <p className="eyebrow">Membership Recharge Plan</p>
           <h2 className="mx-auto mt-3 max-w-xl font-display text-3xl font-medium leading-tight text-charcoal sm:text-4xl">
-            More rewards, with the details kept clear
+            More Rewards · More Beauty · A Brighter You
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-cocoa">
-            Compare the advertised top-up tiers, bonus credit and gifted-service values. Final terms are clearly marked for confirmation.
+            The more you top up, the more rewards you enjoy, with premium treatments, birthday gifts and personalised care.
           </p>
           <div className="mt-7">
             <Link href="/memberships" className="btn-outline">
