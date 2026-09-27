@@ -1,8 +1,60 @@
 export const membershipTiers = [
-  { id: "starter", name: "Starter", nameZh: "尝新会员", topUp: 999, bonus: 100, giftedValue: 100 },
-  { id: "enjoy", name: "Enjoy", nameZh: "悦享会员", topUp: 2000, bonus: 268, giftedValue: 248 },
-  { id: "premium", name: "Premium", nameZh: "臻享会员", topUp: 5000, bonus: 788, giftedValue: 515 },
-  { id: "royal", name: "Royal", nameZh: "至臻会员", topUp: 10000, bonus: 1999, giftedValue: 985 },
+  {
+    id: "starter",
+    name: "Starter",
+    nameZh: "尝新会员",
+    topUp: 999,
+    bonus: 100,
+    bonusPercent: 10,
+    giftedValue: 100,
+    gifts: [
+      { en: "1 scalp analysis", zh: "1次头皮检测" },
+      { en: "1 skin analysis", zh: "1次皮肤检测" },
+    ],
+  },
+  {
+    id: "enjoy",
+    name: "Enjoy",
+    nameZh: "悦享会员",
+    topUp: 2000,
+    bonus: 268,
+    bonusPercent: 13,
+    giftedValue: 248,
+    gifts: [
+      { en: "1 scalp analysis", zh: "1次头皮检测" },
+      { en: "1 × 75-min Korean Classic Head Spa", zh: "1次75mins韩式经典头疗" },
+    ],
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    nameZh: "臻享会员",
+    topUp: 5000,
+    bonus: 788,
+    bonusPercent: 16,
+    giftedValue: 515,
+    gifts: [
+      { en: "1 scalp analysis", zh: "1次头皮检测" },
+      { en: "1 × 30-min Korean Glass-Skin Peel", zh: "1次30mins韩国水光焕肤酸疗" },
+      { en: "1 × 75-min Korean Classic Head Spa", zh: "1次75mins韩式经典头疗" },
+      { en: "1 × 75-min Korean Manual Facial Sculpting", zh: "1次75mins韩式徒手小颜护理" },
+    ],
+  },
+  {
+    id: "royal",
+    name: "Royal",
+    nameZh: "至臻会员",
+    topUp: 10000,
+    bonus: 1999,
+    bonusPercent: 20,
+    giftedValue: 985,
+    gifts: [
+      { en: "1 scalp analysis + 1 skin analysis", zh: "1次头皮检测 + 1次皮肤检测" },
+      { en: "1 × 75-min Hair-Loss Revitalising Treatment", zh: "1次75mins脱发焕活护理" },
+      { en: "1 × 90-min Korean Aqua-Glow Treatment", zh: "1次90mins韩式水光炸弹管理" },
+      { en: "1 × 120-min Full-Body Fat-Burning Mind & Body Reset", zh: "1次120mins全身燃脂身心重启管理" },
+    ],
+  },
 ] as const;
 
 export const membershipReviewItems = {

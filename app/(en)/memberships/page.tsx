@@ -8,7 +8,7 @@ import { siteImages } from "@/src/data/images";
 export const metadata = pageMetadata({
   title: "Membership Recharge Plan",
   description:
-    "Review Mend Beauty Studio membership top-up tiers, advertised dollar bonuses, gifted-service values and terms awaiting confirmation.",
+    "Discover Mend Beauty Studio membership top-up levels, extra value, gifted member benefits and birthday-month offers.",
   path: "/memberships",
 });
 
@@ -17,8 +17,8 @@ export default function MembershipsPage() {
     <>
       <Hero
         eyebrow="Membership Recharge Plan"
-        title="More rewards, with the details kept clear"
-        body="Review the advertised top-up tiers, dollar bonuses and gifted-service values, then contact the studio while final terms are confirmed."
+        title="More Rewards · More Beauty · A Brighter You"
+        body="The more you top up, the more rewards you enjoy."
         image={siteImages.memberships.src}
         imageAlt={siteImages.memberships.alt}
         actions={[
@@ -36,7 +36,7 @@ export default function MembershipsPage() {
       <CTABlock
         eyebrow="Membership enquiry"
         heading="Ask the studio about the membership plan"
-        body="The team can explain the advertised values while the remaining commercial terms are being confirmed."
+        body="Contact the team to choose the membership level that suits you."
         actions={[
           {
             label: "Enquire Now",

@@ -103,7 +103,7 @@ const hairReduction: ServiceCategory = {
   slug: "hair-reduction", title: "Hair Reduction", cardTitle: "Hair Reduction",
   excerpt: "Single-session and six-session hair-reduction pricing.",
   intro: "Hair-reduction prices transcribed from the supplied menu. The disputed full-arm/full-leg wording is clearly flagged for confirmation.",
-  image: legacyBody.image, imageAlt: "Calm MEND beauty treatment setting",
+  image: "/images/hair-reduction-menu.jpg", imageAlt: "MEND Hair Reduction service menu",
   items: [
     item("hair-reduction-upper-lip", "brow-shape", "Upper Lip", "唇部", "$39 single · $199 / 6 sessions", "15 mins"),
     item("hair-reduction-underarms", "brow-shape", "Underarms", "腋下", "$59 single · $299 / 6 sessions", "15 mins"),
