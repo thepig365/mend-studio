@@ -34,7 +34,7 @@ export type ServiceCategory = {
 
 // General pricing note shown with every service menu.
 export const pricingNote =
-  "Prices include GST. Prices are subject to consultation and may vary depending on service complexity, hair length, product use and individual suitability.";
+  "Prices are shown in Australian dollars and may vary after consultation depending on service complexity, hair length, product use and individual suitability. No tax treatment is implied beyond the displayed price.";
 
 export const serviceCategories: ServiceCategory[] = [
   {

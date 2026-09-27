@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import ContactCard from "@/components/ContactCard";
 import BookingEnquiryForm from "@/components/BookingEnquiryForm";
+import QrCodePanel from "@/components/QrCodePanel";
 import { site } from "@/lib/site";
 import { pageMetadata } from "@/lib/seo";
 // Temporary stock images — replace with professional Mend Beauty Studio photography.
@@ -51,6 +52,9 @@ export default function ContactPage() {
         </div>
 
         <BookingEnquiryForm />
+      </section>
+      <section className="wrap pb-16 sm:pb-24">
+        <QrCodePanel />
       </section>
     </>
   );

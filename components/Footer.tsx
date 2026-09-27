@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
 import SharePage from "@/components/SharePage";
 import SocialLinks from "@/components/SocialLinks";
+import QrCodePanel from "@/components/QrCodePanel";
 import {
   chineseLocale,
   isChinesePath,
@@ -132,6 +133,15 @@ export default function Footer() {
           </a>
           <SharePage />
           <SocialLinks locale={locale} />
+        </div>
+      </div>
+
+      <div className="wrap border-t border-cream/10 py-8">
+        <div className="mx-auto max-w-md">
+          <p className="mb-4 text-center text-xs font-medium uppercase tracking-[0.24em] text-gold">
+            {locale === chineseLocale ? "扫码连接" : "Scan to connect"}
+          </p>
+          <QrCodePanel locale={locale} compact />
         </div>
       </div>
 
