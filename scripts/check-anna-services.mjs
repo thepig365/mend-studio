@@ -55,20 +55,26 @@ const posterItems = [
   price: match[5],
 }));
 
-assert.equal(posterItems.length, 45, "Expected 45 source-poster service declarations");
+assert.equal(posterItems.length, 50, "Expected 50 source-book service declarations");
 assert.equal(
   new Set(posterItems.map((item) => item.id)).size,
-  45,
-  "Source-poster service ids must be unique",
+  50,
+  "Source-book service ids must be unique",
 );
 
 for (const marker of [
   '"Gentleman’s Precision Cut", "男士精剪", "$65"',
   '"Root Refresh", "局部补染", "$138"',
   '"Hair Growth Ritual", "脱发焕活护理", "$269", "90 mins"',
+  '"Express Head Spa", "快速头疗", "$78", "30 mins"',
+  '"Korean Signature Head Spa", "韩式经典头疗", "$198", "75 mins"',
+  '"Aroma Healing Head Spa", "芳香疗愈深度睡眠头疗", "$268", "90 mins"',
+  '"MEND Signature Head Ritual", "MEND臻选头疗", "$398", "120 mins"',
+  '"Add-on Scalp Detox Ritual", "头皮毛孔净化", "$30", "15 mins"',
   '"LHALA Glass Skin Peel", "韩国水光焕肤酸疗", "$69", "20 mins"',
   '"MEND Signature Body Ritual", "全身焕活身心能量管理", "$348", "120 mins"',
-  '"Arms (Full) / Full Legs", "全手臂／全小腿", "$139 single · $699 / 6 sessions"',
+  '"Arms (Half) / Legs (Half)", "半手臂／半腿", "$119 single · $599 / 6 sessions"',
+  '"Arms (Full) / Legs (Full)", "全手臂／全腿", "$139 single · $699 / 6 sessions"',
 ]) {
   assert(anna.includes(marker), `Missing exact poster value: ${marker}`);
 }
@@ -109,7 +115,7 @@ assert.match(
 assert.match(row, /const hasImage = !item\.hideImage/);
 
 assert.match(anna, /advanced devices, injectables and skin boosters remain withheld/i);
-assert.match(anna, /Chinese source says 全手臂／全小腿/);
+assert.doesNotMatch(anna, /Owner confirmation required|全小腿|Lower Legs/);
 
 assert.match(qrData, /https:\/\/u\.wechat\.com\/kNVC5BSGLv-TksATEKFVjKs\?s=2/);
 assert.match(qrData, /https:\/\/mendbeauty\.com\.au\//);
@@ -142,6 +148,17 @@ for (const gift of [
 ]) {
   assert(memberships.includes(gift), `Missing membership gift: ${gift}`);
 }
+for (const term of [
+  "充值金额、赠送金额及赠送项目，自充值之日起有效期为两年。",
+  "充值金额不予退款；账户余额可转让或与家人共享使用。",
+  "余额适用于所有服务及产品。",
+  "不可与疗程套价或其他会员折扣同时使用。",
+  "不限服务项目及金额",
+  "赠送项目为固定内容，不可更换或折现",
+]) {
+  assert(memberships.includes(term), `Missing membership term: ${term}`);
+}
+assert.match(membershipPage, /membershipTerms\.map/);
 assert.doesNotMatch(membershipPage, /广告|Advertised|advertised/);
 assert.match(anna, /image: "\/images\/hair-reduction-menu\.jpg"/);
 
@@ -232,5 +249,5 @@ for (const [path, expected] of Object.entries(protectedHashes)) {
 }
 
 console.log(
-  "Poster update checks passed: 8 public categories, 45 source-poster declarations, exact bilingual values, original Hair Reduction imagery with Bikini Line hidden, membership wording and gifts, QR placements, protected assets and MaSe booking handoff.",
+  "Project-book update checks passed: 8 public categories, 50 source-book declarations, dedicated bilingual Head Spa menu, corrected Hair Reduction scope, membership terms and gifts, QR placements, protected assets and MaSe booking handoff.",
 );

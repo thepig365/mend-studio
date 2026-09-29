@@ -27,6 +27,14 @@ const scalpCareItems: ServiceItem[] = [
   item("scalp-detox-ritual", "scalp-cleansing-treatment", "Scalp Detox Ritual", "头皮毛孔净化", "$30", "15 mins", { section: "Add On", sectionZh: "加购项目" }),
 ];
 
+const headSpaItems: ServiceItem[] = [
+  item("express-head-spa", "express-scalp-refresh", "Express Head Spa", "快速头疗", "$78", "30 mins", { description: "A first-time introduction, an add-on after a cut or wash, or a relaxing lunch-break reset.", descriptionZh: "适合第一次体验，洗剪后加购，午休放松。" }),
+  item("korean-signature-head-spa", "signature-head-spa", "Korean Signature Head Spa", "韩式经典头疗", "$198", "75 mins", { description: "Includes scalp analysis, deep cleansing, scalp massage, water-circulation head spa, targeted essence application and blow-dry.", descriptionZh: "包含头皮检测、深层清洁、头皮按摩、水循环头疗、功效精华导入、吹干。" }),
+  item("aroma-healing-head-spa", "premium-head-spa-ritual", "Aroma Healing Head Spa", "芳香疗愈深度睡眠头疗", "$268", "90 mins", { description: "Builds on the classic head spa with aromatic essence, neck and shoulder massage, warm compresses and a sleep-relaxation ritual.", descriptionZh: "在经典头疗基础上，增加芳香精华、肩颈按摩、热敷、睡眠放松流程。" }),
+  item("mend-signature-head-ritual", "deluxe-head-spa-ritual", "MEND Signature Head Ritual", "MEND臻选头疗", "$398", "120 mins", { description: "Includes scalp analysis, customised scalp care, neck and shoulder relaxation, hot stones, essence application, hair mask, aromatherapy and blow-dry styling.", descriptionZh: "包含头皮检测、定制头皮护理、肩颈放松、热石、精华导入、发膜护理、芳疗、吹造型。", signature: true }),
+  item("head-spa-scalp-detox", "scalp-cleansing-treatment", "Add-on Scalp Detox Ritual", "头皮毛孔净化", "$30", "15 mins", { description: "Deep cleansing to remove excess oil and impurities.", descriptionZh: "深层清洁，去除多余油脂与污垢。", section: "Add On", sectionZh: "加购项目" }),
+];
+
 const hairAtelier: ServiceCategory = {
   slug: "hair", title: "Hair Atelier", cardTitle: "Hair Atelier",
   excerpt: "Scalp analysis, precision cutting, colour, texture and hair rituals.",
@@ -56,10 +64,10 @@ const hairAtelier: ServiceCategory = {
 
 const scalpMindWellness: ServiceCategory = {
   slug: "head-spa", title: "Scalp & Mind Wellness", cardTitle: "Scalp & Mind Wellness",
-  excerpt: "Scalp assessment and cosmetic scalp-care rituals.",
-  intro: "Scalp assessment and care services transcribed from the supplied Scalp & Mind Wellness menu.",
+  excerpt: "Express, Korean and MEND signature head-spa rituals.",
+  intro: "The dedicated head-spa menu, including express, Korean signature, aroma healing and MEND signature rituals.",
   image: "/images/head-spa-water-halo.webp", imageAlt: legacyHeadSpa.imageAlt,
-  items: [...assessmentItems, ...scalpCareItems],
+  items: headSpaItems,
   notes: ["These are cosmetic scalp-care and relaxation services, not medical diagnosis or treatment. Results vary."],
 };
 
@@ -102,18 +110,18 @@ const bodyWellness: ServiceCategory = {
 const hairReduction: ServiceCategory = {
   slug: "hair-reduction", title: "Hair Reduction", cardTitle: "Hair Reduction",
   excerpt: "Single-session and six-session hair-reduction pricing.",
-  intro: "Hair-reduction prices transcribed from the supplied menu. The disputed full-arm/full-leg wording is clearly flagged for confirmation.",
+  intro: "Hair-reduction items, durations and single-session or six-session prices from the supplied menu.",
   image: "/images/hair-reduction-menu.jpg", imageAlt: "MEND Hair Reduction service menu",
   items: [
     item("hair-reduction-upper-lip", "hair-reduction-upper-lip", "Upper Lip", "唇部", "$39 single · $199 / 6 sessions", "15 mins"),
     item("hair-reduction-underarms", "hair-reduction-underarms", "Underarms", "腋下", "$59 single · $299 / 6 sessions", "15 mins"),
     item("hair-reduction-full-face", "hair-reduction-full-face", "Full Face", "全脸", "$99 single · $499 / 6 sessions", "30 mins"),
-    item("hair-reduction-half-arms-lower-legs", "hair-reduction-half-arms-lower-legs", "Arms (Half) / Lower Legs", "半手臂／小腿", "$119 single · $599 / 6 sessions", "45 mins"),
+    item("hair-reduction-half-arms-lower-legs", "hair-reduction-half-arms-lower-legs", "Arms (Half) / Legs (Half)", "半手臂／半腿", "$119 single · $599 / 6 sessions", "45 mins"),
     item("hair-reduction-bikini-line", "body-scrub", "Bikini Line", "比基尼线", "$119 single · $599 / 6 sessions", "30 mins", { hideImage: true }),
-    item("hair-reduction-full-arms-legs", "hair-reduction-full-arms-legs", "Arms (Full) / Full Legs", "全手臂／全小腿", "$139 single · $699 / 6 sessions", "60 mins"),
+    item("hair-reduction-full-arms-legs", "hair-reduction-full-arms-legs", "Arms (Full) / Legs (Full)", "全手臂／全腿", "$139 single · $699 / 6 sessions", "60 mins"),
     item("hair-reduction-full-back", "body-care-head-spa-package", "Full Back", "全后背", "$139 single · $699 / 6 sessions", "60 mins"),
   ],
-  notes: ["Owner confirmation required: the Chinese source says 全手臂／全小腿, while the English source says Arms (Full) / Full Legs. No interpretation has been made.", "Suitability, contraindications and expected results must be discussed before treatment. No universal suitability or guaranteed outcome is promised."],
+  notes: ["Suitability, contraindications and expected results must be discussed before treatment. No universal suitability or guaranteed outcome is promised."],
 };
 
 const hairScalpRecovery: ServiceCategory = { ...scalpMindWellness, slug: "hair-scalp-recovery", title: "Hair & Scalp Recovery", cardTitle: "Hair & Scalp Recovery" };
