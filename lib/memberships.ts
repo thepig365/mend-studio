@@ -57,17 +57,47 @@ export const membershipTiers = [
   },
 ] as const;
 
-export const membershipReviewItems = {
-  en: [
-    "Premium gift: the membership poster says the Korean glass-skin peel is 30 minutes; the skin menu says 20 minutes.",
-    "Royal gift: the membership poster says the hair-growth ritual is 75 minutes; the scalp menu says 90 minutes.",
-    "The 75-minute Korean classic head-spa gift has no exact published menu-name match; its implied value also differs by $1 from the 75-minute scalp treatments.",
-    "Expiry, refunds, sharing, discount stacking, eligible services and exclusions have not been supplied.",
-  ],
-  zh: [
-    "臻享会员赠礼：会员海报中的韩国水光焕肤酸疗为 30 分钟，肌肤菜单为 20 分钟。",
-    "至臻会员赠礼：会员海报中的脱发焕活护理为 75 分钟，头皮菜单为 90 分钟。",
-    "75 分钟韩式经典头疗在现有菜单中没有完全一致的名称；按赠礼总值推算，与 75 分钟头皮护理项目还存在 A$1 差异。",
-    "有效期、退款、共享、优惠叠加、适用项目及排除项目尚未提供。",
-  ],
-} as const;
+export const membershipTerms = [
+  {
+    id: "validity",
+    title: "Validity",
+    titleZh: "有效期",
+    body: "The top-up amount, bonus amount and gifted items are valid for two years from the top-up date.",
+    bodyZh: "充值金额、赠送金额及赠送项目，自充值之日起有效期为两年。",
+  },
+  {
+    id: "refunds-sharing",
+    title: "Refunds & sharing",
+    titleZh: "退款与共享",
+    body: "Top-up amounts are non-refundable. The account balance may be transferred to or shared with family members.",
+    bodyZh: "充值金额不予退款；账户余额可转让或与家人共享使用。",
+  },
+  {
+    id: "balance-use",
+    title: "Balance use",
+    titleZh: "余额使用",
+    body: "The top-up amount and bonus amount are combined into one account balance, with no required order of use. The balance may be used for all services and products.",
+    bodyZh: "充值金额与赠送金额合并为同一账户余额，不设使用先后顺序；余额适用于所有服务及产品。",
+  },
+  {
+    id: "service-pricing",
+    title: "Service pricing",
+    titleZh: "服务计价",
+    body: "Services paid with the member balance are charged at single-treatment prices and cannot be combined with package pricing or other member discounts.",
+    bodyZh: "使用会员余额支付服务时，按单次项目价格计费，不可与疗程套价或其他会员折扣同时使用。",
+  },
+  {
+    id: "birthday-benefit",
+    title: "Birthday benefit",
+    titleZh: "生日月礼遇",
+    body: "Members receive 30% off one service during their birthday month, with no service or amount limit. This benefit cannot be combined with other member discounts or promotions.",
+    bodyZh: "会员生日当月可享一次单项服务七折优惠，不限服务项目及金额；不可与其他会员折扣或促销活动同时使用。",
+  },
+  {
+    id: "gifted-items",
+    title: "Gifted items",
+    titleZh: "赠送项目",
+    body: "Gifted items are fixed and cannot be exchanged or converted to cash. Please contact the studio if you need to postpone their use.",
+    bodyZh: "赠送项目为固定内容，不可更换或折现；如需延期使用，请联系门店。",
+  },
+] as const;
