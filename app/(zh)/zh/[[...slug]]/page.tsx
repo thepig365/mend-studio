@@ -37,6 +37,7 @@ type ChinesePageProps = {
 const annaServiceSlugs = new Set(
   [
     ...zhAnnaServiceCategories.map((category) => category.slug),
+    "hair-scalp-recovery",
     "nails-semi-permanent",
   ],
 );
