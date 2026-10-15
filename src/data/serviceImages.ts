@@ -26,7 +26,7 @@ export type ImageMatchQuality = "exact" | "close" | "generic-safe";
 export type ServiceImage = {
   src: string;
   alt: string;
-  sourceName: "Pexels" | "Unsplash" | "MEND Original";
+  sourceName: "Pexels" | "Unsplash" | "MEND Original" | "Illustration";
   sourceUrl: string;
   credit?: string;
   imageMatchQuality: ImageMatchQuality;
@@ -85,6 +85,13 @@ const mendOriginal = (
  * (e.g. lash refills) — the file is stored once and referenced twice.
  */
 export const serviceImages: Record<string, ServiceImage> = {
+  "hair-reduction-bikini": { src: "/images/services/hair-reduction-bikini.png", alt: "Illustrative hair reduction beside a modestly covered bikini line", sourceName: "Illustration", sourceUrl: "/images/services/hair-reduction-bikini.png", credit: "AI-generated service illustration; not a client or studio photograph", imageMatchQuality: "close", temporary: true },
+  "hair-reduction-back": { src: "/images/services/laser-equipment.png", alt: "Illustrative laser hair-reduction handpiece and protective eyewear", sourceName: "Illustration", sourceUrl: "/images/services/laser-equipment.png", credit: "AI-generated service illustration; not a client or studio photograph", imageMatchQuality: "close", temporary: true },
+
+  "facial-moxibustion-ritual": {
+    src: "/images/services/facial-moxibustion.png", alt: "Illustration of a facial moxibustion ritual in a calm spa setting",
+    sourceName: "Illustration", sourceUrl: "/images/services/facial-moxibustion.png", credit: "AI-generated service illustration; not a client photograph", imageMatchQuality: "close", temporary: true,
+  },
   // --- Hair Services ---------------------------------------------------------
   "womens-cut-blow-dry": unsplash(
     "hair-blow-dry",

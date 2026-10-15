@@ -1,3 +1,4 @@
+import MenuDownloads from "@/components/MenuDownloads";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
@@ -38,6 +39,7 @@ const annaServiceSlugs = new Set(
   [
     ...zhAnnaServiceCategories.map((category) => category.slug),
     "nails-semi-permanent",
+    "hair-scalp-recovery",
   ],
 );
 const serviceSlugs = new Set([
@@ -348,6 +350,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         ]}
       />
       <section className="wrap py-16 sm:py-20">
+        <MenuDownloads slug={slug} chinese />
         {primaryGroups.map(([title, items], index) => (
           <div key={title} className={index === 0 ? "" : "mt-10"}>
             <ServiceMenuSection

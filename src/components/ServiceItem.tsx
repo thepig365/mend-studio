@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import ServiceImagePreview from "@/src/components/ServiceImagePreview";
 import type { ServiceItem as ServiceItemType } from "@/src/data/serviceMenu";
@@ -50,6 +51,9 @@ export default function ServiceItem({
           }` : item.name}
           className={`min-w-0 flex-1 rounded-xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${hasImage ? "cursor-pointer" : "cursor-default"}`}
         >
+          {hasImage && <span className="relative mb-4 block h-36 w-full overflow-hidden rounded-xl sm:float-left sm:mb-0 sm:mr-5 sm:h-24 sm:w-28">
+            <Image src={item.image.src} alt={item.image.alt} fill sizes="(max-width: 640px) 80vw, 112px" className="object-cover" />
+          </span>}
           {item.signature && (
             <span className="mb-2 inline-flex rounded-full border border-gold/50 px-3 py-1 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-bronze">
               {locale === "zh-Hans" ? "王牌项目" : "Signature Service"}

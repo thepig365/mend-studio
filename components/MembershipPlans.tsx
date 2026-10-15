@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import { chineseLocale } from "@/lib/i18n";
-import { membershipTiers } from "@/lib/memberships";
+import { membershipTiers, membershipTerms } from "@/lib/memberships";
 
 const money = (value: number) => `$${value.toLocaleString("en-AU")}`;
 
@@ -58,6 +58,16 @@ export default function MembershipPlans({ locale = "en-AU" }: { locale?: Locale 
         </p>
       </div>
 
+      <div className="mt-10 rounded-3xl border border-beige/70 bg-white/70 p-7 sm:p-10">
+        <h3 className="font-display text-2xl text-charcoal">{isZh ? "会员须知" : "Membership Terms"}</h3>
+        <div className="mt-6 grid gap-7 md:grid-cols-2">
+          {membershipTerms.map((term, index) => <article key={term.en}>
+            <h4 className="font-medium text-bronze">{index + 1}. {isZh ? term.zh : term.en}</h4>
+            <p className="mt-2 text-sm leading-relaxed text-cocoa">{isZh ? term.bodyZh : term.bodyEn}</p>
+          </article>)}
+        </div>
+        <a className="mt-6 inline-block text-sm underline text-bronze" href="/menus/membership.png" target="_blank" rel="noreferrer">{isZh ? "查看完整会员海报" : "View the full membership menu"}</a>
+      </div>
       <div className="mt-10 text-center">
         <Link href={isZh ? "/zh/contact#booking-enquiry" : "/contact#booking-enquiry"} className="btn-gold">
           {isZh ? "咨询会员计划" : "Enquire about membership"}
