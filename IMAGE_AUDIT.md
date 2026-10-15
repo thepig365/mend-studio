@@ -1,6 +1,6 @@
 # Service image review — 16 October 2026
 
-This review supersedes the match claims and counts in the historical audit below. Reviewed the 65 entries from the six supplied menus and the existing service asset contact sheets. Changed 18 service mappings using 10 newly downloaded Pexels photos and one existing oil-massage photo. All menu prices, durations and inclusions remain unchanged.
+This review supersedes the match claims and counts in the historical audit below. Reviewed the 65 entries from the six supplied menus and the existing service asset contact sheets. Changed 20 service mappings using 10 newly downloaded Pexels photos and existing colour, foil and massage photos. All menu prices, durations and inclusions remain unchanged.
 
 ## Licensing
 
@@ -24,6 +24,7 @@ New photos are listed as free to use on their individual Pexels pages. The [Pexe
 - Scalp assessments: replaced shampoo/colour application with a consultation scene. This is context only; it does not show an AI scanner.
 - Children’s cuts: replaced adult portrait with a child haircut. The model’s age is not verified as 0–2; this is a general children’s haircut reference.
 - Ladies’ cuts/fringe: replaced blow-drying/portrait with scissors cutting hair. Fringe is a related-cut reference rather than a fringe-specific demonstration.
+- Root refresh/full-head foils: corrected foil/consultation mismatches to colour application and visible foil application. Images illustrate the process, not exact coverage.
 - Wash & Curls: replaced finished hairstyle with actual curling-iron styling.
 - Perms: replaced blow-drying and men’s haircut with roller-setting and a male curly-hair reference. These do not claim to depict chemical/digital perm equipment or guaranteed results.
 - Manual facial sculpting: replaced a mask with hands-on facial massage.
