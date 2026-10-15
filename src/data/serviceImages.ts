@@ -8,8 +8,8 @@
 // watermarks or competitor branding. Models shown do NOT endorse Mend Beauty
 // Studio.
 //
-// Every image has been audited against the exact service name, description,
-// price and time (see IMAGE_AUDIT.md). `imageMatchQuality` records how closely
+// Match ratings describe the photographed activity, not a verified MEND
+// technique, machine, clinical outcome or model age. See IMAGE_AUDIT.md. `imageMatchQuality` records how closely
 // the photo matches the service:
 //   - "exact"        the photo clearly shows this service being performed
 //   - "close"        the photo shows closely related work or a faithful result
@@ -31,6 +31,7 @@ export type ServiceImage = {
   credit?: string;
   imageMatchQuality: ImageMatchQuality;
   temporary: boolean;
+  objectPosition?: string;
 };
 
 // Temporary stock image — replace with professional Mend Beauty Studio photography.
@@ -54,7 +55,8 @@ const pexels = (
   file: string,
   alt: string,
   photoId: number,
-  imageMatchQuality: ImageMatchQuality
+  imageMatchQuality: ImageMatchQuality,
+  objectPosition = "50% 50%"
 ): ServiceImage => ({
   src: `/images/services/${file}.jpg`,
   alt,
@@ -63,6 +65,7 @@ const pexels = (
   credit: "Temporary stock image via Pexels",
   imageMatchQuality,
   temporary: true,
+  objectPosition,
 });
 
 const mendOriginal = (
@@ -85,6 +88,18 @@ const mendOriginal = (
  * (e.g. lash refills) — the file is stored once and referenced twice.
  */
 export const serviceImages: Record<string, ServiceImage> = {
+  // Reviewed free-use stock replacements, 16 October 2026. See IMAGE_AUDIT.md.
+  "hair-consultation": pexels("hair-consultation-pexels-3992861", "Stylist and client discussing hair care in a salon", 3992861, "generic-safe"),
+  "child-haircut": pexels("child-haircut-pexels-7697384", "Child receiving a haircut in a barbershop", 7697384, "close"),
+  "ladies-scissor-cut": pexels("ladies-scissor-cut-pexels-17784000", "Scissors trimming a section of wet hair in a salon", 17784000, "exact", "50% 60%"),
+  "curl-styling": pexels("curl-styling-pexels-10318038", "Stylist using a curling iron on short hair", 10318038, "exact"),
+  "roller-styling": pexels("roller-styling-pexels-12275462", "Hair section being wrapped around a flexible roller", 12275462, "close"),
+  "mens-curl-inspiration": pexels("mens-curl-inspiration-pexels-16791412", "Curly hairstyle reference on a male model; not a treatment result", 16791412, "generic-safe", "50% 20%"),
+  "manual-facial-massage": pexels("manual-facial-massage-pexels-5659010", "Therapist performing a hands-on facial massage", 5659010, "close", "50% 85%"),
+  "eye-patch-care": pexels("eye-patch-care-pexels-5938234", "Woman wearing under-eye patches and a spa towel", 5938234, "close", "50% 35%"),
+  "neck-massage-care": pexels("neck-massage-care-pexels-14187889", "Therapist massaging the neck and upper shoulders", 14187889, "close"),
+  "relaxation-massage-care": pexels("relaxation-massage-care-pexels-3764568", "Hands-on neck and shoulder massage in a spa", 3764568, "close"),
+
   "hair-reduction-bikini": { src: "/images/services/hair-reduction-bikini.png", alt: "Illustrative hair reduction beside a modestly covered bikini line", sourceName: "Illustration", sourceUrl: "/images/services/hair-reduction-bikini.png", credit: "AI-generated service illustration; not a client or studio photograph", imageMatchQuality: "close", temporary: true },
   "hair-reduction-back": { src: "/images/services/laser-equipment.png", alt: "Illustrative laser hair-reduction handpiece and protective eyewear", sourceName: "Illustration", sourceUrl: "/images/services/laser-equipment.png", credit: "AI-generated service illustration; not a client or studio photograph", imageMatchQuality: "close", temporary: true },
 
