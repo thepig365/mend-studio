@@ -55,23 +55,46 @@ const posterItems = [
   price: match[5],
 }));
 
-assert.equal(posterItems.length, 45, "Expected 45 source-poster service declarations");
+assert.equal(posterItems.length, 65, "Expected 65 source-menu service declarations");
 assert.equal(
   new Set(posterItems.map((item) => item.id)).size,
-  45,
+  65,
   "Source-poster service ids must be unique",
 );
 
 for (const marker of [
-  '"Gentleman’s Precision Cut", "男士精剪", "$65"',
-  '"Root Refresh", "局部补染", "$138"',
-  '"Hair Growth Ritual", "脱发焕活护理", "$269", "90 mins"',
+  '"Gentleman’s Precision Cut", "男士精剪", "From $55"',
+  '"Root Refresh", "局部补染", "From $130"',
+  '"Hair Loss Care Ritual", "防脱强韧头皮护理", "$199"',
   '"LHALA Glass Skin Peel", "韩国水光焕肤酸疗", "$69", "20 mins"',
   '"MEND Signature Body Ritual", "全身焕活身心能量管理", "$348", "120 mins"',
-  '"Arms (Full) / Full Legs", "全手臂／全小腿", "$139 single · $699 / 6 sessions"',
+  '"Arms (Full) / Legs (Full)", "全手臂／全腿", "$139 single · $699 / 6 sessions"',
 ]) {
   assert(anna.includes(marker), `Missing exact poster value: ${marker}`);
 }
+
+const requiredNewMenuPrices = {
+  "wash-blow-dry": "From $55", "wash-curls": "From $65",
+  "kids-signature-cut": "$45", "kids-cut-three-plus": "From $50",
+  "quarter-head-foils": "$120", "half-head-foils-menu": "$150", "full-head-foils-menu": "$250",
+  "classic-texture-perm": "From $250", "ladies-texture-wave": "From $300", "scalp-detox-ritual": "$58",
+  "hydra-hair-ritual": "$150", "dandruff-control-ritual": "$199", "sensitive-scalp-care-ritual": "$199", "oily-scalp-balancing-ritual": "$199", "hair-loss-care-ritual": "$199",
+  "express-head-spa": "$78", "korean-signature-head-spa": "$198", "aroma-healing-head-spa": "$268", "mend-signature-head-ritual": "$398",
+  "circulation-therapy": "$268", "express-relaxation-massage": "$88", "aroma-healing-massage": "$168", "deep-sleep-massage": "$268",
+  "facial-moxibustion-ritual": "$69", "radiance-eye-renewal": "$69", "neck-renewal-care": "$69",
+  "signature-facial-program": "$1299", "collagen-renewal-program": "$1399", "acne-reset-program": "$2339", "pigment-reset-program": "$1999", "glass-skin-program": "$2699", "age-defying-program": "$3599", "mend-bridal-journey": "$4999",
+};
+for (const [id, price] of Object.entries(requiredNewMenuPrices)) {
+  assert.equal(posterItems.find(item => item.id === id)?.price, price, `Incorrect or missing updated service: ${id}`);
+}
+assert.match(memberships, /valid for 2 years/);
+assert.match(memberships, /Top-ups are non-refundable/);
+assert.match(memberships, /transferred or shared with family/);
+assert.match(memberships, /single-treatment prices/);
+assert.match(memberships, /no service or amount limit/);
+assert.match(memberships, /cannot be exchanged or converted to cash/);
+assert.doesNotMatch(memberships, /mins|75-min|30-min|Fat-Burning/);
+for (const file of ["hair-atelier.pdf", "skin-collection.pdf", "scalp-body.png", "hair-reduction.png", "membership.png", "customised-programs.png"]) assert(readFileSync(`public/menus/${file}`).length > 1000);
 
 const imageKeys = new Set(
   [
@@ -80,6 +103,7 @@ const imageKeys = new Set(
     ),
   ].map((match) => match[1]),
 );
+for (const match of imageRegistry.matchAll(/^  "([a-z0-9-]+)": \{/gm)) imageKeys.add(match[1]);
 for (const item of posterItems) {
   assert(
     imageKeys.has(item.imageId),
@@ -94,22 +118,15 @@ for (const [serviceId, imageId] of [
   ["hair-reduction-full-face", "hair-reduction-full-face"],
   ["hair-reduction-half-arms-lower-legs", "hair-reduction-half-arms-lower-legs"],
   ["hair-reduction-full-arms-legs", "hair-reduction-full-arms-legs"],
-  ["hair-reduction-full-back", "body-care-head-spa-package"],
+  ["hair-reduction-full-back", "hair-reduction-back"],
 ]) {
   assert(
     posterItems.some((item) => item.id === serviceId && item.imageId === imageId),
     `Incorrect Hair Reduction image mapping: ${serviceId}`,
   );
 }
-assert.match(
-  anna,
-  /item\("hair-reduction-bikini-line"[\s\S]*?\{ hideImage: true \}\)/,
-  "Bikini Line must not expose an image",
-);
-assert.match(row, /const hasImage = !item\.hideImage/);
-
-assert.match(anna, /advanced devices, injectables and skin boosters remain withheld/i);
-assert.match(anna, /Chinese source says 全手臂／全小腿/);
+assert(posterItems.some(item => item.id === "hair-reduction-bikini-line" && item.imageId === "hair-reduction-bikini"));
+assert.doesNotMatch(anna, /hideImage: true|remain withheld|Chinese source says/);
 
 assert.match(qrData, /https:\/\/u\.wechat\.com\/kNVC5BSGLv-TksATEKFVjKs\?s=2/);
 assert.match(qrData, /https:\/\/mendbeauty\.com\.au\//);
@@ -133,17 +150,17 @@ for (const wording of [
 }
 for (const gift of [
   "1次皮肤检测",
-  "1次75mins韩式经典头疗",
-  "1次30mins韩国水光焕肤酸疗",
-  "1次75mins韩式徒手小颜护理",
-  "1次75mins脱发焕活护理",
-  "1次90mins韩式水光炸弹管理",
-  "1次120mins全身燃脂身心重启管理",
+  "1次韩式经典头疗",
+  "1次韩国水光焕肤酸疗",
+  "1次韩式徒手小颜V脸管理",
+  "1次脱发焕活护理",
+  "1次韩式水光炸弹管理",
+  "1次全身焕肤身心重启管理",
 ]) {
   assert(memberships.includes(gift), `Missing membership gift: ${gift}`);
 }
 assert.doesNotMatch(membershipPage, /广告|Advertised|advertised/);
-assert.match(anna, /image: "\/images\/hair-reduction-menu\.jpg"/);
+assert.match(anna, /laser-equipment\.png/);
 
 assert.match(anna, /const nailsIds = \[[\s\S]*?"nail-removal"/);
 assert.match(anna, /const semiPermanentIds = \[[\s\S]*?"annual-refresh"/);
@@ -200,14 +217,10 @@ const protectedHashes = {
     "ce44ca231b58ae544e1292d5348dddabc7a47d5a93b576af1795cb35ad13a44e",
   "src/data/images.ts":
     "b87774da0172663b940c9de708a999d18553b3c966ad4c85d2796aae350a2462",
-  "src/data/serviceImages.ts":
-    "a1359168fe4e2f29c6394963d6ea9c446c7b1fd337416c9f375d4bee3e4d766e",
   "components/ServiceCard.tsx":
     "16ef9183493012406ba231d85581902fce3891011794f37b325e9873dee6cb30",
   "src/components/ServiceImagePreview.tsx":
     "59e2dfcacd22566afa67d038a46cda4a82e0327c90e815950975c151b919dd94",
-  "src/components/ServiceImageModal.tsx":
-    "18cd9e952d6b530a44e05909516d81e66aba0c6f7a70518bf75c65ed24092ede",
   "public/images/services/headspa-wash.jpg":
     "5d15fe4607f9f44ccca2e887166d5b00290c275c1ccffbd95909c7a73dc17ca1",
   "public/images/services/headspa-signature-mend.webp":
@@ -232,5 +245,5 @@ for (const [path, expected] of Object.entries(protectedHashes)) {
 }
 
 console.log(
-  "Poster update checks passed: 8 public categories, 45 source-poster declarations, exact bilingual values, original Hair Reduction imagery with Bikini Line hidden, membership wording and gifts, QR placements, protected assets and MaSe booking handoff.",
+  "Poster update checks passed: 8 public categories, 65 source-menu declarations, exact bilingual values, original Hair Reduction imagery including Bikini Line, membership wording and gifts, QR placements, protected assets and MaSe booking handoff.",
 );

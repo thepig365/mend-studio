@@ -43,7 +43,7 @@ export default function ServiceImageModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6"
+      className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={item.name}
@@ -110,6 +110,7 @@ export default function ServiceImageModal({
             <p className="mt-4 text-sm leading-relaxed text-cocoa">{item.description}</p>
           )}
 
+          {item.details && <ul className="mt-4 space-y-1 text-sm text-cocoa">{item.details.map(detail => <li key={detail}>• {detail}</li>)}</ul>}
           {item.bookingNote && (
             <p className="mt-3 text-xs leading-relaxed text-taupe">{item.bookingNote}</p>
           )}
@@ -131,7 +132,7 @@ export default function ServiceImageModal({
             <p className="mt-5 text-center text-[0.65rem] leading-relaxed text-taupe">
               {isChinese
                 ? `临时参考图片，来源：${item.image.sourceName}；仅作说明用途。`
-                : `Temporary stock image via ${item.image.sourceName} — for illustration only.`}
+                : item.image.sourceName === "Illustration" ? "AI-generated illustration — not a client or studio photograph." : `Reference image via ${item.image.sourceName} — for illustration only.`}
             </p>
           )}
         </div>

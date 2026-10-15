@@ -1,3 +1,4 @@
+import MenuDownloads from "@/components/MenuDownloads";
 import type { ReactNode } from "react";
 import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
@@ -68,6 +69,7 @@ export default function ServicePage({
       />
 
       <section className="wrap py-16 sm:py-20">
+        <MenuDownloads slug={category.slug} />
         {!hidePriceList &&
           primaryGroups.map(([title, items], index) => (
             <div key={title} className={index === 0 ? "" : "mt-10"}>
