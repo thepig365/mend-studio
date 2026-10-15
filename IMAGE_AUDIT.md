@@ -1,3 +1,47 @@
+# Service image review — 16 October 2026
+
+This review supersedes the match claims and counts in the historical audit below. Reviewed the 65 entries from the six supplied menus and the existing service asset contact sheets. Changed 18 service mappings using 10 newly downloaded Pexels photos and one existing oil-massage photo. All menu prices, durations and inclusions remain unchanged.
+
+## Licensing
+
+New photos are listed as free to use on their individual Pexels pages. The [Pexels licence](https://www.pexels.com/license/) permits free commercial website use and modifications; attribution is optional. Copyright remains with the creators: these are licensed stock photos, not public-domain or “no copyright” images. No endorsement, client result or MEND staff identity is implied. Files are stored locally, not hotlinked.
+
+| New image | Source and licence evidence | Use / limitation |
+|---|---|---|
+| hair-consultation | [Pexels 3992861](https://www.pexels.com/photo/3992861/), Pexels licence, checked 2026-10-16 | Stylist and client discussing hair care in a salon; generic-safe |
+| child-haircut | [Pexels 7697384](https://www.pexels.com/photo/7697384/), Pexels licence, checked 2026-10-16 | Child receiving a haircut in a barbershop; close |
+| ladies-scissor-cut | [Pexels 17784000](https://www.pexels.com/photo/17784000/), Pexels licence, checked 2026-10-16 | Scissors trimming a section of wet hair in a salon; exact |
+| curl-styling | [Pexels 10318038](https://www.pexels.com/photo/10318038/), Pexels licence, checked 2026-10-16 | Stylist using a curling iron on short hair; exact |
+| roller-styling | [Pexels 12275462](https://www.pexels.com/photo/12275462/), Pexels licence, checked 2026-10-16 | Hair section being wrapped around a flexible roller; close |
+| mens-curl-inspiration | [Pexels 16791412](https://www.pexels.com/photo/16791412/), Pexels licence, checked 2026-10-16 | Curly hairstyle reference on a male model; not a treatment result; generic-safe |
+| manual-facial-massage | [Pexels 5659010](https://www.pexels.com/photo/5659010/), Pexels licence, checked 2026-10-16 | Therapist performing a hands-on facial massage; close |
+| eye-patch-care | [Pexels 5938234](https://www.pexels.com/photo/5938234/), Pexels licence, checked 2026-10-16 | Woman wearing under-eye patches and a spa towel; close |
+| neck-massage-care | [Pexels 14187889](https://www.pexels.com/photo/14187889/), Pexels licence, checked 2026-10-16 | Therapist massaging the neck and upper shoulders; close |
+| relaxation-massage-care | [Pexels 3764568](https://www.pexels.com/photo/3764568/), Pexels licence, checked 2026-10-16 | Hands-on neck and shoulder massage in a spa; close |
+
+## Visual corrections
+
+- Scalp assessments: replaced shampoo/colour application with a consultation scene. This is context only; it does not show an AI scanner.
+- Children’s cuts: replaced adult portrait with a child haircut. The model’s age is not verified as 0–2; this is a general children’s haircut reference.
+- Ladies’ cuts/fringe: replaced blow-drying/portrait with scissors cutting hair. Fringe is a related-cut reference rather than a fringe-specific demonstration.
+- Wash & Curls: replaced finished hairstyle with actual curling-iron styling.
+- Perms: replaced blow-drying and men’s haircut with roller-setting and a male curly-hair reference. These do not claim to depict chemical/digital perm equipment or guaranteed results.
+- Manual facial sculpting: replaced a mask with hands-on facial massage.
+- Eye care: replaced a full-face mask with visible under-eye patches.
+- Neck care: replaced facial gua sha with neck massage.
+- Lymphatic/deep-sleep massage: replaced hot-stone imagery with hands-on massage. Lymphatic drainage technique cannot be verified from this stock photo.
+- Signature body ritual: replaced the hand-scrub image with the existing oil-massage photo, matching the aromatherapy component.
+
+## Remaining specialist photography needs
+
+Existing suitable wash, colour, foil, mask, cleansing and massage photos remain. Multi-treatment programs retain images of a relevant facial/recovery component, not an asserted depiction of every included treatment. No verified free-stock photo of MEND’s NIR, AXERRO, DPL, New Double or AI scalp scanner was found. Branded equipment, skin-booster injection technique, complete bridal program and specific perm machinery need real studio photography for exact matches. Full-back hair reduction still uses a generic equipment illustration; existing head-spa and hair-reduction illustrations are retained, not newly sourced stock. No claim that every image is an exact technique match is made.
+
+Rejected examples: Pexels 33756692 shows a branded high-frequency comb and practitioner portrait, not scalp analysis; Pixabay 1768529 depicts scalp tattooing; Pexels 4586756 shows an unidentified facial device, not verified DPL/NIR; roller references do not prove a chemical perm.
+
+---
+
+## Historical audit (retained for provenance; not current counts or match guarantees)
+
 # Service Image Audit — Mend Beauty Studio
 
 Audit date: 10 June 2026

@@ -21,7 +21,7 @@ export default function ServiceImagePreview({ item }: ServiceImagePreviewProps) 
             alt={item.image.alt}
             fill
             sizes="288px"
-            className="object-cover"
+            className="object-cover" style={{ objectPosition: item.image.objectPosition }}
           />
         </div>
         <div className="px-5 py-4">

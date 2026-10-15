@@ -65,7 +65,7 @@ export default function ServiceImageModal({
             alt={item.image.alt}
             fill
             sizes="(max-width: 640px) 100vw, 512px"
-            className="object-cover"
+            className="object-cover" style={{ objectPosition: item.image.objectPosition }}
             priority
           />
           <button
@@ -131,8 +131,8 @@ export default function ServiceImageModal({
           {item.image.temporary && (
             <p className="mt-5 text-center text-[0.65rem] leading-relaxed text-taupe">
               {isChinese
-                ? `临时参考图片，来源：${item.image.sourceName}；仅作说明用途。`
-                : item.image.sourceName === "Illustration" ? "AI-generated illustration — not a client or studio photograph." : `Reference image via ${item.image.sourceName} — for illustration only.`}
+                ? `参考图片，来源：${item.image.sourceName}；实际护理与设备可能不同，并非本店顾客效果图。`
+                : item.image.sourceName === "Illustration" ? "AI-generated illustration — not a client or studio photograph." : `Reference photo via ${item.image.sourceName}. Treatments and equipment may differ; not a MEND client result.`}
             </p>
           )}
         </div>

@@ -52,7 +52,7 @@ export default function ServiceItem({
           className={`min-w-0 flex-1 rounded-xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${hasImage ? "cursor-pointer" : "cursor-default"}`}
         >
           {hasImage && <span className="relative mb-4 block h-36 w-full overflow-hidden rounded-xl sm:float-left sm:mb-0 sm:mr-5 sm:h-24 sm:w-28">
-            <Image src={item.image.src} alt={item.image.alt} fill sizes="(max-width: 640px) 80vw, 112px" className="object-cover" />
+            <Image src={item.image.src} alt={item.image.alt} fill sizes="(max-width: 640px) 80vw, 112px" className="object-cover" style={{ objectPosition: item.image.objectPosition }} />
           </span>}
           {item.signature && (
             <span className="mb-2 inline-flex rounded-full border border-gold/50 px-3 py-1 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-bronze">
