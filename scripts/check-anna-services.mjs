@@ -219,8 +219,9 @@ const protectedHashes = {
     "b87774da0172663b940c9de708a999d18553b3c966ad4c85d2796aae350a2462",
   "components/ServiceCard.tsx":
     "16ef9183493012406ba231d85581902fce3891011794f37b325e9873dee6cb30",
+  // Updated 2026-10-16: reviewed stock-photo focal points in the hover preview.
   "src/components/ServiceImagePreview.tsx":
-    "59e2dfcacd22566afa67d038a46cda4a82e0327c90e815950975c151b919dd94",
+    "03954ed82004811e684c61b5edb500a9b528b4f8386b6101cad09b863fb1390e",
   "public/images/services/headspa-wash.jpg":
     "5d15fe4607f9f44ccca2e887166d5b00290c275c1ccffbd95909c7a73dc17ca1",
   "public/images/services/headspa-signature-mend.webp":
