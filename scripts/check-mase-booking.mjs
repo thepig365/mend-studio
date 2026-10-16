@@ -39,8 +39,8 @@ assert.doesNotMatch(bookingConfig, /NEXT_PUBLIC_MASE_BOOKING_URL/);
 assert.match(bookingConfig, /clients\.mase\.cloud/);
 
 const siteConfig = readFileSync("lib/site.ts", "utf8");
-assert.match(siteConfig, /Wednesday", time: "Closed"/);
-assert.match(siteConfig, /9:00 am – 5:00 pm/);
+assert.match(siteConfig, /Sunday", time: "Closed"/);
+assert.match(siteConfig, /10:00 am – 6:00 pm/);
 assert.match(siteConfig, /structuredOpeningHours/);
 
 const sitemap = readFileSync("app/sitemap.ts", "utf8");

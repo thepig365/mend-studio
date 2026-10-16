@@ -36,8 +36,9 @@ website does not store booking personal information.
 - Phone display: `0499 66 88 99`
 - Telephone URI: `+61499668899`
 - Address: `74 Whitehorse Road, Deepdene VIC 3103, Australia`
-- Trading hours: 09:00–17:00 Monday, Tuesday and Thursday through Sunday;
-  Wednesday closed
+- Trading hours: 10:00–18:00 Monday through Saturday; Sunday closed (confirmed 17 October 2026)
+
+The website hours are updated separately from MaSe. MaSe hours still require an administrator login and have not been verified as updated.
 
 ## MaSe corrections required before production publication
 
@@ -71,8 +72,8 @@ These are recommendations, not approved production settings:
 - `/book` works on desktop and approximately 390 px mobile width.
 - Every public `Book` / `预约` action reaches `/book` or `/zh/book`.
 - The MaSe handoff opens the correct Mend Beauty Studio booking page.
-- Wednesday exposes no appointment slots.
-- No slot begins or ends outside 09:00–17:00 on an open day.
+- Sunday exposes no appointment slots.
+- No slot begins or ends outside 10:00–18:00 on an open day.
 - Service name, price and duration match the approved website content.
 - Phone and enquiry fallbacks remain available if MaSe is unavailable.
 - The website stores no booking personal information.
