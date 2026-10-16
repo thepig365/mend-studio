@@ -14,9 +14,8 @@ export default function ContactCard({
   const copy = ui[locale];
   const hours = isChinese
     ? [
-        { days: "星期一至星期二", time: "上午 9:00–下午 5:00" },
-        { days: "星期三", time: "休息" },
-        { days: "星期四至星期日", time: "上午 9:00–下午 5:00" },
+        { days: "星期一至星期六", time: "上午 10:00–下午 6:00" },
+        { days: "星期日", time: "休息" },
       ]
     : site.hours;
 
