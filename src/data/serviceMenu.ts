@@ -176,14 +176,30 @@ function buildItems(
   }));
 }
 
+// Keep each photo once across all sections of a service page. Repeated
+// services remain listed and bookable, but do not repeat the same imagery.
+function withoutRepeatedPhotos(items: ServiceItem[], secondaryItems: ServiceItem[]) {
+  const seen = new Set<string>();
+  const deduplicate = (item: ServiceItem): ServiceItem => {
+    if (item.hideImage) return item;
+    if (seen.has(item.image.src)) return { ...item, hideImage: true };
+    seen.add(item.image.src);
+    return item;
+  };
+  return {
+    items: items.map(deduplicate),
+    secondaryItems: secondaryItems.map(deduplicate),
+  };
+}
+
 export function getMenuItemsForCategory(slug: string): {
   items: ServiceItem[];
   secondaryItems: ServiceItem[];
 } {
-  return {
-    items: buildItems(slug, "items"),
-    secondaryItems: buildItems(slug, "secondaryItems"),
-  };
+  return withoutRepeatedPhotos(
+    buildItems(slug, "items"),
+    buildItems(slug, "secondaryItems"),
+  );
 }
 
 function buildAnnaItems(
@@ -241,10 +257,10 @@ export function getAnnaMenuItemsForCategory(slug: string): {
   items: ServiceItem[];
   secondaryItems: ServiceItem[];
 } {
-  return {
-    items: buildAnnaItems(slug, "items"),
-    secondaryItems: buildAnnaItems(slug, "secondaryItems"),
-  };
+  return withoutRepeatedPhotos(
+    buildAnnaItems(slug, "items"),
+    buildAnnaItems(slug, "secondaryItems"),
+  );
 }
 
 export const allServiceItems: ServiceItem[] = Object.keys(idsByCategory).flatMap(
