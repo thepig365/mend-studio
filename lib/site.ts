@@ -10,7 +10,7 @@ export const site = {
   wechat: "+61499666688",
   address: "74 Whitehorse Road, Deepdene VIC 3103, Australia",
   mapsHref:
-    "https://www.google.com/maps/search/?api=1&query=74%20Whitehorse%20Road%2C%20Deepdene%20VIC%203103%2C%20Australia",
+    "https://www.google.com/maps/place/Mend+Beauty+Studio/data=!4m2!3m1!1s0x0:0x7a86de5b3c1198d5",
   socialProfiles: {
     facebook: "https://www.facebook.com/mendbeauty365",
     instagram: "https://www.instagram.com/mendbeauty365/",

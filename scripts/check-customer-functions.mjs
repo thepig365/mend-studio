@@ -42,7 +42,10 @@ assert.match(shareSource, /navigator\.clipboard\.writeText/);
 
 const siteSource = readFileSync("lib/site.ts", "utf8");
 assert.match(siteSource, /email:\s*"hello@mendbeauty\.com\.au"/);
-assert.match(siteSource, /google\.com\/maps\/search/);
+assert.ok(
+  siteSource.includes("https://www.google.com/maps/place/Mend+Beauty+Studio/data=!4m2!3m1!1s0x0:0x7a86de5b3c1198d5"),
+  "Directions must target the verified MEND business profile, not an address-only search.",
+);
 
 console.log(
   "Customer-function checks passed: unified enquiry route, validated email handoff, map directions, and share fallback.",
