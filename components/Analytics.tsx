@@ -23,8 +23,10 @@ function initialiseAnalytics(id: string) {
   window.dataLayer = window.dataLayer || [];
   window.gtag =
     window.gtag ||
-    function gtag(...args: unknown[]) {
-      window.dataLayer.push(args);
+    function gtag() {
+      // Google tag commands require an Arguments object, not a rest array.
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
     };
 
   const script = document.createElement("script");
