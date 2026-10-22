@@ -281,6 +281,25 @@ function ChineseServices() {
             />
           ))}
         </div>
+        <section aria-labelledby="service-detail-links" className="mt-14 rounded-3xl border border-beige/70 bg-white/60 p-6 sm:p-8">
+          <h2 id="service-detail-links" className="font-display text-2xl text-charcoal">
+            更多服务详情
+          </h2>
+          <div className="mt-4 grid gap-4 text-sm leading-relaxed text-cocoa sm:grid-cols-2">
+            <p>
+              想进一步了解头皮与发质护理？查看{" "}
+              <Link href="/zh/services/hair-scalp-recovery" className="font-medium text-bronze underline underline-offset-4">
+                头皮健康管理项目
+              </Link>，了解头皮评估与护理选项。
+            </p>
+            <p>
+              如需眼部美容服务，请浏览{" "}
+              <Link href="/zh/services/brows-lashes" className="font-medium text-bronze underline underline-offset-4">
+                眉睫护理项目
+              </Link>；如有具体服务问题，欢迎联系门店。
+            </p>
+          </div>
+        </section>
         <p className="mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-taupe">
           所示价格均为澳元；最终价格可能根据服务复杂度、头发长度、产品用量及个人适用性在咨询后调整。除展示价格外，不对税务处理作额外声明。
         </p>

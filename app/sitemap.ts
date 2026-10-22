@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 
 // Keep in sync with the routes under app/. Homepage first, then services, then
-// standalone pages. Add new routes here when a new page.tsx is added.
+// standalone content pages. Exclude redirects (including /book and /zh/book),
+// private workspaces and authentication routes; only list canonical public pages.
 const routes: { path: string; priority: number }[] = [
   { path: "", priority: 1 },
   { path: "/services", priority: 0.8 },
@@ -20,7 +21,6 @@ const routes: { path: string; priority: number }[] = [
   { path: "/gift-cards", priority: 0.5 },
   { path: "/memberships", priority: 0.5 },
   { path: "/careers", priority: 0.4 },
-  { path: "/book", priority: 0.8 },
   { path: "/contact", priority: 0.6 },
   { path: "/our-story", priority: 0.6 },
   { path: "/policies", priority: 0.3 },
