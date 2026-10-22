@@ -101,3 +101,48 @@ change production settings or spend money.
 
 Those capabilities require separate source-system access, privacy review,
 operating design, cost verification and CEO approval.
+
+## Operator handbook (working version, 23 October 2026)
+
+The existing workspace now begins with a public-safe operating guide for remote
+promotion staff. It preserves the existing authentication, source links, AI task
+desk and Landing Page Studio. No access, account or publishing authority is
+created by reading the guide or changing a task status.
+
+Included: brand direction; remote onboarding and shop-capture handoff; a 16-task
+30-day plan; GBP, Meta, Chinese-social, website/booking and paid-search playbooks;
+service intent mapping; SEO and separate ChatGPT Search / Google AI workflows;
+eight non-brand discovery prompts; customer-care and fair-recognition standards;
+a coordinator role brief and an evidence-based weekly review template.
+
+The discovery prompts are a proposed test protocol, **not completed tests**.
+Service facts, consent, practitioner input and actual analytics still require
+verification. Seed keywords have no claimed search volume. No campaign is
+launched, no security setting changes and no paid tool is needed by this update.
+
+### Task handoff and honest persistence
+
+Task fields exist only in the current browser session. They are not stored in a
+database, local storage, analytics or a shared backend. Operators can export a
+versioned JSON task file, place it in an already-authorised private team workspace,
+and import it later. Import validates known task IDs, field types, statuses, dates
+and size, then requires confirmation before replacing current fields. Unknown
+fields are not rendered or executed. Cancel preserves the current work.
+
+A before-unload warning helps protect unexported edits but is not a save guarantee.
+The weekly text draft is separate: copy it before leaving. Export/import does not
+upload, send or change sharing permissions. Do not claim this is a synchronised
+multi-user tracker. Agree one coordinator and an authoritative team copy to avoid
+conflicting versions.
+
+### Privacy and staff access
+
+The repository is public and client bundles can be downloaded. The guide must
+therefore contain only public-safe generic guidance even though `/marketing` is
+server-authenticated. Never commit the full confidential strategy, budgets,
+individual pay/performance information, customer records, private attachments or
+secrets. Private operating records belong in existing approved private systems.
+
+The allowed account remains unchanged. New staff require administrator-approved
+access; do not share the business account password. Adding identities, role-based
+access or a shared database is a separate scoped change, not part of this release.

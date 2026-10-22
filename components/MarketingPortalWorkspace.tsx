@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import LandingPageStudio from "@/components/LandingPageStudio";
+import MarketingOperatingGuide from "@/components/MarketingOperatingGuide";
 
 const workspaces = [
   {
@@ -108,6 +109,7 @@ export default function MarketingPortalWorkspace() {
 
   return (
     <>
+      <MarketingOperatingGuide />
       <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {workspaces.map((workspace) => (
           <article
