@@ -89,3 +89,34 @@ for (const source of [
 console.log(
   "Marketing Portal checks passed: exact-email gate, private routes, no broken language switch, no-index controls, draft-only AI handoff, human-gated release controls, honest Search Console and GA4 handoffs, and no embedded AI credentials.",
 );
+
+const [guide, playbook] = await Promise.all([
+  read("components/MarketingOperatingGuide.tsx"),
+  read("lib/marketing-playbook.ts"),
+]);
+assert.match(workspace, /<MarketingOperatingGuide \/>/);
+for (const section of ["start", "strategy", "remote", "plan", "channels", "search", "service", "review", "tools"]) {
+  assert.ok(guide.includes(`id="marketing-${section}"`), `Missing handbook section: ${section}`);
+}
+assert.match(guide, /do not share a password/);
+assert.match(guide, /Session-only/);
+assert.match(guide, /not a shared database/);
+assert.match(guide, /Replace task fields/);
+assert.match(guide, /Cancel import/);
+assert.match(guide, /file\.size > 128_000/);
+assert.match(guide, /statuses\.includes/);
+assert.match(guide, /beforeunload/);
+assert.match(guide, /baseline not yet run/);
+assert.match(playbook, /OAI-SearchBot/);
+assert.match(playbook, /GPTBot/);
+assert.match(playbook, /Search Console Web totals/);
+assert.match(playbook, /Find me a hair studio in the Balwyn area/);
+assert.match(playbook, /Rewards never replace wages/);
+assert.doesNotMatch(guide, /localStorage|sessionStorage|fetch\(|dangerouslySetInnerHTML/);
+for (const source of [guide, playbook]) {
+  assert.doesNotMatch(source, /sk-[A-Za-z0-9_-]{20,}|AUTH_GOOGLE_SECRET|OPENAI_API_KEY|ANTHROPIC_API_KEY/);
+}
+const taskIds = [...playbook.matchAll(/id: "([A-Z]+-\d+)"/g)].map((match) => match[1]);
+assert.equal(taskIds.length, 16);
+assert.equal(new Set(taskIds).size, taskIds.length);
+console.log("Operating guide checks passed: public-safe handbook, 16 distinct tasks, honest session-only handoff, validated import, no automatic transmission, separate SEO/AI evidence, and unchanged access boundary.");
