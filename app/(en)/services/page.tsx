@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
@@ -39,6 +40,28 @@ export default function ServicesPage() {
             />
           ))}
         </div>
+
+        <section aria-labelledby="service-detail-links" className="mt-14 rounded-3xl border border-beige/70 bg-white/60 p-6 sm:p-8">
+          <h2 id="service-detail-links" className="font-display text-2xl text-charcoal">
+            More service details
+          </h2>
+          <div className="mt-4 grid gap-4 text-sm leading-relaxed text-cocoa sm:grid-cols-2">
+            <p>
+              Looking for focused scalp and hair care? Explore the{" "}
+              <Link href="/services/hair-scalp-recovery" className="font-medium text-bronze underline underline-offset-4">
+                Hair &amp; Scalp Recovery menu
+              </Link>{" "}
+              for scalp assessment and care options.
+            </p>
+            <p>
+              For eye-area beauty services, browse the{" "}
+              <Link href="/services/brows-lashes" className="font-medium text-bronze underline underline-offset-4">
+                Brows &amp; Lashes menu
+              </Link>{" "}
+              and contact the studio with any service questions.
+            </p>
+          </div>
+        </section>
 
         <div className="mt-14">
           <SectionHeading

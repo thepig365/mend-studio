@@ -12,6 +12,7 @@ const expectedRoutes = [
   "/services/head-spa",
   "/services/skin-facial",
   "/services/body-care",
+  "/services/hair-reduction",
   "/services/brows-lashes",
   "/services/mens-grooming",
   "/services/nails",
@@ -23,6 +24,7 @@ const expectedRoutes = [
   "/contact",
   "/our-story",
   "/policies",
+  "/team/mejin-shick",
 ];
 
 async function read(path) {

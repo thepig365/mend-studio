@@ -44,7 +44,7 @@ assert.match(siteConfig, /10:00 am – 6:00 pm/);
 assert.match(siteConfig, /structuredOpeningHours/);
 
 const sitemap = readFileSync("app/sitemap.ts", "utf8");
-assert.match(sitemap, /path: "\/book"/);
+assert.doesNotMatch(sitemap, /path: "(?:\/zh)?\/book"/, "Booking redirects must not be submitted as canonical sitemap pages");
 
 const schema = readFileSync("lib/local-business-schema.ts", "utf8");
 assert.match(schema, /openingHoursSpecification: site\.structuredOpeningHours/);

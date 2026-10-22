@@ -21,7 +21,19 @@ const policies = await read("app/(en)/policies/page.tsx");
 const chinese = await read("app/(zh)/zh/[[...slug]]/page.tsx");
 const englishLayout = await read("app/(en)/layout.tsx");
 const chineseLayout = await read("app/(zh)/zh/layout.tsx");
+const servicesHub = await read("app/(en)/services/page.tsx");
+const sitemap = await read("app/sitemap.ts");
 const envExample = await read(".env.example");
+
+const sitemapPaths = [...sitemap.matchAll(/\{ path: "([^"]*)", priority:/g)].map((match) => match[1]);
+assert(sitemapPaths.length === 20 && new Set(sitemapPaths).size === 20, "Sitemap must contain 20 unique public content paths (40 bilingual URLs)");
+assert(!sitemapPaths.some((path) => /^\/(book|marketing|api)(\/|$)/.test(path)), "Redirects and private/auth routes must stay outside the sitemap");
+assert(sitemapPaths.includes("/services/nails-semi-permanent"), "Keep the public legacy nails/semi-permanent chooser indexable");
+const chineseServicesHub = chinese.slice(chinese.indexOf("function ChineseServices()"), chinese.indexOf("function ChineseServiceDetail("));
+for (const slug of ["hair-scalp-recovery", "brows-lashes"]) {
+  assert(servicesHub.includes(`href="/services/${slug}"`), `English services hub needs a crawlable ${slug} link`);
+  assert(chineseServicesHub.includes(`href="/zh/services/${slug}"`), `Chinese services hub needs a same-language ${slug} link`);
+}
 
 assert(
   site.includes('"https://www.facebook.com/mendbeauty365"'),
@@ -85,5 +97,5 @@ assert(
 );
 
 console.log(
-  "Growth SEO checks passed: social identity, local/service structured data, consent gate and conversion events.",
+  "Growth SEO checks passed: 40 canonical sitemap URLs, bilingual service discovery, social identity, local/service structured data, consent gate and conversion events.",
 );
