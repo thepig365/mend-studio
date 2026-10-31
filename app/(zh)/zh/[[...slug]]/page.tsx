@@ -1,3 +1,5 @@
+import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
+import { hairPageCopy } from "@/lib/hair-page-copy";
 import MenuDownloads from "@/components/MenuDownloads";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -116,8 +118,8 @@ export async function generateMetadata({
       ? getZhAnnaCategory(slug[1])
       : getZhCategory(slug[1]);
     return chinesePageMetadata({
-      title: category.title,
-      description: category.excerpt,
+      title: slug[1] === "hair" ? hairPageCopy["zh-Hans"].title : category.title,
+      description: slug[1] === "hair" ? hairPageCopy["zh-Hans"].description : category.excerpt,
       path,
     });
   }
@@ -360,8 +362,8 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
       />
       <Hero
         eyebrow="服务项目"
-        title={category.title}
-        body={category.intro}
+        title={slug === "hair" ? hairPageCopy["zh-Hans"].heading : category.title}
+        body={slug === "hair" ? hairPageCopy["zh-Hans"].intro : category.intro}
         image={category.image}
         imageAlt={category.title}
         actions={[
@@ -370,6 +372,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         ]}
       />
       <section className="wrap py-16 sm:py-20">
+        {slug === "hair" && <HairMenuIntro locale="zh-Hans" />}
         <MenuDownloads slug={slug} chinese />
         {primaryGroups.map(([title, items], index) => (
           <div key={title} className={index === 0 ? "" : "mt-10"}>
@@ -407,7 +410,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
           </Link>
         </div>
       </section>
-      {slug === "hair" ? <MejinProfileFeature locale="zh-Hans" /> : null}
+      {slug === "hair" ? <><MejinProfileFeature locale="zh-Hans" /><HairVisitGuide locale="zh-Hans" /></> : null}
       <CTABlock
         eyebrow="准备好了吗？"
         heading="预约到访 Mend Beauty Studio"

@@ -15,6 +15,7 @@ type ServicePageProps = {
   eyebrow?: string;
   subtitle?: string;
   children?: ReactNode;
+  beforeMenuContent?: ReactNode;
   afterMenuContent?: ReactNode;
   hidePriceList?: boolean;
   menuOverride?: {
@@ -37,6 +38,7 @@ export default function ServicePage({
   eyebrow = "Services",
   subtitle,
   children,
+  beforeMenuContent,
   afterMenuContent,
   hidePriceList = false,
   menuOverride,
@@ -69,6 +71,7 @@ export default function ServicePage({
       />
 
       <section className="wrap py-16 sm:py-20">
+        {beforeMenuContent}
         <MenuDownloads slug={category.slug} />
         {!hidePriceList &&
           primaryGroups.map(([title, items], index) => (
