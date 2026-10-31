@@ -30,7 +30,7 @@ const routes: { path: string; priority: number }[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   // No lastModified field — we don't track real per-page modification dates,
   // and a build-time timestamp would be a fake signal to search engines.
-  return routes.flatMap(({ path, priority }) => {
+  const bilingualPages = routes.flatMap(({ path, priority }) => {
     const englishUrl = `${site.url}${path}`;
     const chineseUrl = `${site.url}/zh${path}`;
     const alternates = {
@@ -55,4 +55,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     ];
   });
+  // These offer pages are currently English-only; do not advertise missing
+  // Chinese equivalents as language alternates.
+  const promotionPages: MetadataRoute.Sitemap = [
+    "/promotions",
+    "/promotions/first-hair-visit",
+  ].map((path) => ({
+    url: `${site.url}${path}`,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+  return [...bilingualPages, ...promotionPages];
 }
