@@ -25,7 +25,7 @@ export default function ServiceItem({
   const hasImage = !item.hideImage;
 
   return (
-    <li className="relative">
+    <li id={`service-${item.id}`} className="relative scroll-mt-36">
       {/* Hover preview — pointer devices only, never blocks nearby text */}
       {showPreview && hasImage && (
         <span className="hidden [@media(hover:hover)_and_(pointer:fine)]:inline">
