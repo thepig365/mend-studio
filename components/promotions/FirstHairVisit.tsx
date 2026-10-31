@@ -3,11 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { firstHairVisitOffer as offer } from "@/lib/promotions";
+import { firstHairVisitOffer, chineseFirstHairVisitOffer } from "@/lib/promotions";
+import { localePath, ui, type Locale } from "@/lib/i18n";
+import { promotionsCopy } from "@/lib/promotions-copy";
 import { site } from "@/lib/site";
 import styles from "./Promotions.module.css";
 
-export default function FirstHairVisit() {
+export default function FirstHairVisit({ locale = "en-AU" }: { locale?: Locale }) {
+  const copy = promotionsCopy[locale];
+  const common = ui[locale];
+  const offer = locale === "zh-Hans" ? chineseFirstHairVisitOffer : firstHairVisitOffer;
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -30,38 +35,38 @@ export default function FirstHairVisit() {
 
   return (
     <>
-      {bannerVisible && <aside className={styles.banner} aria-label="First-visit hair offer">
-        <p><span aria-hidden="true">⌖</span><span>New to MEND? <strong>50% off your first hair visit.</strong></span></p>
-        <button className={styles.bannerLink} onClick={openOffer}>See offer <span aria-hidden="true">↗</span></button>
-        <button className={styles.bannerClose} aria-label="Dismiss offer banner" onClick={() => setBannerVisible(false)}>×</button>
+      {bannerVisible && <aside className={styles.banner} aria-label={copy.bannerLabel}>
+        <p><span aria-hidden="true">⌖</span><span>{copy.welcome} <strong>{copy.offerHeadline}</strong></span></p>
+        <button className={styles.bannerLink} onClick={openOffer}>{copy.seeOffer} <span aria-hidden="true">↗</span></button>
+        <button className={styles.bannerClose} aria-label={copy.dismissBanner} onClick={() => setBannerVisible(false)}>×</button>
       </aside>}
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href="/promotions">Promotions</Link><span aria-hidden="true">/</span><span>First hair visit</span></nav>
-          <p className={styles.eyebrow}>DEEPDENE · MELBOURNE</p>
-          <h1>Hair Atelier<span>at MEND.</span></h1>
-          <p className={styles.heroOffer}>50% off your first hair visit.</p>
-          <p className={styles.heroDetail}>{offer.scope} Haircuts, colour, balayage, styling, perms and hair treatments.</p>
-          <div className={styles.heroActions}><a className={styles.button} href="/book">Book <span aria-hidden="true">↗</span></a><button className={styles.textLink} onClick={openOffer}>View offer details <span aria-hidden="true">→</span></button></div>
+          <nav className={styles.breadcrumb} aria-label={copy.breadcrumb}><Link href={localePath("/promotions", locale)}>{copy.promotions}</Link><span aria-hidden="true">/</span><span>{copy.firstHairVisit}</span></nav>
+          <p className={styles.eyebrow}>{copy.location}</p>
+          <h1>Hair Atelier<span>{copy.heroSubheading}</span></h1>
+          <p className={styles.heroOffer}>{copy.offerHeadline}</p>
+          <p className={styles.heroDetail}>{offer.scope} {copy.serviceSummary}</p>
+          <div className={styles.heroActions}><a className={styles.button} href={localePath("/book", locale)}>{common.bookNow} <span aria-hidden="true">↗</span></a><button className={styles.textLink} onClick={openOffer}>{copy.details} <span aria-hidden="true">→</span></button></div>
           <p className={styles.heroAddress}><span aria-hidden="true"/>74 Whitehorse Road, Deepdene</p>
         </div>
-        <figure className={styles.heroPhoto}><Image src="/images/mend-beauty-hero.png" alt="MEND Beauty Studio interior in Deepdene with arched entrances and hair stations" fill priority sizes="(max-width: 760px) 100vw, 55vw"/><figcaption><span>YOUR TIME. YOUR HAIR.</span><span>THE DEEPDENE STUDIO</span></figcaption></figure>
+        <figure className={styles.heroPhoto}><Image src="/images/mend-beauty-hero.png" alt={copy.heroImageAlt} fill priority sizes="(max-width: 760px) 100vw, 55vw"/><figcaption><span>{copy.heroCaption}</span><span>{copy.studioCaption}</span></figcaption></figure>
       </section>
-      <section className={styles.serviceLine} aria-label="Included hair services">
+      <section className={styles.serviceLine} aria-label={copy.includedServices}>
         {offer.services.map((service) => <span key={service}>{service}</span>)}
       </section>
       <section className={styles.offerSection} id="offer" aria-labelledby="offer-heading">
-        <div><p className={styles.eyebrow}>A FIRST-VISIT WELCOME</p><h2 id="offer-heading">Your hair. A fresh beginning.</h2><p>Enjoy 50% off all hair service items on your first visit as a new MEND client.</p><p className={styles.scopeNote}>{offer.exclusions}</p><Link className={styles.textLink} href="/services/hair">Explore the Hair Atelier menu <span aria-hidden="true">↗</span></Link></div>
-        <div className={styles.bookingCard}><p className={styles.eyebrow}>PLAN YOUR VISIT</p><h3>We look forward to meeting you.</h3><p>Book your hair appointment online. For help with the offer or your booking, call our team.</p><a className={styles.button} href="/book">Book <span aria-hidden="true">↗</span></a><a className={styles.textLink} href={site.phoneHref}>Call {site.phone}</a></div>
+        <div><p className={styles.eyebrow}>{copy.welcomeEyebrow}</p><h2 id="offer-heading">{copy.welcomeHeading}</h2><p>{copy.welcomeBody}</p><p className={styles.scopeNote}>{offer.exclusions}</p><Link className={styles.textLink} href={localePath("/services/hair", locale)}>{copy.menu} <span aria-hidden="true">↗</span></Link></div>
+        <div className={styles.bookingCard}><p className={styles.eyebrow}>{copy.planVisit}</p><h3>{copy.bookingHeading}</h3><p>{copy.bookingBody}</p><a className={styles.button} href={localePath("/book", locale)}>{common.bookNow} <span aria-hidden="true">↗</span></a><a className={styles.textLink} href={site.phoneHref}>{common.call} {site.phone}</a></div>
       </section>
       <dialog className={styles.dialog} ref={dialog} aria-labelledby="offer-dialog-title" aria-describedby="offer-dialog-scope" onClose={returnFocus} onClick={(event) => {
         if (event.target !== event.currentTarget) return;
         const rect = event.currentTarget.getBoundingClientRect();
         if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeOffer();
       }}>
-        <div className={styles.modalTop}><button className={styles.modalClose} onClick={closeOffer} aria-label="Close offer details" autoFocus>×</button></div>
-        <div className={styles.modalGrid}><figure className={styles.modalPhoto}><Image src="/images/mend-beauty-salon-interior-1.png" alt="Hair styling stations inside MEND's Deepdene studio" fill sizes="(max-width: 760px) 1px, 380px"/><figcaption>MEND, DEEPDENE.<br/>A space for you.</figcaption></figure><div className={styles.modalCopy}>
-          <p className={styles.eyebrow}>NEW TO HAIR ATELIER?</p><h2 id="offer-dialog-title">Your first hair visit.<br/>50% off.</h2><p className={styles.modalLead} id="offer-dialog-scope">{offer.scope}</p><p>Includes haircuts, colour, balayage, styling, perms and hair treatments.</p><p className={styles.scopeNote}>{offer.exclusions}</p><a className={styles.button} href="/book">Book <span aria-hidden="true">↗</span></a><a className={styles.textLink} href={site.phoneHref}>Call about this offer</a><button className={styles.continueButton} onClick={closeOffer}>I’ll explore first <span aria-hidden="true">→</span></button><p className={styles.modalAddress}>74 Whitehorse Road, Deepdene VIC 3103</p>
+        <div className={styles.modalTop}><button className={styles.modalClose} onClick={closeOffer} aria-label={copy.closeDetails} autoFocus>×</button></div>
+        <div className={styles.modalGrid}><figure className={styles.modalPhoto}><Image src="/images/mend-beauty-salon-interior-1.png" alt={copy.modalImageAlt} fill sizes="(max-width: 760px) 1px, 380px"/><figcaption>{copy.modalCaptionOne}<br/>{copy.modalCaptionTwo}</figcaption></figure><div className={styles.modalCopy}>
+          <p className={styles.eyebrow}>{copy.modalEyebrow}</p><h2 id="offer-dialog-title">{copy.modalHeadingOne}<br/>{copy.modalHeadingTwo}</h2><p className={styles.modalLead} id="offer-dialog-scope">{offer.scope}</p><p>{copy.modalServices}</p><p className={styles.scopeNote}>{offer.exclusions}</p><a className={styles.button} href={localePath("/book", locale)}>{common.bookNow} <span aria-hidden="true">↗</span></a><a className={styles.textLink} href={site.phoneHref}>{copy.callOffer}</a><button className={styles.continueButton} onClick={closeOffer}>{copy.exploreFirst} <span aria-hidden="true">→</span></button><p className={styles.modalAddress}>74 Whitehorse Road, Deepdene VIC 3103</p>
         </div></div>
       </dialog>
     </>

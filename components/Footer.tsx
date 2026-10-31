@@ -82,11 +82,11 @@ export default function Footer() {
               ))}
             <li>
               <Link
-                href="/promotions"
-                hrefLang="en-AU"
+                href={localePath("/promotions", locale)}
+                hrefLang={locale}
                 className="text-sm text-cream/80 transition-colors hover:text-gold"
               >
-                {locale === chineseLocale ? "优惠活动（英文）" : "Promotions"}
+                {locale === chineseLocale ? "优惠活动" : "Promotions"}
               </Link>
             </li>
             <li>
