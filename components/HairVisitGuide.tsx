@@ -11,6 +11,10 @@ export function HairMenuIntro({ locale }: { locale: Locale }) {
   const copy = hairPageCopy[locale];
   return <div className="mb-8 scroll-mt-36" id="hair-menu">
     <SectionHeading title={copy.menuHeading} body={copy.menuIntro} align="left"/>
+    <p className="mt-5 text-sm leading-relaxed text-cocoa">
+      {locale === "zh-Hans" ? "想先了解发型师？" : "Get to know your hairdresser. "}
+      <a className={textLink} href="#meet-mejin">{locale === "zh-Hans" ? "认识 Mejin Shick" : "Meet Mejin Shick"}</a>
+    </p>
     <nav className="mt-6 flex flex-wrap gap-3" aria-label={locale === "zh-Hans" ? "美发项目快捷导航" : "Hair service shortcuts"}>
       {promotionServiceLinks.map((service, index) => <a className="btn-outline min-h-11 px-5 py-2" key={service.anchor} href={`#${service.anchor}`}>{copy.serviceLabels[index]}</a>)}
     </nav>

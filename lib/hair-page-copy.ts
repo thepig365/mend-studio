@@ -1,5 +1,14 @@
 import type { Locale } from "@/lib/i18n";
 
+// Existing MEND studio image, already used by the approved promotion pages.
+export const hairStudioImage = {
+  src: "/images/mend-beauty-salon-interior-1.png",
+  alt: {
+    "en-AU": "Hair styling stations inside MEND Beauty Studio in Deepdene",
+    "zh-Hans": "MEND Beauty Studio 位于 Deepdene 的店内美发工作区",
+  },
+};
+
 export const hairPageCopy: Record<Locale, {
   title: string;
   description: string;

@@ -1,5 +1,5 @@
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
-import { hairPageCopy } from "@/lib/hair-page-copy";
+import { hairPageCopy, hairStudioImage } from "@/lib/hair-page-copy";
 import ServicePage from "@/components/ServicePage";
 import MejinProfileFeature from "@/components/MejinProfileFeature";
 import { getAnnaCategory } from "@/lib/anna-services";
@@ -16,7 +16,7 @@ export default function HairServicesPage() {
   const category = getAnnaCategory("hair");
   return (
     <ServicePage
-      category={{ ...category, title: hairPageCopy["en-AU"].heading, intro: hairPageCopy["en-AU"].intro }}
+      category={{ ...category, title: hairPageCopy["en-AU"].heading, intro: hairPageCopy["en-AU"].intro, image: hairStudioImage.src, imageAlt: hairStudioImage.alt["en-AU"] }}
       subtitle="Scalp Assessment · Cutting · Colour · Perm Design"
       menuOverride={getAnnaMenuItemsForCategory("hair")}
       beforeMenuContent={<HairMenuIntro locale="en-AU" />}

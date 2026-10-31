@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { chineseLocale, isChinesePath, localePath } from "@/lib/i18n";
+import { isHairOfferPopupRoute } from "@/lib/hair-offer-popup";
 
 type Consent = "accepted" | "declined" | null;
 
@@ -105,8 +106,10 @@ export default function Analytics() {
         return;
       }
       if (!href) return;
+      const offerLink = ["/promotions/first-hair-visit", "/zh/promotions/first-hair-visit"].includes(href);
+      const popupOffer = offerLink && isHairOfferPopupRoute(path) && control.getAttribute("data-analytics-placement") === "hair_offer_popup";
       const action = trackedAction(href) ?? (
-        context.service_category === "hair" && ["/promotions/first-hair-visit", "/zh/promotions/first-hair-visit"].includes(href)
+        (context.service_category === "hair" || popupOffer) && offerLink
           ? "offer_view_click" : null
       );
       if (!action) return;
@@ -115,6 +118,7 @@ export default function Analytics() {
         page_path: path,
         link_url: href,
         ...context,
+        ...(popupOffer ? { service_category: "hair", link_placement: "hair_offer_popup" } : {}),
         ...(action === "book_click" ? { action_stage: "booking_link" } : {}),
         ...(action === "offer_view_click" ? { offer_id: "first-hair-visit" } : {}),
       });
@@ -133,6 +137,7 @@ export default function Analytics() {
 
   return (
     <aside
+      data-mend-analytics-consent
       aria-label={
         locale === chineseLocale ? "可选网站分析设置" : "Optional website analytics"
       }

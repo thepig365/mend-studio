@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileStickyBar from "@/components/MobileStickyBar";
 import Analytics from "@/components/Analytics";
+import HairOfferPopup from "@/components/HairOfferPopup";
 import { localBusinessJsonLd } from "@/lib/local-business-schema";
 
 const cormorant = Cormorant_Garamond({
@@ -36,6 +37,7 @@ export default function SiteDocument({ children, lang }: SiteDocumentProps) {
         <Footer />
         <MobileStickyBar />
         <Analytics />
+        <HairOfferPopup />
       </body>
     </html>
   );

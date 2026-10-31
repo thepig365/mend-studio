@@ -1,5 +1,5 @@
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
-import { hairPageCopy } from "@/lib/hair-page-copy";
+import { hairPageCopy, hairStudioImage } from "@/lib/hair-page-copy";
 import MenuDownloads from "@/components/MenuDownloads";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -364,8 +364,8 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         eyebrow="服务项目"
         title={slug === "hair" ? hairPageCopy["zh-Hans"].heading : category.title}
         body={slug === "hair" ? hairPageCopy["zh-Hans"].intro : category.intro}
-        image={category.image}
-        imageAlt={category.title}
+        image={slug === "hair" ? hairStudioImage.src : category.image}
+        imageAlt={slug === "hair" ? hairStudioImage.alt["zh-Hans"] : category.title}
         actions={[
           { label: "预约", href: "/zh/book", variant: "gold" },
           { label: "全部服务", href: "/zh/services", variant: "outline" },

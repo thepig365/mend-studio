@@ -62,6 +62,9 @@ function mount(storedConsent) {
       isChinesePath: (path) => path.startsWith("/zh"),
       localePath: (path) => path,
     },
+    "@/lib/hair-offer-popup": {
+      isHairOfferPopupRoute: (path) => ["/", "/zh", "/services/hair", "/zh/services/hair"].includes(path),
+    },
   };
   const exports = {};
   vm.runInNewContext(compiled, {
@@ -96,6 +99,7 @@ for (const consent of [null, "declined"]) {
   page.navigate("/services/hair");
   page.click({ href: "/book" });
   page.click({ "data-analytics-action": "offer_details_view" });
+  page.click({ href: "/promotions/first-hair-visit", "data-analytics-placement": "hair_offer_popup" });
   assert.equal(page.scripts.length, 0, "No Google script before consent");
   assert.equal(page.window.dataLayer, undefined, "No queued analytics before consent");
   assert.equal(page.listeners.size, 0, "No click tracking before consent");
@@ -146,7 +150,16 @@ for (const prefix of ["", "/zh"]) {
 accepted.navigate("/services/skin-facial");
 accepted.click({ href: "/book" });
 assert.equal(commands.at(-1)[2].service_category, undefined, "Other services are never attributed to hair");
+for (const prefix of ["", "/zh"]) {
+  accepted.navigate(prefix || "/");
+  accepted.click({ href: `${prefix}/promotions/first-hair-visit`, "data-analytics-placement": "hair_offer_popup" });
+  assert.equal(commands.at(-1)[1], "offer_view_click");
+  assert.equal(commands.at(-1)[2].link_placement, "hair_offer_popup");
+  assert.equal(commands.at(-1)[2].service_category, "hair");
+}
+accepted.navigate("/contact");
 const beforeUntracked = commands.length;
+accepted.click({ href: "/promotions/first-hair-visit", "data-analytics-placement": "hair_offer_popup" });
 accepted.click({ "data-analytics-action": "offer_details_view" });
 accepted.click({ "data-analytics-action": "purchase" });
 accepted.click({ href: "#menu-signature-colour" });
