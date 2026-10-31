@@ -55,15 +55,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     ];
   });
-  // These offer pages are currently English-only; do not advertise missing
-  // Chinese equivalents as language alternates.
   const promotionPages: MetadataRoute.Sitemap = [
     "/promotions",
     "/promotions/first-hair-visit",
-  ].map((path) => ({
-    url: `${site.url}${path}`,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  ].flatMap((path) => {
+    const englishUrl = `${site.url}${path}`;
+    const chineseUrl = `${site.url}/zh${path}`;
+    const alternates = { languages: { "en-AU": englishUrl, "zh-Hans": chineseUrl, "x-default": englishUrl } };
+    return [englishUrl, chineseUrl].map((url) => ({ url, changeFrequency: "monthly" as const, priority: 0.6, alternates }));
+  });
   return [...bilingualPages, ...promotionPages];
 }

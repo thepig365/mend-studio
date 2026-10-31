@@ -7,3 +7,17 @@
 
 .brandLogo{display:block;width:110px;height:auto;object-fit:contain}.footerIdentity{display:flex;align-items:center;gap:26px}.footerLogo{display:block;width:150px;height:auto;object-fit:contain;flex-shrink:0}
 @media(max-width:760px){.header{padding-top:8px;padding-bottom:8px}.brandLogo{width:90px}.footerIdentity{align-items:flex-start;flex-direction:column;gap:20px}.footerLogo{width:130px}}
+
+.languageSwitch{min-width:44px;justify-content:center;text-decoration:underline!important;text-underline-offset:4px}
+.page:lang(zh-Hans){font-family:var(--font-jost),"PingFang SC","Microsoft YaHei",sans-serif}
+.page:lang(zh-Hans) h1,.page:lang(zh-Hans) h2,.page:lang(zh-Hans) h3{font-family:var(--font-cormorant),"Songti SC","Noto Serif CJK SC",serif;line-height:1.35;letter-spacing:0}
+.page:lang(zh-Hans) .hero h1{line-height:1.05;letter-spacing:-1px}
+.page:lang(zh-Hans) .hero h1 span{font-size:clamp(30px,3.2vw,46px);font-style:normal;line-height:1.5;margin-top:12px;letter-spacing:1px}
+.page:lang(zh-Hans) .eyebrow{letter-spacing:1px}
+.page:lang(zh-Hans) .heroOffer{line-height:1.5}
+.page:lang(zh-Hans) .heroPhoto figcaption{flex-wrap:wrap;line-height:1.7}
+@media(max-width:760px){.navigation{gap:8px}.page:lang(zh-Hans) .hero h1 span{font-size:30px}.page:lang(zh-Hans) .offerSection h2{font-size:32px}.page:lang(zh-Hans) .cardCopy h2{font-size:32px}.page:lang(zh-Hans) .modalCopy h2{font-size:36px}.page:lang(zh-Hans) .modalCopy .eyebrow{font-size:10px}}
+@media(max-width:360px){.page:lang(zh-Hans) .hero h1 span{font-size:27px}.page:lang(zh-Hans) .modalCopy h2{font-size:31px}}
+
+.page:lang(zh-Hans) h2{text-wrap:balance}
+@media(max-width:760px){.page:lang(zh-Hans) .banner p{flex-basis:100%}.page:lang(zh-Hans) .bannerLink{margin-left:33px}}
