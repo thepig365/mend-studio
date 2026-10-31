@@ -5,6 +5,10 @@ const base = process.argv[2] || "http://127.0.0.1:3191";
 const origin = "https://mendbeauty.com.au";
 const englishPaths = ["/promotions", "/promotions/first-hair-visit"];
 const paths = englishPaths.flatMap((path) => [path, `/zh${path}`]);
+const serviceAnchors = [
+  "menu-ladies-signature-cut", "menu-signature-colour", "service-signature-balayage",
+  "menu-wash-blow-dry", "menu-classic-texture-perm", "menu-hydra-hair-ritual",
+];
 const tags = (html, name) => [...html.matchAll(new RegExp(`<${name}\\b[^>]*>`, "gi"))].map((match) => Object.fromEntries([...match[0].matchAll(/([\w-]+)="([^"]*)"/g)].map((attr) => [attr[1].toLowerCase(), attr[2]])));
 const textOnly = (html) => html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
 const get = (path, options = {}) => fetch(new URL(path, base), { signal: AbortSignal.timeout(20000), ...options });
@@ -28,6 +32,18 @@ for (const path of paths) {
   }
   const links = tags(html, "a");
   assert.ok(links.some((link) => link.href === otherPath && link.hreflang === (chinese ? "en-AU" : "zh-Hans")), `${path}: equivalent-page language switch`);
+  if (path.endsWith("/first-hair-visit")) {
+    const hairPath = chinese ? "/zh/services/hair" : "/services/hair";
+    const hair = await get(hairPath);
+    assert.equal(hair.status, 200, `${path}: hair service destination resolves`);
+    const hairHtml = await hair.text();
+    for (const anchor of serviceAnchors) {
+      assert.equal((hairHtml.match(new RegExp(`id="${anchor}"`, "g")) || []).length, 1, `${hairPath}: unique ${anchor} target`);
+      assert.equal(links.filter((link) => link.href === `${hairPath}#${anchor}`).length, 2, `${path}: service card and dialog both link to ${anchor}`);
+    }
+    assert.match(html, /font-display text-4xl font-medium leading-\[1\.1\]/, `${path}: shared Hero heading scale`);
+    assert.match(html, /class="btn-gold"/, `${path}: shared booking button`);
+  }
   assert.match(text, /50% off/i);
   if (chinese) {
     assert.match(text, /新客首次到店，所有美发服务项目均享五折（50% off）。/);
@@ -83,4 +99,4 @@ const logo = await get("/images/mend-supplied-logo.png");
 assert.equal(logo.status, 200);
 assert.match(logo.headers.get("content-type"), /image\/png/);
 assert.ok((await logo.arrayBuffer()).byteLength > 100000, "Supplied logo served");
-console.log("Promotions checks passed: four bilingual promotion pages, correct languages and reciprocal alternates, translated approved terms, no demo or signup controls, 44 sitemap URLs HTTP 200, same-language links, supplied logo and both unchanged MaSe booking destinations.");
+console.log("Promotions checks passed: four bilingual promotion pages, correct languages and reciprocal alternates, translated approved terms, no demo or signup controls, 44 sitemap URLs HTTP 200, same-language links, six unique service detail anchors per language with linked cards and dialog entries, shared Hero/button styles, supplied logo and both unchanged MaSe booking destinations.");

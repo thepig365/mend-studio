@@ -22,7 +22,7 @@ export default function ServiceMenuSection({
   const [activeItem, setActiveItem] = useState<ServiceItemType | null>(null);
 
   return (
-    <div className="rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-10">
+    <div id={items[0] ? `menu-${items[0].id}` : undefined} className="scroll-mt-36 rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-10">
       {title && (
         <h3 className="mb-4 font-display text-2xl font-medium text-charcoal">{title}</h3>
       )}
