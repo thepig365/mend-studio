@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { chineseLocale, isChinesePath, localePath } from "@/lib/i18n";
 
 type Consent = "accepted" | "declined" | null;
@@ -42,6 +42,15 @@ function initialiseAnalytics(id: string) {
   });
 }
 
+function hairContext(pathname: string) {
+  const path = pathname.replace(/^\/zh(?=\/)/, "");
+  if (path === "/services/hair") return { service_category: "hair", page_type: "service" };
+  if (path === "/promotions/first-hair-visit") {
+    return { service_category: "hair", page_type: "promotion", offer_id: "first-hair-visit" };
+  }
+  return {};
+}
+
 function trackedAction(href: string) {
   if (href === "/book" || href === "/zh/book") return "book_click";
   if (href.startsWith("tel:")) return "phone_click";
@@ -53,6 +62,7 @@ function trackedAction(href: string) {
 export default function Analytics() {
   const pathname = usePathname();
   const [consent, setConsent] = useState<Consent>(null);
+  const previousPage = useRef<string | null>(null);
   const locale = isChinesePath(pathname) ? chineseLocale : "en-AU";
 
   useEffect(() => {
@@ -71,7 +81,10 @@ export default function Analytics() {
       page_path: pathname,
       page_location: window.location.href,
       page_title: document.title,
+      page_referrer: previousPage.current ?? document.referrer,
+      ...hairContext(pathname),
     });
+    previousPage.current = window.location.href;
   }, [consent, pathname]);
 
   useEffect(() => {
@@ -80,15 +93,30 @@ export default function Analytics() {
     const onClick = (event: MouseEvent) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const anchor = target.closest("a[href]");
-      const href = anchor?.getAttribute("href");
+      const control = target.closest("a[href], button[data-analytics-action]");
+      if (!control) return;
+      const href = control.getAttribute("href");
+      const path = window.location.pathname;
+      const context = hairContext(path);
+      // Only explicitly tagged offer-detail buttons are tracked; no form values
+      // or arbitrary button text are collected. A view is not a redeemed offer.
+      if (control.getAttribute("data-analytics-action") === "offer_details_view" && context.offer_id) {
+        window.gtag("event", "offer_details_view", { page_path: path, ...context });
+        return;
+      }
       if (!href) return;
-      const action = trackedAction(href);
+      const action = trackedAction(href) ?? (
+        context.service_category === "hair" && ["/promotions/first-hair-visit", "/zh/promotions/first-hair-visit"].includes(href)
+          ? "offer_view_click" : null
+      );
       if (!action) return;
 
       window.gtag("event", action, {
-        page_path: window.location.pathname,
+        page_path: path,
         link_url: href,
+        ...context,
+        ...(action === "book_click" ? { action_stage: "booking_link" } : {}),
+        ...(action === "offer_view_click" ? { offer_id: "first-hair-visit" } : {}),
       });
     };
 

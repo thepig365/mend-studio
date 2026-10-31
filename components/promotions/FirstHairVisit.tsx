@@ -47,7 +47,7 @@ export default function FirstHairVisit({ locale = "en-AU" }: { locale?: Locale }
       {bannerVisible && <aside className="border-b border-beige/70 bg-linen" aria-label={copy.bannerLabel}>
         <div className="wrap flex items-center gap-3 py-3 text-sm leading-relaxed text-charcoal">
           <p className="flex-1">{copy.welcome} <strong className="font-medium">{copy.offerHeadline}</strong></p>
-          <button className="min-h-11 shrink-0 rounded-full px-3 font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-gold" onClick={openOffer}>{copy.seeOffer}</button>
+          <button className="min-h-11 shrink-0 rounded-full px-3 font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-gold" data-analytics-action="offer_details_view" onClick={openOffer}>{copy.seeOffer}</button>
           <button className="menu-toggle shrink-0" aria-label={copy.dismissBanner} onClick={() => setBannerVisible(false)}>×</button>
         </div>
       </aside>}
@@ -74,7 +74,7 @@ export default function FirstHairVisit({ locale = "en-AU" }: { locale?: Locale }
       </section>
       <section className="bg-sand" id="offer">
         <div className="wrap grid gap-10 py-16 sm:py-20 lg:grid-cols-2">
-          <div><SectionHeading align="left" eyebrow={copy.welcomeEyebrow} title={copy.welcomeHeading} body={copy.welcomeBody}/><p className="mt-5 text-sm leading-relaxed text-cocoa">{offer.exclusions}</p><button className="btn-outline mt-8" onClick={openOffer}>{copy.details}</button></div>
+          <div><SectionHeading align="left" eyebrow={copy.welcomeEyebrow} title={copy.welcomeHeading} body={copy.welcomeBody}/><p className="mt-5 text-sm leading-relaxed text-cocoa">{offer.exclusions}</p><button className="btn-outline mt-8" data-analytics-action="offer_details_view" onClick={openOffer}>{copy.details}</button></div>
           <div className="rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-10"><p className="eyebrow">{copy.planVisit}</p><h3 className="mt-3 font-display text-2xl font-medium leading-tight text-charcoal">{copy.bookingHeading}</h3><p className="mt-4 text-base leading-relaxed text-cocoa">{copy.bookingBody}</p><div className="mt-8 flex flex-wrap gap-3"><a className="btn-gold" href={localePath("/book", locale)}>{common.bookNow}</a><a className="btn-outline" href={site.phoneHref}>{common.call} {site.phone}</a></div></div>
         </div>
       </section>
