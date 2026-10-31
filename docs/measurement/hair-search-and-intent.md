@@ -11,13 +11,13 @@ The existing English and Chinese Hair Atelier pages own the hair-service search 
 
 ## Website events
 
-All events remain behind the existing optional analytics consent gate. No new storage, form data, account links or consent defaults are introduced.
+All events remain behind the existing optional analytics consent gate. No form data, account links or consent defaults are introduced. The promotion popup uses a separate, non-analytics session flag solely to avoid repeating its display; that flag contains no visitor identity or attribution.
 
 | Event | Meaning | Context |
 | --- | --- | --- |
 | `page_view` | A consented page view | Actual page path/location/title; initial document referrer or previous consented SPA page. Hair pages add `service_category=hair` and `page_type=service` or `promotion`. |
 | `book_click` | Visitor clicked the existing Book / 预约 handoff | `action_stage=booking_link`; hair/promotion page context. On the offer page, `offer_id=first-hair-visit`. This is intent only. |
-| `offer_view_click` | Visitor followed the first-visit offer link from the hair page | Hair-page path and `offer_id=first-hair-visit`. |
+| `offer_view_click` | Visitor followed the first-visit offer link from the hair page or the homepage/hair-page promotion popup | Source page path and `offer_id=first-hair-visit`. Popup links add `service_category=hair` and `link_placement=hair_offer_popup`. |
 | `offer_details_view` | Visitor deliberately opened the promotion's offer-details dialog | Promotion-page path and `offer_id=first-hair-visit`. It is not signup or offer redemption. |
 
 No `purchase`, `booking_complete`, `offer_claimed` or `generate_lead` event is emitted by these controls. Offer context is not persisted across pages; a later ordinary hair booking click does not automatically inherit an earlier offer view. New event parameters may need event-scoped custom dimensions before they appear in GA4 custom reports; no Analytics settings are changed by this website release.

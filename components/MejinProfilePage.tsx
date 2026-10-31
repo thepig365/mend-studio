@@ -3,6 +3,7 @@ import CTABlock from "@/components/CTABlock";
 import Hero from "@/components/Hero";
 import type { Locale } from "@/lib/i18n";
 import { mejinImages, mejinProfile } from "@/lib/mejin-profile";
+import MejinServiceLinks from "@/components/MejinServiceLinks";
 
 export default function MejinProfilePage({ locale }: { locale: Locale }) {
   const copy = mejinProfile[locale];
@@ -65,6 +66,7 @@ export default function MejinProfilePage({ locale }: { locale: Locale }) {
               </div>
             ))}
           </div>
+          <MejinServiceLinks locale={locale} align="center" />
         </div>
       </section>
 

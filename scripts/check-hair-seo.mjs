@@ -34,8 +34,13 @@ for (const prefix of ["", "/zh"]) {
   const menuStart = html.indexOf('id="hair-menu"');
   const firstSection = html.indexOf('id="menu-mend-ai-scalp-analysis"');
   assert.ok(menuStart > 0 && menuStart < firstSection, "Hair menu navigation precedes the unchanged service list");
-  const menuLinks = attrs(html.slice(menuStart, firstSection), "a").filter((a) => a.href?.startsWith("#"));
+  const menuIntro = html.slice(menuStart, firstSection);
+  const menuLinks = attrs(menuIntro, "a").filter((a) => /^#(?:menu|service)-/.test(a.href || ""));
   assert.equal(menuLinks.length, 6);
+  assert.ok(attrs(menuIntro, "a").some((a) => a.href === "#meet-mejin"), "Stylist discovery is available before the full menu");
+  assert.equal((html.match(/id="meet-mejin"/g) || []).length, 1, "Unique stylist section target");
+  assert.match(html.slice(0, menuStart), /mend-beauty-salon-interior-1\.png/, "Hair hero uses the existing studio image");
+  assert.doesNotMatch(html.slice(0, menuStart), /images\.unsplash\.com/, "Hair hero no longer uses a stock salon");
   const visitStart = html.indexOf('<section class="bg-sand py-16 sm:py-20" aria-labelledby="hair-visit-heading">');
   assert.ok(visitStart > firstSection, "Local visiting guide follows the menu");
   const visit = html.slice(visitStart, html.indexOf("</section>", visitStart));
@@ -53,5 +58,22 @@ for (const prefix of ["", "/zh"]) {
   assert.ok(attrs(html, "a").some((link) => link.href === `${prefix}/team/mejin-shick`), "Existing practitioner profile preserved");
   assert.match(html, /service-korean-soft-wave/);
   assert.match(html, /service-signature-balayage/);
+  const profile = await page(`${prefix}/team/mejin-shick`);
+  for (const source of [html, profile]) {
+    assert.match(source, /mejin-professional-portrait\.png/, "Approved portrait retained");
+    const start = source.indexOf('id="mejin-services"');
+    assert.ok(start > 0, "Related services appear with the stylist introduction");
+    const serviceLinks = attrs(source.slice(start, source.indexOf("</nav>", start)), "a");
+    assert.equal(serviceLinks.length, 4);
+    for (const link of serviceLinks) {
+      const target = new URL(link.href, origin);
+      assert.equal(target.pathname, path, "Stylist services preserve the reader's language");
+      assert.equal((html.match(new RegExp(`id="${target.hash.slice(1)}"`, "g")) || []).length, 1, "Stylist link reaches a unique existing menu item");
+    }
+    assert.doesNotMatch(source, /copper-short-style|creative-colour\.jpeg|textured-short-style|warm-short-style/, "Previously removed gallery remains excluded");
+  }
+  const schemas = [...profile.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+  assert.ok(schemas.some((schema) => schema["@type"] === "ProfilePage" && schema.mainEntity?.name === "Mejin Shick"), "Existing named profile schema preserved");
+  assert.doesNotMatch(JSON.stringify(schemas), /AggregateRating|"@type":"Review"/, "No unsupported review or rating schema");
 }
-console.log("Hair SEO checks passed: bilingual descriptive metadata/H1, crawlable local guide and menu shortcuts, six valid anchors per language, useful detail/contact/scalp/offer/profile links, preserved canonicals and language alternates.");
+console.log("Hair SEO checks passed: bilingual metadata/H1, local guide, six menu shortcuts, early stylist discovery, existing studio image and approved portrait, four valid stylist-service links on each hair/profile page, no removed gallery or review schema, preserved canonicals and language alternates.");
