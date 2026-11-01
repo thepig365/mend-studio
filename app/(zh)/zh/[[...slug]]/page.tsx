@@ -164,6 +164,9 @@ function ChineseHome() {
           title="墨尔本东区一站式美容护理空间"
           body="从美发染护、头疗和头皮护理，到韩式皮肤管理、身体护理与眉睫美容，Mend Beauty Studio 在舒适雅致的环境中，为您安排完整的日常美容护理。"
         />
+        <div className="mt-6 text-center">
+          <Link href="/zh/services/hair" className="btn-outline">查看剪发、染发与造型项目</Link>
+        </div>
       </section>
 
       <section className="bg-linen py-16 sm:py-24">

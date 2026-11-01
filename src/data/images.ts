@@ -33,7 +33,7 @@ export const siteImages = {
   // Real Mend Beauty Studio photo — not a stock image.
   hero: {
     src: "/images/mend-beauty-hero.png",
-    alt: "Mend Beauty Studio Balwyn salon interior",
+    alt: "Mend Beauty Studio Deepdene salon interior",
     credit: "Mend Beauty Studio",
   },
   hair: {
@@ -133,7 +133,7 @@ export const signatureImages = {
 export const galleryStockImages: SiteImage[] = [
   {
     src: "/images/mend-beauty-hero.png",
-    alt: "Mend Beauty Studio Balwyn salon interior",
+    alt: "Mend Beauty Studio Deepdene salon interior",
     credit: "Mend Beauty Studio",
   },
   {

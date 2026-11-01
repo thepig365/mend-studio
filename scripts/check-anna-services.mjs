@@ -215,8 +215,10 @@ const protectedHashes = {
     "0d7dd61b0bb7b924730e8cdd106214e1b9bca12021aa93732e4ab89300e6d1ef",
   "public/qr/wechat-booking-qr.jpg":
     "ce44ca231b58ae544e1292d5348dddabc7a47d5a93b576af1795cb35ad13a44e",
+  // 2026-11-01: correct two studio-image alt labels from Balwyn to Deepdene;
+  // image sources, credits and all assets remain unchanged.
   "src/data/images.ts":
-    "b87774da0172663b940c9de708a999d18553b3c966ad4c85d2796aae350a2462",
+    "2ff140892f6a87c01859b20b67550cbf87a42189de5d4ec6d3f1b89c0a2e25f0",
   "components/ServiceCard.tsx":
     "16ef9183493012406ba231d85581902fce3891011794f37b325e9873dee6cb30",
   // Updated 2026-10-16: reviewed stock-photo focal points in the hover preview.
