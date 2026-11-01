@@ -35,6 +35,9 @@ export default function HomePage() {
           title="A complete beauty maintenance studio in Melbourne’s Inner East."
           body="From hair colour and repair treatments to head spa rituals, Korean skin management, body care and eye beauty, Mend Beauty Studio brings your beauty routine into one refined space."
         />
+        <div className="mt-6 text-center">
+          <Link href="/services/hair" className="btn-outline">Haircuts, colour &amp; styling</Link>
+        </div>
       </section>
 
       {/* 3. Brand philosophy */}

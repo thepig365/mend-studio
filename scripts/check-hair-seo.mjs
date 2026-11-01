@@ -24,7 +24,6 @@ for (const prefix of ["", "/zh"]) {
   assert.match(h1, /Deepdene/);
   assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /Deepdene 美发沙龙与理发师/ : /Hairdresser in Deepdene/);
   assert.match(text, /74 Whitehorse Road/);
-  for (const suburb of ["Balwyn", "Surrey Hills", "Kew", "Camberwell", "Canterbury"]) assert.ok(text.includes(suburb), `${path}: useful nearby-suburb context`);
   assert.ok(attrs(html, "link").some((a) => a.rel === "canonical" && a.href === `${origin}${path}`));
   for (const [lang, target] of [["en-AU", "/services/hair"], ["zh-Hans", "/zh/services/hair"], ["x-default", "/services/hair"]]) {
     assert.ok(attrs(html, "link").some((a) => a.hreflang === lang && a.href === `${origin}${target}`));
@@ -37,13 +36,25 @@ for (const prefix of ["", "/zh"]) {
   const menuIntro = html.slice(menuStart, firstSection);
   const menuLinks = attrs(menuIntro, "a").filter((a) => /^#(?:menu|service)-/.test(a.href || ""));
   assert.equal(menuLinks.length, 6);
+  for (const target of ["#hair-visit", "#hair-care-options"]) {
+    assert.ok(attrs(menuIntro, "a").some((a) => a.href === target), `${path}: visit/care guide is discoverable before the long menu`);
+    assert.equal((html.match(new RegExp(`id="${target.slice(1)}"`, "g")) || []).length, 1, `${path}: unique guide destination`);
+  }
   assert.ok(attrs(menuIntro, "a").some((a) => a.href === "#meet-mejin"), "Stylist discovery is available before the full menu");
   assert.equal((html.match(/id="meet-mejin"/g) || []).length, 1, "Unique stylist section target");
   assert.match(html.slice(0, menuStart), /mend-beauty-salon-interior-1\.png/, "Hair hero uses the existing studio image");
   assert.doesNotMatch(html.slice(0, menuStart), /images\.unsplash\.com/, "Hair hero no longer uses a stock salon");
-  const visitStart = html.indexOf('<section class="bg-sand py-16 sm:py-20" aria-labelledby="hair-visit-heading">');
+  const visitStart = html.indexOf('<section id="hair-visit"');
   assert.ok(visitStart > firstSection, "Local visiting guide follows the menu");
   const visit = html.slice(visitStart, html.indexOf("</section>", visitStart));
+  const visitText = plain(visit);
+  for (const suburb of ["Deepdene", "Canterbury", "Surrey Hills", "Balwyn", "Kew", "Camberwell", "Mont Albert"]) {
+    assert.ok(visitText.includes(suburb), `${path}: seven-area context appears in the visible visiting guide`);
+  }
+  assert.match(visitText, prefix ? /所有预约服务均在 Deepdene 门店进行/ : /All appointments take place at our Deepdene studio/, "Nearby areas are visitor catchments, not branches");
+  assert.doesNotMatch(visitText, /(?:5|five)\s*(?:km|kilometres)|free parking|免费停车/i, "No unsupported distance or parking claims");
+  assert.match(visitText, prefix ? /并非医疗诊断或治疗/ : /not medical diagnosis or treatment/, "Care distinction retains cosmetic scope");
+  assert.match(visitText, prefix ? /营业时间与联系信息/ : /opening hours and contact details/, "Visit planning points to maintained hours");
   const links = [...menuLinks, ...attrs(visit, "a")];
   for (const link of links) {
     if (!link.href?.startsWith("/") && !link.href?.startsWith("#")) continue;
@@ -54,7 +65,12 @@ for (const prefix of ["", "/zh"]) {
       assert.equal((targetHtml.match(new RegExp(`id="${id}"`, "g")) || []).length, 1, `${path}: unique destination ${target.pathname}${target.hash}`);
     }
   }
-  for (const target of [`${prefix}/contact`, `${prefix}/services/hair-scalp-recovery`, `${prefix}/promotions/first-hair-visit`]) assert.ok(links.some((link) => link.href === target));
+  for (const target of [`${prefix}/contact`, `${prefix}/services/head-spa`, `${prefix}/services/hair-scalp-recovery`, `${prefix}/promotions/first-hair-visit`]) assert.ok(links.some((link) => link.href === target));
+  for (const anchor of ["menu-signature-colour", "menu-classic-texture-perm"]) assert.ok(links.some((link) => link.href === `${path}#${anchor}`), "Local guide connects to existing colour and texture service details");
+  const home = await page(prefix || "/");
+  assert.match(home, prefix ? /查看剪发、染发与造型项目/ : /Haircuts, colour &amp; styling/, "Homepage offers a descriptive hair-service entry point");
+  assert.ok(attrs(home, "a").some((link) => link.href === path));
+  assert.doesNotMatch(home, /Balwyn salon interior/, "Studio imagery identifies the real Deepdene location");
   assert.ok(attrs(html, "a").some((link) => link.href === `${prefix}/team/mejin-shick`), "Existing practitioner profile preserved");
   assert.match(html, /service-korean-soft-wave/);
   assert.match(html, /service-signature-balayage/);
@@ -76,4 +92,4 @@ for (const prefix of ["", "/zh"]) {
   assert.ok(schemas.some((schema) => schema["@type"] === "ProfilePage" && schema.mainEntity?.name === "Mejin Shick"), "Existing named profile schema preserved");
   assert.doesNotMatch(JSON.stringify(schemas), /AggregateRating|"@type":"Review"/, "No unsupported review or rating schema");
 }
-console.log("Hair SEO checks passed: bilingual metadata/H1, local guide, six menu shortcuts, early stylist discovery, existing studio image and approved portrait, four valid stylist-service links on each hair/profile page, no removed gallery or review schema, preserved canonicals and language alternates.");
+console.log("Hair SEO checks passed: bilingual metadata/H1, seven-area local guide with real Deepdene address, early visit/care navigation, same-language Head Spa/scalp links, colour/texture detail links, homepage hair entry, six menu shortcuts, approved studio/stylist imagery, profile links/schema, canonicals and language alternates.");
