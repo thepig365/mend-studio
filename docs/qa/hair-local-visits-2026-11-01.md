@@ -36,4 +36,12 @@ The real address is **74 Whitehorse Road, Deepdene VIC 3103**. No five-kilometre
 - Promotion regression checks passed for all four promotion pages, 44 sitemap URLs, reciprocal languages/canonicals, approved terms, service anchors and existing MaSe handoffs.
 - The protected `src/data/images.ts` hash was updated solely for the two reviewed Balwyn-to-Deepdene alt corrections; all other asset protection remains active.
 
-Browser layout QA and production verification are separate release checks. HTTP health, readable location information and valid links do not establish Google indexing, organic rank or Maps rank. Those outcomes need separate observations after publication.
+## Browser QA follow-up
+
+The local production build was inspected in Chrome on the owner's Mac at 1920 × 963 (desktop), 390 × 844 (both languages), and 320 × 667 (Chinese narrow-screen care section). The visiting and care sections wrap without horizontal overflow. The final anchor destinations sit approximately 144 px below the viewport top, clear of the fixed header. Existing mobile booking controls remain usable.
+
+Visual QA found that client-router links between fragments on the same hair page could compose two hashes in the address. The five local service links in this guide now use native fragment anchors. Keyboard navigation was verified for all five targets in both languages: styling, colour/foils, perms/straightening, balayage and Korean Soft Wave. Each reached the correct single-fragment URL. The early visiting/care anchors were also checked.
+
+Both new homepage hair entries navigate to the correct language. Head Spa and scalp-care links open the existing matching-language pages. No real booking or form submission was performed. The final local runtime hair and promotion checks, lint, TypeScript, i18n/growth checks and 53-page production build passed after the anchor correction. No production deployment was performed as part of this QA follow-up.
+
+Production verification remains a separate release check. HTTP health, readable location information and valid links do not establish Google indexing, organic rank or Maps rank. Those outcomes need separate observations after publication.

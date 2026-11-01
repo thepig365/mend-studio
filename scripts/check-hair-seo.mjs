@@ -66,7 +66,7 @@ for (const prefix of ["", "/zh"]) {
     }
   }
   for (const target of [`${prefix}/contact`, `${prefix}/services/head-spa`, `${prefix}/services/hair-scalp-recovery`, `${prefix}/promotions/first-hair-visit`]) assert.ok(links.some((link) => link.href === target));
-  for (const anchor of ["menu-signature-colour", "menu-classic-texture-perm"]) assert.ok(links.some((link) => link.href === `${path}#${anchor}`), "Local guide connects to existing colour and texture service details");
+  for (const anchor of ["menu-signature-colour", "menu-classic-texture-perm"]) assert.ok(links.some((link) => link.href === `#${anchor}`), "Local guide connects to existing colour and texture service details");
   const home = await page(prefix || "/");
   assert.match(home, prefix ? /查看剪发、染发与造型项目/ : /Haircuts, colour &amp; styling/, "Homepage offers a descriptive hair-service entry point");
   assert.ok(attrs(home, "a").some((link) => link.href === path));

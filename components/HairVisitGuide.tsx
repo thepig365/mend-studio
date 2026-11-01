@@ -27,7 +27,6 @@ export function HairMenuIntro({ locale }: { locale: Locale }) {
 
 export default function HairVisitGuide({ locale }: { locale: Locale }) {
   const zh = locale === "zh-Hans";
-  const hairPath = localePath("/services/hair", locale);
   return <section id="hair-visit" className="scroll-mt-36 bg-sand py-16 sm:py-20" aria-labelledby="hair-visit-heading">
     <div className="wrap grid gap-10 lg:grid-cols-2">
       <div>
@@ -41,9 +40,9 @@ export default function HairVisitGuide({ locale }: { locale: Locale }) {
       <div className="rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-10">
         <h3 className="font-display text-2xl font-medium text-charcoal">{zh ? "选择适合您的美发项目" : "Choosing your hair service"}</h3>
         <div className="mt-5 space-y-5 text-sm leading-relaxed text-cocoa">
-          <p>{zh ? "剪发菜单包含女士、男士及儿童项目；吹整与卷发造型列于" : "The cut menu includes options for women, men and children. Blow-dry and curl styling are listed under "}<Link className={textLink} href={`${hairPath}#menu-wash-blow-dry`}>{zh ? "造型服务" : "Styling"}</Link>{zh ? "。" : "."}</p>
-          <p>{zh ? "想调整发色或补染发根？查看" : "For a colour change or root refresh, browse "}<Link className={textLink} href={`${hairPath}#menu-signature-colour`}>{zh ? "染发与挑染项目" : "hair colour and foil highlights"}</Link>{zh ? "；想改变头发的卷直形态，也可了解" : "; for a change in texture, explore "}<Link className={textLink} href={`${hairPath}#menu-classic-texture-perm`}>{zh ? "烫发与拉直项目" : "perms and straightening"}</Link>{zh ? "。" : "."}</p>
-          <p>{zh ? "想了解渐变染或韩式柔感烫？可查看 " : "Considering balayage or a Korean-style perm? See "}<Link className={textLink} href={`${hairPath}#service-signature-balayage`}>Signature Balayage{zh ? " 渐变染" : ""}</Link>{zh ? "与 " : " and "}<Link className={textLink} href={`${hairPath}#service-korean-soft-wave`}>Korean Soft Wave{zh ? " 韩式柔感烫" : ""}</Link>{zh ? "的项目说明与价格。" : " in the menu for the listed options and prices."}</p>
+          <p>{zh ? "剪发菜单包含女士、男士及儿童项目；吹整与卷发造型列于" : "The cut menu includes options for women, men and children. Blow-dry and curl styling are listed under "}<a className={textLink} href="#menu-wash-blow-dry">{zh ? "造型服务" : "Styling"}</a>{zh ? "。" : "."}</p>
+          <p>{zh ? "想调整发色或补染发根？查看" : "For a colour change or root refresh, browse "}<a className={textLink} href="#menu-signature-colour">{zh ? "染发与挑染项目" : "hair colour and foil highlights"}</a>{zh ? "；想改变头发的卷直形态，也可了解" : "; for a change in texture, explore "}<a className={textLink} href="#menu-classic-texture-perm">{zh ? "烫发与拉直项目" : "perms and straightening"}</a>{zh ? "。" : "."}</p>
+          <p>{zh ? "想了解渐变染或韩式柔感烫？可查看 " : "Considering balayage or a Korean-style perm? See "}<a className={textLink} href="#service-signature-balayage">Signature Balayage{zh ? " 渐变染" : ""}</a>{zh ? "与 " : " and "}<a className={textLink} href="#service-korean-soft-wave">Korean Soft Wave{zh ? " 韩式柔感烫" : ""}</a>{zh ? "的项目说明与价格。" : " in the menu for the listed options and prices."}</p>
           <p>{zh ? "菜单中标注起价的项目，最终费用可能因发长、服务复杂度及咨询结果而调整。不确定选哪个项目时，欢迎先致电我们。" : "Where a starting price is shown, the final price may vary after consultation with hair length and service complexity. Call us if you are unsure which service to choose."}</p>
           <p>{zh ? "第一次来 MEND？查看" : "New to MEND? See the "}<Link className={textLink} href={localePath("/promotions/first-hair-visit", locale)}>{zh ? "新客首次到店美发五折优惠" : "50% off first hair visit offer"}</Link>{zh ? "，了解适用范围与预约方式。" : " for the scope and booking details."}</p>
         </div>
