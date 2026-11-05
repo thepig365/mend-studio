@@ -52,6 +52,45 @@ function hairContext(pathname: string) {
   return {};
 }
 
+const campaignKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "utm_id"] as const;
+
+function serviceFromPath(pathname: string) {
+  const path = pathname.replace(/^\/zh(?=\/)/, "") || "/";
+  return path.match(/^\/services\/([a-z0-9-]+)/)?.[1];
+}
+
+function ctaLocation(control: Element) {
+  const tagged = control.getAttribute("data-cta-location")?.trim();
+  if (tagged) return tagged.slice(0, 48);
+  const region = control.closest("header, footer");
+  if (region && region !== control) {
+    if (region.tagName === "HEADER") return "header";
+    if (region.tagName === "FOOTER") return "footer";
+  }
+  return "page";
+}
+
+function campaignParams() {
+  const params = new URLSearchParams(window.location.search ?? "");
+  const campaign: Record<string, string> = {};
+  for (const key of campaignKeys) {
+    const value = params.get(key)?.trim();
+    if (value) campaign[key] = value.slice(0, 100);
+  }
+  return campaign;
+}
+
+function intentContext(control: Element, pathname: string, serviceCategory?: string) {
+  const taggedService = control.getAttribute("data-service")?.trim();
+  const service = (taggedService || serviceFromPath(pathname) || serviceCategory || "").slice(0, 48);
+  return {
+    page_lang: isChinesePath(pathname) ? "zh-Hans" : "en-AU",
+    cta_location: ctaLocation(control),
+    ...(service ? { service } : {}),
+    ...campaignParams(),
+  };
+}
+
 function trackedAction(href: string) {
   if (href === "/book" || href === "/zh/book") return "book_click";
   if (href.startsWith("tel:")) return "phone_click";
@@ -114,6 +153,7 @@ export default function Analytics() {
       );
       if (!action) return;
 
+      const intent = action === "book_click" || action === "phone_click" || action === "directions_click" || action === "email_click";
       window.gtag("event", action, {
         page_path: path,
         link_url: href,
@@ -121,6 +161,7 @@ export default function Analytics() {
         ...(popupOffer ? { service_category: "hair", link_placement: "hair_offer_popup" } : {}),
         ...(action === "book_click" ? { action_stage: "booking_link" } : {}),
         ...(action === "offer_view_click" ? { offer_id: "first-hair-visit" } : {}),
+        ...(intent ? intentContext(control, path, context.service_category) : {}),
       });
     };
 

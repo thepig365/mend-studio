@@ -35,7 +35,6 @@ export const localizedRoutes = [
   "/services/mens-grooming",
   "/services/nails",
   "/services/semi-permanent",
-  "/services/nails-semi-permanent",
   "/book",
   "/gift-cards",
   "/memberships",

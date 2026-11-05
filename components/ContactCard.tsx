@@ -29,7 +29,7 @@ export default function ContactCard({
         <p>{site.address}</p>
         <p>
           {copy.phone}:{" "}
-          <a href={site.phoneHref} className="font-medium text-bronze hover:text-gold">
+          <a href={site.phoneHref} data-cta-location="contact-card" className="font-medium text-bronze hover:text-gold">
             {site.phone}
           </a>
         </p>
@@ -66,10 +66,10 @@ export default function ContactCard({
       )}
 
       <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-        <a href={localePath("/book", locale)} className="btn-primary w-full sm:w-auto">
+        <a href={localePath("/book", locale)} data-cta-location="contact-card" className="btn-primary w-full sm:w-auto">
           {copy.bookAppointment}
         </a>
-        <a href={site.phoneHref} className="btn-outline w-full sm:w-auto">
+        <a href={site.phoneHref} data-cta-location="contact-card" className="btn-outline w-full sm:w-auto">
           {copy.callNow}
         </a>
       </div>

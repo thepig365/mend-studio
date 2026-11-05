@@ -68,7 +68,7 @@ function mount(storedConsent) {
   };
   const exports = {};
   vm.runInNewContext(compiled, {
-    exports, window, document, Element: ClickTarget,
+    exports, window, document, Element: ClickTarget, URLSearchParams,
     process: { env: { NEXT_PUBLIC_GA_MEASUREMENT_ID: "G-TESTONLY" } },
     require: (name) => {
       assert.ok(name in modules, `Unexpected import: ${name}`);
@@ -134,6 +134,9 @@ for (const prefix of ["", "/zh"]) {
   assert.equal(commands.at(-1)[1], "book_click");
   assert.equal(commands.at(-1)[2].action_stage, "booking_link");
   assert.equal(commands.at(-1)[2].page_path, `${prefix}/services/hair`);
+  assert.equal(commands.at(-1)[2].page_lang, prefix ? "zh-Hans" : "en-AU");
+  assert.equal(commands.at(-1)[2].service, "hair");
+  assert.equal(commands.at(-1)[2].cta_location, "page");
   assert.equal(commands.at(-1)[2].offer_id, undefined, "Hair booking clicks do not imply an offer was claimed");
   accepted.click({ href: `${prefix}/promotions/first-hair-visit` });
   assert.equal(commands.at(-1)[1], "offer_view_click");
@@ -150,6 +153,32 @@ for (const prefix of ["", "/zh"]) {
 accepted.navigate("/services/skin-facial");
 accepted.click({ href: "/book" });
 assert.equal(commands.at(-1)[2].service_category, undefined, "Other services are never attributed to hair");
+assert.equal(commands.at(-1)[2].service, "skin-facial");
+assert.equal(commands.at(-1)[2].page_lang, "en-AU");
+accepted.navigate("/services/head-spa");
+accepted.window.location = {
+  href: "https://example.test/services/head-spa?utm_source=google&utm_medium=cpc&utm_campaign=deepdene&q=not-collected",
+  pathname: "/services/head-spa",
+  search: "?utm_source=google&utm_medium=cpc&utm_campaign=deepdene&q=not-collected",
+};
+accepted.click({ href: "/book", "data-cta-location": "header", "data-service": "head-spa" });
+assert.equal(commands.at(-1)[1], "book_click");
+assert.equal(commands.at(-1)[2].service, "head-spa");
+assert.equal(commands.at(-1)[2].cta_location, "header");
+assert.equal(commands.at(-1)[2].utm_source, "google");
+assert.equal(commands.at(-1)[2].utm_medium, "cpc");
+assert.equal(commands.at(-1)[2].utm_campaign, "deepdene");
+assert.equal(commands.at(-1)[2].q, undefined, "Only utm_* campaign parameters are copied onto the event");
+accepted.navigate("/contact");
+accepted.click({ href: "tel:+61499668899", "data-cta-location": "footer" });
+assert.equal(commands.at(-1)[1], "phone_click");
+assert.equal(commands.at(-1)[2].page_lang, "en-AU");
+assert.equal(commands.at(-1)[2].cta_location, "footer");
+assert.equal(commands.at(-1)[2].service, undefined);
+accepted.click({ href: "https://www.google.com/maps/place/Mend+Beauty+Studio", "data-cta-location": "contact-map" });
+assert.equal(commands.at(-1)[1], "directions_click");
+assert.equal(commands.at(-1)[2].cta_location, "contact-map");
+assert.equal(commands.at(-1)[2].page_lang, "en-AU");
 for (const prefix of ["", "/zh"]) {
   accepted.navigate(prefix || "/");
   accepted.click({ href: `${prefix}/promotions/first-hair-visit`, "data-analytics-placement": "hair_offer_popup" });
@@ -165,4 +194,4 @@ accepted.click({ "data-analytics-action": "purchase" });
 accepted.click({ href: "#menu-signature-colour" });
 assert.equal(commands.length, beforeUntracked, "Only allowlisted intent controls are tracked");
 assert.ok(!commands.some((command) => ["purchase", "booking_complete", "offer_claimed", "generate_lead"].includes(command[1])), "Website intent must never be reported as a booking or redemption");
-console.log("Analytics checks passed: consent gate, command format, single initialization, referrers, bilingual hair and promotion click context, allowlisted offer views, and no fabricated booking/claim events.");
+console.log("Analytics checks passed: consent gate, command format, single initialization, referrers, bilingual hair and promotion click context, book/phone/directions parameters, allowlisted offer views, and no fabricated booking/claim events.");

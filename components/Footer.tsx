@@ -125,19 +125,19 @@ export default function Footer() {
             <p>{site.address}</p>
             <p>
               {copy.phone}:{" "}
-              <a href={site.phoneHref} className="transition-colors hover:text-gold">
+              <a href={site.phoneHref} data-cta-location="footer" className="transition-colors hover:text-gold">
                 {site.phone}
               </a>
             </p>
             <p>
               {copy.email}:{" "}
-              <a href={site.emailHref} className="transition-colors hover:text-gold">
+              <a href={site.emailHref} data-cta-location="footer" className="transition-colors hover:text-gold">
                 {site.email}
               </a>
             </p>
             <p>WeChat: {site.wechat}</p>
           </address>
-          <a href={localePath("/book", locale)} className="btn-gold mt-6 px-6 py-2.5">
+          <a href={localePath("/book", locale)} data-cta-location="footer" className="btn-gold mt-6 px-6 py-2.5">
             {copy.bookAppointment}
           </a>
           <SharePage />
@@ -159,6 +159,17 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. {copy.rights}
           </p>
+          {pathname.startsWith("/marketing") ? null : (
+            <Link
+              href={localePath(pathname, locale === chineseLocale ? "en-AU" : chineseLocale)}
+              hrefLang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
+              lang={locale === chineseLocale ? "en-AU" : "zh-Hans"}
+              aria-label={copy.switchLanguageLabel}
+              className="text-cream/80 underline underline-offset-4 transition-colors hover:text-gold"
+            >
+              {copy.switchLanguage}
+            </Link>
+          )}
           <p>{site.locationName} · {site.region}</p>
         </div>
         <div className="wrap pb-6">

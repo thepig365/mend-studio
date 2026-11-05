@@ -42,7 +42,7 @@ does not force a language based on IP address or browser language.
 Every localized page provides:
 
 - a self-referencing canonical URL;
-- `hreflang` for `en-AU`, `zh-Hans`, and `x-default`;
+- `hreflang` for `en-AU`, `zh`, and `x-default` (the document language remains `zh-Hans`);
 - localized title, description, Open Graph locale, and share copy;
 - both language URLs in `sitemap.xml`.
 

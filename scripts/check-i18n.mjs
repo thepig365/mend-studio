@@ -51,7 +51,7 @@ for (const slug of requiredServiceSlugs) {
   }
 }
 
-for (const marker of ['"zh-Hans"', '"en-AU"', '"x-default"', "chineseUrl"]) {
+for (const marker of ['"zh"', '"en-AU"', '"x-default"', "chineseUrl"]) {
   if (!files.seo.includes(marker) && !files.sitemap.includes(marker)) {
     failures.push(`Missing bilingual SEO marker: ${marker}`);
   }

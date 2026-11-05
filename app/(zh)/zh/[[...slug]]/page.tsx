@@ -1,4 +1,5 @@
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
+import NearbySuburbs from "@/components/NearbySuburbs";
 import ScalpCareMenuIntro from "@/components/ScalpCareMenuIntro";
 import { hairPageCopy, hairStudioImage } from "@/lib/hair-page-copy";
 import MenuDownloads from "@/components/MenuDownloads";
@@ -21,6 +22,7 @@ import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import type { ServiceItem as MenuServiceItem } from "@/src/data/serviceMenu";
 import { booking } from "@/lib/booking";
+import { localServiceCopy, type LocalServiceSlug } from "@/lib/local-service-copy";
 import { chinesePageMetadata } from "@/lib/seo";
 import { galleryImages } from "@/lib/services";
 import { site } from "@/lib/site";
@@ -42,10 +44,12 @@ const annaServiceSlugs = new Set(
   [
     ...zhAnnaServiceCategories.map((category) => category.slug),
     "hair-scalp-recovery",
-    "nails-semi-permanent",
-    "hair-scalp-recovery",
   ],
 );
+
+function localService(slug: string) {
+  return slug in localServiceCopy ? localServiceCopy[slug as LocalServiceSlug] : undefined;
+}
 const serviceSlugs = new Set([
   ...zhServiceCategories.map((category) => category.slug),
   ...annaServiceSlugs,
@@ -118,9 +122,10 @@ export async function generateMetadata({
     const category = annaServiceSlugs.has(slug[1])
       ? getZhAnnaCategory(slug[1])
       : getZhCategory(slug[1]);
+    const local = localService(slug[1]);
     return chinesePageMetadata({
-      title: slug[1] === "hair" ? hairPageCopy["zh-Hans"].title : category.title,
-      description: slug[1] === "hair" ? hairPageCopy["zh-Hans"].description : category.excerpt,
+      title: slug[1] === "hair" ? hairPageCopy["zh-Hans"].title : local?.["zh-Hans"].title ?? category.title,
+      description: slug[1] === "hair" ? hairPageCopy["zh-Hans"].description : local?.["zh-Hans"].description ?? category.excerpt,
       path,
     });
   }
@@ -143,6 +148,7 @@ export default async function ChinesePage({ params }: ChinesePageProps) {
   if (slug[0] === "services" && slug[1] && serviceSlugs.has(slug[1])) {
     return <ChineseServiceDetail slug={slug[1]} />;
   }
+  // Same MaSe handoff as English. utm_* is not appended; see /book.
   if (path === "/book") redirect(booking.url);
   if (path === "/gift-cards") return <ChineseGiftCards />;
   if (path === "/memberships") return <ChineseMemberships />;
@@ -166,7 +172,7 @@ function ChineseHome() {
           body="从美发染护、头疗和头皮护理，到韩式皮肤管理、身体护理与眉睫美容，Mend Beauty Studio 在舒适雅致的环境中，为您安排完整的日常美容护理。"
         />
         <div className="mt-6 text-center">
-          <Link href="/zh/services/hair" className="btn-outline">查看剪发、染发与造型项目</Link>
+          <Link href="/zh/services/hair" className="btn-outline">Deepdene 理发：剪发、染发与造型</Link>
         </div>
       </section>
 
@@ -196,12 +202,20 @@ function ChineseHome() {
             {zhAnnaServiceCategories.slice(0, 5).map((category) => (
               <ServiceCard
                 key={category.slug}
-                title={category.cardTitle}
+                title={
+                  category.slug === "hair"
+                    ? "Deepdene 美发沙龙"
+                    : category.slug === "head-spa"
+                      ? "Deepdene 头疗"
+                      : category.slug === "skin-facial"
+                        ? "Deepdene 面部与肌肤护理"
+                        : category.cardTitle
+                }
                 description={category.excerpt}
                 href={`/zh/services/${category.slug}`}
                 image={category.image}
                 imageAlt={category.title}
-                linkLabel="查看服务"
+                linkLabel={category.slug === "hair" ? "剪发、染发与造型" : "查看服务"}
               />
             ))}
           </div>
@@ -253,7 +267,7 @@ function ChineseHome() {
         heading="修护秀发，焕亮肌肤，重拾自信光彩。"
         body="现在预约美发、头疗、皮肤管理或美容护理。"
         actions={[
-          { label: "预约", href: "/zh/book", variant: "light" },
+          { label: "预约", href: "/zh/book", variant: "light", ctaLocation: "home-cta" },
           { label: "查看服务", href: "/zh/services", variant: "outline-light" },
         ]}
       />
@@ -324,10 +338,6 @@ function ChineseServices() {
 }
 
 function ChineseServiceDetail({ slug }: { slug: string }) {
-  if (slug === "nails-semi-permanent") {
-    return <ChineseNailsSemiPermanentIndex />;
-  }
-
   const isAnnaCategory = annaServiceSlugs.has(slug);
   const category = isAnnaCategory
     ? getZhAnnaCategory(slug)
@@ -356,26 +366,30 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
     category.secondaryTitle ?? "其他可选项目",
   );
   const allItems = [...menu.items, ...menu.secondaryItems];
+  const local = localService(slug);
+  const heading = slug === "hair" ? hairPageCopy["zh-Hans"].heading : local?.["zh-Hans"].heading ?? category.title;
 
   return (
     <>
       <ServiceStructuredData
-        categoryName={category.title}
+        categoryName={heading}
         items={allItems}
         path={`/zh/services/${slug}`}
       />
       <Hero
         eyebrow="服务项目"
-        title={slug === "hair" ? hairPageCopy["zh-Hans"].heading : category.title}
+        title={heading}
+        subtitle={local?.["zh-Hans"].subtitle}
         body={slug === "hair" ? hairPageCopy["zh-Hans"].intro : category.intro}
         image={slug === "hair" ? hairStudioImage.src : category.image}
         imageAlt={slug === "hair" ? hairStudioImage.alt["zh-Hans"] : category.title}
         actions={[
-          { label: "预约", href: "/zh/book", variant: "gold" },
+          { label: "预约", href: "/zh/book", variant: "gold", ctaLocation: "service-hero", service: slug },
           { label: "全部服务", href: "/zh/services", variant: "outline" },
         ]}
       />
       <section className="wrap py-16 sm:py-20">
+        {local ? <NearbySuburbs locale="zh-Hans" service={slug as LocalServiceSlug} /> : null}
         {slug === "hair" && <HairMenuIntro locale="zh-Hans" />}
         {slug === "hair-scalp-recovery" && <ScalpCareMenuIntro locale="zh-Hans" />}
         <MenuDownloads slug={slug} chinese />
@@ -410,7 +424,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
           所示价格均为澳元；最终价格可能根据服务复杂度、头发长度、产品用量及个人适用性在咨询后调整。除展示价格外，不对税务处理作额外声明。
         </p>
         <div className="mt-6 text-center">
-          <Link href="/zh/book" className="btn-gold">
+          <Link href="/zh/book" className="btn-gold" data-cta-location="service-menu" data-service={slug}>
             预约
           </Link>
         </div>
@@ -421,61 +435,8 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         heading="预约到访 Mend Beauty Studio"
         body="建议提前预约；如需协助选择项目，请先联系我们。"
         actions={[
-          { label: "预约", href: "/zh/book", variant: "light" },
+          { label: "预约", href: "/zh/book", variant: "light", ctaLocation: "service-cta", service: slug },
           { label: "联系我们", href: "/zh/contact", variant: "outline-light" },
-        ]}
-      />
-    </>
-  );
-}
-
-function ChineseNailsSemiPermanentIndex() {
-  const categories = [
-    getZhCategory("nails"),
-    getZhCategory("semi-permanent"),
-  ];
-
-  return (
-    <>
-      <Hero
-        eyebrow="服务项目"
-        title="美甲与半永久美容"
-        body="现已分为两个独立类别。请选择类别查看全部现有项目、价格、时长及预约要求。"
-        actions={[
-          { label: "美甲", href: "/zh/services/nails", variant: "gold" },
-          {
-            label: "半永久美容",
-            href: "/zh/services/semi-permanent",
-            variant: "outline",
-          },
-        ]}
-      />
-      <section className="wrap py-16 sm:py-24">
-        <div className="grid gap-6 sm:grid-cols-2">
-          {categories.map((category) => (
-            <ServiceCard
-              key={category.slug}
-              title={category.cardTitle}
-              description={category.excerpt}
-              href={`/zh/services/${category.slug}`}
-              image={category.image}
-              imageAlt={category.imageAlt}
-              linkLabel="查看项目"
-            />
-          ))}
-        </div>
-      </section>
-      <CTABlock
-        eyebrow="Mend Beauty Studio"
-        heading="请选择所需服务类别"
-        body="美甲与半永久美容保持独立分类，所有原有项目及咨询要求均予保留。"
-        actions={[
-          { label: "美甲", href: "/zh/services/nails", variant: "light" },
-          {
-            label: "半永久美容",
-            href: "/zh/services/semi-permanent",
-            variant: "outline-light",
-          },
         ]}
       />
     </>

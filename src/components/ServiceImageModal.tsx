@@ -118,6 +118,7 @@ export default function ServiceImageModal({
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <a
               href={isChinese ? "/zh/book" : "/book"}
+              data-cta-location="service-modal"
               onClick={onClose}
               className="btn-gold flex-1"
             >

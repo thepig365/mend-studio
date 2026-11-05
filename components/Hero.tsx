@@ -4,6 +4,8 @@ export type HeroAction = {
   label: string;
   href: string;
   variant?: "primary" | "gold" | "outline";
+  ctaLocation?: string;
+  service?: string;
 };
 
 type HeroProps = {
@@ -72,6 +74,8 @@ export default function Hero({
                   key={action.label}
                   href={action.href}
                   className={actionClass[action.variant ?? "outline"]}
+                  data-cta-location={action.ctaLocation}
+                  data-service={action.service}
                 >
                   {action.label}
                 </a>

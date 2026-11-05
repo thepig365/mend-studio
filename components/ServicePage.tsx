@@ -65,7 +65,7 @@ export default function ServicePage({
         image={category.image}
         imageAlt={category.imageAlt}
         actions={[
-          { label: "Book", href: "/book", variant: "gold" },
+          { label: "Book", href: "/book", variant: "gold", ctaLocation: "service-hero", service: category.slug },
           { label: "All Services", href: "/services", variant: "outline" },
         ]}
       />
@@ -105,7 +105,7 @@ export default function ServicePage({
           {pricingNote}
         </p>
         <div className="mt-6 text-center">
-          <a href="/book" className="btn-gold">
+          <a href="/book" className="btn-gold" data-cta-location="service-menu" data-service={category.slug}>
             Book
           </a>
         </div>
@@ -118,7 +118,7 @@ export default function ServicePage({
         heading="Book your visit to Mend Beauty Studio — Deepdene"
         body="Call or message us to find a time that suits. Walk-in availability may be limited, so booking ahead is recommended."
         actions={[
-          { label: "Book", href: "/book", variant: "light" },
+          { label: "Book", href: "/book", variant: "light", ctaLocation: "service-cta", service: category.slug },
           { label: "Gift Cards", href: "/gift-cards", variant: "outline-light" },
         ]}
       />

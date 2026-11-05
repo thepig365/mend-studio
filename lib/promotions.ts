@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { site } from "@/lib/site";
 import { localePath, type Locale } from "@/lib/i18n";
+import { hreflangAlternates } from "@/lib/seo";
+import { site } from "@/lib/site";
 
 export const firstHairVisitOffer = {
   path: "/promotions/first-hair-visit",
@@ -29,7 +30,7 @@ export function promotionMetadata(title: string, description: string, path: stri
   return {
     title,
     description,
-    alternates: { canonical: url, languages: { "en-AU": englishUrl, "zh-Hans": chineseUrl, "x-default": englishUrl } },
+    alternates: { canonical: url, languages: hreflangAlternates(englishUrl, chineseUrl) },
     keywords: chinese ? ["MEND Beauty Studio", "Hair Atelier", "Deepdene 美发", "新客美发优惠"] : ["MEND Beauty Studio", "Hair Atelier", "hair salon Deepdene", "first visit hair offer"],
     openGraph: {
       title: `${title} | ${site.name}`,

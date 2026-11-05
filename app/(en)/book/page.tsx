@@ -10,5 +10,8 @@ export const metadata = pageMetadata({
 });
 
 export default function BookPage() {
+  // Do not append utm_* here. The MaSe URL already depends on custId and
+  // compId, and extra query parameters were not verified against the booking
+  // flow. book_click records campaign parameters from the Mend page instead.
   redirect(booking.url);
 }

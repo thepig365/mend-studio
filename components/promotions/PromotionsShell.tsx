@@ -23,7 +23,7 @@ export default function PromotionsShell({ children, locale = "en-AU" }: { childr
             <a className="nav-link" href="#visit">{common.visitUs}</a>
           </nav>
           <div className="ml-auto flex items-center gap-2">
-            <a href={localePath("/book", locale)} className="btn-book">{common.bookNow}</a>
+            <a href={localePath("/book", locale)} data-cta-location="promotion-header" className="btn-book">{common.bookNow}</a>
             <PromotionLanguageSwitch locale={locale}/>
           </div>
         </div>

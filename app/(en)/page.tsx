@@ -36,7 +36,7 @@ export default function HomePage() {
           body="From hair colour and repair treatments to head spa rituals, Korean skin management, body care and eye beauty, Mend Beauty Studio brings your beauty routine into one refined space."
         />
         <div className="mt-6 text-center">
-          <Link href="/services/hair" className="btn-outline">Haircuts, colour &amp; styling</Link>
+          <Link href="/services/hair" className="btn-outline">Hairdresser in Deepdene — haircuts, colour and styling</Link>
         </div>
       </section>
 
@@ -69,11 +69,20 @@ export default function HomePage() {
             {annaServiceCategories.slice(0, 5).map((service) => (
               <ServiceCard
                 key={service.slug}
-                title={service.cardTitle}
+                title={
+                  service.slug === "hair"
+                    ? "Hairdresser in Deepdene"
+                    : service.slug === "head-spa"
+                      ? "Head Spa in Deepdene"
+                      : service.slug === "skin-facial"
+                        ? "Facial and skin care in Deepdene"
+                        : service.cardTitle
+                }
                 description={service.excerpt}
                 href={`/services/${service.slug}`}
                 image={service.image}
                 imageAlt={service.imageAlt}
+                linkLabel={service.slug === "hair" ? "Haircuts, colour and styling" : undefined}
               />
             ))}
           </div>
@@ -235,7 +244,7 @@ export default function HomePage() {
         heading="Mend your hair. Refresh your skin. Renew your look."
         body="Book your next hair, head spa, skin or beauty visit today."
         actions={[
-          { label: "Book", href: "/book", variant: "light" },
+          { label: "Book", href: "/book", variant: "light", ctaLocation: "home-cta" },
           { label: "View Services", href: "/services", variant: "outline-light" },
         ]}
       />

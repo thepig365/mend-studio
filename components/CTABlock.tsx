@@ -2,6 +2,8 @@ type CTAAction = {
   label: string;
   href: string;
   variant?: "primary" | "gold" | "outline" | "light" | "outline-light";
+  ctaLocation?: string;
+  service?: string;
 };
 
 type CTABlockProps = {
@@ -60,6 +62,8 @@ export default function CTABlock({
               className={
                 lightActionClass[action.variant ?? (isDark ? "light" : "primary")]
               }
+              data-cta-location={action.ctaLocation}
+              data-service={action.service}
             >
               {action.label}
             </a>
