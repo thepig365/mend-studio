@@ -24,7 +24,7 @@ export const hairPageCopy: Record<Locale, {
     heading: "Hair Atelier — Hair Salon in Deepdene",
     intro: "Visit MEND Beauty Studio at 74 Whitehorse Road, Deepdene for haircuts, colour, highlights, balayage, styling, perms and hair treatments. Explore the menu below to find a service and plan your visit.",
     menuHeading: "Hair services & prices",
-    menuIntro: "Jump to the service you have in mind, or browse the full Hair Atelier menu. Each item has its own booking link.",
+    menuIntro: "Browse the Hair Atelier menu and note the service name you would like to book. Book opens MEND’s MaSe booking menu, where you can select your service and check the current price and available times.",
     serviceLabels: ["Haircuts", "Colour & highlights", "Balayage", "Blow-dry & styling", "Perms & straightening", "Hair & scalp treatments"],
   },
   "zh-Hans": {
@@ -33,7 +33,7 @@ export const hairPageCopy: Record<Locale, {
     heading: "Hair Atelier｜Deepdene 美发沙龙",
     intro: "MEND Beauty Studio 位于 Deepdene 的 74 Whitehorse Road，提供剪发、染发、挑染、Balayage 渐变染、造型、烫发及发质护理。浏览下方菜单，了解项目并安排您的到店时间。",
     menuHeading: "美发项目与价格",
-    menuIntro: "可直接前往您感兴趣的项目分类，也可浏览完整的 Hair Atelier 菜单。每个项目均设有预约入口。",
+    menuIntro: "浏览 Hair Atelier 菜单，记下您想预约的项目名称。点击“预约”后将打开 MEND 的 MaSe 预约菜单，请在 MaSe 选择项目，并查看当前价格与可预约时间。",
     serviceLabels: ["剪发", "染发与挑染", "Balayage 渐变染", "吹整与造型", "烫发与顺直造型", "头皮与发质护理"],
   },
 };
