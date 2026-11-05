@@ -94,7 +94,17 @@ assert.match(memberships, /single-treatment prices/);
 assert.match(memberships, /no service or amount limit/);
 assert.match(memberships, /cannot be exchanged or converted to cash/);
 assert.doesNotMatch(memberships, /mins|75-min|30-min|Fat-Burning/);
-for (const file of ["hair-atelier.pdf", "skin-collection.pdf", "scalp-body.png", "hair-reduction.png", "membership.png", "customised-programs.png"]) assert(readFileSync(`public/menus/${file}`).length > 1000);
+for (const file of ["hair-atelier.pdf", "skin-collection.pdf", "hair-reduction.png", "membership.png", "customised-programs.png"]) assert(readFileSync(`public/menus/${file}`).length > 1000);
+let scalpBodyPosterRemoved = false;
+try {
+  readFileSync("public/menus/scalp-body.png");
+} catch {
+  scalpBodyPosterRemoved = true;
+}
+assert(scalpBodyPosterRemoved, "The scalp-body poster must not stay downloadable");
+assert.doesNotMatch(read("components/MenuDownloads.tsx"), /scalp-body\.png/);
+assert.match(read("components/MenuDownloads.tsx"), /pending replacement/);
+assert.doesNotMatch(imageRegistry, /headspa-signature-ritual-mend|body-care-room|neck-shoulder-care/);
 
 const imageKeys = new Set(
   [
@@ -232,7 +242,10 @@ const protectedHashes = {
     "283d99697f97b019fa6522acd4287f562dcad441531bb1f61ddb3f7adfce4377",
   "public/images/services/headspa-aroma-sleep-mend.webp":
     "51c06ac30c1afc416f0094fe17038e4e9309ae9d150582ed6b8a623b167b3136",
-  "public/images/services/headspa-signature-ritual-mend.webp":
+  // Withheld from the public site on 2026-11-05: the picture shows hot stones,
+  // which Leon confirmed have not launched for head spa or body care.
+  // Bytes stay unchanged; the file is no longer under public/.
+  "docs/withheld-imagery/headspa-signature-ritual-mend.webp":
     "54810586a7aac2cbac3506fd65069ee3ccb8944d3338dd1a4aff58a67e436ef1",
   "public/images/services/hair-reduction-upper-lip.webp":
     "bae11e3c4f6728de205c63de6ee3047079c5211822c917b796df36e5b4f8a743",
