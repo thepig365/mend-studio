@@ -15,9 +15,9 @@ import { pageMetadata } from "@/lib/seo";
 import { siteImages } from "@/src/data/images";
 
 export const metadata = pageMetadata({
-  title: "Mend Beauty Studio Deepdene | Hair, Head Spa, Skin & Beauty",
+  title: "Mend Beauty Studio | Hair, Head Spa & Skin – Balwyn & Deepdene",
   description:
-    "Mend Beauty Studio in Deepdene offers hair, Head Spa, scalp wellness, Korean skin care, body wellness, nails and beauty services in a calm, modern salon space.",
+    "Mend Beauty Studio on Whitehorse Road, Deepdene, on the Balwyn border, offers hair, Head Spa, scalp wellness, Korean skin care, body wellness, nails and beauty services in a calm, modern salon space.",
   path: "/",
   absoluteTitle: true,
 });
@@ -36,7 +36,7 @@ export default function HomePage() {
           body="From hair colour and repair treatments to head spa rituals, Korean skin management, body care and eye beauty, Mend Beauty Studio brings your beauty routine into one refined space."
         />
         <div className="mt-6 text-center">
-          <Link href="/services/hair" className="btn-outline">Hairdresser in Deepdene — haircuts, colour and styling</Link>
+          <Link href="/services/hair" className="btn-outline">Hairdresser near Balwyn & Deepdene — haircuts, colour and styling</Link>
         </div>
       </section>
 
@@ -71,11 +71,11 @@ export default function HomePage() {
                 key={service.slug}
                 title={
                   service.slug === "hair"
-                    ? "Hairdresser in Deepdene"
+                    ? "Hairdresser Balwyn & Deepdene"
                     : service.slug === "head-spa"
-                      ? "Head Spa in Deepdene"
+                      ? "Head Spa Balwyn & Deepdene"
                       : service.slug === "skin-facial"
-                        ? "Facial and skin care in Deepdene"
+                        ? "Facials Balwyn & Deepdene"
                         : service.cardTitle
                 }
                 description={service.excerpt}
@@ -226,7 +226,7 @@ export default function HomePage() {
         <div>
           <SectionHeading
             eyebrow="Visit Us"
-            title="Find us in Deepdene"
+            title="Find us in Deepdene, next to Balwyn"
             body="Call, message or visit — we would love to welcome you to the studio."
             align="left"
           />

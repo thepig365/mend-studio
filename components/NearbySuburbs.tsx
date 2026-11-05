@@ -19,16 +19,16 @@ export default function NearbySuburbs({
   return (
     <section aria-labelledby="nearby-suburbs-heading" className="mb-10 rounded-3xl bg-sand p-7 sm:p-8">
       <h2 id="nearby-suburbs-heading" className="font-display text-2xl font-medium text-charcoal sm:text-3xl">
-        {zh ? "服务附近区域" : "Serving nearby suburbs"}
+        {zh ? "欢迎附近区域的客人" : "Serving nearby suburbs"}
       </h2>
       <p className="mt-4 max-w-3xl text-base leading-relaxed text-cocoa">
         {zh
-          ? `Mend Beauty Studio 欢迎来自 Deepdene、Balwyn、Kew、Camberwell、Canterbury、Surrey Hills 与 Mont Albert 的客人。门店地址是 ${site.address}。${nearby} 这些附近区域不是分店。`
-          : `Mend Beauty Studio welcomes guests from Deepdene, Balwyn, Kew, Camberwell, Canterbury, Surrey Hills and Mont Albert. The studio is at ${site.address}. ${nearby} These nearby suburbs are not separate salon locations.`}
+          ? `Mend Beauty Studio 位于 ${site.address}，在 Whitehorse Road 上、紧邻 Balwyn。我们欢迎来自 Balwyn、Kew、Camberwell、Canterbury、Surrey Hills 与 Mont Albert 的客人。${nearby}这些附近区域不是分店。`
+          : `Mend Beauty Studio is at ${site.address}, on Whitehorse Road at the Balwyn border. We welcome guests from Balwyn, Kew, Camberwell, Canterbury, Surrey Hills and Mont Albert. ${nearby} These nearby suburbs are not separate salon locations.`}
       </p>
       <p className="mt-4 text-sm leading-relaxed text-cocoa">
-        <Link className={textLink} href={localePath("/contact", locale)}>
-          {zh ? "查看营业时间与联系信息" : "Opening hours and contact details"}
+        <Link className={textLink} href={`${localePath("/contact", locale)}#getting-here`}>
+          {zh ? "从附近区域到店的路线" : "How to get here from nearby suburbs"}
         </Link>
       </p>
     </section>

@@ -49,8 +49,8 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
         </h1>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/90 sm:mt-5 sm:text-lg">
           {isChinese
-            ? "位于 Deepdene 的专业美发、头疗、皮肤管理与美容护理。"
-            : "Premium hair, Head Spa, skin and beauty care in Deepdene."}
+            ? "位于 Deepdene、紧邻 Balwyn 的专业美发、头疗、皮肤管理与美容护理。"
+            : "Premium hair, Head Spa, skin and beauty care in Deepdene, next to Balwyn."}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
           <a

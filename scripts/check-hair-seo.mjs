@@ -22,7 +22,8 @@ for (const prefix of ["", "/zh"]) {
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
   assert.match(h1, /Hair Atelier/);
   assert.match(h1, /Deepdene/);
-  assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /Deepdene 美发沙龙与理发师/ : /Hairdresser in Deepdene/);
+  assert.match(h1, /Balwyn/);
+  assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /Balwyn 及 Deepdene 美发沙龙与理发师/ : /Hairdresser Balwyn &(?:amp;)? Deepdene/);
   assert.match(text, /74 Whitehorse Road/);
   assert.ok(attrs(html, "link").some((a) => a.rel === "canonical" && a.href === `${origin}${path}`));
   for (const [lang, target] of [["en-AU", "/services/hair"], ["zh", "/zh/services/hair"], ["x-default", "/services/hair"]]) {
@@ -68,7 +69,7 @@ for (const prefix of ["", "/zh"]) {
   for (const target of [`${prefix}/contact`, `${prefix}/services/head-spa`, `${prefix}/services/hair-scalp-recovery`, `${prefix}/promotions/first-hair-visit`]) assert.ok(links.some((link) => link.href === target));
   for (const anchor of ["menu-signature-colour", "menu-classic-texture-perm"]) assert.ok(links.some((link) => link.href === `#${anchor}`), "Local guide connects to existing colour and texture service details");
   const home = await page(prefix || "/");
-  assert.match(home, prefix ? /Deepdene 理发：剪发、染发与造型/ : /Hairdresser in Deepdene — haircuts, colour and styling/, "Homepage offers a descriptive hair-service entry point");
+  assert.match(home, prefix ? /Balwyn 附近理发（Deepdene）：剪发、染发与造型/ : /Hairdresser near Balwyn &(?:amp;)? Deepdene — haircuts, colour and styling/, "Homepage offers a descriptive hair-service entry point");
   assert.ok(attrs(home, "a").some((link) => link.href === path));
   assert.doesNotMatch(home, /Balwyn salon interior/, "Studio imagery identifies the real Deepdene location");
   assert.ok(attrs(html, "a").some((link) => link.href === `${prefix}/team/mejin-shick`), "Existing practitioner profile preserved");
@@ -91,5 +92,33 @@ for (const prefix of ["", "/zh"]) {
   const schemas = [...profile.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
   assert.ok(schemas.some((schema) => schema["@type"] === "ProfilePage" && schema.mainEntity?.name === "Mejin Shick"), "Existing named profile schema preserved");
   assert.doesNotMatch(JSON.stringify(schemas), /AggregateRating|"@type":"Review"/, "No unsupported review or rating schema");
+}
+for (const path of [
+  "/services/head-spa",
+  "/services/hair-scalp-recovery",
+  "/services/skin-facial",
+  "/zh/services/head-spa",
+  "/zh/services/hair-scalp-recovery",
+  "/zh/services/skin-facial",
+]) {
+  const html = await page(path);
+  const title = html.match(/<title>(.*?)<\/title>/)?.[1] ?? "";
+  const h1 = html.match(/<h1\b[^>]*>(.*?)<\/h1>/)?.[1] ?? "";
+  assert.match(title, /Balwyn/, `${path} title includes Balwyn`);
+  assert.match(title, /Deepdene/, `${path} title includes Deepdene`);
+  assert.match(h1, /Balwyn/, `${path} H1 includes Balwyn`);
+  assert.match(h1, /Deepdene/, `${path} H1 includes Deepdene`);
+}
+for (const path of ["/contact", "/zh/contact", "/"]) {
+  const html = await page(path);
+  if (path.endsWith("contact")) {
+    assert.equal((html.match(/id="getting-here"/g) || []).length, 1, `${path} includes #getting-here`);
+  }
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+  const business = blocks.find((schema) => schema["@type"] === "HairSalon" && schema.address);
+  assert.equal(business?.address?.addressLocality, "Deepdene", `${path} JSON-LD address stays in Deepdene`);
+}
+for (const [path, html] of cache) {
+  assert.doesNotMatch(html, /\bin Balwyn\b/, `${path} must not say the studio is in Balwyn`);
 }
 console.log("Hair SEO checks passed: bilingual metadata/H1, seven-area local guide with real Deepdene address, early visit/care navigation, same-language Head Spa/scalp links, colour/texture detail links, homepage hair entry, six menu shortcuts, approved studio/stylist imagery, profile links/schema, canonicals and language alternates.");

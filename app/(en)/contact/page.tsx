@@ -1,3 +1,4 @@
+import GettingHere from "@/components/GettingHere";
 import Hero from "@/components/Hero";
 import ContactCard from "@/components/ContactCard";
 import BookingEnquiryForm from "@/components/BookingEnquiryForm";
@@ -54,6 +55,7 @@ export default function ContactPage() {
 
         <BookingEnquiryForm />
       </section>
+      <GettingHere locale="en-AU" />
       <section className="wrap pb-16 sm:pb-24">
         <QrCodePanel />
       </section>

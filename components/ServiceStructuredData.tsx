@@ -1,4 +1,4 @@
-import { site } from "@/lib/site";
+import { serviceAreas, site } from "@/lib/site";
 import type { ServiceItem } from "@/src/data/serviceMenu";
 
 type ServiceStructuredDataProps = {
@@ -60,10 +60,7 @@ export default function ServiceStructuredData({
           description: [item.description, item.time, item.price]
             .filter(Boolean)
             .join(" · "),
-          areaServed: {
-            "@type": "City",
-            name: "Deepdene",
-          },
+          areaServed: serviceAreas,
           provider,
           url,
         },
