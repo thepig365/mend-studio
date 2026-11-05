@@ -1,4 +1,5 @@
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
+import ScalpCareMenuIntro from "@/components/ScalpCareMenuIntro";
 import { hairPageCopy, hairStudioImage } from "@/lib/hair-page-copy";
 import MenuDownloads from "@/components/MenuDownloads";
 import type { Metadata } from "next";
@@ -376,6 +377,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
       />
       <section className="wrap py-16 sm:py-20">
         {slug === "hair" && <HairMenuIntro locale="zh-Hans" />}
+        {slug === "hair-scalp-recovery" && <ScalpCareMenuIntro locale="zh-Hans" />}
         <MenuDownloads slug={slug} chinese />
         {primaryGroups.map(([title, items], index) => (
           <div key={title} className={index === 0 ? "" : "mt-10"}>
