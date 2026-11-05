@@ -17,10 +17,10 @@ export default function MobileStickyBar() {
       aria-label={locale === chineseLocale ? "快捷操作" : "Quick actions"}
     >
       <div className="mx-auto flex max-w-lg gap-2">
-        <a href={site.phoneHref} className="btn-outline flex-1 py-3 text-sm">
+        <a href={site.phoneHref} data-cta-location="mobile-sticky" className="btn-outline flex-1 py-3 text-sm">
           {copy.call}
         </a>
-        <a href={localePath("/book", locale)} className="btn-gold flex-1 py-3 text-sm">
+        <a href={localePath("/book", locale)} data-cta-location="mobile-sticky" className="btn-gold flex-1 py-3 text-sm">
           {copy.bookNow}
         </a>
       </div>

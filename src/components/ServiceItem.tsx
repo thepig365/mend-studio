@@ -104,6 +104,7 @@ export default function ServiceItem({
         </button>
         <Link
           href={locale === "zh-Hans" ? "/zh/book" : "/book"}
+          data-cta-location="service-item"
           className="btn-outline self-start px-5 py-2 text-xs sm:mt-1"
         >
           {locale === "zh-Hans" ? "预约" : "Book"}

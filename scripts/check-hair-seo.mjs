@@ -25,7 +25,7 @@ for (const prefix of ["", "/zh"]) {
   assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /Deepdene 美发沙龙与理发师/ : /Hairdresser in Deepdene/);
   assert.match(text, /74 Whitehorse Road/);
   assert.ok(attrs(html, "link").some((a) => a.rel === "canonical" && a.href === `${origin}${path}`));
-  for (const [lang, target] of [["en-AU", "/services/hair"], ["zh-Hans", "/zh/services/hair"], ["x-default", "/services/hair"]]) {
+  for (const [lang, target] of [["en-AU", "/services/hair"], ["zh", "/zh/services/hair"], ["x-default", "/services/hair"]]) {
     assert.ok(attrs(html, "link").some((a) => a.hreflang === lang && a.href === `${origin}${target}`));
   }
   assert.equal(attrs(html, "html")[0].lang, prefix ? "zh-Hans" : "en-AU");
@@ -68,7 +68,7 @@ for (const prefix of ["", "/zh"]) {
   for (const target of [`${prefix}/contact`, `${prefix}/services/head-spa`, `${prefix}/services/hair-scalp-recovery`, `${prefix}/promotions/first-hair-visit`]) assert.ok(links.some((link) => link.href === target));
   for (const anchor of ["menu-signature-colour", "menu-classic-texture-perm"]) assert.ok(links.some((link) => link.href === `#${anchor}`), "Local guide connects to existing colour and texture service details");
   const home = await page(prefix || "/");
-  assert.match(home, prefix ? /查看剪发、染发与造型项目/ : /Haircuts, colour &amp; styling/, "Homepage offers a descriptive hair-service entry point");
+  assert.match(home, prefix ? /Deepdene 理发：剪发、染发与造型/ : /Hairdresser in Deepdene — haircuts, colour and styling/, "Homepage offers a descriptive hair-service entry point");
   assert.ok(attrs(home, "a").some((link) => link.href === path));
   assert.doesNotMatch(home, /Balwyn salon interior/, "Studio imagery identifies the real Deepdene location");
   assert.ok(attrs(html, "a").some((link) => link.href === `${prefix}/team/mejin-shick`), "Existing practitioner profile preserved");

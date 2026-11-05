@@ -12,7 +12,7 @@ const chinese = read("app/(zh)/zh/[[...slug]]/page.tsx");
 const menu = read("src/data/serviceMenu.ts");
 const row = read("src/components/ServiceItem.tsx");
 const imageRegistry = read("src/data/serviceImages.ts");
-const splitPage = read("app/(en)/services/nails-semi-permanent/page.tsx");
+const redirects = read("next.config.ts");
 const i18n = read("lib/i18n.ts");
 const qrPanel = read("components/QrCodePanel.tsx");
 const qrData = read("lib/qr-codes.ts");
@@ -174,10 +174,12 @@ assert.doesNotMatch(
   /nailsSemiPermanent/,
   "The combined category must not appear on the services overview",
 );
-assert.match(splitPage, /href: "\/services\/nails"/);
-assert.match(splitPage, /href: "\/services\/semi-permanent"/);
-assert.match(chinese, /href: "\/zh\/services\/nails"/);
-assert.match(chinese, /href: "\/zh\/services\/semi-permanent"/);
+assert.match(redirects, /source: "\/services\/nails-semi-permanent"/);
+assert.match(redirects, /destination: "\/services\/semi-permanent"/);
+assert.match(redirects, /source: "\/zh\/services\/nails-semi-permanent"/);
+assert.match(redirects, /destination: "\/zh\/services\/semi-permanent"/);
+assert.match(redirects, /statusCode: 301/);
+assert.doesNotMatch(chinese, /nails-semi-permanent/);
 assert.match(i18n, /label: "Nails", href: "\/services\/nails"/);
 assert.match(
   i18n,

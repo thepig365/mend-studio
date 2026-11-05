@@ -55,6 +55,7 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
           <a
             href={isChinese ? "/zh/book" : "/book"}
+            data-cta-location="home-hero"
             className="btn-gold w-full py-3.5 sm:w-auto"
           >
             {isChinese ? "预约" : "Book"}

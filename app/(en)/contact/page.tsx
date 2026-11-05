@@ -41,6 +41,7 @@ export default function ContactPage() {
               </p>
               <a
                 className="btn-outline mt-6"
+                data-cta-location="contact-map"
                 href={site.mapsHref}
                 target="_blank"
                 rel="noreferrer"

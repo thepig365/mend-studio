@@ -42,7 +42,7 @@ npm run check:i18n
 | `/services/mens-grooming` | Men’s Grooming |
 | `/services/nails` | Nails |
 | `/services/semi-permanent` | Semi-Permanent Beauty (consultation only) |
-| `/services/nails-semi-permanent` | Compatibility page linking to the two separate categories |
+| `/services/nails-semi-permanent` | Permanent redirect to `/services/semi-permanent` (Chinese: `/zh/services/nails-semi-permanent`) |
 | `/gift-cards` | Gift Cards |
 | `/memberships` | Memberships (coming soon) |
 | `/careers` | Careers / Rent a Space |

@@ -17,7 +17,6 @@ const expectedRoutes = [
   "/services/mens-grooming",
   "/services/nails",
   "/services/semi-permanent",
-  "/services/nails-semi-permanent",
   "/gift-cards",
   "/memberships",
   "/careers",

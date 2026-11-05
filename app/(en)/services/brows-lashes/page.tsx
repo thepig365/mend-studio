@@ -46,7 +46,7 @@ export default function BrowsLashesPage() {
                   {item.time}
                 </span>
               </div>
-              <a href="/book" className="btn-primary mt-6">
+              <a href="/book" data-cta-location="service-item" data-service="brows-lashes" className="btn-primary mt-6">
                 Book
               </a>
             </div>

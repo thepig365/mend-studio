@@ -27,7 +27,7 @@ for (const path of paths) {
   assert.doesNotMatch(html, /<meta[^>]+name="robots"[^>]+noindex/i);
   assert.equal(tags(html, "html")[0].lang, chinese ? "zh-Hans" : "en-AU");
   const alternates = tags(html, "link").filter((link) => link.rel === "alternate");
-  for (const [language, target] of [["en-AU", englishPath], ["zh-Hans", `/zh${englishPath}`], ["x-default", englishPath]]) {
+  for (const [language, target] of [["en-AU", englishPath], ["zh", `/zh${englishPath}`], ["x-default", englishPath]]) {
     assert.ok(alternates.some((link) => link.hreflang === language && link.href === `${origin}${target}`), `${path}: ${language} alternate`);
   }
   const links = tags(html, "a");
@@ -69,13 +69,13 @@ for (const path of paths) {
 
 const sitemap = await (await get("/sitemap.xml")).text();
 const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-assert.equal(urls.length, 44, "40 existing URLs plus four bilingual promotion URLs");
+assert.equal(urls.length, 42, "38 bilingual content URLs plus four bilingual promotion URLs");
 assert.equal(new Set(urls).size, urls.length, "No duplicate sitemap URLs");
 for (const path of paths) assert.ok(urls.includes(`${origin}${path}`));
 for (const path of paths) {
   const block = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].find((match) => match[1].includes(`<loc>${origin}${path}</loc>`))?.[1];
   assert.ok(block, `${path}: sitemap entry`);
-  for (const language of ["en-AU", "zh-Hans", "x-default"]) assert.ok(block.includes(`hreflang="${language}"`));
+  for (const language of ["en-AU", "zh", "x-default"]) assert.ok(block.includes(`hreflang="${language}"`));
 }
 for (const url of urls) {
   const path = new URL(url).pathname;
@@ -99,4 +99,4 @@ const logo = await get("/images/mend-supplied-logo.png");
 assert.equal(logo.status, 200);
 assert.match(logo.headers.get("content-type"), /image\/png/);
 assert.ok((await logo.arrayBuffer()).byteLength > 100000, "Supplied logo served");
-console.log("Promotions checks passed: four bilingual promotion pages, correct languages and reciprocal alternates, translated approved terms, no demo or signup controls, 44 sitemap URLs HTTP 200, same-language links, six unique service detail anchors per language with linked cards and dialog entries, shared Hero/button styles, supplied logo and both unchanged MaSe booking destinations.");
+console.log("Promotions checks passed: four bilingual promotion pages, correct languages and reciprocal alternates, translated approved terms, no demo or signup controls, 42 sitemap URLs HTTP 200, same-language links, six unique service detail anchors per language with linked cards and dialog entries, shared Hero/button styles, supplied logo and both unchanged MaSe booking destinations.");

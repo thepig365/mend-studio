@@ -21,6 +21,20 @@ type ChinesePageMetadataInput = Omit<PageMetadataInput, "path"> & {
   path: string;
 };
 
+/**
+ * Google documents hreflang as an ISO 639-1 language code, optionally plus an
+ * ISO 3166-1 region. `zh-Hans` is the page language (html lang) but not that
+ * pair, so the alternate annotation uses `zh`. x-default is the English URL.
+ * Both language versions must list the same set, including themselves.
+ */
+export function hreflangAlternates(englishUrl: string, chineseUrl: string) {
+  return {
+    "en-AU": englishUrl,
+    "zh": chineseUrl,
+    "x-default": englishUrl,
+  };
+}
+
 const socialImage = {
   url: `${site.url}/images/mend-beauty-logo.png`,
   width: 1024,
@@ -45,11 +59,7 @@ export function pageMetadata({
     description,
     alternates: {
       canonical,
-      languages: {
-        "en-AU": canonical,
-        "zh-Hans": chineseUrl,
-        "x-default": canonical,
-      },
+      languages: hreflangAlternates(canonical, chineseUrl),
     },
     openGraph: {
       title: socialTitle,
@@ -85,11 +95,7 @@ export function chinesePageMetadata({
     description,
     alternates: {
       canonical,
-      languages: {
-        "en-AU": englishUrl,
-        "zh-Hans": canonical,
-        "x-default": englishUrl,
-      },
+      languages: hreflangAlternates(englishUrl, canonical),
     },
     openGraph: {
       title: socialTitle,

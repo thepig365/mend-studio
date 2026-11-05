@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { hreflangAlternates } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 // Keep in sync with the routes under app/. Homepage first, then services, then
@@ -17,7 +18,6 @@ const routes: { path: string; priority: number }[] = [
   { path: "/services/mens-grooming", priority: 0.7 },
   { path: "/services/nails", priority: 0.7 },
   { path: "/services/semi-permanent", priority: 0.7 },
-  { path: "/services/nails-semi-permanent", priority: 0.7 },
   { path: "/gift-cards", priority: 0.5 },
   { path: "/memberships", priority: 0.5 },
   { path: "/careers", priority: 0.4 },
@@ -30,30 +30,22 @@ const routes: { path: string; priority: number }[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   // No lastModified field — we don't track real per-page modification dates,
   // and a build-time timestamp would be a fake signal to search engines.
+  // English and Chinese URLs share a priority. A lower Chinese priority, and
+  // the float produced by subtracting 0.1 in JavaScript, is not a crawl hint
+  // we want in the file Google fetches.
   const bilingualPages = routes.flatMap(({ path, priority }) => {
     const englishUrl = `${site.url}${path}`;
     const chineseUrl = `${site.url}/zh${path}`;
     const alternates = {
-      languages: {
-        "en-AU": englishUrl,
-        "zh-Hans": chineseUrl,
-      },
+      languages: hreflangAlternates(englishUrl, chineseUrl),
     };
 
-    return [
-      {
-        url: englishUrl,
-        changeFrequency: "monthly" as const,
-        priority,
-        alternates,
-      },
-      {
-        url: chineseUrl,
-        changeFrequency: "monthly" as const,
-        priority: Math.max(priority - 0.1, 0.2),
-        alternates,
-      },
-    ];
+    return [englishUrl, chineseUrl].map((url) => ({
+      url,
+      changeFrequency: "monthly" as const,
+      priority,
+      alternates,
+    }));
   });
   const promotionPages: MetadataRoute.Sitemap = [
     "/promotions",
@@ -61,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].flatMap((path) => {
     const englishUrl = `${site.url}${path}`;
     const chineseUrl = `${site.url}/zh${path}`;
-    const alternates = { languages: { "en-AU": englishUrl, "zh-Hans": chineseUrl, "x-default": englishUrl } };
+    const alternates = { languages: hreflangAlternates(englishUrl, chineseUrl) };
     return [englishUrl, chineseUrl].map((url) => ({ url, changeFrequency: "monthly" as const, priority: 0.6, alternates }));
   });
   return [...bilingualPages, ...promotionPages];
