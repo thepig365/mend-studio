@@ -54,6 +54,17 @@ client secrets, access tokens or passwords.
 - Release Console: human-gated handoff to publish an approved review build,
   submit or inspect the production URL in Search Console, and verify the page
   in Google Analytics
+- Marketing Skills Library: a staff browser for the MIT-licensed
+  [marketingskills](https://github.com/coreyhaines31/marketingskills) files
+  vendored under `vendor/marketingskills/`. The pinned commit is recorded in
+  `vendor/marketingskills/UPSTREAM.json`. Refresh with
+  `node scripts/refresh-marketingskills.mjs` (optional `--sha`). The script
+  copies `LICENSE` and skill markdown only and does not run upstream
+  installers. Library routes stay behind the same sign-in as `/marketing`,
+  send `noindex`, and are not added to the sitemap. Upstream text is
+  third-party guidance; unsourced statistics must not be quoted as fact to
+  customers. Do not store private strategy, customer or staff records, budgets
+  or secrets in the vendored files.
 
 ## AI boundary
 

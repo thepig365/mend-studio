@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
+import path from "node:path";
+import { markdownToBlocks, parseSkillFrontmatter } from "../lib/markdown-blocks.mjs";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -120,3 +122,112 @@ const taskIds = [...playbook.matchAll(/id: "([A-Z]+-\d+)"/g)].map((match) => mat
 assert.equal(taskIds.length, 16);
 assert.equal(new Set(taskIds).size, taskIds.length);
 console.log("Operating guide checks passed: public-safe handbook, 16 distinct tasks, honest session-only handoff, validated import, no automatic transmission, separate SEO/AI evidence, and unchanged access boundary.");
+
+const [
+  skillsIndex,
+  skillPage,
+  access,
+  disclaimer,
+  browser,
+  groups,
+  upstreamRecord,
+  license,
+  refreshScript,
+  vendorReadme,
+  sitemap,
+] = await Promise.all([
+  read("app/(en)/marketing/skills/page.tsx"),
+  read("app/(en)/marketing/skills/[slug]/[[...doc]]/page.tsx"),
+  read("lib/require-marketing-portal.ts"),
+  read("components/MarketingSkillsDisclaimer.tsx"),
+  read("components/MarketingSkillsBrowser.tsx"),
+  read("lib/marketing-skill-groups.ts"),
+  read("vendor/marketingskills/UPSTREAM.json"),
+  read("vendor/marketingskills/LICENSE"),
+  read("scripts/refresh-marketingskills.mjs"),
+  read("vendor/marketingskills/README.md"),
+  read("app/sitemap.ts"),
+]);
+
+const upstream = JSON.parse(upstreamRecord);
+assert.match(upstream.commit, /^[0-9a-f]{40}$/);
+assert.equal(upstream.license, "MIT");
+assert.equal(upstream.repository, "https://github.com/coreyhaines31/marketingskills");
+assert.match(license, /MIT License/);
+assert.match(license, /Copyright \(c\) 2025 Corey Haines/);
+assert.match(vendorReadme, new RegExp(upstream.commit));
+assert.match(refreshScript, /Does not execute any upstream installer/);
+assert.match(refreshScript, /"skills\/\*\*\/\*\.md"/);
+assert.doesNotMatch(refreshScript, /npx skills add|child_process\.exec\(/);
+assert.match(skillsIndex, /requireMarketingPortal/);
+assert.match(skillPage, /requireMarketingPortal/);
+assert.match(access, /redirect\("\/marketing\/login"\)/);
+assert.doesNotMatch(access, /MARKETING_PORTAL_SCREENSHOT/);
+assert.match(skillsIndex, /index: false/);
+assert.match(skillPage, /index: false/);
+assert.match(skillsIndex, /follow: false/);
+assert.match(skillPage, /follow: false/);
+assert.match(skillsIndex, /force-dynamic/);
+assert.match(skillPage, /force-dynamic/);
+assert.match(disclaimer, /must not be quoted as fact to customers/);
+assert.match(skillsIndex, /MarketingSkillsDisclaimer/);
+assert.match(skillPage, /MarketingSkillsDisclaimer/);
+assert.match(workspace, /href="\/marketing\/skills"/);
+assert.match(workspace, /Marketing Skills Library/);
+assert.doesNotMatch(sitemap, /marketing\/skills/);
+assert.match(robots, /disallow: \["\/marketing", "\/api\/auth"\]/);
+
+const listedSlugs = [
+  ...groups.matchAll(/slugs:\s*\[([\s\S]*?)\]/g),
+].flatMap((match) => [...match[1].matchAll(/"([^"]+)"/g)].map((slug) => slug[1]));
+const skillDirs = await skillDirectories("vendor/marketingskills/skills");
+assert.deepEqual([...listedSlugs].sort(), skillDirs);
+for (const slug of ["ai-seo", "seo-audit", "schema", "directory-submissions", "copywriting", "emails", "social"]) {
+  assert.ok(listedSlugs.includes(slug), slug);
+  assert.equal(await fileExists(`vendor/marketingskills/skills/${slug}/SKILL.md`), true);
+}
+assert.equal(await fileExists("vendor/marketingskills/skills/seo-audit/references/local-seo.md"), true);
+await assertMarkdownOnly("vendor/marketingskills/skills");
+
+const aiSeo = await read("vendor/marketingskills/skills/ai-seo/SKILL.md");
+const frontmatter = parseSkillFrontmatter(aiSeo);
+assert.equal(frontmatter.data.name, "ai-seo");
+const blocks = markdownToBlocks(aiSeo, {
+  resolveHref: (href) =>
+    href.startsWith("references/")
+      ? `/marketing/skills/ai-seo/${href.replace(/\.md$/, "")}`
+      : href.startsWith("javascript:")
+        ? null
+        : href,
+});
+assert.ok(blocks.some((block) => block.type === "heading" && block.level === 1));
+assert.ok(blocks.some((block) => block.type === "table" && block.rows.length > 0));
+assert.match(JSON.stringify(blocks), /\/marketing\/skills\/ai-seo\/references\/agent-readiness/);
+
+for (const source of [skillsIndex, skillPage, disclaimer, browser, groups, access]) {
+  assert.doesNotMatch(source, /sk-[A-Za-z0-9_-]{20,}|AUTH_GOOGLE_SECRET|OPENAI_API_KEY|ANTHROPIC_API_KEY|dangerouslySetInnerHTML/);
+}
+console.log(
+  `Marketing skills library checks passed: ${skillDirs.length} skills pinned at ${upstream.commit}, MIT licence retained, auth and noindex on library routes, sitemap unchanged, and ai-seo markdown renders.`,
+);
+
+async function skillDirectories(root) {
+  const entries = await readdir(root, { withFileTypes: true });
+  return entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
+}
+
+async function fileExists(file) {
+  try {
+    return (await stat(file)).isFile();
+  } catch {
+    return false;
+  }
+}
+
+async function assertMarkdownOnly(root) {
+  for (const entry of await readdir(root, { withFileTypes: true })) {
+    const full = path.join(root, entry.name);
+    if (entry.isDirectory()) await assertMarkdownOnly(full);
+    else assert.ok(entry.name.endsWith(".md"), `${full} is not vendored markdown`);
+  }
+}
