@@ -9,7 +9,10 @@ type LocalCopy = {
 };
 
 // Titles, descriptions and H1s for service pages: Balwyn & Deepdene local signal. The studio is in Deepdene, on the Balwyn border.
-export const localServiceCopy: Record<"head-spa" | "hair-scalp-recovery" | "skin-facial", Record<Locale, LocalCopy>> = {
+export const localServiceCopy: Record<
+  "head-spa" | "hair-scalp-recovery" | "skin-facial" | "body-care",
+  Record<Locale, LocalCopy>
+> = {
   "head-spa": {
     "en-AU": {
       title: "Head Spa Balwyn & Deepdene",
@@ -62,6 +65,24 @@ export const localServiceCopy: Record<"head-spa" | "hair-scalp-recovery" | "skin
       heading: "Balwyn 附近面部与肌肤护理｜Deepdene 门店",
       subtitle: "肌肤管理",
       nearby: "面部与肌肤护理预约均在我们位于 Whitehorse Road、紧邻 Balwyn 的 Deepdene 门店进行。",
+    },
+  },
+  "body-care": {
+    "en-AU": {
+      title: "Body Care Balwyn & Deepdene",
+      description:
+        "Body care near Balwyn at Mend Beauty Studio, 74 Whitehorse Road, Deepdene. Relaxation-focused body therapy and massage, from 30 minutes at $88. Not medical diagnosis or treatment.",
+      heading: "Body Care near Balwyn, in Deepdene",
+      subtitle: "Body Wellness & Relaxation",
+      nearby: "Body care visits are booked at our Deepdene studio on Whitehorse Road, on the Balwyn border.",
+    },
+    "zh-Hans": {
+      title: "Balwyn 及 Deepdene 身体护理",
+      description:
+        "Mend Beauty Studio 位于 Deepdene 的 74 Whitehorse Road，紧邻 Balwyn。提供以放松为主的身体理疗与按摩，30 分钟项目 $88 起。这些是放松服务，并非医疗诊断或治疗。",
+      heading: "Balwyn 附近身体护理｜Deepdene 门店",
+      subtitle: "身体护理与放松",
+      nearby: "身体护理预约均在我们位于 Whitehorse Road、紧邻 Balwyn 的 Deepdene 门店进行。",
     },
   },
 };

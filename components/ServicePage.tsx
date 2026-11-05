@@ -2,8 +2,10 @@ import MenuDownloads from "@/components/MenuDownloads";
 import type { ReactNode } from "react";
 import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
+import ServiceFaq from "@/components/ServiceFaq";
 import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
+import { answerIntro } from "@/lib/service-answer-intros";
 import { pricingNote, type ServiceCategory } from "@/lib/services";
 import {
   getMenuItemsForCategory,
@@ -44,6 +46,7 @@ export default function ServicePage({
   menuOverride,
 }: ServicePageProps) {
   const menu = menuOverride ?? getMenuItemsForCategory(category.slug);
+  const opening = answerIntro(category.slug, "en-AU") ?? category.intro;
   const allItems = [...menu.items, ...menu.secondaryItems];
   const primaryGroups = groupBySection(menu.items, "Menu & Pricing");
   const secondaryGroups = groupBySection(
@@ -61,7 +64,7 @@ export default function ServicePage({
         eyebrow={eyebrow}
         title={category.title}
         subtitle={subtitle}
-        body={category.intro}
+        body={opening}
         image={category.image}
         imageAlt={category.imageAlt}
         actions={[
@@ -112,6 +115,8 @@ export default function ServicePage({
       </section>
 
       {afterMenuContent}
+
+      <ServiceFaq slug={category.slug} locale="en-AU" />
 
       <CTABlock
         eyebrow="Ready when you are"

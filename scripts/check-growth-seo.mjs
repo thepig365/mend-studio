@@ -118,6 +118,10 @@ for (const phrase of [
   "Facials and Skin Care near Balwyn, in Deepdene",
   "Balwyn 及 Deepdene 面部与肌肤护理",
   "Balwyn 附近面部与肌肤护理｜Deepdene 门店",
+  "Body Care Balwyn & Deepdene",
+  "Body Care near Balwyn, in Deepdene",
+  "Balwyn 及 Deepdene 身体护理",
+  "Balwyn 附近身体护理｜Deepdene 门店",
 ]) {
   assert(localCopy.includes(phrase) && phrase.includes("Balwyn") && phrase.includes("Deepdene"), `Service title or H1 missing Balwyn and Deepdene: ${phrase}`);
 }
@@ -133,6 +137,33 @@ assert(chineseContact.includes("<GettingHere"), "Chinese contact page renders th
 assert(nearbySuburbs.includes("欢迎附近区域的客人"), "Chinese nearby heading welcomes guests");
 assert(!nearbySuburbs.includes("。 这些"), "Chinese nearby copy has no stray space after the full stop");
 assert(nearbySuburbs.includes("We welcome guests from"), "English nearby copy welcomes guests");
+
+const answerIntros = await read("lib/service-answer-intros.ts");
+const englishIntros = [...answerIntros.matchAll(/"en-AU":\s*\n\s*"([^"]+)"/g)].map((match) => match[1]);
+assert(englishIntros.length === 5, "Five English answer-first intros");
+for (const intro of englishIntros) {
+  const words = intro.split(/\s+/).length;
+  assert(words >= 40 && words <= 60, `Answer intro must be 40-60 words (got ${words})`);
+}
+const faq = await read("components/ServiceFaq.tsx");
+const faqData = await read("lib/service-faqs.ts");
+assert(faq.includes('name: item.question') && faq.includes("text: item.answer"), "FAQPage JSON-LD must reuse the visible question and answer strings");
+assert(servicePage.includes("<ServiceFaq") && chinese.includes("<ServiceFaq"), "English and Chinese service pages render the FAQ");
+assert(servicePage.includes("answerIntro(") && chinese.includes("answerIntro("), "Service pages use the answer-first intro");
+for (const slug of ["head-spa", "hair-scalp-recovery", "skin-facial", "hair", "body-care"]) {
+  assert(faqData.includes(`"${slug}"`), `FAQ data missing ${slug}`);
+}
+assert(schema.includes("BeautySalon") && schema.includes("DaySpa") && schema.includes("HairSalon"), "Business JSON-LD keeps HairSalon and adds BeautySalon and DaySpa");
+assert(schema.includes("slogan: site.tagline") && schema.includes("description: businessDescription"), "Slogan stays separate from the factual description");
+assert(schema.includes("email: site.email") && schema.includes("priceRange") && schema.includes("latitude"), "Business JSON-LD includes email, price range and coordinates");
+assert(schema.includes("hasMap: site.mapsHref") && schema.includes("areaServed: serviceAreas"), "Map link and areaServed stay on the business entity");
+const robots = await read("app/robots.ts");
+for (const agent of ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "Perplexity-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "Google-Extended", "Applebot", "Applebot-Extended", "Bingbot", "CCBot", "meta-externalagent"]) {
+  assert(robots.includes(`"${agent}"`), `robots.txt must name ${agent}`);
+}
+assert(robots.includes('disallow: ["/marketing", "/api/auth"]'), "Private paths stay disallowed");
+const llmsRoute = await read("app/llms.txt/route.ts");
+assert(llmsRoute.includes("llmsTxt") && llmsRoute.includes("text/plain"), "llms.txt is served as plain text from site data");
 
 function sourceFiles(dir, files = []) {
   for (const name of readdirSync(dir)) {

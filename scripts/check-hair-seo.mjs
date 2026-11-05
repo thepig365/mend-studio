@@ -97,9 +97,11 @@ for (const path of [
   "/services/head-spa",
   "/services/hair-scalp-recovery",
   "/services/skin-facial",
+  "/services/body-care",
   "/zh/services/head-spa",
   "/zh/services/hair-scalp-recovery",
   "/zh/services/skin-facial",
+  "/zh/services/body-care",
 ]) {
   const html = await page(path);
   const title = html.match(/<title>(.*?)<\/title>/)?.[1] ?? "";
@@ -115,7 +117,12 @@ for (const path of ["/contact", "/zh/contact", "/"]) {
     assert.equal((html.match(/id="getting-here"/g) || []).length, 1, `${path} includes #getting-here`);
   }
   const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
-  const business = blocks.find((schema) => schema["@type"] === "HairSalon" && schema.address);
+  const business = blocks.find((schema) => {
+    if (!schema || Array.isArray(schema) || !schema.address) return false;
+    const type = schema["@type"];
+    const types = Array.isArray(type) ? type : [type];
+    return types.includes("HairSalon");
+  });
   assert.equal(business?.address?.addressLocality, "Deepdene", `${path} JSON-LD address stays in Deepdene`);
 }
 for (const [path, html] of cache) {
