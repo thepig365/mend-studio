@@ -137,7 +137,16 @@ const hairReduction: ServiceCategory = {
   notes: ["Suitability, contraindications and expected results must be discussed before treatment. No universal suitability or guaranteed outcome is promised."],
 };
 
-const hairScalpRecovery: ServiceCategory = { ...hairAtelier, items: [...assessmentItems, ...scalpCareItems], slug: "hair-scalp-recovery", title: "Hair & Scalp Recovery", cardTitle: "Hair & Scalp Recovery" };
+const hairScalpRecovery: ServiceCategory = {
+  ...hairAtelier,
+  items: [...assessmentItems, ...scalpCareItems],
+  slug: "hair-scalp-recovery",
+  title: "Hair & Scalp Treatments in Deepdene",
+  cardTitle: "Hair & Scalp Recovery",
+  excerpt: "Explore hair conditioning, scalp assessments and cosmetic scalp-care rituals at MEND in Deepdene. View services, prices and booking information.",
+  intro: "Explore hair conditioning, scalp assessments and cosmetic scalp-care rituals at MEND Beauty Studio in Deepdene. The menu below includes Hydra Hair Ritual and care options for your scalp.",
+  notes: ["Hair and scalp care are cosmetic services, not medical diagnosis or treatment."],
+};
 const nailsIds = ["classic-manicure", "gel-manicure", "classic-pedicure", "gel-pedicure", "nail-art", "nail-removal"];
 const semiPermanentIds = ["semi-permanent-consultation", "powder-ombre-brows", "combination-brows", "lip-blush", "lip-blush-touch-up", "lash-line-enhancement", "eyeliner-tattoo", "semi-permanent-touch-up", "annual-refresh"];
 const nailsSemiPermanent: ServiceCategory = {

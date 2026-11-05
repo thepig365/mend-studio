@@ -402,11 +402,11 @@ const annaCategoryTranslations: Record<
     intro: "查看经批准的头皮检测、剪裁、染发与烫发项目、价格及时间。",
   },
   "hair-scalp-recovery": {
-    title: "头皮健康管理",
+    title: "Deepdene 头皮与发质护理",
     cardTitle: "头皮健康管理",
-    excerpt: "针对头皮与发质状态的护理项目。",
-    intro: "专注头皮状态、发质状态及修护护理的经批准项目。",
-    notes: ["头皮与发质护理属于美容与健康支持服务，并非医疗诊断或治疗。"],
+    excerpt: "了解 MEND 位于 Deepdene 的发质养护、头皮检测与美容型头皮护理项目。查看菜单，并了解如何选择与预约。",
+    intro: "了解 MEND Beauty Studio 位于 Deepdene 的发质养护、头皮检测与美容型头皮护理项目。下方菜单包含 Hydra Hair Ritual 水润舒缓发质护理及多种头皮护理选项。",
+    notes: ["头皮与发质护理属于美容护理服务，并非医疗诊断或治疗。"],
   },
   "head-spa": {
     title: "头皮护理与身心放松",
