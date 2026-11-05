@@ -218,7 +218,7 @@ export const serviceImages: Record<string, ServiceImage> = {
   ),
   "deluxe-head-spa-ritual": mendOriginal(
     "headspa-signature-ritual-mend",
-    "Premium MEND Head Spa ritual with water halo, serum, hair mask and hot stones",
+    "Premium MEND Head Spa ritual with water halo, serum and hair mask",
     "exact"
   ),
   "scalp-cleansing-treatment": unsplash(
@@ -310,8 +310,8 @@ export const serviceImages: Record<string, ServiceImage> = {
     "exact"
   ),
   "korean-body-care-ritual": pexels(
-    "body-hot-stones",
-    "Warm stone body care ritual in a bright spa room",
+    "body-care-room",
+    "Body care in a bright treatment room",
     6560276,
     "close"
   ),
@@ -328,8 +328,8 @@ export const serviceImages: Record<string, ServiceImage> = {
     "close"
   ),
   "body-care-head-spa-package": pexels(
-    "body-stone-neck",
-    "Warm stone neck and shoulder care during a spa package",
+    "neck-shoulder-care",
+    "Neck and shoulder care during a spa package",
     6560298,
     "close"
   ),

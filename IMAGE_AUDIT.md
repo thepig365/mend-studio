@@ -30,7 +30,7 @@ New photos are listed as free to use on their individual Pexels pages. The [Pexe
 - Manual facial sculpting: replaced a mask with hands-on facial massage.
 - Eye care: replaced a full-face mask with visible under-eye patches.
 - Neck care: replaced facial gua sha with neck massage.
-- Lymphatic/deep-sleep massage: replaced hot-stone imagery with hands-on massage. Lymphatic drainage technique cannot be verified from this stock photo.
+- Lymphatic/deep-sleep massage: replaced the previous massage photo with hands-on massage. Lymphatic drainage technique cannot be verified from this stock photo.
 - Signature body ritual: replaced the hand-scrub image with the existing oil-massage photo, matching the aromatherapy component.
 
 ## Remaining specialist photography needs

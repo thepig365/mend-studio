@@ -164,6 +164,9 @@ for (const agent of ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot",
 assert(robots.includes('disallow: ["/marketing", "/api/auth"]'), "Private paths stay disallowed");
 const llmsRoute = await read("app/llms.txt/route.ts");
 assert(llmsRoute.includes("llmsTxt") && llmsRoute.includes("text/plain"), "llms.txt is served as plain text from site data");
+assert(faqData.includes("Yes — there are 6 car parks at the back of the studio.") && faqData.includes("有，店铺后面有 6 个停车位。"), "Parking FAQ uses the owner-confirmed wording");
+assert(!/free parking|免费停车|customer-only|仅限顾客/i.test(faqData + gettingHere), "Parking copy does not claim the parks are free or customer-only");
+assert(!/hot stone|hot-stone|热石/i.test(faqData + gettingHere), "FAQ and getting-here copy do not mention hot stone");
 
 function sourceFiles(dir, files = []) {
   for (const name of readdirSync(dir)) {

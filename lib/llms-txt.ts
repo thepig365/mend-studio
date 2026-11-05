@@ -77,7 +77,7 @@ export const llmsTxt = [
   `- Region: ${site.region}`,
   `- Google Maps: ${site.mapsHref}`,
   "- Tram: route 109, stop 43, Deepdene Shopping Centre/Whitehorse Rd. From Balwyn Shopping Centre (stop 48) the tram runs five stops west.",
-  "- Parking: not described on this website.",
+  "- Parking: There are 6 car parks at the back of the studio.",
   "",
   "## Hours",
   ...site.hours.map((slot) => `- ${slot.days}: ${slot.time}`),

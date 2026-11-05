@@ -23,6 +23,18 @@ function bookAnswer(locale: Locale, serviceLabel: string) {
   return `To book ${serviceLabel}, use Book on this page or open ${site.url}/book. The booking page hands you to MaSe, where you select the service and check the current price and available times. You can also call ${site.phone}, email ${site.email}, or message WeChat ${site.wechat}. Appointments are recommended. The studio is open Monday to Saturday, 10:00 am – 6:00 pm, and closed Sunday. Public holiday hours may vary. Walk-in availability may be limited.`;
 }
 
+// Owner-confirmed 5 November 2026. Six parks at the back of the studio.
+export const parkingFaq: Record<Locale, { question: string; answer: string }> = {
+  "en-AU": {
+    question: "Is there parking?",
+    answer: "Yes — there are 6 car parks at the back of the studio.",
+  },
+  "zh-Hans": {
+    question: "有停车位吗？",
+    answer: "有，店铺后面有 6 个停车位。",
+  },
+};
+
 function whereAnswer(locale: Locale) {
   if (locale === "zh-Hans") {
     return `Mend Beauty Studio 位于 ${site.address}，在 Whitehorse Road 上、紧邻 Balwyn。门店位于 Balwyn 商业街与 Palace Balwyn 影院以西。从 Balwyn Shopping Centre（48 号站）乘 109 路电车向西 5 站，到 Deepdene Shopping Centre/Whitehorse Rd（43 号站）。我们欢迎来自 Balwyn、Kew、Camberwell、Canterbury、Surrey Hills 与 Mont Albert 的客人。这些附近区域不是分店。联系页面提供 Google 地图链接。`;
@@ -38,7 +50,7 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
         {
           question: "What does a head spa at Mend Beauty Studio involve?",
           answer:
-            "A head spa is a cosmetic scalp-care and relaxation appointment, not medical diagnosis or treatment. Results vary. Express Head Spa takes 30 mins and is described as a refreshing first experience, haircut add-on or lunchtime pause. Korean Signature Head Spa takes 75 mins and lists deep scalp cleansing, head massage, neck and shoulder massage and water-circulation head spa. Aroma Healing Head Spa takes 90 mins, includes the Korean Signature Head Spa ritual, and lists aromatherapy oils, scalp essence infusion, neck and shoulder gua sha, warm compresses and relaxation ritual. MEND Signature Head Ritual takes 120 mins, builds on the Aroma Healing Head Spa, and lists hot stone therapy, scalp ampoule infusion, a warm hair-mask treatment, infrared scalp care, aromatherapy and blow-dry styling.",
+            "A head spa is a cosmetic scalp-care and relaxation appointment, not medical diagnosis or treatment. Results vary. Express Head Spa takes 30 mins and is described as a refreshing first experience, haircut add-on or lunchtime pause. Korean Signature Head Spa takes 75 mins and lists deep scalp cleansing, head massage, neck and shoulder massage and water-circulation head spa. Aroma Healing Head Spa takes 90 mins, includes the Korean Signature Head Spa ritual, and lists aromatherapy oils, scalp essence infusion, neck and shoulder gua sha, warm compresses and relaxation ritual. MEND Signature Head Ritual takes 120 mins, builds on the Aroma Healing Head Spa, and lists scalp ampoule infusion, a warm hair-mask treatment, infrared scalp care, aromatherapy and blow-dry styling.",
         },
         {
           question: "How long does a head spa take?",
@@ -70,7 +82,7 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
         {
           question: "Mend Beauty Studio 的头疗包含什么？",
           answer:
-            "头疗是美容型头皮护理与放松服务，并非医疗诊断或治疗，效果因人而异。快速头疗为 30 分钟，适合第一次体验、洗剪后加购或午休放松。韩式经典头疗为 75 分钟，列出的内容包括头皮深层清洁、头部按摩、肩颈按摩与水循环头疗。芳香疗愈深度睡眠头疗为 90 分钟，在韩式经典头疗基础上升级，并列出芳香精油、头皮精华导入、肩颈刮痧，以及热敷与睡眠放松流程。MEND臻选头疗为 120 分钟，在芳香疗愈头疗基础上升级，并列出热石护理、头皮安瓶导入、热敷护发、红外线头皮护理、芳疗与吹造型。",
+            "头疗是美容型头皮护理与放松服务，并非医疗诊断或治疗，效果因人而异。快速头疗为 30 分钟，适合第一次体验、洗剪后加购或午休放松。韩式经典头疗为 75 分钟，列出的内容包括头皮深层清洁、头部按摩、肩颈按摩与水循环头疗。芳香疗愈深度睡眠头疗为 90 分钟，在韩式经典头疗基础上升级，并列出芳香精油、头皮精华导入、肩颈刮痧，以及热敷与睡眠放松流程。MEND臻选头疗为 120 分钟，在芳香疗愈头疗基础上升级，并列出头皮安瓶导入、热敷护发、红外线头皮护理、芳疗与吹造型。",
         },
         {
           question: "头疗需要多长时间？",
@@ -350,6 +362,12 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
     },
   },
 };
+
+for (const block of Object.values(serviceFaqs)) {
+  for (const locale of ["en-AU", "zh-Hans"] as const) {
+    block[locale].items.push(parkingFaq[locale]);
+  }
+}
 
 export function serviceFaq(slug: string, locale: Locale) {
   return serviceFaqs[slug]?.[locale];
