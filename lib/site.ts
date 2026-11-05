@@ -49,6 +49,21 @@ export const site = {
   hoursNote: "Appointments are recommended. Public holiday hours may vary.",
 };
 
+// Places guests travel from. The studio address stays Deepdene; these are not salon locations.
+export const serviceAreas = [
+  "Deepdene",
+  "Balwyn",
+  "Balwyn North",
+  "Kew",
+  "Camberwell",
+  "Canterbury",
+  "Surrey Hills",
+  "Mont Albert",
+].map((name) => ({
+  "@type": "Place" as const,
+  name: `${name} VIC`,
+}));
+
 export const mainNav = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services", hasDropdown: true },

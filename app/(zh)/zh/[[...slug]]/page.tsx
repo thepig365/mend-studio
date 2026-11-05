@@ -1,3 +1,4 @@
+import GettingHere from "@/components/GettingHere";
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
 import NearbySuburbs from "@/components/NearbySuburbs";
 import ScalpCareMenuIntro from "@/components/ScalpCareMenuIntro";
@@ -57,9 +58,9 @@ const serviceSlugs = new Set([
 
 const routeMetadata: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Mend Beauty Studio 中文网站｜美发、头疗、皮肤管理与美容护理",
+    title: "Mend Beauty Studio 中文网站｜Balwyn 及 Deepdene 美发、头疗与皮肤管理",
     description:
-      "Mend Beauty Studio 位于墨尔本 Deepdene，提供美发、头疗、头皮护理、韩式皮肤管理、身体护理及眉睫美容服务。",
+      "Mend Beauty Studio 位于墨尔本 Deepdene 的 Whitehorse Road，紧邻 Balwyn，提供美发、头疗、头皮护理、韩式皮肤管理、身体护理及眉睫美容服务。",
   },
   "/services": {
     title: "服务项目",
@@ -172,7 +173,7 @@ function ChineseHome() {
           body="从美发染护、头疗和头皮护理，到韩式皮肤管理、身体护理与眉睫美容，Mend Beauty Studio 在舒适雅致的环境中，为您安排完整的日常美容护理。"
         />
         <div className="mt-6 text-center">
-          <Link href="/zh/services/hair" className="btn-outline">Deepdene 理发：剪发、染发与造型</Link>
+          <Link href="/zh/services/hair" className="btn-outline">Balwyn 附近理发（Deepdene）：剪发、染发与造型</Link>
         </div>
       </section>
 
@@ -204,11 +205,11 @@ function ChineseHome() {
                 key={category.slug}
                 title={
                   category.slug === "hair"
-                    ? "Deepdene 美发沙龙"
+                    ? "Balwyn 及 Deepdene 美发沙龙"
                     : category.slug === "head-spa"
-                      ? "Deepdene 头疗"
+                      ? "Balwyn 及 Deepdene 头疗"
                       : category.slug === "skin-facial"
-                        ? "Deepdene 面部与肌肤护理"
+                        ? "Balwyn 及 Deepdene 面部与肌肤护理"
                         : category.cardTitle
                 }
                 description={category.excerpt}
@@ -250,7 +251,7 @@ function ChineseHome() {
         <div>
           <SectionHeading
             eyebrow="到店体验"
-            title="欢迎来到 Deepdene"
+            title="欢迎来到 Deepdene（紧邻 Balwyn）"
             body="如需预约、咨询或选择服务，请致电、发送邮件或使用预约页面。"
             align="left"
           />
@@ -568,6 +569,7 @@ function ChineseContact() {
         </div>
         <BookingEnquiryForm locale="zh-Hans" />
       </section>
+      <GettingHere locale="zh-Hans" />
       <section className="wrap pb-16 sm:pb-24">
         <QrCodePanel locale="zh-Hans" />
       </section>

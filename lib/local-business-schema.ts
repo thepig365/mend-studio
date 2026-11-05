@@ -1,4 +1,4 @@
-import { site } from "@/lib/site";
+import { serviceAreas, site } from "@/lib/site";
 
 // Public business identity only. Keep every fact sourced from lib/site.ts.
 export const localBusinessJsonLd = {
@@ -19,4 +19,5 @@ export const localBusinessJsonLd = {
     "@type": "PostalAddress",
     ...site.structuredAddress,
   },
+  areaServed: serviceAreas,
 };

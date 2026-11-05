@@ -141,7 +141,7 @@ const hairScalpRecovery: ServiceCategory = {
   ...hairAtelier,
   items: [...assessmentItems, ...scalpCareItems],
   slug: "hair-scalp-recovery",
-  title: "Hair & Scalp Treatments in Deepdene",
+  title: "Hair & Scalp Treatments near Balwyn, in Deepdene",
   cardTitle: "Hair & Scalp Recovery",
   excerpt: "Explore hair conditioning, scalp assessments and cosmetic scalp-care rituals at MEND in Deepdene. View services, prices and booking information.",
   intro: "Explore hair conditioning, scalp assessments and cosmetic scalp-care rituals at MEND Beauty Studio in Deepdene. The menu below includes Hydra Hair Ritual and care options for your scalp.",

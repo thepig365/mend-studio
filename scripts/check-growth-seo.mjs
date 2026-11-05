@@ -1,3 +1,4 @@
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -99,6 +100,54 @@ assert(
     chineseLayout.includes('lang="zh-Hans"'),
   "Static root layouts must preserve the correct HTML language",
 );
+
+const localCopy = await read("lib/local-service-copy.ts");
+const gettingHere = await read("components/GettingHere.tsx");
+const nearbySuburbs = await read("components/NearbySuburbs.tsx");
+const contact = await read("app/(en)/contact/page.tsx");
+for (const phrase of [
+  "Head Spa Balwyn & Deepdene",
+  "Head Spa near Balwyn, in Deepdene",
+  "Balwyn 及 Deepdene 头疗",
+  "Balwyn 附近头疗｜Deepdene 门店",
+  "Scalp Care Balwyn & Deepdene",
+  "Scalp Care near Balwyn, in Deepdene",
+  "Balwyn 及 Deepdene 头皮护理",
+  "Balwyn 附近头皮护理｜Deepdene 门店",
+  "Facials Balwyn & Deepdene",
+  "Facials and Skin Care near Balwyn, in Deepdene",
+  "Balwyn 及 Deepdene 面部与肌肤护理",
+  "Balwyn 附近面部与肌肤护理｜Deepdene 门店",
+]) {
+  assert(localCopy.includes(phrase) && phrase.includes("Balwyn") && phrase.includes("Deepdene"), `Service title or H1 missing Balwyn and Deepdene: ${phrase}`);
+}
+assert(serviceSchema.includes("areaServed: serviceAreas"), "Service JSON-LD must share the areaServed list");
+assert(schema.includes("areaServed: serviceAreas"), "LocalBusiness JSON-LD must include areaServed");
+assert(site.includes('addressLocality: "Deepdene"'), "JSON-LD address locality stays Deepdene");
+assert(site.includes("74 Whitehorse Road, Deepdene VIC 3103"), "Studio address stays 74 Whitehorse Road, Deepdene");
+assert(!schema.includes('addressLocality: "Balwyn"'), "Business address must not move to Balwyn");
+assert(gettingHere.includes('id="getting-here"'), "Getting-here guide exposes #getting-here");
+assert(contact.includes("<GettingHere"), "English contact page renders the getting-here guide");
+const chineseContact = chinese.slice(chinese.indexOf("function ChineseContact()"), chinese.indexOf("const policies"));
+assert(chineseContact.includes("<GettingHere"), "Chinese contact page renders the getting-here guide");
+assert(nearbySuburbs.includes("欢迎附近区域的客人"), "Chinese nearby heading welcomes guests");
+assert(!nearbySuburbs.includes("。 这些"), "Chinese nearby copy has no stray space after the full stop");
+assert(nearbySuburbs.includes("We welcome guests from"), "English nearby copy welcomes guests");
+
+function sourceFiles(dir, files = []) {
+  for (const name of readdirSync(dir)) {
+    if (name === "node_modules" || name.startsWith(".")) continue;
+    const path = join(dir, name);
+    if (statSync(path).isDirectory()) sourceFiles(path, files);
+    else if (/\.(tsx|ts)$/.test(name)) files.push(path);
+  }
+  return files;
+}
+for (const dir of ["app", "components", "lib"]) {
+  for (const file of sourceFiles(join(root, dir))) {
+    assert(!/\bin Balwyn\b/.test(readFileSync(file, "utf8")), `${file} must not say the studio is in Balwyn`);
+  }
+}
 
 console.log(
   "Growth SEO checks passed: 38 bilingual sitemap URLs plus promotions, reciprocal hreflang, social identity, local/service structured data, consent gate and conversion events.",
