@@ -72,6 +72,14 @@ assert(
   "English semi-permanent page must render the same service structured data as its Chinese counterpart",
 );
 assert(
+  semiPermanent.includes('price: ""') && semiPermanent.includes("items={structuredItems}"),
+  "English semi-permanent structured data must not receive the visible price strings",
+);
+assert(
+  semiPermanent.includes("items={menu.items}"),
+  "English semi-permanent visible menu must keep the original items",
+);
+assert(
   chinese.includes("<ServiceStructuredData"),
   "Chinese service pages must render their structured data",
 );

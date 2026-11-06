@@ -16,11 +16,14 @@ export const metadata = pageMetadata({
 export default function SemiPermanentPage() {
   const category = getCategory("semi-permanent");
   const menu = getMenuItemsForCategory("semi-permanent");
+  // Names and descriptions only. The visible menu keeps its price strings;
+  // they are not copied into this page's structured data.
+  const structuredItems = menu.items.map((item) => ({ ...item, price: "" }));
   return (
     <>
       <ServiceStructuredData
         categoryName="Semi-Permanent Beauty"
-        items={menu.items}
+        items={structuredItems}
         path="/services/semi-permanent"
       />
       <Hero
