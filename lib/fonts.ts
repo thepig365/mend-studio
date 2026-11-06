@@ -1,26 +1,12 @@
 import localFont from "next/font/local";
 
-// Latin subsets of the same families previously loaded with next/font/google.
-// The files are vendored so production builds do not depend on Google's CSS
-// URL shape. CSS variables and weights stay the same.
+// Vendored Latin files. CSS variables stay --font-cormorant and --font-jost.
+// Cormorant is the official Google Fonts variable font, subset to Latin,
+// wght 300–700. Jost is the official Latin variable file, wght 100–900.
 export const cormorant = localFont({
-  src: [
-    {
-      path: "./fonts/cormorant-garamond-latin-400.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/cormorant-garamond-latin-500.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "./fonts/cormorant-garamond-latin-600.woff2",
-      weight: "600",
-      style: "normal",
-    },
-  ],
+  src: "./fonts/cormorant-garamond-latin-wght.woff2",
+  weight: "300 700",
+  style: "normal",
   variable: "--font-cormorant",
   display: "swap",
   adjustFontFallback: "Times New Roman",
