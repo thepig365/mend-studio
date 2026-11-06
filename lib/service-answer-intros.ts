@@ -24,9 +24,9 @@ const answerIntros: Record<string, Record<Locale, string>> = {
   },
   "hair": {
     "en-AU":
-      "Hair services at Mend Beauty Studio include cuts, colour, styling and perms at 74 Whitehorse Road, Deepdene, near Balwyn. Ladies Signature Cut is from $75 and Signature Colour is from $180. Where a starting price is shown, the final price may vary after consultation. Book online or call 0499 66 88 99.",
+      "Mend Beauty Studio is a hairdresser at 74 Whitehorse Road, Deepdene, near Balwyn. Hair Atelier includes cuts, colour, styling and perms. Ladies Signature Cut is from $75 and Signature Colour is from $180. Where a starting price is shown, the final price may vary after consultation. Book online or call 0499 66 88 99.",
     "zh-Hans":
-      "Mend Beauty Studio 的美发服务位于 Deepdene 的 74 Whitehorse Road，紧邻 Balwyn，包括剪发、染发、造型与烫发。女士设计剪发 $75 起，全头染发 $180 起。标注起价的项目，最终价格可能在咨询后调整。可在线预约，或致电 0499 66 88 99。",
+      "Mend Beauty Studio 是位于 Deepdene 74 Whitehorse Road、紧邻 Balwyn 的美发沙龙与理发师，提供剪发、染发、造型与烫发。女士设计剪发 $75 起，全头染发 $180 起。标注起价的项目，最终价格可能在咨询后调整。可在线预约，或致电 0499 66 88 99。",
   },
   "body-care": {
     "en-AU":

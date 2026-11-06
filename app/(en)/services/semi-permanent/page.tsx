@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
+import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import { getCategory, pricingNote } from "@/lib/services";
 import { getMenuItemsForCategory } from "@/src/data/serviceMenu";
@@ -17,6 +18,11 @@ export default function SemiPermanentPage() {
   const menu = getMenuItemsForCategory("semi-permanent");
   return (
     <>
+      <ServiceStructuredData
+        categoryName="Semi-Permanent Beauty"
+        items={menu.items}
+        path="/services/semi-permanent"
+      />
       <Hero
         eyebrow="Services"
         title="Semi-Permanent Beauty"

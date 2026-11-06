@@ -66,6 +66,11 @@ assert(
   servicePage.includes("<ServiceStructuredData"),
   "English service pages must render their structured data",
 );
+const semiPermanent = await read("app/(en)/services/semi-permanent/page.tsx");
+assert(
+  semiPermanent.includes("<ServiceStructuredData"),
+  "English semi-permanent page must render the same service structured data as its Chinese counterpart",
+);
 assert(
   chinese.includes("<ServiceStructuredData"),
   "Chinese service pages must render their structured data",
