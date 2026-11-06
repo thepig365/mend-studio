@@ -1,3 +1,5 @@
+import { localBusinessTypes } from "@/lib/local-business-schema";
+import { audOffers } from "@/lib/service-offers";
 import { serviceAreas, site } from "@/lib/site";
 import type { ServiceItem } from "@/src/data/serviceMenu";
 
@@ -14,7 +16,7 @@ export default function ServiceStructuredData({
 }: ServiceStructuredDataProps) {
   const url = `${site.url}${path}`;
   const provider = {
-    "@type": "HairSalon",
+    "@type": [...localBusinessTypes],
     "@id": `${site.url}/#business`,
     name: site.name,
     url: site.url,
@@ -51,20 +53,24 @@ export default function ServiceStructuredData({
       name: `${categoryName} services`,
       url,
       numberOfItems: items.length,
-      itemListElement: items.map((item, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "Service",
-          name: item.name,
-          description: [item.description, item.time, item.price]
-            .filter(Boolean)
-            .join(" · "),
-          areaServed: serviceAreas,
-          provider,
-          url,
-        },
-      })),
+      itemListElement: items.map((item, index) => {
+        const offers = audOffers(item.price);
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Service",
+            name: item.name,
+            description: [item.description, item.time, item.price]
+              .filter(Boolean)
+              .join(" · "),
+            ...(offers ? { offers } : {}),
+            areaServed: serviceAreas,
+            provider,
+            url,
+          },
+        };
+      }),
     },
   ];
 

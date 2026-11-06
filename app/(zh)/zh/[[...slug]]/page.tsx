@@ -19,10 +19,12 @@ import MembershipPlans from "@/components/MembershipPlans";
 import SectionHeading from "@/components/SectionHeading";
 import QrCodePanel from "@/components/QrCodePanel";
 import ServiceCard from "@/components/ServiceCard";
+import ServiceFaq from "@/components/ServiceFaq";
 import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import type { ServiceItem as MenuServiceItem } from "@/src/data/serviceMenu";
 import { booking } from "@/lib/booking";
+import { answerIntro } from "@/lib/service-answer-intros";
 import { localServiceCopy, type LocalServiceSlug } from "@/lib/local-service-copy";
 import { chinesePageMetadata } from "@/lib/seo";
 import { galleryImages } from "@/lib/services";
@@ -369,6 +371,9 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
   const allItems = [...menu.items, ...menu.secondaryItems];
   const local = localService(slug);
   const heading = slug === "hair" ? hairPageCopy["zh-Hans"].heading : local?.["zh-Hans"].heading ?? category.title;
+  const opening =
+    answerIntro(slug, "zh-Hans") ??
+    (slug === "hair" ? hairPageCopy["zh-Hans"].intro : category.intro);
 
   return (
     <>
@@ -381,7 +386,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         eyebrow="服务项目"
         title={heading}
         subtitle={local?.["zh-Hans"].subtitle}
-        body={slug === "hair" ? hairPageCopy["zh-Hans"].intro : category.intro}
+        body={opening}
         image={slug === "hair" ? hairStudioImage.src : category.image}
         imageAlt={slug === "hair" ? hairStudioImage.alt["zh-Hans"] : category.title}
         actions={[
@@ -431,6 +436,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         </div>
       </section>
       {slug === "hair" ? <><MejinProfileFeature locale="zh-Hans" /><HairVisitGuide locale="zh-Hans" /></> : null}
+      <ServiceFaq slug={slug} locale="zh-Hans" />
       <CTABlock
         eyebrow="准备好了吗？"
         heading="预约到访 Mend Beauty Studio"

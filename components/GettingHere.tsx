@@ -1,4 +1,6 @@
-import type { Locale } from "@/lib/i18n";
+import { localePath, type Locale } from "@/lib/i18n";
+import { parkingFaq } from "@/lib/service-faqs";
+import { site } from "@/lib/site";
 
 const copy = {
   "en-AU": {
@@ -47,6 +49,24 @@ const copy = {
 
 export default function GettingHere({ locale }: { locale: Locale }) {
   const content = copy[locale];
+  const parking = parkingFaq[locale];
+  const path = localePath("/contact", locale);
+  const parkingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${site.url}${path}#parking`,
+    url: `${site.url}${path}`,
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: parking.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: parking.answer,
+        },
+      },
+    ],
+  };
 
   return (
     <section id="getting-here" aria-labelledby="getting-here-heading" className="scroll-mt-36 bg-linen py-16 sm:py-20">
@@ -62,9 +82,18 @@ export default function GettingHere({ locale }: { locale: Locale }) {
             </article>
           ))}
         </div>
+        <div className="mt-8 max-w-3xl border-t border-beige/80 pt-8">
+          <h3 className="font-display text-2xl font-medium text-charcoal">{parking.question}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-cocoa">{parking.answer}</p>
+        </div>
         {/* Canterbury route is omitted until it is verified. */}
-        {/* TODO: Add a parking paragraph only after Anna confirms the wording in writing. */}
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(parkingJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
     </section>
   );
 }
