@@ -155,10 +155,23 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-cream/10">
-        <div className="wrap flex flex-col gap-2 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {site.name}. {copy.rights}
-          </p>
+        <div className="wrap flex flex-col gap-3 py-6 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-2">
+            <p>
+              © {new Date().getFullYear()} {site.name}. {copy.rights}
+            </p>
+            <a
+              href="https://partners.mase.cloud/home"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-fit text-cream/40 transition-colors hover:text-gold"
+            >
+              {locale === chineseLocale ? "MaSe 员工登录" : "MaSe Staff Login"}
+              <span className="sr-only">
+                {locale === chineseLocale ? "（在新标签页打开）" : " (opens in a new tab)"}
+              </span>
+            </a>
+          </div>
           {pathname.startsWith("/marketing") ? null : (
             <Link
               href={localePath(pathname, locale === chineseLocale ? "en-AU" : chineseLocale)}

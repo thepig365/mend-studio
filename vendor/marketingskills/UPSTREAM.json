@@ -1,0 +1,14 @@
+{
+  "name": "marketingskills",
+  "repository": "https://github.com/coreyhaines31/marketingskills",
+  "commit": "88c79f6528a9347420e57ceb1fff9a60de651768",
+  "license": "MIT",
+  "licenseFile": "LICENSE",
+  "copyright": "Copyright (c) 2025 Corey Haines",
+  "included": [
+    "LICENSE",
+    "skills/**/*.md"
+  ],
+  "omitted": "Non-markdown files, evals, assets, scripts and upstream installers are not vendored and must not be executed.",
+  "refreshedOn": "2026-11-05"
+}

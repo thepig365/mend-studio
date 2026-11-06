@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Skill markdown is read from disk inside the authenticated portal.
+  // Keep those files in the serverless trace for the library routes only.
+  outputFileTracingIncludes: {
+    "/marketing/skills": ["./vendor/marketingskills/**/*"],
+    "/marketing/skills/[slug]/[[...doc]]": ["./vendor/marketingskills/**/*"],
+  },
   async redirects() {
     return [
       {

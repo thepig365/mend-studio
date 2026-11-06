@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import LandingPageStudio from "@/components/LandingPageStudio";
 import MarketingOperatingGuide from "@/components/MarketingOperatingGuide";
 
@@ -109,6 +110,21 @@ export default function MarketingPortalWorkspace() {
 
   return (
     <>
+      <section className="mb-10 rounded-3xl border border-gold/40 bg-white/80 p-6 sm:p-8">
+        <p className="eyebrow">Reference library</p>
+        <h2 className="mt-3 font-display text-3xl font-medium text-charcoal">
+          Marketing Skills Library
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-cocoa">
+          Browse third-party marketing skills, including AI SEO, local SEO,
+          schema, directory submissions, copywriting, email and social.
+          Upstream guidance only. It does not change the website, prices,
+          offers or booking.
+        </p>
+        <Link href="/marketing/skills" className="btn-outline mt-6">
+          Open the library
+        </Link>
+      </section>
       <MarketingOperatingGuide />
       <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {workspaces.map((workspace) => (
