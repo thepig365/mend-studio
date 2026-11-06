@@ -1,21 +1,10 @@
-import { Cormorant_Garamond, Jost } from "next/font/google";
+import { cormorant, jost } from "@/lib/fonts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileStickyBar from "@/components/MobileStickyBar";
 import Analytics from "@/components/Analytics";
 import HairOfferPopup from "@/components/HairOfferPopup";
 import { localBusinessJsonLd } from "@/lib/local-business-schema";
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin"],
-});
 
 type SiteDocumentProps = Readonly<{
   children: React.ReactNode;

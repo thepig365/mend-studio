@@ -66,6 +66,29 @@ assert(
   servicePage.includes("<ServiceStructuredData"),
   "English service pages must render their structured data",
 );
+const semiPermanent = await read("app/(en)/services/semi-permanent/page.tsx");
+assert(
+  semiPermanent.includes("<ServiceStructuredData"),
+  "English semi-permanent page must render the same service structured data as its Chinese counterpart",
+);
+assert(
+  semiPermanent.includes('price: ""') && semiPermanent.includes("items={structuredItems}"),
+  "English semi-permanent structured data must not receive the visible price strings",
+);
+assert(
+  semiPermanent.includes("items={menu.items}"),
+  "English semi-permanent visible menu must keep the original items",
+);
+const siteDocument = await read("components/SiteDocument.tsx");
+const promotionsDocument = await read("components/promotions/PromotionsDocument.tsx");
+assert(
+  siteDocument.includes('from "@/lib/fonts"') && promotionsDocument.includes('from "@/lib/fonts"'),
+  "Site fonts must come from the vendored local font module",
+);
+assert(
+  !siteDocument.includes("next/font/google") && !promotionsDocument.includes("next/font/google"),
+  "Google font loader must not be called from the site documents",
+);
 assert(
   chinese.includes("<ServiceStructuredData"),
   "Chinese service pages must render their structured data",

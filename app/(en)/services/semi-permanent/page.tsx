@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import CTABlock from "@/components/CTABlock";
+import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import { getCategory, pricingNote } from "@/lib/services";
 import { getMenuItemsForCategory } from "@/src/data/serviceMenu";
@@ -15,8 +16,16 @@ export const metadata = pageMetadata({
 export default function SemiPermanentPage() {
   const category = getCategory("semi-permanent");
   const menu = getMenuItemsForCategory("semi-permanent");
+  // Names and descriptions only. The visible menu keeps its price strings;
+  // they are not copied into this page's structured data.
+  const structuredItems = menu.items.map((item) => ({ ...item, price: "" }));
   return (
     <>
+      <ServiceStructuredData
+        categoryName="Semi-Permanent Beauty"
+        items={structuredItems}
+        path="/services/semi-permanent"
+      />
       <Hero
         eyebrow="Services"
         title="Semi-Permanent Beauty"
