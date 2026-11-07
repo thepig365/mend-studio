@@ -22,7 +22,7 @@ export const maseMarketingHome = [
     name: { en: "Email", zh: "邮件" },
     confirm: {
       en: "Configuration, cost, consent and opt-out remain unconfirmed and are not sufficient on their own. Before each email is sent, show the owner the full recipient list, subject, body and attachments, and obtain the owner's explicit approval for that specific email.",
-      zh: "配置、费用、同意和退订仍未确认，仅有这些并不够。发送每一封邮件之前，须向负责人展示完整收件人、主题、正文和附件，并取得负责人对该封具体邮件的明确批准。",
+      zh: "配置、费用、同意和退订仍未确认，仅有这些并不够。发送每一封邮件之前，须向店主展示完整收件人名单、主题、正文和附件，并取得店主对该封具体邮件的明确批准。",
     },
   },
   {
