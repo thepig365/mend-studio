@@ -198,6 +198,24 @@ Run `npm run check:marketing-growth` for the actual helper and component-state
 checks, including clipboard failure, workstream switching, draft boundaries,
 unload warnings and invalid campaign paths. This check is included in `npm test`.
 
+## MaSe marketing-home reference
+
+Services and retention includes a separate nine-label reference for the MaSe
+marketing home: SMS, email, WhatsApp, WeChat, promotions and activities, smart
+pricing, customer loyalty, points, and membership tiers. Every row uses the
+stable status `unverified` and is shown as pending confirmation. The list is a
+static bilingual reference, not a running integration or an editable evidence
+tracker. Configuration, cost, consent and opt-out do not by themselves
+authorise an email: before each email is sent, the owner must be shown the
+full recipient list, subject, body and attachments, and must explicitly
+approve that specific email. MaSe remains
+responsible for sending, price rules, points and tiers. The portal does not
+send messages or change those settings, and it adds no control for doing so.
+The Growth Desk comparison of Google booking, website events, Review
+Booster, TapFlow and Deskie is unchanged.
+
+Run `npm run check:mase-marketing-home`. This check is included in `npm test`.
+
 ## Bilingual operator interface (7 November 2026)
 
 An English / 中文 switch now covers the portal, login and skills-library routes
