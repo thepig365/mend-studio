@@ -188,6 +188,24 @@ assert(robots.includes('disallow: ["/marketing", "/api/auth"]'), "Private paths 
 const llmsRoute = await read("app/llms.txt/route.ts");
 assert(llmsRoute.includes("llmsTxt") && llmsRoute.includes("text/plain"), "llms.txt is served as plain text from site data");
 assert(faqData.includes("Yes — there are 6 car parks at the back of the studio.") && faqData.includes("有，店铺后面有 6 个停车位。"), "Parking FAQ uses the owner-confirmed wording");
+const mensSeo = await read("lib/mens-grooming-seo.ts");
+const mensPage = await read("app/(en)/services/mens-grooming/page.tsx");
+assert(mensPage.includes('title: mensGroomingSeo["en-AU"].title'), "English men's grooming title uses the narrow SEO copy");
+assert(mensPage.includes("Try the men’s head spa"), "Existing men's head spa block stays in place");
+assert(mensPage.includes("category={category}"), "English men's grooming H1 still comes from the category title");
+assert(chinese.includes('slug[1] === "mens-grooming" ? mensGroomingSeo["zh-Hans"]'), "Chinese metadata uses the men's grooming SEO copy");
+assert(chinese.includes('local?.["zh-Hans"].heading ?? category.title'), "Chinese service H1 is unchanged");
+assert(mensSeo.includes("site.address") && mensSeo.includes("near Balwyn") && mensSeo.includes("紧邻 Balwyn"), "Men's grooming meta uses the published address and near-Balwyn wording");
+assert(!/\bin Balwyn\b/.test(mensSeo), "Men's grooming meta must not place the studio in Balwyn");
+const parkingAppend = faqData.indexOf("block[locale].items.push(parkingFaq[locale])");
+const mensFaqStart = faqData.indexOf("function mensWhereAnswer");
+const mensFaq = faqData.slice(mensFaqStart);
+assert(mensFaqStart > parkingAppend, "Men's grooming FAQ stays outside the parking append");
+for (const omitted of ["Cut + Beard", "Scalp Detox", "剪发与胡须", "头皮净化", "car parks", "停车", "From $", "popular"]) {
+  assert(!mensFaq.includes(omitted) && !mensSeo.includes(omitted), `New men's grooming copy must omit ${omitted}`);
+}
+assert(mensFaq.includes("not a MaSe certification") && mensFaq.includes("并不是 MaSe 对当前项目的认证"), "New FAQ states the website menu is not a MaSe certification");
+assert(mensFaq.includes("does not create the booking") && mensFaq.includes("不会直接创建预约"), "New FAQ states the website does not create the booking");
 assert(!/free parking|免费停车|customer-only|仅限顾客/i.test(faqData + gettingHere), "Parking copy does not claim the parks are free or customer-only");
 assert(!/hot stone|hot-stone|热石/i.test(faqData + gettingHere), "FAQ and getting-here copy do not mention hot stone");
 

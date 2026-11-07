@@ -369,6 +369,53 @@ for (const block of Object.values(serviceFaqs)) {
   }
 }
 
+// Added after the parking append so this page does not gain a parking answer.
+// Location uses the same published address as other service FAQs. Booking
+// explains how to open the existing page. It does not list combination
+// services, prices, durations, or current MaSe availability.
+function mensWhereAnswer(locale: Locale) {
+  if (locale === "zh-Hans") {
+    return `男士剪发与理容在 Mend Beauty Studio 进行。${whereAnswer(locale)}`;
+  }
+  return `Men’s haircuts and grooming are at Mend Beauty Studio. ${whereAnswer("en-AU")}`;
+}
+
+function mensBookingAnswer(locale: Locale) {
+  if (locale === "zh-Hans") {
+    return `请点击本页“预约”，或打开 ${site.url}/zh/book。预约页面会转到 MaSe，请在 MaSe 选择项目。本网站不会直接创建预约。本页项目名称是网站菜单，并不是 MaSe 对当前项目的认证。也可致电 ${site.phone}、发送邮件至 ${site.email}，或通过微信 ${site.wechat} 联系。`;
+  }
+  return `Use Book on this page, or open ${site.url}/book. The booking page hands you to MaSe, where you select the service. This website does not create the booking. The names on this page are the website menu. They are not a MaSe certification of the services currently offered. You can also call ${site.phone}, email ${site.email}, or message WeChat ${site.wechat}.`;
+}
+
+serviceFaqs["mens-grooming"] = {
+  "en-AU": {
+    heading: "Men’s grooming questions",
+    items: [
+      {
+        question: "Where is men’s grooming?",
+        answer: mensWhereAnswer("en-AU"),
+      },
+      {
+        question: "How do I open booking for men’s grooming?",
+        answer: mensBookingAnswer("en-AU"),
+      },
+    ],
+  },
+  "zh-Hans": {
+    heading: "男士理容常见问题",
+    items: [
+      {
+        question: "男士理容在哪里？",
+        answer: mensWhereAnswer("zh-Hans"),
+      },
+      {
+        question: "如何打开男士理容预约？",
+        answer: mensBookingAnswer("zh-Hans"),
+      },
+    ],
+  },
+};
+
 export function serviceFaq(slug: string, locale: Locale) {
   return serviceFaqs[slug]?.[locale];
 }
