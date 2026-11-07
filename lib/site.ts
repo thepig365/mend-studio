@@ -13,7 +13,7 @@ export const site = {
     "https://www.google.com/maps/place/Mend+Beauty+Studio/data=!4m2!3m1!1s0x0:0x7a86de5b3c1198d5",
   socialProfiles: {
     facebook: "https://www.facebook.com/mendbeauty365",
-    instagram: "https://www.instagram.com/mendbeauty365/",
+    instagram: "https://www.instagram.com/mendbeauty_365/",
   },
   // Structured components of the address above, for JSON-LD only. Values must always
   // match the `address` string exactly — do not edit one without the other.
