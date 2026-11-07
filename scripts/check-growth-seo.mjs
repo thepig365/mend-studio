@@ -45,7 +45,7 @@ assert(
   "Confirmed Facebook profile is missing from site config",
 );
 assert(
-  site.includes('"https://www.instagram.com/mendbeauty365/"'),
+  site.includes('"https://www.instagram.com/mendbeauty_365/"'),
   "Confirmed Instagram profile is missing from site config",
 );
 assert(
