@@ -1,3 +1,4 @@
+import HeadSpaScalpChoice from "@/components/HeadSpaScalpChoice";
 import NearbySuburbs from "@/components/NearbySuburbs";
 import ServicePage from "@/components/ServicePage";
 import { getAnnaCategory } from "@/lib/anna-services";
@@ -21,6 +22,7 @@ export default function HeadSpaPage() {
       subtitle={copy.subtitle}
       menuOverride={getAnnaMenuItemsForCategory("head-spa")}
       beforeMenuContent={<NearbySuburbs locale="en-AU" service="head-spa" />}
+      afterMenuContent={<HeadSpaScalpChoice locale="en-AU" />}
     />
   );
 }

@@ -1,4 +1,5 @@
 import GettingHere from "@/components/GettingHere";
+import HeadSpaScalpChoice from "@/components/HeadSpaScalpChoice";
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
 import NearbySuburbs from "@/components/NearbySuburbs";
 import ScalpCareMenuIntro from "@/components/ScalpCareMenuIntro";
@@ -437,6 +438,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
           </Link>
         </div>
       </section>
+      {slug === "head-spa" ? <HeadSpaScalpChoice locale="zh-Hans" /> : null}
       {slug === "hair" ? <><MejinProfileFeature locale="zh-Hans" /><HairVisitGuide locale="zh-Hans" /></> : null}
       <ServiceFaq slug={slug} locale="zh-Hans" />
       <CTABlock
