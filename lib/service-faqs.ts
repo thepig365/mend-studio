@@ -369,6 +369,50 @@ for (const block of Object.values(serviceFaqs)) {
   }
 }
 
+// Added after the parking append so this page does not gain a parking answer.
+function mensWhereAnswer(locale: Locale) {
+  if (locale === "zh-Hans") {
+    return `男士剪发与理容在 Mend Beauty Studio 进行。${whereAnswer(locale)}`;
+  }
+  return `Men’s haircuts and grooming are at Mend Beauty Studio. ${whereAnswer("en-AU")}`;
+}
+
+function mensBookingAnswer(locale: Locale) {
+  if (locale === "zh-Hans") {
+    return "点击“预约”进入 MaSe 并选择服务。";
+  }
+  return "Select Book to continue to MaSe and choose your service.";
+}
+
+serviceFaqs["mens-grooming"] = {
+  "en-AU": {
+    heading: "Men’s grooming questions",
+    items: [
+      {
+        question: "Where is men’s grooming?",
+        answer: mensWhereAnswer("en-AU"),
+      },
+      {
+        question: "How do I book?",
+        answer: mensBookingAnswer("en-AU"),
+      },
+    ],
+  },
+  "zh-Hans": {
+    heading: "男士理容常见问题",
+    items: [
+      {
+        question: "男士理容在哪里？",
+        answer: mensWhereAnswer("zh-Hans"),
+      },
+      {
+        question: "如何预约？",
+        answer: mensBookingAnswer("zh-Hans"),
+      },
+    ],
+  },
+};
+
 export function serviceFaq(slug: string, locale: Locale) {
   return serviceFaqs[slug]?.[locale];
 }

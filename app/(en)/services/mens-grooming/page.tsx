@@ -1,12 +1,12 @@
 import Link from "next/link";
 import ServicePage from "@/components/ServicePage";
+import { mensGroomingSeo } from "@/lib/mens-grooming-seo";
 import { getCategory } from "@/lib/services";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Men’s Grooming",
-  description:
-    "Men’s cuts, skin fades, beard trims, grey blending, scalp detox and men’s Head Spa at Mend Beauty Studio, Deepdene.",
+  title: mensGroomingSeo["en-AU"].title,
+  description: mensGroomingSeo["en-AU"].description,
   path: "/services/mens-grooming",
 });
 

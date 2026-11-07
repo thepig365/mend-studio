@@ -24,6 +24,7 @@ import ServiceStructuredData from "@/components/ServiceStructuredData";
 import ServiceMenuSection from "@/src/components/ServiceMenuSection";
 import type { ServiceItem as MenuServiceItem } from "@/src/data/serviceMenu";
 import { booking } from "@/lib/booking";
+import { mensGroomingSeo } from "@/lib/mens-grooming-seo";
 import { answerIntro } from "@/lib/service-answer-intros";
 import { localServiceCopy, type LocalServiceSlug } from "@/lib/local-service-copy";
 import { chinesePageMetadata } from "@/lib/seo";
@@ -126,9 +127,10 @@ export async function generateMetadata({
       ? getZhAnnaCategory(slug[1])
       : getZhCategory(slug[1]);
     const local = localService(slug[1]);
+    const mensSeo = slug[1] === "mens-grooming" ? mensGroomingSeo["zh-Hans"] : undefined;
     return chinesePageMetadata({
-      title: slug[1] === "hair" ? hairPageCopy["zh-Hans"].title : local?.["zh-Hans"].title ?? category.title,
-      description: slug[1] === "hair" ? hairPageCopy["zh-Hans"].description : local?.["zh-Hans"].description ?? category.excerpt,
+      title: slug[1] === "hair" ? hairPageCopy["zh-Hans"].title : mensSeo?.title ?? local?.["zh-Hans"].title ?? category.title,
+      description: slug[1] === "hair" ? hairPageCopy["zh-Hans"].description : mensSeo?.description ?? local?.["zh-Hans"].description ?? category.excerpt,
       path,
     });
   }

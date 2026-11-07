@@ -188,6 +188,25 @@ assert(robots.includes('disallow: ["/marketing", "/api/auth"]'), "Private paths 
 const llmsRoute = await read("app/llms.txt/route.ts");
 assert(llmsRoute.includes("llmsTxt") && llmsRoute.includes("text/plain"), "llms.txt is served as plain text from site data");
 assert(faqData.includes("Yes — there are 6 car parks at the back of the studio.") && faqData.includes("有，店铺后面有 6 个停车位。"), "Parking FAQ uses the owner-confirmed wording");
+const mensSeo = await read("lib/mens-grooming-seo.ts");
+const mensPage = await read("app/(en)/services/mens-grooming/page.tsx");
+assert(mensPage.includes('title: mensGroomingSeo["en-AU"].title'), "English men's grooming title uses the narrow SEO copy");
+assert(mensPage.includes("Try the men’s head spa"), "Existing men's head spa block stays in place");
+assert(mensPage.includes("category={category}"), "English men's grooming H1 still comes from the category title");
+assert(chinese.includes('slug[1] === "mens-grooming" ? mensGroomingSeo["zh-Hans"]'), "Chinese metadata uses the men's grooming SEO copy");
+assert(chinese.includes('local?.["zh-Hans"].heading ?? category.title'), "Chinese service H1 is unchanged");
+assert(mensSeo.includes("site.address") && mensSeo.includes("near Balwyn") && mensSeo.includes("紧邻 Balwyn"), "Men's grooming meta uses the published address and near-Balwyn wording");
+assert(!/\bin Balwyn\b/.test(mensSeo), "Men's grooming meta must not place the studio in Balwyn");
+assert(!/existing booking page|打开现有预约页面/.test(mensSeo), "Men's grooming meta uses natural wording");
+const parkingAppend = faqData.indexOf("block[locale].items.push(parkingFaq[locale])");
+const mensFaqStart = faqData.indexOf("function mensWhereAnswer");
+const mensFaq = faqData.slice(mensFaqStart);
+assert(mensFaqStart > parkingAppend, "Men's grooming FAQ stays outside the parking append");
+for (const omitted of ["Cut + Beard", "Scalp Detox", "剪发与胡须", "头皮净化", "car parks", "停车", "From $", "popular", "MaSe certification", "对当前项目的认证", "How do I open booking", "如何打开", "existing booking page", "site.phone", "site.email", "site.wechat"]) {
+  assert(!mensFaq.includes(omitted) && !mensSeo.includes(omitted), `New men's grooming copy must omit ${omitted}`);
+}
+assert(mensFaq.includes('question: "How do I book?"') && mensFaq.includes('question: "如何预约？"'), "Booking questions use customer wording");
+assert(mensFaq.includes("Select Book to continue to MaSe and choose your service.") && mensFaq.includes("点击“预约”进入 MaSe 并选择服务。"), "Booking answers tell the guest to continue to MaSe and choose a service");
 assert(!/free parking|免费停车|customer-only|仅限顾客/i.test(faqData + gettingHere), "Parking copy does not claim the parks are free or customer-only");
 assert(!/hot stone|hot-stone|热石/i.test(faqData + gettingHere), "FAQ and getting-here copy do not mention hot stone");
 
