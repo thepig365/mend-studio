@@ -206,6 +206,17 @@ for (const omitted of ["Cut + Beard", "Scalp Detox", "剪发与胡须", "头皮�
   assert(!mensFaq.includes(omitted) && !mensSeo.includes(omitted), `New men's grooming copy must omit ${omitted}`);
 }
 assert(mensFaq.includes('question: "How do I book?"') && mensFaq.includes('question: "如何预约？"'), "Booking questions use customer wording");
+const headSpaChoice = await read("components/HeadSpaScalpChoice.tsx");
+const headSpaPage = await read("app/(en)/services/head-spa/page.tsx");
+assert(headSpaPage.includes("<HeadSpaScalpChoice locale=\"en-AU\" />"), "English head spa page offers the scalp-care choice");
+assert(chinese.includes('slug === "head-spa" ? <HeadSpaScalpChoice locale="zh-Hans" />'), "Chinese head spa page offers the scalp-care choice");
+assert(headSpaChoice.includes('localePath("/services/hair-scalp-recovery", locale)'), "Choice links to the existing scalp-care route");
+assert(headSpaChoice.includes("Explore scalp care") && headSpaChoice.includes("查看头皮与发质护理项目"), "Choice uses the existing scalp-care link labels");
+assert(headSpaChoice.includes("not medical diagnosis or treatment") && headSpaChoice.includes("并非医疗诊断或治疗"), "Choice keeps the published cosmetic boundary");
+for (const omitted of ["$", "minutes", "mins", "分钟", "Balwyn", "停车", "popular", "available"]) {
+  assert(!headSpaChoice.includes(omitted), `Head spa choice must omit ${omitted}`);
+}
+assert(!faqData.slice(faqData.indexOf('"head-spa"'), faqData.indexOf('"hair-scalp-recovery"')).includes("How is head spa different"), "Head spa FAQ schema stays unchanged");
 assert(mensFaq.includes("Select Book to continue to MaSe and choose your service.") && mensFaq.includes("点击“预约”进入 MaSe 并选择服务。"), "Booking answers tell the guest to continue to MaSe and choose a service");
 assert(!/free parking|免费停车|customer-only|仅限顾客/i.test(faqData + gettingHere), "Parking copy does not claim the parks are free or customer-only");
 assert(!/hot stone|hot-stone|热石/i.test(faqData + gettingHere), "FAQ and getting-here copy do not mention hot stone");
