@@ -1,10 +1,11 @@
+import { MarketingText } from "@/components/MarketingLocale";
 import Link from "next/link";
 import { signOutOfMarketingPortal } from "@/app/(en)/marketing/actions";
 
 type MarketingPortalFrameProps = {
-  eyebrow: string;
-  title: string;
-  lede?: string;
+  eyebrow: React.ReactNode;
+  title: React.ReactNode;
+  lede?: React.ReactNode;
   children: React.ReactNode;
 };
 
@@ -29,11 +30,11 @@ export default function MarketingPortalFrame({
           </div>
           <div className="flex flex-wrap gap-3">
             <Link href="/marketing" className="btn-outline">
-              Portal home
+              <MarketingText en="Portal home" zh="营销首页" />
             </Link>
             <form action={signOutOfMarketingPortal}>
               <button type="submit" className="btn-outline">
-                Sign out
+                <MarketingText en="Sign out" zh="退出登录" />
               </button>
             </form>
           </div>

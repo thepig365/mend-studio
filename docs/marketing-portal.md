@@ -9,9 +9,10 @@ authoritative services and prepares minimal, reviewable AI task briefs.
 The public footer contains a restrained `Marketing Portal` link. The portal and
 its sign-in route are excluded from search indexing.
 
-The private workspace is currently English-only. Its header does not show the
-public bilingual switch because no `/zh/marketing` or `/zh/marketing/login`
-route exists; this prevents operators being sent to a false 404 destination.
+The private workspace has its own in-place English / 中文 switch on all marketing
+routes. Its header still hides the public-site language switch because no
+`/zh/marketing` or `/zh/marketing/login` route is needed. The marketing-only
+switch preserves form state and avoids false 404 destinations.
 
 ## Access
 
@@ -157,3 +158,64 @@ secrets. Private operating records belong in existing approved private systems.
 The allowed account remains unchanged. New staff require administrator-approved
 access; do not share the business account password. Adding identities, role-based
 access or a shared database is a separate scoped change, not part of this release.
+
+## Growth Desk (7 November 2026)
+
+The first panel now provides five operator workstreams: Google Reviews,
+Facebook Recommendations, Instagram, SEO and AEO / AI discovery. Each has a
+concrete checklist, source-platform handoffs, an evidence standard and a locally
+generated reviewable task brief. The operator can prepare this work without
+opening MaSe. Platform authentication, posting and data retrieval still happen
+in their authoritative systems; this release does not provide API integrations.
+
+The Google review-request destination was verified against the MEND Business
+Profile at 74 Whitehorse Road. The Facebook `/reviews` destination is provided
+with an explicit submission-unverified label. Invitations must be voluntary and
+neutral: no rating-based gating, incentives or generated positive reviews.
+
+The optional UTM builder accepts only public MEND content paths and fixed source
+choices. It excludes private routes, direct booking redirects, query strings,
+fragments, encoded paths and external hosts. A generated link is not proof that
+the page exists; the operator must check it before publishing. Campaign labels
+must contain no personal data. UTMs measure website visits and intent, not MaSe
+appointment completion or revenue.
+
+All new fields are session-only React state. Switching workstreams preserves
+fields, and browser unload warns about unexported work. Copy the current brief
+before leaving; existing operating-guide JSON export does not include Growth
+Desk fields. Copy errors show manual-copy guidance. No brief is automatically
+sent to an AI service, saved, posted or added to analytics.
+
+The feature comparison records the 7 November read-only MaSe audit: Google
+booking connection unconfirmed; Google Analytics/Meta event settings offered
+Enable now; review enhancer destination blank with 4+ filter disabled; TapFlow
+trial offered NFC, AI positive-review text and social links at $199/store/year
+(currency unspecified); Deskie unconfigured. These are observations, not
+activation or purchase recommendations. Finance/day-close and operational
+records remain in MaSe. This change does not touch review-QR deliverables.
+
+Run `npm run check:marketing-growth` for the actual helper and component-state
+checks, including clipboard failure, workstream switching, draft boundaries,
+unload warnings and invalid campaign paths. This check is included in `npm test`.
+
+## Bilingual operator interface (7 November 2026)
+
+An English / 中文 switch now covers the portal, login and skills-library routes
+through a marketing-only locale provider. It switches in place without remounting
+workspace forms. Existing English mode, task IDs, status values, import/export
+format, URLs, source systems and publishing approval gates are preserved.
+
+Chinese UI includes the operating guide and 16-task plan, weekly report template,
+Growth Desk, AI task briefs, Landing Page Studio and release briefs, login errors,
+and skills catalogue/search. The 53 third-party skill documents remain their
+original English source; this is clearly labelled, while catalogue titles,
+descriptions, navigation and controls have Chinese translations. Search accepts
+English and Chinese catalogue terms. No vendor documents were deleted or replaced.
+
+Only the UI language preference is stored locally, under
+`mend-marketing-language`. Blocked local storage does not prevent switching in the
+current session. No task content is persisted by this change. User-entered facts,
+report edits and task records are not translated, overwritten or sent externally.
+A pristine weekly report template follows the chosen language; edited text is
+retained. The existing printed review stand remains authoritative and all QR work
+is paused pending the owner-provided photo/file.
