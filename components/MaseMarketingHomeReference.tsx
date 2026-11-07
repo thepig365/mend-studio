@@ -13,6 +13,7 @@ export default function MaseMarketingHomeReference() {
       <p className="eyebrow">{language === "zh" ? "服务与客户维护" : "Services & Retention"}</p>
       <h2 id="mase-marketing-home-heading" className="mt-3 font-display text-3xl font-medium text-charcoal">{copy.heading[language]}</h2>
       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-cocoa">{copy.intro[language]}</p>
+      <p className="mt-3 max-w-3xl text-sm leading-relaxed text-cocoa">{copy.scope[language]}</p>
       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-cocoa">{copy.ownership[language]}</p>
       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-cocoa">{copy.next[language]}</p>
       <ul className="mt-6 divide-y divide-beige border-y border-beige">

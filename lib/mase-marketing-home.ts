@@ -21,8 +21,8 @@ export const maseMarketingHome = [
     status: maseCapabilityStatus,
     name: { en: "Email", zh: "邮件" },
     confirm: {
-      en: "Before any email is sent, confirm configuration, cost, consent and opt-out in MaSe.",
-      zh: "发送任何邮件之前，须在 MaSe 确认配置、费用、同意和退订。",
+      en: "Configuration, cost, consent and opt-out remain unconfirmed and are not sufficient on their own. Before each email is sent, show the owner the full recipient list, subject, body and attachments, and obtain the owner's explicit approval for that specific email.",
+      zh: "配置、费用、同意和退订仍未确认，仅有这些并不够。发送每一封邮件之前，须向负责人展示完整收件人、主题、正文和附件，并取得负责人对该封具体邮件的明确批准。",
     },
   },
   {
@@ -95,6 +95,10 @@ export const maseMarketingHomeCopy = {
   intro: {
     en: "Nine labels from the MaSe marketing home. Configuration, cost, entitlement, sending and automation have not been confirmed here for any label.",
     zh: "以下九个名称来自 MaSe 营销首页。各项的配置、费用、使用权、发送和自动执行，都尚未在此确认。",
+  },
+  scope: {
+    en: "This is a static bilingual reference. It is not a running integration and not an editable evidence tracker.",
+    zh: "这是一份静态的中英对照说明，不是正在运行的集成，也不是可编辑的证据记录。",
   },
   status: { en: "Unverified — pending confirmation", zh: "未核实——待确认" },
   ownership: {

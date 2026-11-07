@@ -203,7 +203,12 @@ unload warnings and invalid campaign paths. This check is included in `npm test`
 Services and retention includes a separate nine-label reference for the MaSe
 marketing home: SMS, email, WhatsApp, WeChat, promotions and activities, smart
 pricing, customer loyalty, points, and membership tiers. Every row uses the
-stable status `unverified` and is shown as pending confirmation. MaSe remains
+stable status `unverified` and is shown as pending confirmation. The list is a
+static bilingual reference, not a running integration or an editable evidence
+tracker. Configuration, cost, consent and opt-out do not by themselves
+authorise an email: before each email is sent, the owner must be shown the
+full recipient list, subject, body and attachments, and must explicitly
+approve that specific email. MaSe remains
 responsible for sending, price rules, points and tiers. The portal does not
 send messages or change those settings, and it adds no control for doing so.
 The Growth Desk comparison of Google booking, website events, Review
