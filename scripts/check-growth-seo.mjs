@@ -197,15 +197,16 @@ assert(chinese.includes('slug[1] === "mens-grooming" ? mensGroomingSeo["zh-Hans"
 assert(chinese.includes('local?.["zh-Hans"].heading ?? category.title'), "Chinese service H1 is unchanged");
 assert(mensSeo.includes("site.address") && mensSeo.includes("near Balwyn") && mensSeo.includes("紧邻 Balwyn"), "Men's grooming meta uses the published address and near-Balwyn wording");
 assert(!/\bin Balwyn\b/.test(mensSeo), "Men's grooming meta must not place the studio in Balwyn");
+assert(!/existing booking page|打开现有预约页面/.test(mensSeo), "Men's grooming meta uses natural wording");
 const parkingAppend = faqData.indexOf("block[locale].items.push(parkingFaq[locale])");
 const mensFaqStart = faqData.indexOf("function mensWhereAnswer");
 const mensFaq = faqData.slice(mensFaqStart);
 assert(mensFaqStart > parkingAppend, "Men's grooming FAQ stays outside the parking append");
-for (const omitted of ["Cut + Beard", "Scalp Detox", "剪发与胡须", "头皮净化", "car parks", "停车", "From $", "popular"]) {
+for (const omitted of ["Cut + Beard", "Scalp Detox", "剪发与胡须", "头皮净化", "car parks", "停车", "From $", "popular", "MaSe certification", "对当前项目的认证", "How do I open booking", "如何打开", "existing booking page", "site.phone", "site.email", "site.wechat"]) {
   assert(!mensFaq.includes(omitted) && !mensSeo.includes(omitted), `New men's grooming copy must omit ${omitted}`);
 }
-assert(mensFaq.includes("not a MaSe certification") && mensFaq.includes("并不是 MaSe 对当前项目的认证"), "New FAQ states the website menu is not a MaSe certification");
-assert(mensFaq.includes("does not create the booking") && mensFaq.includes("不会直接创建预约"), "New FAQ states the website does not create the booking");
+assert(mensFaq.includes('question: "How do I book?"') && mensFaq.includes('question: "如何预约？"'), "Booking questions use customer wording");
+assert(mensFaq.includes("Select Book to continue to MaSe and choose your service.") && mensFaq.includes("点击“预约”进入 MaSe 并选择服务。"), "Booking answers tell the guest to continue to MaSe and choose a service");
 assert(!/free parking|免费停车|customer-only|仅限顾客/i.test(faqData + gettingHere), "Parking copy does not claim the parks are free or customer-only");
 assert(!/hot stone|hot-stone|热石/i.test(faqData + gettingHere), "FAQ and getting-here copy do not mention hot stone");
 

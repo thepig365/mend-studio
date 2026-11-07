@@ -370,9 +370,6 @@ for (const block of Object.values(serviceFaqs)) {
 }
 
 // Added after the parking append so this page does not gain a parking answer.
-// Location uses the same published address as other service FAQs. Booking
-// explains how to open the existing page. It does not list combination
-// services, prices, durations, or current MaSe availability.
 function mensWhereAnswer(locale: Locale) {
   if (locale === "zh-Hans") {
     return `男士剪发与理容在 Mend Beauty Studio 进行。${whereAnswer(locale)}`;
@@ -382,9 +379,9 @@ function mensWhereAnswer(locale: Locale) {
 
 function mensBookingAnswer(locale: Locale) {
   if (locale === "zh-Hans") {
-    return `请点击本页“预约”，或打开 ${site.url}/zh/book。预约页面会转到 MaSe，请在 MaSe 选择项目。本网站不会直接创建预约。本页项目名称是网站菜单，并不是 MaSe 对当前项目的认证。也可致电 ${site.phone}、发送邮件至 ${site.email}，或通过微信 ${site.wechat} 联系。`;
+    return "点击“预约”进入 MaSe 并选择服务。";
   }
-  return `Use Book on this page, or open ${site.url}/book. The booking page hands you to MaSe, where you select the service. This website does not create the booking. The names on this page are the website menu. They are not a MaSe certification of the services currently offered. You can also call ${site.phone}, email ${site.email}, or message WeChat ${site.wechat}.`;
+  return "Select Book to continue to MaSe and choose your service.";
 }
 
 serviceFaqs["mens-grooming"] = {
@@ -396,7 +393,7 @@ serviceFaqs["mens-grooming"] = {
         answer: mensWhereAnswer("en-AU"),
       },
       {
-        question: "How do I open booking for men’s grooming?",
+        question: "How do I book?",
         answer: mensBookingAnswer("en-AU"),
       },
     ],
@@ -409,7 +406,7 @@ serviceFaqs["mens-grooming"] = {
         answer: mensWhereAnswer("zh-Hans"),
       },
       {
-        question: "如何打开男士理容预约？",
+        question: "如何预约？",
         answer: mensBookingAnswer("zh-Hans"),
       },
     ],
