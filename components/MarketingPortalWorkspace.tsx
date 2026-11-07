@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMarketingLocale } from "@/components/MarketingLocale";
 import MarketingGrowthDesk from "@/components/MarketingGrowthDesk";
 import LandingPageStudio from "@/components/LandingPageStudio";
+import MaseMarketingHomeReference from "@/components/MaseMarketingHomeReference";
 import MarketingOperatingGuide from "@/components/MarketingOperatingGuide";
 
 const workspaces = [
@@ -204,6 +205,8 @@ export default function MarketingPortalWorkspace() {
           </article>
         ))}
       </div>
+
+      <MaseMarketingHomeReference />
 
       <section className="mt-10 rounded-3xl border border-beige bg-white/80 p-6 sm:p-8">
         <div className="max-w-3xl">
