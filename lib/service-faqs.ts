@@ -37,9 +37,9 @@ export const parkingFaq: Record<Locale, { question: string; answer: string }> = 
 
 function whereAnswer(locale: Locale) {
   if (locale === "zh-Hans") {
-    return `Mend Beauty Studio 位于 ${site.address}，在 Whitehorse Road 上、紧邻 Balwyn。门店位于 Balwyn 商业街与 Palace Balwyn 影院以西。从 Balwyn Shopping Centre（48 号站）乘 109 路电车向西 5 站，到 Deepdene Shopping Centre/Whitehorse Rd（43 号站）。我们欢迎来自 Balwyn、Kew、Camberwell、Canterbury、Surrey Hills 与 Mont Albert 的客人。这些附近区域不是分店。联系页面提供 Google 地图链接。`;
+    return `Mend Beauty Studio 位于 ${site.address}，在 Whitehorse Road 上、紧邻 Balwyn。门店位于 Balwyn 商业街与 Palace Balwyn 影院以西。从 Balwyn Shopping Centre（48 号站）乘 109 路电车向西 5 站，到 Deepdene Shopping Centre/Whitehorse Rd（43 号站）。我们欢迎来自 Balwyn、Balwyn North、Kew、Camberwell、Canterbury、Surrey Hills 与 Mont Albert 的客人。这些附近区域不是分店。联系页面提供 Google 地图链接。`;
   }
-  return `Mend Beauty Studio is at ${site.address}, on Whitehorse Road, just west of Balwyn's shopping strip and the Palace Balwyn cinema. Tram 109 runs west from Balwyn Shopping Centre (stop 48) to Deepdene Shopping Centre/Whitehorse Rd (stop 43), five stops. We welcome guests from Balwyn, Kew, Camberwell, Canterbury, Surrey Hills and Mont Albert. These nearby suburbs are not separate salon locations. The contact page includes a Google Maps link.`;
+  return `Mend Beauty Studio is at ${site.address}, on Whitehorse Road, just west of Balwyn's shopping strip and the Palace Balwyn cinema. Tram 109 runs west from Balwyn Shopping Centre (stop 48) to Deepdene Shopping Centre/Whitehorse Rd (stop 43), five stops. We welcome guests from Balwyn, Balwyn North, Kew, Camberwell, Canterbury, Surrey Hills and Mont Albert. These nearby suburbs are not separate salon locations. The contact page includes a Google Maps link.`;
 }
 
 const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {

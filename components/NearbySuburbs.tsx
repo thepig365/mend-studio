@@ -28,8 +28,8 @@ export default function NearbySuburbs({
       </h2>
       <p className="mt-4 max-w-3xl text-base leading-relaxed text-cocoa">
         {zh
-          ? `Mend Beauty Studio 位于 ${site.address}，在 Whitehorse Road 上、紧邻 Balwyn。我们欢迎来自 Balwyn、Kew、Camberwell、Canterbury、Surrey Hills 与 Mont Albert 的客人。${nearby}这些附近区域不是分店。`
-          : `Mend Beauty Studio is at ${site.address}, on Whitehorse Road at the Balwyn border. We welcome guests from Balwyn, Kew, Camberwell, Canterbury, Surrey Hills and Mont Albert. ${nearby} These nearby suburbs are not separate salon locations.`}
+          ? `Mend Beauty Studio 位于 ${site.address}，在 Whitehorse Road 上、紧邻 Balwyn。我们欢迎来自 Balwyn、Balwyn North、Kew、Camberwell、Canterbury、Surrey Hills 与 Mont Albert 的客人。${nearby}这些附近区域不是分店。`
+          : `Mend Beauty Studio is at ${site.address}, on Whitehorse Road at the Balwyn border. We welcome guests from Balwyn, Balwyn North, Kew, Camberwell, Canterbury, Surrey Hills and Mont Albert. ${nearby} These nearby suburbs are not separate salon locations.`}
       </p>
       <p className="mt-4 text-sm leading-relaxed text-cocoa">
         <Link className={textLink} href={`${localePath("/contact", locale)}#getting-here`}>

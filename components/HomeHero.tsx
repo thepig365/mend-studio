@@ -44,8 +44,8 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
         </p>
         <h1 className="mt-3 max-w-3xl font-display text-[1.65rem] font-medium leading-[1.2] text-cream sm:mt-4 sm:text-4xl sm:leading-tight lg:text-5xl">
           {isChinese
-            ? "Deepdene Whitehorse Road 美发、头疗与皮肤管理｜紧邻 Balwyn"
-            : "Hair Salon, Head Spa & Facials on Whitehorse Road, Deepdene, near Balwyn"}
+            ? "Deepdene Whitehorse Road 韩式美发、头疗与皮肤管理｜紧邻 Balwyn"
+            : "Korean Hair Salon, Head Spa & Facials on Whitehorse Road, Deepdene, near Balwyn"}
         </h1>
         <p className="mt-4 max-w-3xl font-display text-xl font-medium leading-snug text-cream sm:text-3xl">
           {isChinese
@@ -54,8 +54,8 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
         </p>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/90 sm:mt-5 sm:text-lg">
           {isChinese
-            ? "位于 Deepdene、紧邻 Balwyn 的专业美发、头疗、皮肤管理与美容护理。"
-            : "Premium hair, Head Spa, skin and beauty care in Deepdene, next to Balwyn."}
+            ? "位于 Deepdene、紧邻 Balwyn 的韩式美发、头疗、皮肤管理与美容护理。提供中文服务。"
+            : "Korean hairdresser and hair salon in Deepdene, next to Balwyn. Service available in English and Chinese."}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
           <a

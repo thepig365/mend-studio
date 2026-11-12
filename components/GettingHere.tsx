@@ -6,7 +6,7 @@ const copy = {
   "en-AU": {
     title: "Getting here from Balwyn and nearby suburbs",
     intro:
-      "MEND is at 74 Whitehorse Road, Deepdene, on the Balwyn border. These nearby suburbs are not separate salon locations.",
+      "MEND is at 74 Whitehorse Road, Deepdene, on the Balwyn border. These nearby suburbs are not separate salon locations. Service available in English and Chinese.",
     areas: [
       {
         name: "Balwyn",
@@ -28,7 +28,7 @@ const copy = {
   },
   "zh-Hans": {
     title: "从 Balwyn 及附近区域到店",
-    intro: "MEND 位于 74 Whitehorse Road, Deepdene，紧邻 Balwyn。这些附近区域不是分店。",
+    intro: "MEND 位于 74 Whitehorse Road, Deepdene，紧邻 Balwyn。这些附近区域不是分店。提供中文服务。",
     areas: [
       {
         name: "Balwyn",

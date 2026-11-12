@@ -236,21 +236,26 @@ assert(faqData.includes("Is a head spa the same as a hair spa or scalp spa?") &&
 assert(faqData.includes("Can I book a scalp analysis?") && faqData.includes("可以做头皮检测吗？"), "Scalp analysis FAQ is bilingual");
 assert(faqData.includes("Which Korean facials are on the menu?") && faqData.includes("有哪些韩式皮肤管理项目？"), "Korean facial FAQ is bilingual");
 const hero = await read("components/HomeHero.tsx");
-assert(hero.includes("Hair Salon, Head Spa & Facials on Whitehorse Road, Deepdene, near Balwyn"), "Homepage H1 names the studio offer and Whitehorse Road");
+assert(hero.includes("Korean Hair Salon, Head Spa & Facials on Whitehorse Road, Deepdene, near Balwyn"), "Homepage H1 names the Korean hair salon and Whitehorse Road");
+assert(hero.includes("Service available in English and Chinese."), "Homepage states Chinese service is available");
+assert(hero.includes("提供中文服务。"), "Chinese homepage states Chinese service is available");
 assert(hero.includes("Mend your hair. Refresh your skin. Renew your look."), "Homepage slogan stays as the tagline");
-assert(hero.includes("Deepdene Whitehorse Road 美发、头疗与皮肤管理｜紧邻 Balwyn"), "Chinese homepage H1 names Whitehorse Road");
+assert(hero.includes("Deepdene Whitehorse Road 韩式美发、头疗与皮肤管理｜紧邻 Balwyn"), "Chinese homepage H1 names Whitehorse Road");
 assert(servicesHub.includes("Hair Salon, Head Spa, Facials & Men’s Grooming, Deepdene"), "Services hub title names the studio offer");
 assert(servicesHub.includes("Hair Salon, Head Spa, Facials & Men’s Grooming in Deepdene"), "Services hub H1 names the studio offer");
 assert(contact.includes("Contact · Whitehorse Road, Deepdene") && contact.includes("Contact us on Whitehorse Road, Deepdene"), "Contact title and H1 name Whitehorse Road");
 assert(chinese.includes("美发、头疗、皮肤管理与男士理容服务项目｜Deepdene"), "Chinese services title names the offer");
 assert(chinese.includes("联系我们｜Deepdene Whitehorse Road") && chinese.includes("联系 Deepdene Whitehorse Road 门店"), "Chinese contact title and H1 name Whitehorse Road");
 assert(gettingHere.includes("on the Balwyn border") && gettingHere.includes("这些附近区域不是分店。"), "Getting here keeps one not-a-branch sentence");
-for (const file of ["lib/hair-page-copy.ts", "lib/local-service-copy.ts", "lib/service-faqs.ts", "components/HairVisitGuide.tsx", "components/HomeHero.tsx", "components/GettingHere.tsx", "components/NearbySuburbs.tsx"]) {
-  const source = await read(file);
-  assert(!source.includes("Balwyn North"), `${file} must not add Balwyn North to visible copy`);
-  assert(!/Korean hairdresser|Korean hair salon|韩式美发|华人理发/.test(source), `${file} must not use unconfirmed salon identity claims`);
-}
-assert(site.includes('"Balwyn North"'), "Existing schema area list still names Balwyn North");
+const hairCopy = await read("lib/hair-page-copy.ts");
+const hairVisit = await read("components/HairVisitGuide.tsx");
+assert(hairCopy.includes("Korean Hairdresser & Hair Salon") && hairCopy.includes("韩式美发"), "Hair page names the Korean hair salon in EN and ZH");
+assert(hairVisit.includes("Balwyn North") && nearbySuburbs.includes("Balwyn North") && faqData.includes("Balwyn North"), "Nearby-suburbs sentence names Balwyn North");
+assert(hairVisit.includes("All appointments take place at our Deepdene studio at 74 Whitehorse Road") && hairVisit.includes("这些附近区域不是分店"), "Nearby sentence keeps every appointment at the Deepdene studio");
+assert(hairVisit.includes("Service available in English and Chinese.") && gettingHere.includes("提供中文服务。"), "Chinese service line is on the hair and contact pages");
+assert(!/华人理发/.test([hairCopy, hairVisit, hero, gettingHere, nearbySuburbs, faqData, localCopy].join("\n")), "Headings and nearby copy do not use 华人理发");
+assert(!/\bMandarin\b|\bCantonese\b/.test([hero, hairVisit, gettingHere].join("\n")), "Language line does not name a dialect");
+assert(site.includes('"Balwyn North"'), "Schema area list still names Balwyn North");
 assert(!/free parking|免费停车|customer-only|仅限顾客/i.test(faqData + gettingHere), "Parking copy does not claim the parks are free or customer-only");
 assert(!/hot stone|hot-stone|热石/i.test(faqData + gettingHere), "FAQ and getting-here copy do not mention hot stone");
 
