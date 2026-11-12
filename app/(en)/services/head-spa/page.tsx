@@ -19,6 +19,7 @@ export default function HeadSpaPage() {
   return (
     <ServicePage
       category={{ ...category, title: copy.heading }}
+      kicker={copy.kicker}
       subtitle={copy.subtitle}
       menuOverride={getAnnaMenuItemsForCategory("head-spa")}
       beforeMenuContent={<NearbySuburbs locale="en-AU" service="head-spa" />}

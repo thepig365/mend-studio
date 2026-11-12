@@ -67,7 +67,7 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
       "Mend Beauty Studio 位于墨尔本 Deepdene 的 Whitehorse Road，紧邻 Balwyn，提供美发、头疗、头皮护理、韩式皮肤管理、身体护理及眉睫美容服务。",
   },
   "/services": {
-    title: "服务项目",
+    title: "美发、头疗、皮肤管理与男士理容服务项目｜Deepdene",
     description:
       "查看 Mend Beauty Studio 的美发设计、头皮健康管理、Head Spa、韩式肌肤管理、身体疗愈、男士理容、美甲及半永久美容项目、价格与时间。",
   },
@@ -88,7 +88,7 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
     description: "了解 Mend Beauty Studio 的沙龙经理、美发师、租椅及美容护理房合作机会。",
   },
   "/contact": {
-    title: "联系我们",
+    title: "联系我们｜Deepdene Whitehorse Road",
     description: `联系 Mend Beauty Studio。电话 ${site.phone}，地址 ${site.address}。`,
   },
   "/our-story": {
@@ -286,7 +286,7 @@ function ChineseServices() {
     <>
       <Hero
         eyebrow="我们的服务"
-        title="MEND 服务项目、价格与时间"
+        title="Deepdene 美发、头疗、皮肤管理与男士理容"
         body="直接查看经批准的美发、头皮管理、头疗、肌肤管理、身体疗愈、男士理容、美甲及半永久美容项目。"
         actions={[
           { label: "预约", href: "/zh/book", variant: "gold" },
@@ -387,6 +387,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
       />
       <Hero
         eyebrow="服务项目"
+        kicker={local?.["zh-Hans"].kicker}
         title={heading}
         subtitle={local?.["zh-Hans"].subtitle}
         body={opening}
@@ -556,7 +557,7 @@ function ChineseContact() {
     <>
       <Hero
         eyebrow="联系我们"
-        title="期待收到您的消息"
+        title="联系 Deepdene Whitehorse Road 门店"
         body="无论是预约、礼品卡、项目咨询或合作机会，都可以致电、发送邮件或填写下方咨询内容。"
         image={siteImages.contact.src}
         imageAlt="Mend Beauty Studio 店内环境"

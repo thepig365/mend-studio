@@ -1,6 +1,6 @@
 import { localBusinessTypes } from "@/lib/local-business-schema";
 import { audOffers } from "@/lib/service-offers";
-import { serviceAreas, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import type { ServiceItem } from "@/src/data/serviceMenu";
 
 type ServiceStructuredDataProps = {
@@ -65,7 +65,6 @@ export default function ServiceStructuredData({
               .filter(Boolean)
               .join(" · "),
             ...(offers ? { offers } : {}),
-            areaServed: serviceAreas,
             provider,
             url,
           },

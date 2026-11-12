@@ -8,7 +8,7 @@ import { annaServiceCategories } from "@/lib/anna-services";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Services",
+  title: "Hair Salon, Head Spa, Facials & Men’s Grooming, Deepdene",
   description:
     "Hair salon and hairdresser services in Deepdene, Head Spa Melbourne, scalp treatments, Korean facial treatments, body wellness, men’s grooming, nails and semi-permanent beauty.",
   path: "/services",
@@ -19,7 +19,7 @@ export default function ServicesPage() {
     <>
       <Hero
         eyebrow="Our Services"
-        title="MEND services, pricing and duration"
+        title="Hair Salon, Head Spa, Facials & Men’s Grooming in Deepdene"
         body="Browse the approved hair, scalp, Head Spa, skin, body, men’s grooming, nail and semi-permanent beauty menu directly."
         actions={[
           { label: "Book", href: "/book", variant: "gold" },
