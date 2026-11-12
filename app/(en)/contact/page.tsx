@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 import { siteImages } from "@/src/data/images";
 
 export const metadata = pageMetadata({
-  title: "Contact",
+  title: "Contact · Whitehorse Road, Deepdene",
   description: `Contact Mend Beauty Studio — Deepdene. Phone ${site.phone}, WeChat ${site.wechat}. ${site.address}. Book hair, Head Spa, skin, body, nails and beauty services.`,
   path: "/contact",
 });
@@ -19,7 +19,7 @@ export default function ContactPage() {
     <>
       <Hero
         eyebrow="Contact"
-        title="We’d love to hear from you"
+        title="Contact us on Whitehorse Road, Deepdene"
         body="Bookings, gift cards, consultations or career enquiries — call, message or send us a note below."
         image={siteImages.contact.src}
         imageAlt={siteImages.contact.alt}

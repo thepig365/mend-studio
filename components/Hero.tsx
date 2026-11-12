@@ -10,6 +10,8 @@ export type HeroAction = {
 
 type HeroProps = {
   eyebrow?: string;
+  /** Sentence-case line under the eyebrow and above the H1. */
+  kicker?: string;
   title: string;
   subtitle?: string;
   lead?: string;
@@ -29,6 +31,7 @@ const actionClass: Record<NonNullable<HeroAction["variant"]>, string> = {
 
 export default function Hero({
   eyebrow,
+  kicker,
   title,
   subtitle,
   lead,
@@ -47,6 +50,9 @@ export default function Hero({
       >
         <div className={image ? "" : "mx-auto max-w-3xl text-center"}>
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+          {kicker && (
+            <p className="mt-3 max-w-xl text-sm font-medium leading-relaxed text-bronze">{kicker}</p>
+          )}
           <h1 className="mt-4 font-display text-4xl font-medium leading-[1.1] text-charcoal sm:text-5xl lg:text-6xl">
             {title}
           </h1>

@@ -20,10 +20,11 @@ for (const prefix of ["", "/zh"]) {
   const text = plain(html);
   const h1 = html.match(/<h1\b[^>]*>(.*?)<\/h1>/)?.[1];
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
-  assert.match(h1, /Hair Atelier/);
+  assert.match(h1, prefix ? /Balwyn 附近理发店与美发沙龙/ : /Hairdresser &(?:amp;)? Hair Salon near Balwyn/);
   assert.match(h1, /Deepdene/);
-  assert.match(h1, /Balwyn/);
-  assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /Balwyn 及 Deepdene 美发沙龙与理发师/ : /Hairdresser Balwyn &(?:amp;)? Deepdene/);
+  assert.match(h1, prefix ? /门店/ : /Whitehorse Road/);
+  assert.match(text, /Hair Atelier/);
+  assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /Balwyn 附近理发店与美发沙龙/ : /Hairdresser Balwyn &(?:amp;)? Deepdene · Whitehorse Rd/);
   assert.match(text, /74 Whitehorse Road/);
   assert.ok(attrs(html, "link").some((a) => a.rel === "canonical" && a.href === `${origin}${path}`));
   for (const [lang, target] of [["en-AU", "/services/hair"], ["zh", "/zh/services/hair"], ["x-default", "/services/hair"]]) {
@@ -125,7 +126,62 @@ for (const path of ["/contact", "/zh/contact", "/"]) {
   });
   assert.equal(business?.address?.addressLocality, "Deepdene", `${path} JSON-LD address stays in Deepdene`);
 }
+function jsonBlocks(html) {
+  return [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+}
+function areaServedNodes(value, found = []) {
+  if (!value || typeof value !== "object") return found;
+  if (Array.isArray(value)) {
+    for (const item of value) areaServedNodes(item, found);
+    return found;
+  }
+  if (Object.prototype.hasOwnProperty.call(value, "areaServed")) found.push(value);
+  for (const item of Object.values(value)) areaServedNodes(item, found);
+  return found;
+}
+const faqExpectations = {
+  "/services/hair": ["Do you offer Korean perms or digital perms?", "Do you offer keratin smoothing or straightening?", "Where on Whitehorse Road is the salon?"],
+  "/zh/services/hair": ["有韩式烫发或数码烫吗？", "有角蛋白顺滑护理或离子烫吗？", "门店在 Whitehorse Road 哪里？"],
+  "/services/head-spa": ["Is a head spa the same as a hair spa or scalp spa?", "What is included in the Korean Signature Head Spa?"],
+  "/zh/services/head-spa": ["韩式经典头疗包括什么？", "头疗店在哪里？"],
+  "/services/hair-scalp-recovery": ["Can I book a scalp analysis?", "Do you offer a scalp detox?"],
+  "/zh/services/hair-scalp-recovery": ["可以做头皮检测吗？"],
+  "/services/mens-grooming": ["How much is a men’s haircut?", "Do you offer men’s grooming packages?", "Are you a barber?"],
+  "/zh/services/mens-grooming": ["男士剪发多少钱？", "有男士理容组合吗？"],
+  "/services/skin-facial": ["Which Korean facials are on the menu?"],
+  "/zh/services/skin-facial": ["有哪些韩式皮肤管理项目？"],
+};
+for (const [path, questions] of Object.entries(faqExpectations)) {
+  const html = await page(path);
+  assert.equal((html.match(/<h1\b/g) || []).length, 1, `${path} has one H1`);
+  const visible = html.slice(html.indexOf('id="service-faq"'), html.indexOf("</section>", html.indexOf('id="service-faq"')));
+  for (const question of questions) assert.ok(visible.includes(question), `${path} shows FAQ: ${question}`);
+  const blocks = jsonBlocks(html);
+  const faq = blocks.find((schema) => schema["@type"] === "FAQPage");
+  assert.ok(faq, `${path} has one FAQPage object`);
+  const names = faq.mainEntity.map((entity) => entity.name);
+  const decode = (value) => value.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#x27;|&apos;/g, "'").replace(/&quot;/g, '"');
+  for (const question of questions) {
+    assert.ok(names.includes(question), `${path} FAQ schema includes ${question}`);
+    const entity = faq.mainEntity.find((item) => item.name === question);
+    const shown = decode(visible.slice(visible.indexOf(question)).match(/<dd[^>]*>([\s\S]*?)<\/dd>/)?.[1] ?? "");
+    assert.equal(shown.trim(), entity.acceptedAnswer.text, `${path} FAQ schema matches visible answer for ${question}`);
+  }
+  const served = areaServedNodes(blocks);
+  assert.equal(served.length, 1, `${path} declares areaServed once`);
+  assert.equal(served[0].areaServed.length, 8, `${path} business areaServed keeps the eight suburbs`);
+  assert.ok(served[0]["@type"]?.includes?.("HairSalon") || (Array.isArray(served[0]["@type"]) && served[0]["@type"].includes("HairSalon")), `${path} areaServed sits on the business entity`);
+  const english = path.replace(/^\/zh/, "") || "/";
+  const chinese = `/zh${english}`;
+  for (const [lang, expected] of [["en-AU", english], ["zh", chinese], ["x-default", english]]) {
+    assert.ok(attrs(html, "link").some((link) => link.rel === "alternate" && link.hreflang === lang && link.href === `${origin}${expected}`), `${path} hreflang ${lang}`);
+  }
+  assert.ok(attrs(html, "link").some((link) => link.rel === "canonical" && link.href === `${origin}${path}`), `${path} canonical`);
+}
 for (const [path, html] of cache) {
-  assert.doesNotMatch(html, /\bin Balwyn\b/, `${path} must not say the studio is in Balwyn`);
+  const visible = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "");
+  assert.doesNotMatch(visible, /\bin Balwyn\b/, `${path} must not say the studio is in Balwyn`);
+  assert.doesNotMatch(visible, /Balwyn North|Korean hairdresser|Korean hair salon|韩式美发|华人理发/, `${path} must not show unconfirmed claims in visible copy`);
+  assert.match(html, /"name":"Balwyn North VIC"/, `${path} keeps Balwyn North in the business areaServed schema`);
 }
 console.log("Hair SEO checks passed: bilingual metadata/H1, seven-area local guide with real Deepdene address, early visit/care navigation, same-language Head Spa/scalp links, colour/texture detail links, homepage hair entry, six menu shortcuts, approved studio/stylist imagery, profile links/schema, canonicals and language alternates.");

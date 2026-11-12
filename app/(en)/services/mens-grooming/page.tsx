@@ -1,8 +1,12 @@
 import Link from "next/link";
+import NearbySuburbs from "@/components/NearbySuburbs";
 import ServicePage from "@/components/ServicePage";
+import { localServiceCopy } from "@/lib/local-service-copy";
 import { mensGroomingSeo } from "@/lib/mens-grooming-seo";
 import { getCategory } from "@/lib/services";
 import { pageMetadata } from "@/lib/seo";
+
+const copy = localServiceCopy["mens-grooming"]["en-AU"];
 
 export const metadata = pageMetadata({
   title: mensGroomingSeo["en-AU"].title,
@@ -13,7 +17,11 @@ export const metadata = pageMetadata({
 export default function MensGroomingPage() {
   const category = getCategory("mens-grooming");
   return (
-    <ServicePage category={category} subtitle="Cuts · Grooming · Scalp Care">
+    <ServicePage
+      category={{ ...category, title: copy.heading }}
+      subtitle={copy.subtitle}
+      beforeMenuContent={<NearbySuburbs locale="en-AU" service="mens-grooming" />}
+    >
       <div className="mt-10 rounded-3xl bg-linen p-7 sm:p-8">
         <h3 className="font-display text-xl font-medium text-charcoal">
           Try the men’s head spa

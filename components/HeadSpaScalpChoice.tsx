@@ -26,7 +26,7 @@ export default function HeadSpaScalpChoice({ locale }: { locale: Locale }) {
             : "Head spa is our menu for scalp cleansing, massage and relaxation. If you're looking for hair conditioning or a scalp assessment, see our scalp care menu. Both are cosmetic care, not medical diagnosis or treatment."}
         </p>
         <Link className={textLink} href={localePath("/services/hair-scalp-recovery", locale)}>
-          {zh ? "查看头皮与发质护理项目" : "Explore scalp care"}
+          {zh ? "查看头皮护理项目" : "Explore scalp treatments"}
         </Link>
       </div>
     </section>

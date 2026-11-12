@@ -42,11 +42,16 @@ export default function HomeHero({ locale = "en-AU" }: HomeHeroProps) {
         <p className="text-[0.65rem] font-medium uppercase tracking-[0.22em] text-cream/90 sm:text-xs sm:tracking-[0.25em]">
           Mend Beauty Studio — Deepdene
         </p>
-        <h1 className="mt-3 max-w-3xl font-display text-[1.75rem] font-medium leading-[1.15] text-cream sm:mt-4 sm:text-5xl sm:leading-tight lg:text-6xl">
+        <h1 className="mt-3 max-w-3xl font-display text-[1.65rem] font-medium leading-[1.2] text-cream sm:mt-4 sm:text-4xl sm:leading-tight lg:text-5xl">
+          {isChinese
+            ? "Deepdene Whitehorse Road 美发、头疗与皮肤管理｜紧邻 Balwyn"
+            : "Hair Salon, Head Spa & Facials on Whitehorse Road, Deepdene, near Balwyn"}
+        </h1>
+        <p className="mt-4 max-w-3xl font-display text-xl font-medium leading-snug text-cream sm:text-3xl">
           {isChinese
             ? "修护秀发，焕亮肌肤，重拾自信光彩。"
             : "Mend your hair. Refresh your skin. Renew your look."}
-        </h1>
+        </p>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/90 sm:mt-5 sm:text-lg">
           {isChinese
             ? "位于 Deepdene、紧邻 Balwyn 的专业美发、头疗、皮肤管理与美容护理。"

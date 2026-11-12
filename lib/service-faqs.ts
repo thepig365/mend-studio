@@ -67,6 +67,15 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
             "Express Head Spa is described as a refreshing first experience, a haircut add-on or a lunchtime pause. The 75-minute, 90-minute and 120-minute rituals are longer scalp-care and relaxation appointments. Results vary, and these services are not medical diagnosis or treatment.",
         },
         {
+          question: "Is a head spa the same as a hair spa or scalp spa?",
+          answer:
+            "People use all three names. At Mend Beauty Studio, Head Spa is the menu for scalp cleansing, massage and relaxation. For hair conditioning or a scalp assessment, see our scalp care menu. Both are cosmetic care, not medical diagnosis or treatment.",
+        },
+        {
+          question: "What is included in the Korean Signature Head Spa?",
+          answer: `It takes 75 mins ($198) and lists deep scalp cleansing, head massage, neck and shoulder massage and water-circulation head spa. This is cosmetic care, not medical diagnosis or treatment. ${pricingNote}`,
+        },
+        {
           question: "How do I book a head spa?",
           answer: bookAnswer("en-AU", "a head spa"),
         },
@@ -97,6 +106,19 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
           question: "头疗适合谁？",
           answer:
             "快速头疗适合第一次体验、洗剪后加购或午休放松。75 分钟、90 分钟和 120 分钟的项目是更长的头皮护理与放松服务。效果因人而异，这些服务并非医疗诊断或治疗。",
+        },
+        {
+          question: "头疗和 hair spa、scalp spa 是同一项服务吗？",
+          answer:
+            "这几个说法都有人使用。在 Mend Beauty Studio，头疗是清洁头皮、按摩与放松的菜单。如需发质养护或头皮检测，请查看头皮护理菜单。两者均为美容护理，并非医疗诊断或治疗。",
+        },
+        {
+          question: "韩式经典头疗包括什么？",
+          answer: `75 分钟，$198，包括头皮深层清洁、头部按摩、肩颈按摩及水循环头疗。属美容放松护理，并非医疗诊断或治疗。${priceCaveatZh}`,
+        },
+        {
+          question: "头疗店在哪里？",
+          answer: "74 Whitehorse Road, Deepdene VIC 3103，紧邻 Balwyn，店后有 6 个停车位。附近区域并非分店。",
         },
         {
           question: "如何预约头疗？",
@@ -133,6 +155,14 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
             "Scalp care is the menu for hair conditioning, scalp assessments and cosmetic scalp-care rituals. Head spa is a separate menu for scalp cleansing, massage and relaxation, with its own durations and prices. Ask the studio team if you are unsure which care service to choose.",
         },
         {
+          question: "Can I book a scalp analysis?",
+          answer: `Yes. MEND AI Scalp Analysis and Hair & Scalp Wellness Assessment are listed at $50 each. They are cosmetic assessments, not medical diagnosis. ${pricingNote}`,
+        },
+        {
+          question: "Do you offer a scalp detox?",
+          answer: `Scalp Detox Ritual is a $58 add-on. On the men’s menu, Men’s Scalp Detox is $145 (50–60 min). ${pricingNote}`,
+        },
+        {
           question: "How do I book scalp care?",
           answer: bookAnswer("en-AU", "scalp care"),
         },
@@ -162,6 +192,14 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
           question: "头皮护理和头疗有什么不同？",
           answer:
             "头皮护理菜单包含发质养护、头皮检测与美容型头皮护理。头疗是另一份菜单，侧重清洁头皮、按摩与放松，时长和价格单独列出。不确定如何选择时，可先咨询店内团队。",
+        },
+        {
+          question: "可以做头皮检测吗？",
+          answer: `可以。AI头皮检测分析与毛囊健康评估各为 $50，属美容评估，并非医疗诊断。${priceCaveatZh}`,
+        },
+        {
+          question: "有头皮净化项目吗？",
+          answer: `头皮毛孔净化为 $58 加购项目。男士菜单中的男士头皮净化护理为 $145（50–60 分钟）。${priceCaveatZh}`,
         },
         {
           question: "如何预约头皮护理？",
@@ -198,6 +236,10 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
             "Treatments are tailored after consultation. Individual results vary.",
         },
         {
+          question: "Which Korean facials are on the menu?",
+          answer: `Essential facials include Korean Facial Sculpting ($198, 75 mins) and Water Bomb Restore ($268, 90 mins). Treatments are tailored after consultation, and individual results vary. ${pricingNote}`,
+        },
+        {
           question: "How do I book a facial?",
           answer: bookAnswer("en-AU", "a facial"),
         },
@@ -227,6 +269,10 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
         {
           question: "面部护理适合谁？",
           answer: "护理需先咨询，效果因人而异。",
+        },
+        {
+          question: "有哪些韩式皮肤管理项目？",
+          answer: `基础护理包括韩式徒手小颜V脸管理（$198，75 分钟）和韩式水光炸弹管理（$268，90 分钟）。护理需先咨询，效果因人而异。${priceCaveatZh}`,
         },
         {
           question: "如何预约面部护理？",
@@ -263,6 +309,19 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
             "The cut menu includes Ladies Signature Cut, Gentleman’s Precision Cut, Kid Signature Cut — 0–2 Years and Kid Signature Cut — Ages 3–11. Styling, colour and perm sections are listed separately on the same menu.",
         },
         {
+          question: "Do you offer Korean perms or digital perms?",
+          answer: `Yes. The Hair Atelier menu lists Korean Soft Wave (from $280), Ladies Digital Perm (from $300), Men’s Digital Perm (from $180) and Classic Cold Perm (from $250). Where a starting price is shown, the final price may vary after consultation with hair length and service complexity. ${pricingNote}`,
+        },
+        {
+          question: "Do you offer keratin smoothing or straightening?",
+          answer: `The menu lists Keratin Smooth Ritual (from $299) and Permanent Straightening (from $388). The final price may vary after consultation. ${pricingNote}`,
+        },
+        {
+          question: "Where on Whitehorse Road is the salon?",
+          answer:
+            "74 Whitehorse Road, Deepdene VIC 3103, just west of Balwyn's shopping strip and the Palace Balwyn cinema. Tram 109 stops at Deepdene Shopping Centre/Whitehorse Rd (stop 43), and there are 6 car parks at the back of the studio.",
+        },
+        {
           question: "How do I book a hair appointment?",
           answer: bookAnswer("en-AU", "a hair service"),
         },
@@ -293,6 +352,20 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
           question: "哪些客人可以预约剪发？",
           answer:
             "剪发菜单包括女士设计剪发、男士精剪、儿童剪发（0–2岁）以及儿童剪发（3岁及以上，12岁以下）。造型、染发和烫发在同一菜单的其他分组中。",
+        },
+        {
+          question: "有韩式烫发或数码烫吗？",
+          answer:
+            "美发菜单包括韩式柔感烫（$280 起）、女士数码烫（$300 起）、男士数码烫（$180 起）及经典冷烫（$250 起）。标示“起”的价格会根据发长与项目复杂度在咨询后确定。",
+        },
+        {
+          question: "有角蛋白顺滑护理或离子烫吗？",
+          answer: `美发菜单包括角蛋白顺滑护理（$299 起）与女士离子烫（$388 起）。最终价格可能在咨询后调整。${priceCaveatZh}`,
+        },
+        {
+          question: "门店在 Whitehorse Road 哪里？",
+          answer:
+            "74 Whitehorse Road, Deepdene VIC 3103，在 Balwyn 购物街以西，109 路电车 Deepdene Shopping Centre/Whitehorse Rd（43 号站）下车，店后有 6 个停车位。",
         },
         {
           question: "如何预约美发？",
@@ -377,24 +450,30 @@ function mensWhereAnswer(locale: Locale) {
   return `Men’s haircuts and grooming are at Mend Beauty Studio. ${whereAnswer("en-AU")}`;
 }
 
-function mensBookingAnswer(locale: Locale) {
-  if (locale === "zh-Hans") {
-    return "点击“预约”进入 MaSe 并选择服务。";
-  }
-  return "Select Book to continue to MaSe and choose your service.";
-}
-
 serviceFaqs["mens-grooming"] = {
   "en-AU": {
     heading: "Men’s grooming questions",
     items: [
       {
-        question: "Where is men’s grooming?",
-        answer: mensWhereAnswer("en-AU"),
+        question: "How much is a men’s haircut?",
+        answer: `Men’s Cut is from $55 (30–45 min) and Skin Fade is from $65 (45 min). Beard Trim is from $35, and Cut + Beard Trim is from $85 (60 min). ${pricingNote}`,
       },
       {
-        question: "How do I book?",
-        answer: mensBookingAnswer("en-AU"),
+        question: "Do you offer men’s grooming packages?",
+        answer: `Combined services on the menu are Cut + Beard Trim (from $85, 60 min) and Men’s Cut + Scalp Detox ($185, 90 min). ${pricingNote}`,
+      },
+      {
+        question: "Are you a barber?",
+        answer:
+          "Mend Beauty Studio is a hair and beauty salon, not a barbershop. The men’s menu includes men’s cuts, skin fades and beard trims, at 74 Whitehorse Road, Deepdene, near Balwyn.",
+      },
+      {
+        question: "How do I book men’s grooming?",
+        answer: bookAnswer("en-AU", "men’s grooming"),
+      },
+      {
+        question: "Where is men’s grooming?",
+        answer: mensWhereAnswer("en-AU"),
       },
     ],
   },
@@ -402,12 +481,20 @@ serviceFaqs["mens-grooming"] = {
     heading: "男士理容常见问题",
     items: [
       {
-        question: "男士理容在哪里？",
-        answer: mensWhereAnswer("zh-Hans"),
+        question: "男士剪发多少钱？",
+        answer: `男士剪发 $55 起（30–45 分钟），渐层推剪 $65 起（45 分钟），胡须修整 $35 起，剪发与胡须修整 $85 起（60 分钟）。${priceCaveatZh}`,
       },
       {
-        question: "如何预约？",
-        answer: mensBookingAnswer("zh-Hans"),
+        question: "有男士理容组合吗？",
+        answer: `菜单上的组合项目包括剪发与胡须修整（$85 起，60 分钟）和男士剪发与头皮净化（$185，90 分钟）。${priceCaveatZh}`,
+      },
+      {
+        question: "如何预约男士理容？",
+        answer: bookAnswer("zh-Hans", "男士理容"),
+      },
+      {
+        question: "男士理容在哪里？",
+        answer: mensWhereAnswer("zh-Hans"),
       },
     ],
   },

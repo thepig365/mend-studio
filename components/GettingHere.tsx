@@ -5,6 +5,8 @@ import { site } from "@/lib/site";
 const copy = {
   "en-AU": {
     title: "Getting here from Balwyn and nearby suburbs",
+    intro:
+      "MEND is at 74 Whitehorse Road, Deepdene, on the Balwyn border. These nearby suburbs are not separate salon locations.",
     areas: [
       {
         name: "Balwyn",
@@ -26,6 +28,7 @@ const copy = {
   },
   "zh-Hans": {
     title: "从 Balwyn 及附近区域到店",
+    intro: "MEND 位于 74 Whitehorse Road, Deepdene，紧邻 Balwyn。这些附近区域不是分店。",
     areas: [
       {
         name: "Balwyn",
@@ -74,6 +77,7 @@ export default function GettingHere({ locale }: { locale: Locale }) {
         <h2 id="getting-here-heading" className="max-w-3xl font-display text-3xl font-medium leading-tight text-charcoal sm:text-4xl">
           {content.title}
         </h2>
+        <p className="mt-5 max-w-3xl text-base leading-relaxed text-cocoa">{content.intro}</p>
         <div className="mt-8 grid gap-6 sm:grid-cols-2">
           {content.areas.map((area) => (
             <article key={area.name} className="rounded-3xl border border-beige/70 bg-white/70 p-6 sm:p-8">

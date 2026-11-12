@@ -14,9 +14,14 @@ export default function NearbySuburbs({
   service: LocalServiceSlug;
 }) {
   const zh = locale === "zh-Hans";
-  const nearby = localServiceCopy[service][locale].nearby;
+  const copy = localServiceCopy[service][locale];
+  const nearby = copy.nearby;
 
   return (
+    <>
+    {copy.lead ? (
+      <p className="mb-8 max-w-3xl text-base leading-relaxed text-cocoa">{copy.lead}</p>
+    ) : null}
     <section aria-labelledby="nearby-suburbs-heading" className="mb-10 rounded-3xl bg-sand p-7 sm:p-8">
       <h2 id="nearby-suburbs-heading" className="font-display text-2xl font-medium text-charcoal sm:text-3xl">
         {zh ? "欢迎附近区域的客人" : "Serving nearby suburbs"}
@@ -32,5 +37,6 @@ export default function NearbySuburbs({
         </Link>
       </p>
     </section>
+    </>
   );
 }

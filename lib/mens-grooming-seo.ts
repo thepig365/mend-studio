@@ -1,14 +1,14 @@
-import type { Locale } from "@/lib/i18n";
-import { site } from "@/lib/site";
+import { localServiceCopy } from "@/lib/local-service-copy";
 
-// Title and meta description only. The visible H1 stays the existing category title.
-export const mensGroomingSeo: Record<Locale, { title: string; description: string }> = {
+// Title and description for the men’s grooming pages. The H1 and nearby
+// sentence live on the same local-service copy so the two cannot drift.
+export const mensGroomingSeo = {
   "en-AU": {
-    title: "Men’s Grooming near Balwyn, Deepdene",
-    description: `Men’s haircuts and grooming near Balwyn at Mend Beauty Studio, ${site.address}.`,
+    title: localServiceCopy["mens-grooming"]["en-AU"].title,
+    description: localServiceCopy["mens-grooming"]["en-AU"].description,
   },
   "zh-Hans": {
-    title: "Deepdene 男士理容，紧邻 Balwyn",
-    description: `Mend Beauty Studio 提供男士剪发与理容，门店位于紧邻 Balwyn 的 ${site.address}。`,
+    title: localServiceCopy["mens-grooming"]["zh-Hans"].title,
+    description: localServiceCopy["mens-grooming"]["zh-Hans"].description,
   },
-};
+} as const;

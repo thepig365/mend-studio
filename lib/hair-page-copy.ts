@@ -19,18 +19,18 @@ export const hairPageCopy: Record<Locale, {
   serviceLabels: string[];
 }> = {
   "en-AU": {
-    title: "Hairdresser Balwyn & Deepdene · Hair Atelier",
-    description: "MEND is a hairdresser at 74 Whitehorse Road, Deepdene, on the Balwyn border, for haircuts, colour, balayage, blow-dry styling and perms. Explore Hair Atelier services, prices and online booking.",
-    heading: "Hair Atelier — Hair Salon near Balwyn, in Deepdene",
+    title: "Hairdresser Balwyn & Deepdene · Whitehorse Rd",
+    description: "Hairdresser and hair salon at 74 Whitehorse Road, Deepdene, on the Balwyn border. Cuts, colour, balayage, Korean Soft Wave and digital perms. Book online.",
+    heading: "Hairdresser & Hair Salon near Balwyn, on Whitehorse Road in Deepdene",
     intro: "Visit MEND Beauty Studio at 74 Whitehorse Road, Deepdene for haircuts, colour, highlights, balayage, styling, perms and hair treatments. Explore the menu below to find a service and plan your visit.",
     menuHeading: "Hair services & prices",
     menuIntro: "Browse the Hair Atelier menu and note the service name you would like to book. Book opens MEND’s MaSe booking menu, where you can select your service and check the current price and available times.",
     serviceLabels: ["Haircuts", "Colour & highlights", "Balayage", "Blow-dry & styling", "Perms & straightening", "Hair & scalp treatments"],
   },
   "zh-Hans": {
-    title: "Balwyn 及 Deepdene 美发沙龙与理发师｜Hair Atelier",
-    description: "MEND 是位于墨尔本 Deepdene 的 74 Whitehorse Road、紧邻 Balwyn 的美发沙龙与理发师，提供剪发、染发、挑染、Balayage 渐变染、吹整造型及烫发。查看 Hair Atelier 美发项目、价格与在线预约。",
-    heading: "Hair Atelier｜Balwyn 附近美发沙龙（Deepdene）",
+    title: "Balwyn 附近理发店与美发沙龙｜Deepdene Whitehorse Road",
+    description: "MEND 位于墨尔本 Deepdene 的 74 Whitehorse Road，紧邻 Balwyn，提供剪发、染发、Balayage 渐变染、韩式柔感烫、数码烫及角蛋白顺滑护理。查看价格与在线预约。",
+    heading: "Balwyn 附近理发店与美发沙龙｜Deepdene 门店",
     intro: "MEND Beauty Studio 位于 Deepdene 的 74 Whitehorse Road，提供剪发、染发、挑染、Balayage 渐变染、造型、烫发及发质护理。浏览下方菜单，了解项目并安排您的到店时间。",
     menuHeading: "美发项目与价格",
     menuIntro: "浏览 Hair Atelier 菜单，记下您想预约的项目名称。点击“预约”后将打开 MEND 的 MaSe 预约菜单，请在 MaSe 选择项目，并查看当前价格与可预约时间。",

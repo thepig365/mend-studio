@@ -15,6 +15,7 @@ import {
 type ServicePageProps = {
   category: ServiceCategory;
   eyebrow?: string;
+  kicker?: string;
   subtitle?: string;
   children?: ReactNode;
   beforeMenuContent?: ReactNode;
@@ -38,6 +39,7 @@ function groupBySection(items: MenuServiceItem[], fallbackTitle: string) {
 export default function ServicePage({
   category,
   eyebrow = "Services",
+  kicker,
   subtitle,
   children,
   beforeMenuContent,
@@ -62,6 +64,7 @@ export default function ServicePage({
       />
       <Hero
         eyebrow={eyebrow}
+        kicker={kicker}
         title={category.title}
         subtitle={subtitle}
         body={opening}

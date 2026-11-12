@@ -129,27 +129,33 @@ const gettingHere = await read("components/GettingHere.tsx");
 const nearbySuburbs = await read("components/NearbySuburbs.tsx");
 const contact = await read("app/(en)/contact/page.tsx");
 for (const phrase of [
-  "Head Spa Balwyn & Deepdene",
+  "Head Spa near Balwyn · Korean Head Spa, Deepdene",
   "Head Spa near Balwyn, in Deepdene",
-  "Balwyn 及 Deepdene 头疗",
+  "Balwyn 附近头疗店｜韩式经典头疗 Deepdene",
   "Balwyn 附近头疗｜Deepdene 门店",
-  "Scalp Care Balwyn & Deepdene",
-  "Scalp Care near Balwyn, in Deepdene",
-  "Balwyn 及 Deepdene 头皮护理",
-  "Balwyn 附近头皮护理｜Deepdene 门店",
-  "Facials Balwyn & Deepdene",
-  "Facials and Skin Care near Balwyn, in Deepdene",
-  "Balwyn 及 Deepdene 面部与肌肤护理",
-  "Balwyn 附近面部与肌肤护理｜Deepdene 门店",
+  "Scalp Treatment & Scalp Analysis near Balwyn, Deepdene",
+  "Scalp Care & Scalp Treatments near Balwyn, in Deepdene",
+  "Balwyn 附近头皮护理与头皮检测｜Deepdene",
+  "Balwyn 附近头皮护理与头皮检测｜Deepdene 门店",
+  "Korean Facials near Balwyn, Deepdene",
+  "Korean Facials & Skin Care near Balwyn, in Deepdene",
+  "Balwyn 附近韩式皮肤管理与面部护理｜Deepdene",
+  "Balwyn 附近韩式皮肤管理与面部护理｜Deepdene 门店",
   "Body Care Balwyn & Deepdene",
   "Body Care near Balwyn, in Deepdene",
   "Balwyn 及 Deepdene 身体护理",
   "Balwyn 附近身体护理｜Deepdene 门店",
+  "Men’s Haircuts & Grooming near Balwyn, Deepdene",
+  "Men’s Haircuts & Grooming near Balwyn, in Deepdene",
+  "Balwyn 附近男士理发与理容｜Deepdene",
+  "男士理发与理容｜Balwyn 附近 Deepdene 门店",
 ]) {
   assert(localCopy.includes(phrase) && phrase.includes("Balwyn") && phrase.includes("Deepdene"), `Service title or H1 missing Balwyn and Deepdene: ${phrase}`);
 }
-assert(serviceSchema.includes("areaServed: serviceAreas"), "Service JSON-LD must share the areaServed list");
-assert(schema.includes("areaServed: serviceAreas"), "LocalBusiness JSON-LD must include areaServed");
+const headCopy = localCopy.slice(localCopy.indexOf('"head-spa"'), localCopy.indexOf('"hair-scalp-recovery"'));
+assert(!/scalp treatment/i.test(headCopy), "Head spa copy must not compete for scalp treatment queries");
+assert(!serviceSchema.includes("areaServed"), "Service JSON-LD must not repeat areaServed on each service");
+assert(schema.includes("areaServed: serviceAreas"), "LocalBusiness JSON-LD must include areaServed once");
 assert(site.includes('addressLocality: "Deepdene"'), "JSON-LD address locality stays Deepdene");
 assert(site.includes("74 Whitehorse Road, Deepdene VIC 3103"), "Studio address stays 74 Whitehorse Road, Deepdene");
 assert(!schema.includes('addressLocality: "Balwyn"'), "Business address must not move to Balwyn");
@@ -190,34 +196,61 @@ assert(llmsRoute.includes("llmsTxt") && llmsRoute.includes("text/plain"), "llms.
 assert(faqData.includes("Yes — there are 6 car parks at the back of the studio.") && faqData.includes("有，店铺后面有 6 个停车位。"), "Parking FAQ uses the owner-confirmed wording");
 const mensSeo = await read("lib/mens-grooming-seo.ts");
 const mensPage = await read("app/(en)/services/mens-grooming/page.tsx");
-assert(mensPage.includes('title: mensGroomingSeo["en-AU"].title'), "English men's grooming title uses the narrow SEO copy");
+assert(mensPage.includes('title: mensGroomingSeo["en-AU"].title'), "English men's grooming title uses the SEO copy");
 assert(mensPage.includes("Try the men’s head spa"), "Existing men's head spa block stays in place");
-assert(mensPage.includes("category={category}"), "English men's grooming H1 still comes from the category title");
+assert(mensPage.includes("title: copy.heading"), "English men's grooming H1 uses the local heading");
+assert(mensPage.includes('service="mens-grooming"'), "English men's grooming page has one nearby-suburbs section");
 assert(chinese.includes('slug[1] === "mens-grooming" ? mensGroomingSeo["zh-Hans"]'), "Chinese metadata uses the men's grooming SEO copy");
-assert(chinese.includes('local?.["zh-Hans"].heading ?? category.title'), "Chinese service H1 is unchanged");
-assert(mensSeo.includes("site.address") && mensSeo.includes("near Balwyn") && mensSeo.includes("紧邻 Balwyn"), "Men's grooming meta uses the published address and near-Balwyn wording");
-assert(!/\bin Balwyn\b/.test(mensSeo), "Men's grooming meta must not place the studio in Balwyn");
-assert(!/existing booking page|打开现有预约页面/.test(mensSeo), "Men's grooming meta uses natural wording");
+assert(chinese.includes('local?.["zh-Hans"].heading ?? category.title'), "Chinese service H1 uses local copy when present");
+assert(localCopy.includes("74 Whitehorse Road, Deepdene, near Balwyn") && localCopy.includes("紧邻 Balwyn"), "Men's grooming meta uses the published address and near-Balwyn wording");
+assert(!/\bin Balwyn\b/.test(localCopy), "Local service copy must not place the studio in Balwyn");
+assert(!/existing booking page|打开现有预约页面/.test(mensSeo + localCopy), "Men's grooming meta uses natural wording");
 const parkingAppend = faqData.indexOf("block[locale].items.push(parkingFaq[locale])");
 const mensFaqStart = faqData.indexOf("function mensWhereAnswer");
 const mensFaq = faqData.slice(mensFaqStart);
 assert(mensFaqStart > parkingAppend, "Men's grooming FAQ stays outside the parking append");
-for (const omitted of ["Cut + Beard", "Scalp Detox", "剪发与胡须", "头皮净化", "car parks", "停车", "From $", "popular", "MaSe certification", "对当前项目的认证", "How do I open booking", "如何打开", "existing booking page", "site.phone", "site.email", "site.wechat"]) {
-  assert(!mensFaq.includes(omitted) && !mensSeo.includes(omitted), `New men's grooming copy must omit ${omitted}`);
+for (const omitted of ["car parks", "停车", "From $", "popular", "MaSe certification", "对当前项目的认证", "How do I open booking", "如何打开", "existing booking page", "site.phone", "site.email", "site.wechat"]) {
+  assert(!mensFaq.includes(omitted) && !mensSeo.includes(omitted), `Men's grooming copy must omit ${omitted}`);
 }
-assert(mensFaq.includes('question: "How do I book?"') && mensFaq.includes('question: "如何预约？"'), "Booking questions use customer wording");
+assert(mensFaq.includes('question: "How much is a men’s haircut?"'), "Men's haircut price FAQ is present");
+assert(mensFaq.includes('question: "Do you offer men’s grooming packages?"'), "Men's package FAQ is present");
+assert(mensFaq.includes('question: "Are you a barber?"') && mensFaq.includes("not a barbershop"), "Barber FAQ says the studio is not a barbershop");
+assert(mensFaq.includes('question: "男士剪发多少钱？"'), "Chinese men's haircut FAQ is present");
+assert(mensFaq.includes('bookAnswer("en-AU", "men’s grooming")') && mensFaq.includes('bookAnswer("zh-Hans", "男士理容")'), "Men's booking FAQ uses the standard hours answer");
+assert(!localCopy.includes("barber") && !/barber/i.test(await read("lib/hair-page-copy.ts")), "Barber is not used in titles or hair copy");
 const headSpaChoice = await read("components/HeadSpaScalpChoice.tsx");
 const headSpaPage = await read("app/(en)/services/head-spa/page.tsx");
 assert(headSpaPage.includes("<HeadSpaScalpChoice locale=\"en-AU\" />"), "English head spa page offers the scalp-care choice");
 assert(chinese.includes('slug === "head-spa" ? <HeadSpaScalpChoice locale="zh-Hans" />'), "Chinese head spa page offers the scalp-care choice");
 assert(headSpaChoice.includes('localePath("/services/hair-scalp-recovery", locale)'), "Choice links to the existing scalp-care route");
-assert(headSpaChoice.includes("Explore scalp care") && headSpaChoice.includes("查看头皮与发质护理项目"), "Choice uses the existing scalp-care link labels");
+assert(headSpaChoice.includes("Explore scalp treatments") && headSpaChoice.includes("查看头皮护理项目"), "Choice links scalp-treatment intent to the scalp-care page");
 assert(headSpaChoice.includes("not medical diagnosis or treatment") && headSpaChoice.includes("并非医疗诊断或治疗"), "Choice keeps the published cosmetic boundary");
 for (const omitted of ["$", "minutes", "mins", "分钟", "Balwyn", "停车", "popular", "available"]) {
   assert(!headSpaChoice.includes(omitted), `Head spa choice must omit ${omitted}`);
 }
 assert(!faqData.slice(faqData.indexOf('"head-spa"'), faqData.indexOf('"hair-scalp-recovery"')).includes("How is head spa different"), "Head spa FAQ schema stays unchanged");
-assert(mensFaq.includes("Select Book to continue to MaSe and choose your service.") && mensFaq.includes("点击“预约”进入 MaSe 并选择服务。"), "Booking answers tell the guest to continue to MaSe and choose a service");
+assert(faqData.includes("Monday to Saturday, 10:00 am – 6:00 pm, and closed Sunday.") && faqData.includes("星期一至星期六上午 10:00–下午 6:00 营业，星期日休息。"), "Standard booking answers include the published hours");
+assert(faqData.includes("Do you offer Korean perms or digital perms?") && faqData.includes("有韩式烫发或数码烫吗？"), "Hair perm FAQ is bilingual");
+assert(faqData.includes("Where on Whitehorse Road is the salon?") && faqData.includes("门店在 Whitehorse Road 哪里？"), "Whitehorse Road FAQ is bilingual");
+assert(faqData.includes("Is a head spa the same as a hair spa or scalp spa?") && faqData.includes("What is included in the Korean Signature Head Spa?"), "Head spa synonym and Korean Signature FAQs are present");
+assert(faqData.includes("Can I book a scalp analysis?") && faqData.includes("可以做头皮检测吗？"), "Scalp analysis FAQ is bilingual");
+assert(faqData.includes("Which Korean facials are on the menu?") && faqData.includes("有哪些韩式皮肤管理项目？"), "Korean facial FAQ is bilingual");
+const hero = await read("components/HomeHero.tsx");
+assert(hero.includes("Hair Salon, Head Spa & Facials on Whitehorse Road, Deepdene, near Balwyn"), "Homepage H1 names the studio offer and Whitehorse Road");
+assert(hero.includes("Mend your hair. Refresh your skin. Renew your look."), "Homepage slogan stays as the tagline");
+assert(hero.includes("Deepdene Whitehorse Road 美发、头疗与皮肤管理｜紧邻 Balwyn"), "Chinese homepage H1 names Whitehorse Road");
+assert(servicesHub.includes("Hair Salon, Head Spa, Facials & Men’s Grooming, Deepdene"), "Services hub title names the studio offer");
+assert(servicesHub.includes("Hair Salon, Head Spa, Facials & Men’s Grooming in Deepdene"), "Services hub H1 names the studio offer");
+assert(contact.includes("Contact · Whitehorse Road, Deepdene") && contact.includes("Contact us on Whitehorse Road, Deepdene"), "Contact title and H1 name Whitehorse Road");
+assert(chinese.includes("美发、头疗、皮肤管理与男士理容服务项目｜Deepdene"), "Chinese services title names the offer");
+assert(chinese.includes("联系我们｜Deepdene Whitehorse Road") && chinese.includes("联系 Deepdene Whitehorse Road 门店"), "Chinese contact title and H1 name Whitehorse Road");
+assert(gettingHere.includes("on the Balwyn border") && gettingHere.includes("这些附近区域不是分店。"), "Getting here keeps one not-a-branch sentence");
+for (const file of ["lib/hair-page-copy.ts", "lib/local-service-copy.ts", "lib/service-faqs.ts", "components/HairVisitGuide.tsx", "components/HomeHero.tsx", "components/GettingHere.tsx", "components/NearbySuburbs.tsx"]) {
+  const source = await read(file);
+  assert(!source.includes("Balwyn North"), `${file} must not add Balwyn North to visible copy`);
+  assert(!/Korean hairdresser|Korean hair salon|韩式美发|华人理发/.test(source), `${file} must not use unconfirmed salon identity claims`);
+}
+assert(site.includes('"Balwyn North"'), "Existing schema area list still names Balwyn North");
 assert(!/free parking|免费停车|customer-only|仅限顾客/i.test(faqData + gettingHere), "Parking copy does not claim the parks are free or customer-only");
 assert(!/hot stone|hot-stone|热石/i.test(faqData + gettingHere), "FAQ and getting-here copy do not mention hot stone");
 
