@@ -20,11 +20,13 @@ for (const prefix of ["", "/zh"]) {
   const text = plain(html);
   const h1 = html.match(/<h1\b[^>]*>(.*?)<\/h1>/)?.[1];
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
-  assert.match(h1, prefix ? /Balwyn 附近理发店与美发沙龙/ : /Hairdresser &(?:amp;)? Hair Salon near Balwyn/);
+  assert.match(h1, prefix ? /韩式美发/ : /Korean Hairdresser &(?:amp;)? Hair Salon near Balwyn/);
   assert.match(h1, /Deepdene/);
   assert.match(h1, prefix ? /门店/ : /Whitehorse Road/);
   assert.match(text, /Hair Atelier/);
-  assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /Balwyn 附近理发店与美发沙龙/ : /Hairdresser Balwyn &(?:amp;)? Deepdene · Whitehorse Rd/);
+  assert.match(text, prefix ? /提供中文服务/ : /Service available in English and Chinese/);
+  assert.match(text, /Balwyn North/);
+  assert.match(html.match(/<title>(.*?)<\/title>/)?.[1], prefix ? /韩式美发/ : /Korean Hair Salon, Deepdene · Whitehorse Rd/);
   assert.match(text, /74 Whitehorse Road/);
   assert.ok(attrs(html, "link").some((a) => a.rel === "canonical" && a.href === `${origin}${path}`));
   for (const [lang, target] of [["en-AU", "/services/hair"], ["zh", "/zh/services/hair"], ["x-default", "/services/hair"]]) {
@@ -181,7 +183,7 @@ for (const [path, questions] of Object.entries(faqExpectations)) {
 for (const [path, html] of cache) {
   const visible = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "");
   assert.doesNotMatch(visible, /\bin Balwyn\b/, `${path} must not say the studio is in Balwyn`);
-  assert.doesNotMatch(visible, /Balwyn North|Korean hairdresser|Korean hair salon|韩式美发|华人理发/, `${path} must not show unconfirmed claims in visible copy`);
+  assert.doesNotMatch(visible, /华人理发/, `${path} does not use 华人理发`);
   assert.match(html, /"name":"Balwyn North VIC"/, `${path} keeps Balwyn North in the business areaServed schema`);
 }
 console.log("Hair SEO checks passed: bilingual metadata/H1, seven-area local guide with real Deepdene address, early visit/care navigation, same-language Head Spa/scalp links, colour/texture detail links, homepage hair entry, six menu shortcuts, approved studio/stylist imagery, profile links/schema, canonicals and language alternates.");
