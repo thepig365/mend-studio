@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "type-check": "tsc --noEmit",
-    "test": "npm run check:domain && npm run check:functionality && npm run check:booking && npm run check:i18n && npm run check:anna-services && npm run check:growth-seo && npm run check:analytics && npm run check:marketing-portal && npm run check:mejin-profile && npm run check:hair-popup && npm run check:marketing-growth && npm run check:marketing-locale && npm run check:mase-marketing-home",
+    "test": "npm run check:domain && npm run check:functionality && npm run check:booking && npm run check:i18n && npm run check:anna-services && npm run check:growth-seo && npm run check:analytics && npm run check:marketing-portal && npm run check:mejin-profile && npm run check:hair-popup && npm run check:marketing-growth && npm run check:marketing-locale && npm run check:mase-marketing-home && npm run check:feedback",
     "check:mase-marketing-home": "node scripts/check-mase-marketing-home.mjs",
     "check:hair-popup": "node scripts/check-hair-popup.mjs",
     "check:analytics": "node scripts/check-analytics.mjs",
@@ -21,11 +21,13 @@
     "check:marketing-portal": "node scripts/check-marketing-portal.mjs",
     "check:mejin-profile": "node scripts/check-mejin-profile.mjs",
     "check:marketing-growth": "node scripts/check-marketing-growth.mjs",
-    "check:marketing-locale": "node scripts/check-marketing-locale.mjs && node scripts/check-landing-localization.cjs && node scripts/check-guide-localization.mjs && node scripts/check-library-localization.mjs"
+    "check:marketing-locale": "node scripts/check-marketing-locale.mjs && node scripts/check-landing-localization.cjs && node scripts/check-guide-localization.mjs && node scripts/check-library-localization.mjs",
+    "check:feedback": "tsx --test tests/feedback.test.ts"
   },
   "dependencies": {
     "next": "16.4.5",
     "next-auth": "^5.0.0-beta.32",
+    "pg": "^8.23.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -35,13 +37,16 @@
     "postcss": "8.5.24"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.17",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

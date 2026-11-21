@@ -55,6 +55,9 @@ export default async function MarketingPortalPage() {
           <strong className="text-charcoal"><MarketingText en="Draft-only control:" zh="仅准备草稿：" /></strong>{" "}<MarketingText en="AI can prepare recommendations and copy, but cannot approve, publish, run advertising, change production settings or spend money." zh="AI 可以准备建议和文案，但不能自行批准、发布、投放广告、更改正式环境设置或花费资金。" />
         </div>
 
+        <a href="/staff/feedback" className="btn-outline mt-8">
+          <MarketingText en="Private customer feedback" zh="私密顾客反馈" />
+        </a>
         <MarketingPortalWorkspace />
       </div>
     </section>
