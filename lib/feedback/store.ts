@@ -1,5 +1,6 @@
 import { Pool } from "pg";
-import type { FeedbackInput } from "./shared";
+import { createHash } from "node:crypto";
+import { normalizeProviderName, type FeedbackInput } from "./shared";
 import type { SaveResult } from "./http";
 
 let pool: Pool | undefined;
@@ -56,9 +57,9 @@ export async function saveFeedback(input: FeedbackInput, rateKey: string, reques
       WHERE mend_feedback.rate_limits.submissions < 200 RETURNING submissions`);
     if (!total.rowCount) { await client.query("ROLLBACK"); return "limited"; }
     await client.query(`INSERT INTO mend_feedback.entries
-      (submission_id, rating, provider_id, locale, initials, comment, request_hash)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [input.submissionId, input.rating, input.providerId, input.locale, input.initials, input.comment, requestHash]);
+      (submission_id, rating, provider_id, locale, initials, comment, request_hash, provider_name, provider_key)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+    [input.submissionId, input.rating, input.providerId, input.locale, input.initials, input.comment, requestHash, input.providerName || null, input.providerName?.toLowerCase() || null]);
     await client.query("DELETE FROM mend_feedback.rate_limits WHERE bucket < now() - interval '24 hours'");
     await client.query("COMMIT");
     return "saved";
@@ -68,14 +69,30 @@ export async function saveFeedback(input: FeedbackInput, rateKey: string, reques
   } finally { client.release(); }
 }
 
-export type FeedbackEntry = Pick<FeedbackInput, "rating" | "locale" | "initials" | "comment"> & { created_at: Date; provider_id: string | null; submission_id: string };
+export type FeedbackEntry = Pick<FeedbackInput, "rating" | "locale" | "initials" | "comment"> & { created_at: Date; provider_id: string | null; provider_name: string | null; provider_filter: string | null; submission_id: string };
+export type FeedbackSummary = { provider_filter: string | null; provider_name: string | null; count: string; average: string };
+
+// Opaque UI filter only, not an authorization mechanism. Avoid names in URLs/logs.
+export function feedbackProviderFilter(name: string) {
+  return createHash("md5").update(normalizeProviderName(name).toLowerCase()).digest("hex");
+}
+
+const resolvedProviders = `SELECT *,
+  COALESCE(provider_key, CASE provider_id WHEN 'mejin-shick' THEN 'mejin shick' END) AS group_key,
+  COALESCE(provider_name, CASE provider_id WHEN 'mejin-shick' THEN 'Mejin Shick' END) AS display_name
+  FROM mend_feedback.entries`;
 
 // Call only after server-side session authorization. Never expose this as a public action.
 export async function readFeedback(provider: string | null | undefined, db: Pool = database()) {
-  const entries = await db.query<FeedbackEntry>(`SELECT submission_id, created_at, rating, provider_id, locale, initials, comment
-    FROM mend_feedback.entries WHERE ($1::boolean OR provider_id IS NOT DISTINCT FROM $2::text)
+  const entries = await db.query<FeedbackEntry>(`WITH resolved AS (${resolvedProviders})
+    SELECT submission_id, created_at, rating, provider_id, display_name AS provider_name,
+      md5(group_key) AS provider_filter, locale, initials, comment
+    FROM resolved WHERE ($1::boolean OR md5(group_key) IS NOT DISTINCT FROM $2::text)
     ORDER BY created_at DESC, submission_id DESC LIMIT 100`, [provider === undefined, provider ?? null]);
-  const summary = await db.query<{ provider_id: string | null; count: string; average: string }>(`SELECT provider_id, count(*)::text AS count,
-    round(avg(rating), 2)::text AS average FROM mend_feedback.entries GROUP BY provider_id ORDER BY provider_id NULLS LAST`);
+  const summary = await db.query<FeedbackSummary>(`WITH resolved AS (${resolvedProviders})
+    SELECT md5(group_key) AS provider_filter,
+      CASE group_key WHEN 'mejin shick' THEN 'Mejin Shick' ELSE min(display_name) END AS provider_name,
+      count(*)::text AS count, round(avg(rating), 2)::text AS average
+    FROM resolved GROUP BY group_key ORDER BY group_key NULLS LAST`);
   return { entries: entries.rows, summary: summary.rows };
 }

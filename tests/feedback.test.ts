@@ -1,15 +1,16 @@
 import assert from "node:assert/strict";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHmac } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { PGlite } from "@electric-sql/pglite";
 import type { Pool } from "pg";
 import { validateFeedback, isFeedbackStaff, feedbackCopy } from "../lib/feedback/shared";
 import { submitFeedback, type FeedbackDependencies } from "../lib/feedback/http";
-import { saveFeedback, readFeedback, feedbackConnectionString } from "../lib/feedback/store";
+import { saveFeedback, readFeedback, feedbackConnectionString, feedbackProviderFilter } from "../lib/feedback/store";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import FeedbackForm from "../components/feedback/FeedbackForm";
+import FeedbackStaffView from "../components/feedback/FeedbackStaffView";
 
 const valid = () => ({ submissionId: randomUUID(), rating: 4, providerId: "mejin-shick", locale: "en", initials: "TEST", comment: "SYNTHETIC TEST — not a customer response", website: "" });
 const request = (body: unknown, headers: Record<string, string> = {}) => new Request("https://mendbeauty.com.au/api/feedback", {
@@ -32,6 +33,10 @@ test("unhydrated forms cannot send feedback in a URL", () => {
     assert.match(html, /<form[^>]*action="\/api\/feedback"/);
     assert.match(html, /<button[^>]*type="submit"[^>]*disabled=""/);
     assert.ok(html.includes(feedbackCopy[locale].nojs));
+    assert.match(html, /<input(?=[^>]*name="providerName")(?=[^>]*maxLength="80")[^>]*>/);
+    assert.doesNotMatch(html, /<select/);
+    assert.ok(html.includes(feedbackCopy[locale].provider));
+    assert.ok(html.includes(feedbackCopy[locale].providerHint));
   }
 });
 
@@ -99,6 +104,7 @@ test("PostgreSQL migration, bilingual receipts, idempotency, provider filtering,
   const db = new PGlite();
   try {
     await db.exec(await readFile(new URL("../migrations/001_customer_feedback.sql", import.meta.url), "utf8"));
+    await db.exec(await readFile(new URL("../migrations/002_feedback_provider_names.sql", import.meta.url), "utf8"));
     const query = async (sql: string, values?: unknown[]) => {
       const result = await db.query(sql, values);
       return { rows: result.rows, rowCount: result.rows.length || result.affectedRows };
@@ -113,13 +119,13 @@ test("PostgreSQL migration, bilingual receipts, idempotency, provider filtering,
     assert.equal((await submitFeedback(request(english), storage)).status, 200);
     assert.equal((await submitFeedback(request({ ...english, rating: 1 }), storage)).status, 409);
     assert.equal((await readFeedback(undefined, pool)).entries.length, 2);
-    const mejin = await readFeedback("mejin-shick", pool);
+    const mejin = await readFeedback(feedbackProviderFilter("Mejin Shick"), pool);
     assert.equal(mejin.entries.length, 1);
     assert.equal(mejin.entries[0].comment, english.comment);
     const unassigned = await readFeedback(null, pool);
     assert.equal(unassigned.entries[0].comment, chinese.comment);
     assert.equal(unassigned.entries[0].locale, "zh");
-    assert.equal(mejin.summary.find((r) => r.provider_id === "mejin-shick")?.count, "1");
+    assert.equal(mejin.summary.find((r) => r.provider_filter === feedbackProviderFilter("Mejin Shick"))?.count, "1");
     for (let i = 0; i < 8; i++) assert.equal((await submitFeedback(request(valid()), storage)).status, 200);
     assert.equal((await submitFeedback(request(valid()), storage)).status, 429);
     assert.equal((await readFeedback(undefined, pool)).entries.length, 10);
@@ -133,5 +139,71 @@ test("PostgreSQL migration, bilingual receipts, idempotency, provider filtering,
     await db.exec("GRANT USAGE ON SCHEMA mend_feedback TO synthetic_anonymous; GRANT SELECT ON mend_feedback.entries TO synthetic_anonymous; SET ROLE synthetic_anonymous;");
     assert.equal((await db.query("SELECT * FROM mend_feedback.entries")).rows.length, 0);
     await db.exec("RESET ROLE;");
+  } finally { await db.close(); }
+});
+
+const named = (providerName: string) => {
+  const body = Object.fromEntries(Object.entries(valid()).filter(([key]) => key !== "providerId"));
+  return { ...body, providerName };
+};
+
+test("optional Unicode names normalize safely while legacy request hashes stay unchanged", () => {
+  assert.equal(validateFeedback(named("  E\u0301lodie\t 李  "))?.providerName, "Élodie 李");
+  assert.equal(validateFeedback(named("   "))?.providerName, "");
+  assert.equal(validateFeedback(named("李".repeat(80)))?.providerName?.length, 80);
+  for (const providerName of ["李".repeat(81), "a\0b", 42, null]) {
+    assert.equal(validateFeedback({ ...named(""), providerName }), null);
+  }
+  assert.equal(validateFeedback({ ...named("name"), providerId: null }), null);
+  const legacy = valid();
+  assert.equal(JSON.stringify(validateFeedback(legacy)), JSON.stringify({ submissionId: legacy.submissionId, rating: legacy.rating, providerId: legacy.providerId, locale: legacy.locale, initials: legacy.initials, comment: legacy.comment }));
+  assert.equal(feedbackProviderFilter(" ÉLODIE  李 "), feedbackProviderFilter("E\u0301lodie 李"));
+});
+
+test("additive name migration preserves history, combines normalized groups and escapes private names", async () => {
+  const db = new PGlite();
+  try {
+    await db.exec(await readFile(new URL("../migrations/001_customer_feedback.sql", import.meta.url), "utf8"));
+    const historical = [valid(), { ...valid(), providerId: null }];
+    for (const old of historical) {
+      const input = validateFeedback(old)!;
+      const hash = createHmac("sha256", "synthetic-unit-test-secret").update(`feedback-body:${JSON.stringify(input)}`).digest("hex");
+      await db.query(`INSERT INTO mend_feedback.entries (submission_id, rating, provider_id, locale, initials, comment, request_hash) VALUES ($1,$2,$3,$4,$5,$6,$7)`, [input.submissionId, input.rating, input.providerId, input.locale, input.initials, input.comment, hash]);
+    }
+    const oldColumns = "submission_id, created_at, rating, provider_id, locale, initials, comment, request_hash";
+    const before = (await db.query(`SELECT ${oldColumns} FROM mend_feedback.entries ORDER BY submission_id`)).rows;
+    await db.exec(await readFile(new URL("../migrations/002_feedback_provider_names.sql", import.meta.url), "utf8"));
+    assert.deepEqual((await db.query(`SELECT ${oldColumns} FROM mend_feedback.entries ORDER BY submission_id`)).rows, before);
+    assert.equal((await db.query("SELECT * FROM mend_feedback.entries WHERE provider_name IS NOT NULL OR provider_key IS NOT NULL")).rows.length, 0);
+    const query = async (sql: string, values?: unknown[]) => {
+      const result = await db.query(sql, values);
+      return { rows: result.rows, rowCount: result.rows.length || result.affectedRows };
+    };
+    const pool = { query, connect: async () => ({ query, release() {} }) } as unknown as Pool;
+    const storage = deps({ save: (input, key, hash) => saveFeedback(input, key, hash, pool) });
+    // A form submitted before the migration still retries successfully afterward.
+    assert.equal((await submitFeedback(request(historical[0]), storage)).status, 200);
+    const unicode = named("  E\u0301lodie   李  ");
+    const blank = { ...named("  "), locale: "zh" };
+    for (const body of [unicode, named("ÉLODIE 李"), blank, named(" mejin   SHICK "), named("<script>synthetic</script>")]) {
+      assert.equal((await submitFeedback(request(body), storage)).status, 200);
+    }
+    assert.equal((await submitFeedback(request(unicode), storage)).status, 200);
+    assert.equal((await submitFeedback(request({ ...unicode, providerName: "different" }), storage)).status, 409);
+    const group = await readFeedback(feedbackProviderFilter("élodie 李"), pool);
+    assert.equal(group.entries.length, 2);
+    assert.ok(group.entries.every((entry) => entry.provider_id === null));
+    assert.equal(group.summary.find((row) => row.provider_filter === feedbackProviderFilter("Élodie 李"))?.count, "2");
+    assert.equal((await readFeedback(feedbackProviderFilter("Mejin Shick"), pool)).entries.length, 2);
+    assert.equal((await readFeedback(null, pool)).entries.length, 2);
+    const all = await readFeedback(undefined, pool);
+    assert.equal(all.entries.length, 7);
+    const html = renderToStaticMarkup(createElement(FeedbackStaffView, { data: all, selected: undefined }));
+    assert.ok(html.includes("&lt;script&gt;synthetic&lt;/script&gt;"));
+    assert.doesNotMatch(html, /<script>/);
+    assert.ok(html.includes(`value="${feedbackProviderFilter("<script>synthetic</script>")}"`));
+    assert.doesNotMatch(html, /value="[^"]*(?:ÉLODIE|Élodie|李|script)/);
+    await db.exec("CREATE ROLE synthetic_named_anonymous NOLOGIN; SET ROLE synthetic_named_anonymous;");
+    await assert.rejects(db.query("SELECT provider_name FROM mend_feedback.entries"), /permission denied/);
   } finally { await db.close(); }
 });

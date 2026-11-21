@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { feedbackCopy, feedbackProviders, type FeedbackLocale } from "@/lib/feedback/shared";
+import { feedbackCopy, type FeedbackLocale } from "@/lib/feedback/shared";
 
 export default function FeedbackForm({ locale }: { locale: FeedbackLocale }) {
   const copy = feedbackCopy[locale];
@@ -32,7 +32,7 @@ export default function FeedbackForm({ locale }: { locale: FeedbackLocale }) {
       submittedBody.current = JSON.stringify({
         submissionId: submissionId.current,
         rating: Number(values.get("rating")),
-        providerId: values.get("providerId") || null,
+        providerName: String(values.get("providerName") || ""),
         locale,
         initials: String(values.get("initials") || ""),
         comment: String(values.get("comment") || ""),
@@ -96,11 +96,9 @@ export default function FeedbackForm({ locale }: { locale: FeedbackLocale }) {
           </div>
         </fieldset>
         <label className="block font-medium">{copy.provider}
-          <select name="providerId" defaultValue="" className={inputClass}>
-            <option value="">{copy.unsure}</option>
-            {feedbackProviders.map((provider) => <option key={provider.id} value={provider.id}>{provider.name}</option>)}
-          </select>
+          <input name="providerName" type="text" maxLength={80} autoComplete="off" aria-describedby="feedback-provider-hint" className={inputClass} />
         </label>
+        <p id="feedback-provider-hint" className="-mt-4 text-sm text-cocoa">{copy.providerHint}</p>
         <label className="block font-medium">{copy.initials}
           <input name="initials" type="text" maxLength={20} autoComplete="off" className={inputClass} />
         </label>
