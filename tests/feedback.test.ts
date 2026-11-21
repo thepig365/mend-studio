@@ -11,6 +11,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import FeedbackForm from "../components/feedback/FeedbackForm";
 import FeedbackStaffView from "../components/feedback/FeedbackStaffView";
+import FeedbackPage from "../components/feedback/FeedbackPage";
 
 const valid = () => ({ submissionId: randomUUID(), rating: 4, providerId: "mejin-shick", locale: "en", initials: "TEST", comment: "SYNTHETIC TEST — not a customer response", website: "" });
 const request = (body: unknown, headers: Record<string, string> = {}) => new Request("https://mendbeauty.com.au/api/feedback", {
@@ -231,4 +232,15 @@ test("both languages reject missing or whitespace-only required names before sto
     assert.equal(validateFeedback(good)?.initials, "合测");
   }
   assert.equal(writes, 2);
+});
+
+
+test("QR tap returns to the same-language form and saving the image is separate", () => {
+  for (const locale of ["en", "zh"] as const) {
+    const html = renderToStaticMarkup(createElement(FeedbackPage, { locale }));
+    assert.match(html, /<h1[^>]*id="feedback-title"/);
+    assert.match(html, /<a[^>]*href="#feedback-title"[^>]*aria-label="[^"]+"[^>]*><img[^>]*src="\/qr\/mend-feedback-qr.png"/);
+    assert.match(html, /<a[^>]*href="\/qr\/mend-feedback-qr.png"[^>]*download="MEND-Feedback-QR.png"/);
+    assert.match(html, new RegExp(`href="${locale === "zh" ? "/feedback" : "/zh/feedback"}"`));
+  }
 });

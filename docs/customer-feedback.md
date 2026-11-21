@@ -39,7 +39,8 @@ The existing staff Google OAuth allowlist remains unchanged.
   Both pages label required fields and show localized validation. No contact details.
 - Both pages embed `/qr/mend-feedback-qr.png`, a common bilingual PNG opening
   `https://mendbeauty.com.au/feedback` with the visible English/Chinese switch.
-  A direct download link allows saving/forwarding the same PNG. Generate offline
+  Tapping the graphic links to `#feedback-title` on the same-language page; a
+  separate direct download link allows saving/forwarding the same PNG. Generate offline
   with `swift scripts/generate-feedback-qr.swift` and verify its payload with
   `swift scripts/decode-qr.swift public/qr/mend-feedback-qr.png`.
 - Privacy copy states internal service improvement and team recognition, not
@@ -118,7 +119,7 @@ another recipient by this implementation.
 ## Verification performed locally
 
 - `npm test`: all existing MEND regression checks passed.
-- `npm run check:feedback`: twelve tests passed. A disposable local PGlite
+- `npm run check:feedback`: thirteen tests passed. A disposable local PGlite
   PostgreSQL engine ran the real migration and storage SQL: English and Chinese
   receipts, Unicode-name grouping and required-field rejection, legacy migration/hash preservation,
   private name escaping, opaque filters, retry idempotency, conflicting
