@@ -6,7 +6,7 @@ import { PGlite } from "@electric-sql/pglite";
 import type { Pool } from "pg";
 import { validateFeedback, isFeedbackStaff, feedbackCopy } from "../lib/feedback/shared";
 import { submitFeedback, type FeedbackDependencies } from "../lib/feedback/http";
-import { saveFeedback, readFeedback } from "../lib/feedback/store";
+import { saveFeedback, readFeedback, feedbackConnectionString } from "../lib/feedback/store";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import FeedbackForm from "../components/feedback/FeedbackForm";
@@ -16,6 +16,14 @@ const request = (body: unknown, headers: Record<string, string> = {}) => new Req
   method: "POST", headers: { origin: "https://mendbeauty.com.au", "content-type": "application/json", "x-vercel-forwarded-for": "192.0.2.1", ...headers }, body: JSON.stringify(body),
 });
 const deps = (overrides: Partial<FeedbackDependencies> = {}): FeedbackDependencies => ({ configured: () => true, secret: () => "synthetic-unit-test-secret", save: async () => "saved", production: true, ...overrides });
+
+test("managed production binding always verifies TLS without exposing credentials", () => {
+  const url = new URL(feedbackConnectionString("postgresql://synthetic:synthetic@example.invalid/db?sslmode=require&ssl=0", true));
+  assert.equal(url.searchParams.get("sslmode"), "verify-full");
+  assert.equal(url.searchParams.has("ssl"), false);
+  assert.throws(() => feedbackConnectionString("not-a-url-SYNTHETIC-SECRET", true), { message: "Feedback storage configuration invalid" });
+  assert.throws(() => feedbackConnectionString(undefined, true), { message: "Feedback storage unavailable" });
+});
 
 test("unhydrated forms cannot send feedback in a URL", () => {
   for (const locale of ["en", "zh"] as const) {

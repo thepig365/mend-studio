@@ -1,7 +1,12 @@
--- DRAFT: run only against the explicitly approved private MEND PostgreSQL store.
+-- Run only against the explicitly approved private MEND PostgreSQL store.
 -- No existing schemas, roles, identities or grants are changed. The migration
 -- owner must be the server-only application role; do not use an anonymous key.
-BEGIN;
+-- A single atomic statement also works in Vercel's prepared-statement editor.
+DO $feedback$
+BEGIN
+IF to_regnamespace('mend_feedback') IS NOT NULL THEN
+  RAISE EXCEPTION 'Feedback schema already exists; verify before retry';
+END IF;
 CREATE SCHEMA mend_feedback;
 REVOKE ALL ON SCHEMA mend_feedback FROM PUBLIC;
 CREATE TABLE mend_feedback.entries (
@@ -27,4 +32,5 @@ REVOKE ALL ON ALL TABLES IN SCHEMA mend_feedback FROM PUBLIC;
 -- added accidentally. Only the private server connection's owner role is used.
 ALTER TABLE mend_feedback.entries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE mend_feedback.rate_limits ENABLE ROW LEVEL SECURITY;
-COMMIT;
+END
+$feedback$;

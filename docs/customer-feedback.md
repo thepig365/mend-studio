@@ -1,26 +1,25 @@
-# Customer feedback — prepared, not released
+# Customer feedback
 
-## Release status (21 November 2026)
+## Storage and release status (21 November 2026)
 
-This feature is **not deployed**. No production feedback has been collected.
-The isolated branch is based on production source
+Prepared on an isolated branch based on production source
 `52374fe388c02daf197509d454d9c9074f8bd21a` in `thepig365/mend-studio`.
+Production web deployment and end-to-end acceptance are pending at this commit.
 
-The repository has no existing database adapter, migration system or durable
-customer submissions. The Vercel project Storage view showed no connected
-database and an unconnected **public** Blob store. Public Blob is unsuitable.
-The local Vercel CLI has no authentication token. The browser is signed in to
-the correct MEND Vercel project, but automatic approval review blocked opening
-the environment-variable page because it might expose credentials. No secrets
-were read, changed, created or copied. No other project's database was used.
+With the owner's explicit approval, the official Vercel Neon integration created
+`mend-feedback-prod` on the Free plan (no card), in Sydney (`syd1`). Neon Auth
+and Realtime are disabled. The dedicated empty database is connected only to
+Vercel project `mend-studio`, **Production** environment, custom prefix `FEEDBACK`,
+with sensitive values enabled. The service installed its server-only binding;
+no secret was displayed, copied, exported or manually edited. Preview and
+Development are not connected. No unrelated project or public Blob is used.
 
-**One launch dependency:** an explicitly approved private MEND PostgreSQL
-destination and its server-only `FEEDBACK_DATABASE_URL`, with permission to run
-the included additive migration through that database's normal release path.
-This is a proposed connection, not an existing verified store. Do not provision
-a vendor, widen account access, change secrets, or apply the migration without
-the necessary specific authorization. Do not merge/deploy the form until this
-dependency and the acceptance steps below are satisfied.
+The additive migration was applied atomically through the authenticated Vercel
+SQL editor. Both tables are owned by `neondb_owner`, with RLS enabled and no
+PUBLIC table or schema grants. The database started with zero user tables.
+Verified database logging: statement and duration/sample logging disabled,
+error parameter logging disabled. The query editor was returned to read-only.
+The existing staff Google OAuth allowlist remains unchanged.
 
 ## Routes and customer experience
 
@@ -61,12 +60,12 @@ scores. No automatic reward, pay or staff employment decision is made.
 
 ## Storage and abuse controls
 
-The proposed PostgreSQL schema is separate: `mend_feedback`. Its migration
+The dedicated PostgreSQL schema is separate: `mend_feedback`. Its migration
 creates only two new tables and indexes, revokes PUBLIC access to its own
 objects and enables RLS with no anonymous policies. Existing roles, identity
 allowlists and other schemas are untouched. The server-only application role
 must own the schema/tables; never use a public/anonymous database credential.
-No production migration has been applied. No browser database client exists.
+The production migration is applied. No browser database client exists.
 
 The API accepts same-origin JSON only, reads at most 4 KiB, validates all fields,
 rejects unexpected fields and a non-empty honeypot, and commits before success.
@@ -82,19 +81,18 @@ the existing AUTH_SECRET, is unlinked to entries, and deletes buckets older than
 24 hours on successful writes. The last buckets can remain until the next write;
 there is no background job. Feedback is retained for staff review; no automatic
 purge or deletion UI has been introduced. Align retention with MEND's approved
-operating policy before rollout. TLS certificate verification is required in
-production. Errors, request bodies and responses are not logged by this feature.
+operating policy. TLS certificate verification is enforced in production by
+normalizing the managed connection string in memory to `sslmode=verify-full`. Errors, request bodies and responses are not logged by this feature.
 
-Review the approved database's parameter/query logging and retention settings
-before deployment; application-level safeguards do not verify infrastructure
-logging. Do not enable request-body logging, session replay, or analytics on
+Preserve the verified database logging settings above and review retention
+through the approved operating policy. Do not enable request-body logging, session replay, or analytics on
 these pages. No response content is sent to Google, an AI service, email, or
 another recipient by this implementation.
 
 ## Verification performed locally
 
 - `npm test`: all existing MEND regression checks passed.
-- `npm run check:feedback`: eight tests passed. A disposable local PGlite
+- `npm run check:feedback`: nine tests passed. A disposable local PGlite
   PostgreSQL engine ran the real migration and storage SQL: English and Chinese
   receipts, Mejin/unassigned filtering and counts, retry idempotency, conflicting
   UUID rejection, per-IP rate limit and anonymous SQL denial. RLS still hid rows
@@ -109,11 +107,11 @@ PGlite is a local, single-session test engine. These checks do not verify the
 production database, real OAuth staff receipt, multi-session concurrency, or
 production Vercel IP/header behavior. Those remain release acceptance gates.
 
-## Acceptance after the storage dependency is approved
+## Production acceptance checklist
 
-1. Apply `migrations/001_customer_feedback.sql` only to the approved MEND store
-   through its normal path; verify role ownership, TLS, no anonymous privileges,
-   RLS and logging. Configure the approved server-only connection; no public key.
+1. Storage provisioning, migration, ownership, RLS, no PUBLIC grants and logging
+   are verified. Do not rerun the migration: it intentionally rejects an existing
+   schema. Confirm the managed binding through successful production submission.
 2. Run repository checks and the feedback suite. Verify concurrent identical
    requests against the actual PostgreSQL connection create exactly one row.
 3. Deploy the reviewed commit through the existing focused PR/Vercel pipeline.

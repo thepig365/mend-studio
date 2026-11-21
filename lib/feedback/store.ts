@@ -3,18 +3,28 @@ import type { FeedbackInput } from "./shared";
 import type { SaveResult } from "./http";
 
 let pool: Pool | undefined;
+// The managed Neon binding may specify sslmode=require. Enforce full certificate
+// verification in memory without viewing, copying or editing the stored secret.
+export function feedbackConnectionString(value: string | undefined, production: boolean) {
+  if (!value) throw new Error("Feedback storage unavailable");
+  try {
+    const url = new URL(value);
+    if (!["postgres:", "postgresql:"].includes(url.protocol)) throw new Error();
+    if (production) {
+      url.searchParams.delete("ssl");
+      url.searchParams.set("sslmode", "verify-full");
+    }
+    return url.toString();
+  } catch { throw new Error("Feedback storage configuration invalid"); }
+}
+
 export function isFeedbackConfigured() {
   return Boolean(process.env.FEEDBACK_DATABASE_URL && process.env.AUTH_SECRET && process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET);
 }
 
 function database() {
   if (!pool) {
-    const connectionString = process.env.FEEDBACK_DATABASE_URL;
-    if (!connectionString) throw new Error("Feedback storage unavailable");
-    const url = new URL(connectionString);
-    if (process.env.NODE_ENV === "production" && url.searchParams.get("sslmode") !== "verify-full") {
-      throw new Error("Feedback storage requires verified TLS");
-    }
+    const connectionString = feedbackConnectionString(process.env.FEEDBACK_DATABASE_URL, process.env.NODE_ENV === "production");
     pool = new Pool({ connectionString, max: 3, connectionTimeoutMillis: 5000, idleTimeoutMillis: 10000, statement_timeout: 5000 });
     pool.on("error", () => { /* No response data or connection details in logs. */ });
   }
