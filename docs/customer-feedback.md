@@ -4,7 +4,12 @@
 
 Prepared on an isolated branch based on production source
 `52374fe388c02daf197509d454d9c9074f8bd21a` in `thepig365/mend-studio`.
-Production web deployment and end-to-end acceptance are pending at this commit.
+The initial form was deployed in PR #60 (5862155). This revision replaces the
+provider dropdown with an optional entered name; its production release is pending.
+Migration 002 has been applied through the same authenticated Vercel SQL editor.
+The three historical synthetic receipts have the same before/after fingerprint
+84b426817ccf3c643bd4f79b7adbdde9. Both new columns are NULL on those records; RLS
+and no PUBLIC table grants remain in place. The editor is back in read-only mode.
 
 With the owner's explicit approval, the official Vercel Neon integration created
 `mend-feedback-prod` on the Free plan (no card), in Sydney (`syd1`). Neon Auth
@@ -27,7 +32,8 @@ The existing staff Google OAuth allowlist remains unchanged.
 - Reciprocal language links, correct document languages and MEND's existing
   fonts, logo and palette. Dedicated root layouts contain no analytics scripts.
 - One required radio rating, 1–5; optional initials (20 characters) and comment
-  (500 characters); provider selector defaults to unassigned.
+  (500 characters); optional provider name (80 characters), initially empty.
+  Customers are told to leave it blank if unsure and provide only a name.
 - Privacy copy states internal service improvement and team recognition, not
   public reviews. No review gating, contact details or marketing consent.
 - If storage/auth configuration is absent, the form is not rendered. Submission
@@ -40,12 +46,22 @@ The existing staff Google OAuth allowlist remains unchanged.
 
 ## Provider evidence and staff access
 
-`mejin-shick` → **Mejin Shick**, verified on the live public page
-<https://mendbeauty.com.au/team/mejin-shick> on 21 November 2026 and in
-`lib/mejin-profile.ts`. No other published provider profile was verified, so no
-other names were invented. “Not sure / someone else” / “不确定 / 其他同事” maps
-to SQL NULL. An approved full staff list can extend the shared allowlist and
-the database constraint together. No provider-specific link is used.
+New forms send an optional Unicode provider name. The server trims and collapses
+whitespace and normalizes Unicode to NFC, retaining the entered capitalization
+for display and using a lower-case key for grouping. Blank names are unassigned.
+Names are customer-entered, not verified identities; spelling variants can form
+separate groups. They are used only for internal review, never automatic rewards.
+
+Migration 002 only adds nullable name/key columns, length/pair checks and a group
+index. It does not update historical rows, IDs or request hashes. Legacy
+`mejin-shick` records display as Mejin Shick and group with equivalent typed
+names; legacy NULL remains unassigned. Requests from older open forms are still
+accepted, preserving their exact normalized body and idempotency hash.
+
+Staff filters use opaque MD5 group identifiers in URLs, not typed names. This is
+only a UI key, not an authorization or anonymization mechanism. All group and
+receipt reads remain behind the unchanged staff session check. Names, initials
+and comments render as escaped text; no public provider-name list is exposed.
 
 After existing Google sign-in, staff use `/staff/feedback` (linked from
 `/marketing`). Authorization uses the existing exact verified-email session
@@ -92,9 +108,10 @@ another recipient by this implementation.
 ## Verification performed locally
 
 - `npm test`: all existing MEND regression checks passed.
-- `npm run check:feedback`: nine tests passed. A disposable local PGlite
+- `npm run check:feedback`: eleven tests passed. A disposable local PGlite
   PostgreSQL engine ran the real migration and storage SQL: English and Chinese
-  receipts, Mejin/unassigned filtering and counts, retry idempotency, conflicting
+  receipts, Unicode/blank-name grouping, legacy migration/hash preservation,
+  private name escaping, opaque filters, retry idempotency, conflicting
   UUID rejection, per-IP rate limit and anonymous SQL denial. RLS still hid rows
   after a synthetic test role was deliberately granted table SELECT locally.
 - `npm run build`: production compilation and TypeScript passed.
@@ -109,16 +126,17 @@ production Vercel IP/header behavior. Those remain release acceptance gates.
 
 ## Production acceptance checklist
 
-1. Storage provisioning, migration, ownership, RLS, no PUBLIC grants and logging
-   are verified. Do not rerun the migration: it intentionally rejects an existing
-   schema. Confirm the managed binding through successful production submission.
+1. Apply migration 002 once in the already approved dedicated database. Verify
+   historical row fingerprints and unchanged ownership, RLS and no PUBLIC grants.
+   Do not rerun either migration blindly. The old code remains compatible with
+   the new nullable columns while the new release is building.
 2. Run repository checks and the feedback suite. Verify concurrent identical
    requests against the actual PostgreSQL connection create exactly one row.
 3. Deploy the reviewed commit through the existing focused PR/Vercel pipeline.
    Respect any current branch rules and release approvals.
 4. Open both public routes and submit unmistakable synthetic test comments
    labelled `SYNTHETIC PRODUCTION TEST — NOT CUSTOMER FEEDBACK` (Chinese equivalent
-   on the Chinese page), one with Mejin and one unassigned. Confirm success, retry
+   on the Chinese page), using a clearly synthetic Unicode name and a blank name. Confirm success, retry
    idempotency and no response bodies in analytics/logs.
 5. Sign in with the existing authorized identity and confirm both stored receipts,
    provider filtering/counts, text escaping and no public read. In an unsigned

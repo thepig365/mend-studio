@@ -1,4 +1,4 @@
-// Names must come from a published MEND profile or an owner-approved staff list.
+// Preserve labels for historical dropdown submissions and open older forms.
 export const feedbackProviders = [
   { id: "mejin-shick", name: "Mejin Shick", source: "/team/mejin-shick" },
 ] as const;
@@ -10,8 +10,8 @@ export const feedbackCopy = {
     purpose: "Your feedback is private and helps us improve our service and recognise our team. It is not a public review.",
     rating: "Your experience (required)",
     ratings: ["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very satisfied"],
-    provider: "Who looked after you?",
-    unsure: "Not sure / someone else",
+    provider: "Who looked after you? (optional)",
+    providerHint: "Leave blank if you’re not sure. Name only, no contact details.",
     initials: "Initials (optional)",
     comment: "A short comment (optional)",
     note: "Please do not include contact details, health information or other private information.",
@@ -21,7 +21,7 @@ export const feedbackCopy = {
     success: "Thank you. Your feedback has been received.",
     successDetail: "We appreciate your time and will use your feedback to care for our customers and recognise our team.",
     error: "We could not confirm your feedback was received. Please try again. Retrying will not send it twice.",
-    invalid: "Please choose one rating and check the length of your initials and comment.",
+    invalid: "Please choose one rating and check the length of your entries.",
     rate: "There have been several submissions from this connection. Please try again in an hour.",
     unavailable: "Feedback is temporarily unavailable. Please try again later.",
     home: "Back to MEND",
@@ -33,8 +33,8 @@ export const feedbackCopy = {
     purpose: "您的反馈仅供内部使用，帮助我们改善服务并认可团队的付出，不会作为公开评价发布。",
     rating: "您的体验（必选）",
     ratings: ["非常不满意", "不满意", "一般", "满意", "非常满意"],
-    provider: "哪位同事为您提供了服务？",
-    unsure: "不确定 / 其他同事",
+    provider: "为您服务的同事姓名（选填）",
+    providerHint: "不确定可留空。仅填写姓名，请勿填写联系方式。",
     initials: "姓名首字母（选填）",
     comment: "一句意见或建议（选填）",
     note: "请勿填写联系方式、健康信息或其他私人信息。",
@@ -44,7 +44,7 @@ export const feedbackCopy = {
     success: "感谢您，您的反馈已收到。",
     successDetail: "谢谢您抽出时间，帮助我们改善顾客体验并认可团队的付出。",
     error: "暂时无法确认反馈是否已收到，请重试。重试不会重复提交。",
-    invalid: "请选择一个评分，并检查姓名首字母及意见的长度。",
+    invalid: "请选择一个评分，并检查各项填写内容的长度。",
     rate: "此网络连接已提交多次反馈，请一小时后再试。",
     unavailable: "反馈服务暂时无法使用，请稍后再试。",
     home: "返回 MEND 首页",
@@ -57,24 +57,36 @@ export type FeedbackInput = {
   submissionId: string;
   rating: number;
   providerId: string | null;
+  providerName?: string; // Absent on legacy requests: preserve their exact idempotency hash.
   locale: FeedbackLocale;
   initials: string;
   comment: string;
 };
 
+export function normalizeProviderName(value: string) {
+  return value.normalize("NFC").trim().replace(/\s+/gu, " ");
+}
+
 export function validateFeedback(value: unknown): FeedbackInput | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const v = value as Record<string, unknown>;
-  const allowed = ["submissionId", "rating", "providerId", "locale", "initials", "comment", "website"];
+  const allowed = ["submissionId", "rating", "providerId", "providerName", "locale", "initials", "comment", "website"];
   if (Object.keys(v).some((k) => !allowed.includes(k))) return null;
   if (typeof v.submissionId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v.submissionId)) return null;
   if (typeof v.rating !== "number" || !Number.isInteger(v.rating) || v.rating < 1 || v.rating > 5) return null;
   if (v.locale !== "en" && v.locale !== "zh") return null;
-  if (v.providerId !== null && !feedbackProviders.some((p) => p.id === v.providerId)) return null;
+  const named = Object.hasOwn(v, "providerName");
+  if (named) {
+    if (Object.hasOwn(v, "providerId") || typeof v.providerName !== "string" || v.providerName.length > 80) return null;
+    if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(v.providerName)) return null;
+  } else if (v.providerId !== null && !feedbackProviders.some((p) => p.id === v.providerId)) return null;
   if (typeof v.initials !== "string" || v.initials.length > 20 || typeof v.comment !== "string" || v.comment.length > 500) return null;
   if (v.website !== "") return null; // Honeypot; never pretend a rejected form was saved.
   if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(v.initials + v.comment)) return null;
-  return { submissionId: v.submissionId.toLowerCase(), rating: v.rating, providerId: v.providerId as string | null, locale: v.locale, initials: v.initials.trim(), comment: v.comment.trim() };
+  // Keep this legacy property order unchanged so pre-release retries still match.
+  const input: FeedbackInput = { submissionId: v.submissionId.toLowerCase(), rating: v.rating, providerId: named ? null : v.providerId as string | null, locale: v.locale, initials: v.initials.trim(), comment: v.comment.trim() };
+  if (named) input.providerName = normalizeProviderName(v.providerName as string);
+  return input;
 }
 
 export function isFeedbackStaff(email: string | null | undefined, allowedEmail: string) {
