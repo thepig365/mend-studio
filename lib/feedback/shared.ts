@@ -10,9 +10,12 @@ export const feedbackCopy = {
     purpose: "Your feedback is private and helps us improve our service and recognise our team. It is not a public review.",
     rating: "Your experience (required)",
     ratings: ["Very dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very satisfied"],
-    provider: "Who looked after you? (optional)",
-    providerHint: "Leave blank if you’re not sure. Name only, no contact details.",
-    initials: "Initials (optional)",
+    provider: "Who looked after you? (required)",
+    providerHint: "Name only, no contact details.",
+    initials: "Initials (required)",
+    providerRequired: "Please enter the name of the colleague who looked after you.",
+    initialsRequired: "Please enter your initials.",
+    required: "Please enter the colleague’s name and your initials.",
     comment: "A short comment (optional)",
     note: "Please do not include contact details, health information or other private information.",
     limit: "Up to 500 characters",
@@ -21,7 +24,7 @@ export const feedbackCopy = {
     success: "Thank you. Your feedback has been received.",
     successDetail: "We appreciate your time and will use your feedback to care for our customers and recognise our team.",
     error: "We could not confirm your feedback was received. Please try again. Retrying will not send it twice.",
-    invalid: "Please choose one rating and check the length of your entries.",
+    invalid: "Please choose one rating, enter the colleague’s name and your initials, and check the length of your entries.",
     rate: "There have been several submissions from this connection. Please try again in an hour.",
     unavailable: "Feedback is temporarily unavailable. Please try again later.",
     home: "Back to MEND",
@@ -33,9 +36,12 @@ export const feedbackCopy = {
     purpose: "您的反馈仅供内部使用，帮助我们改善服务并认可团队的付出，不会作为公开评价发布。",
     rating: "您的体验（必选）",
     ratings: ["非常不满意", "不满意", "一般", "满意", "非常满意"],
-    provider: "为您服务的同事姓名（选填）",
-    providerHint: "不确定可留空。仅填写姓名，请勿填写联系方式。",
-    initials: "姓名首字母（选填）",
+    provider: "为您服务的同事姓名（必填）",
+    providerHint: "仅填写姓名，请勿填写联系方式。",
+    initials: "姓名首字母（必填）",
+    providerRequired: "请填写为您服务的同事姓名。",
+    initialsRequired: "请填写您的姓名首字母。",
+    required: "请填写服务同事姓名和您的姓名首字母。",
     comment: "一句意见或建议（选填）",
     note: "请勿填写联系方式、健康信息或其他私人信息。",
     limit: "最多 500 字",
@@ -44,7 +50,7 @@ export const feedbackCopy = {
     success: "感谢您，您的反馈已收到。",
     successDetail: "谢谢您抽出时间，帮助我们改善顾客体验并认可团队的付出。",
     error: "暂时无法确认反馈是否已收到，请重试。重试不会重复提交。",
-    invalid: "请选择一个评分，并检查各项填写内容的长度。",
+    invalid: "请选择一个评分，填写服务同事姓名和您的姓名首字母，并检查填写内容的长度。",
     rate: "此网络连接已提交多次反馈，请一小时后再试。",
     unavailable: "反馈服务暂时无法使用，请稍后再试。",
     home: "返回 MEND 首页",
@@ -77,10 +83,10 @@ export function validateFeedback(value: unknown): FeedbackInput | null {
   if (v.locale !== "en" && v.locale !== "zh") return null;
   const named = Object.hasOwn(v, "providerName");
   if (named) {
-    if (Object.hasOwn(v, "providerId") || typeof v.providerName !== "string" || v.providerName.length > 80) return null;
+    if (Object.hasOwn(v, "providerId") || typeof v.providerName !== "string" || v.providerName.length > 80 || !normalizeProviderName(v.providerName)) return null;
     if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(v.providerName)) return null;
-  } else if (v.providerId !== null && !feedbackProviders.some((p) => p.id === v.providerId)) return null;
-  if (typeof v.initials !== "string" || v.initials.length > 20 || typeof v.comment !== "string" || v.comment.length > 500) return null;
+  } else if (!feedbackProviders.some((p) => p.id === v.providerId)) return null;
+  if (typeof v.initials !== "string" || !v.initials.trim() || v.initials.length > 20 || typeof v.comment !== "string" || v.comment.length > 500) return null;
   if (v.website !== "") return null; // Honeypot; never pretend a rejected form was saved.
   if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(v.initials + v.comment)) return null;
   // Keep this legacy property order unchanged so pre-release retries still match.

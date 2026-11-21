@@ -21,6 +21,15 @@ export default function FeedbackPage({ locale }: { locale: FeedbackLocale }) {
         <p className="mb-7 mt-3 text-sm leading-relaxed text-cocoa">{copy.purpose}</p>
         {isFeedbackConfigured() ? <FeedbackForm locale={locale} /> : <p role="status" className="rounded-2xl border border-beige bg-sand p-5">{copy.unavailable}</p>}
       </section>
+      <section aria-labelledby="feedback-qr-title" className="mb-8 rounded-2xl border border-beige bg-sand p-5 text-center">
+        <h2 id="feedback-qr-title" className="font-display text-2xl">{zh ? "扫码填写反馈" : "Scan to share your experience"}</h2>
+        <p className="mt-3 text-sm leading-relaxed text-cocoa">{zh ? "点击二维码返回本页表单，或扫码打开反馈页。可在页面顶部切换 English / 中文。" : "Tap the QR code to return to this form, or scan it to open the feedback page. Choose English or 中文 at the top."}</p>
+        <a href="#feedback-title" aria-label={zh ? "返回本页反馈表" : "Return to this feedback form"} className="mx-auto mt-4 block w-fit focus-visible:outline-2 focus-visible:outline-bronze">
+          <Image src="/qr/mend-feedback-qr.png" alt={zh ? "MEND 顾客反馈二维码，打开英文反馈表并可切换中文" : "MEND feedback QR code, opens the English form with a Chinese language switch"} width={1200} height={1500} unoptimized className="h-auto w-60 max-w-full" />
+        </a>
+        <a href="/feedback" className="mt-3 block break-all text-sm underline underline-offset-4">mendbeauty.com.au/feedback</a>
+        <a href="/qr/mend-feedback-qr.png" download="MEND-Feedback-QR.png" className="btn-outline mt-4 min-h-12">{zh ? "保存二维码 PNG" : "Save QR code PNG"}</a>
+      </section>
       <footer className="border-t border-beige py-5 text-center text-sm text-cocoa"><a href={zh ? "/zh" : "/"} className="underline underline-offset-4">{copy.home}</a></footer>
     </main>
   );

@@ -4,8 +4,10 @@
 
 Prepared on an isolated branch based on production source
 `52374fe388c02daf197509d454d9c9074f8bd21a` in `thepig365/mend-studio`.
-The initial form was deployed in PR #60 (5862155). This revision replaces the
-provider dropdown with an optional entered name; its production release is pending.
+The initial form was deployed in PR #60 (5862155); PR #61 (2237e8b) added entered
+provider names. This revision requires the colleague name and customer initials
+for new submissions and adds a public downloadable feedback QR. No migration,
+historical backfill, credential or permission change is required.
 Migration 002 has been applied through the same authenticated Vercel SQL editor.
 The three historical synthetic receipts have the same before/after fingerprint
 84b426817ccf3c643bd4f79b7adbdde9. Both new columns are NULL on those records; RLS
@@ -31,9 +33,16 @@ The existing staff Google OAuth allowlist remains unchanged.
 - `/feedback` — English; `/zh/feedback` — simplified Chinese.
 - Reciprocal language links, correct document languages and MEND's existing
   fonts, logo and palette. Dedicated root layouts contain no analytics scripts.
-- One required radio rating, 1–5; optional initials (20 characters) and comment
-  (500 characters); optional provider name (80 characters), initially empty.
-  Customers are told to leave it blank if unsure and provide only a name.
+- One required radio rating, 1–5; required initials (20 characters), required
+  free-text colleague name (80 characters), and optional comment (500 characters).
+  Names start empty; whitespace-only values are rejected in the browser and API.
+  Both pages label required fields and show localized validation. No contact details.
+- Both pages embed `/qr/mend-feedback-qr.png`, a common bilingual PNG opening
+  `https://mendbeauty.com.au/feedback` with the visible English/Chinese switch.
+  Tapping the graphic links to `#feedback-title` on the same-language page; a
+  separate direct download link allows saving/forwarding the same PNG. Generate offline
+  with `swift scripts/generate-feedback-qr.swift` and verify its payload with
+  `swift scripts/decode-qr.swift public/qr/mend-feedback-qr.png`.
 - Privacy copy states internal service improvement and team recognition, not
   public reviews. No review gating, contact details or marketing consent.
 - If storage/auth configuration is absent, the form is not rendered. Submission
@@ -46,17 +55,19 @@ The existing staff Google OAuth allowlist remains unchanged.
 
 ## Provider evidence and staff access
 
-New forms send an optional Unicode provider name. The server trims and collapses
+New forms send a required Unicode provider name. The server trims and collapses
 whitespace and normalizes Unicode to NFC, retaining the entered capitalization
-for display and using a lower-case key for grouping. Blank names are unassigned.
+for display and using a lower-case key for grouping. Historical blank names remain unassigned.
 Names are customer-entered, not verified identities; spelling variants can form
 separate groups. They are used only for internal review, never automatic rewards.
 
 Migration 002 only adds nullable name/key columns, length/pair checks and a group
 index. It does not update historical rows, IDs or request hashes. Legacy
 `mejin-shick` records display as Mejin Shick and group with equivalent typed
-names; legacy NULL remains unassigned. Requests from older open forms are still
-accepted, preserving their exact normalized body and idempotency hash.
+names; legacy NULL remains unassigned. Older requests with an assigned provider
+and nonblank initials remain accepted with the same normalized body/hash. New
+requests missing either required field are rejected; historical rows are never
+rewritten to satisfy current requirements.
 
 Staff filters use opaque MD5 group identifiers in URLs, not typed names. This is
 only a UI key, not an authorization or anonymization mechanism. All group and
@@ -108,9 +119,9 @@ another recipient by this implementation.
 ## Verification performed locally
 
 - `npm test`: all existing MEND regression checks passed.
-- `npm run check:feedback`: eleven tests passed. A disposable local PGlite
+- `npm run check:feedback`: thirteen tests passed. A disposable local PGlite
   PostgreSQL engine ran the real migration and storage SQL: English and Chinese
-  receipts, Unicode/blank-name grouping, legacy migration/hash preservation,
+  receipts, Unicode-name grouping and required-field rejection, legacy migration/hash preservation,
   private name escaping, opaque filters, retry idempotency, conflicting
   UUID rejection, per-IP rate limit and anonymous SQL denial. RLS still hid rows
   after a synthetic test role was deliberately granted table SELECT locally.
@@ -126,17 +137,16 @@ production Vercel IP/header behavior. Those remain release acceptance gates.
 
 ## Production acceptance checklist
 
-1. Apply migration 002 once in the already approved dedicated database. Verify
-   historical row fingerprints and unchanged ownership, RLS and no PUBLIC grants.
-   Do not rerun either migration blindly. The old code remains compatible with
-   the new nullable columns while the new release is building.
+1. Migrations 001/002 are already applied. This required-field/QR revision needs
+   no database mutation or backfill. Leave ownership, RLS and grants unchanged.
 2. Run repository checks and the feedback suite. Verify concurrent identical
    requests against the actual PostgreSQL connection create exactly one row.
 3. Deploy the reviewed commit through the existing focused PR/Vercel pipeline.
    Respect any current branch rules and release approvals.
 4. Open both public routes and submit unmistakable synthetic test comments
    labelled `SYNTHETIC PRODUCTION TEST — NOT CUSTOMER FEEDBACK` (Chinese equivalent
-   on the Chinese page), using a clearly synthetic Unicode name and a blank name. Confirm success, retry
+   on the Chinese page), using clearly synthetic Unicode names and initials. Verify blank and whitespace-only
+   names/initials are rejected before storage. Confirm success, retry
    idempotency and no response bodies in analytics/logs.
 5. Sign in with the existing authorized identity and confirm both stored receipts,
    provider filtering/counts, text escaping and no public read. In an unsigned
