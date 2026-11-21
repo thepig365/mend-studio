@@ -33,16 +33,18 @@ test("unhydrated forms cannot send feedback in a URL", () => {
     assert.match(html, /<form[^>]*action="\/api\/feedback"/);
     assert.match(html, /<button[^>]*type="submit"[^>]*disabled=""/);
     assert.ok(html.includes(feedbackCopy[locale].nojs));
-    assert.match(html, /<input(?=[^>]*name="providerName")(?=[^>]*maxLength="80")[^>]*>/);
+    assert.match(html, /<input(?=[^>]*name="providerName")(?=[^>]*maxLength="80")(?=[^>]*required="")[^>]*>/);
+    assert.match(html, /<input(?=[^>]*name="initials")(?=[^>]*required="")[^>]*>/);
     assert.doesNotMatch(html, /<select/);
     assert.ok(html.includes(feedbackCopy[locale].provider));
     assert.ok(html.includes(feedbackCopy[locale].providerHint));
   }
 });
 
-test("required rating, optional text, provider allowlist and honeypot validation", () => {
+test("required rating and identity fields, optional comment, provider allowlist and honeypot validation", () => {
   assert.ok(validateFeedback(valid()));
-  assert.equal(validateFeedback({ ...valid(), initials: "", comment: "", providerId: null })?.providerId, null);
+  assert.ok(validateFeedback({ ...valid(), comment: "" }));
+  assert.equal(validateFeedback({ ...valid(), initials: "", comment: "", providerId: null }), null);
   for (const change of [{ rating: 0 }, { rating: 6 }, { rating: 2.5 }, { rating: "5" }, { locale: "fr" }, { initials: "a".repeat(21) }, { comment: "a".repeat(501) }, { comment: "\0" }, { providerId: "invented" }, { website: "bot" }, { submissionId: "bad" }, { email: "not-collected" }]) {
     assert.equal(validateFeedback({ ...valid(), ...change }), null);
   }
@@ -113,7 +115,7 @@ test("PostgreSQL migration, bilingual receipts, idempotency, provider filtering,
     const pool = { query, connect: async () => connection } as unknown as Pool;
     const storage = deps({ save: (input, key, hash) => saveFeedback(input, key, hash, pool) });
     const english = valid();
-    const chinese = { ...valid(), locale: "zh", providerId: null, comment: "合成测试，非真实顾客反馈 <script>不执行</script>" };
+    const chinese = { ...named("合成测试同事"), locale: "zh", comment: "合成测试，非真实顾客反馈 <script>不执行</script>" };
     assert.equal((await submitFeedback(request(english), storage)).status, 200);
     assert.equal((await submitFeedback(request(chinese), storage)).status, 200);
     assert.equal((await submitFeedback(request(english), storage)).status, 200);
@@ -122,9 +124,9 @@ test("PostgreSQL migration, bilingual receipts, idempotency, provider filtering,
     const mejin = await readFeedback(feedbackProviderFilter("Mejin Shick"), pool);
     assert.equal(mejin.entries.length, 1);
     assert.equal(mejin.entries[0].comment, english.comment);
-    const unassigned = await readFeedback(null, pool);
-    assert.equal(unassigned.entries[0].comment, chinese.comment);
-    assert.equal(unassigned.entries[0].locale, "zh");
+    const chineseGroup = await readFeedback(feedbackProviderFilter("合成测试同事"), pool);
+    assert.equal(chineseGroup.entries[0].comment, chinese.comment);
+    assert.equal(chineseGroup.entries[0].locale, "zh");
     assert.equal(mejin.summary.find((r) => r.provider_filter === feedbackProviderFilter("Mejin Shick"))?.count, "1");
     for (let i = 0; i < 8; i++) assert.equal((await submitFeedback(request(valid()), storage)).status, 200);
     assert.equal((await submitFeedback(request(valid()), storage)).status, 429);
@@ -147,9 +149,9 @@ const named = (providerName: string) => {
   return { ...body, providerName };
 };
 
-test("optional Unicode names normalize safely while legacy request hashes stay unchanged", () => {
+test("required Unicode names normalize safely while legacy request hashes stay unchanged", () => {
   assert.equal(validateFeedback(named("  E\u0301lodie\t 李  "))?.providerName, "Élodie 李");
-  assert.equal(validateFeedback(named("   "))?.providerName, "");
+  assert.equal(validateFeedback(named("   ")), null);
   assert.equal(validateFeedback(named("李".repeat(80)))?.providerName?.length, 80);
   for (const providerName of ["李".repeat(81), "a\0b", 42, null]) {
     assert.equal(validateFeedback({ ...named(""), providerName }), null);
@@ -164,9 +166,10 @@ test("additive name migration preserves history, combines normalized groups and 
   const db = new PGlite();
   try {
     await db.exec(await readFile(new URL("../migrations/001_customer_feedback.sql", import.meta.url), "utf8"));
-    const historical = [valid(), { ...valid(), providerId: null }];
+    const historical = [valid(), { ...valid(), providerId: null, initials: "" }];
     for (const old of historical) {
-      const input = validateFeedback(old)!;
+      // Historical optional fields must remain readable without new validation/backfill.
+      const input = { submissionId: old.submissionId, rating: old.rating, providerId: old.providerId, locale: old.locale, initials: old.initials, comment: old.comment };
       const hash = createHmac("sha256", "synthetic-unit-test-secret").update(`feedback-body:${JSON.stringify(input)}`).digest("hex");
       await db.query(`INSERT INTO mend_feedback.entries (submission_id, rating, provider_id, locale, initials, comment, request_hash) VALUES ($1,$2,$3,$4,$5,$6,$7)`, [input.submissionId, input.rating, input.providerId, input.locale, input.initials, input.comment, hash]);
     }
@@ -184,8 +187,8 @@ test("additive name migration preserves history, combines normalized groups and 
     // A form submitted before the migration still retries successfully afterward.
     assert.equal((await submitFeedback(request(historical[0]), storage)).status, 200);
     const unicode = named("  E\u0301lodie   李  ");
-    const blank = { ...named("  "), locale: "zh" };
-    for (const body of [unicode, named("ÉLODIE 李"), blank, named(" mejin   SHICK "), named("<script>synthetic</script>")]) {
+    assert.equal((await submitFeedback(request({ ...named("  "), locale: "zh" }), storage)).status, 400);
+    for (const body of [unicode, named("ÉLODIE 李"), named(" mejin   SHICK "), named("<script>synthetic</script>")]) {
       assert.equal((await submitFeedback(request(body), storage)).status, 200);
     }
     assert.equal((await submitFeedback(request(unicode), storage)).status, 200);
@@ -195,9 +198,10 @@ test("additive name migration preserves history, combines normalized groups and 
     assert.ok(group.entries.every((entry) => entry.provider_id === null));
     assert.equal(group.summary.find((row) => row.provider_filter === feedbackProviderFilter("Élodie 李"))?.count, "2");
     assert.equal((await readFeedback(feedbackProviderFilter("Mejin Shick"), pool)).entries.length, 2);
-    assert.equal((await readFeedback(null, pool)).entries.length, 2);
+    assert.equal((await readFeedback(null, pool)).entries.length, 1);
+    assert.equal((await readFeedback(null, pool)).entries[0].initials, "");
     const all = await readFeedback(undefined, pool);
-    assert.equal(all.entries.length, 7);
+    assert.equal(all.entries.length, 6);
     const html = renderToStaticMarkup(createElement(FeedbackStaffView, { data: all, selected: undefined }));
     assert.ok(html.includes("&lt;script&gt;synthetic&lt;/script&gt;"));
     assert.doesNotMatch(html, /<script>/);
@@ -206,4 +210,25 @@ test("additive name migration preserves history, combines normalized groups and 
     await db.exec("CREATE ROLE synthetic_named_anonymous NOLOGIN; SET ROLE synthetic_named_anonymous;");
     await assert.rejects(db.query("SELECT provider_name FROM mend_feedback.entries"), /permission denied/);
   } finally { await db.close(); }
+});
+
+
+test("both languages reject missing or whitespace-only required names before storage", async () => {
+  let writes = 0;
+  const storage = deps({ save: async () => { writes++; return "saved"; } });
+  for (const locale of ["en", "zh"] as const) {
+    const good = { ...named("  Élodie  李  "), locale, initials: "  合测  ", comment: "" };
+    const missingName = Object.fromEntries(Object.entries(good).filter(([key]) => key !== "providerName"));
+    const missingInitials = Object.fromEntries(Object.entries(good).filter(([key]) => key !== "initials"));
+    for (const body of [missingName, missingInitials, { ...good, providerName: "" }, { ...good, providerName: " \t\n　" }, { ...good, initials: "" }, { ...good, initials: " \t\n　" }, { ...valid(), locale, providerId: null }]) {
+      const response = await submitFeedback(request(body), storage);
+      assert.equal(response.status, 400);
+      assert.deepEqual(await response.json(), { code: "invalid" });
+    }
+    assert.equal(writes, locale === "en" ? 0 : 1);
+    assert.equal((await submitFeedback(request(good), storage)).status, 200);
+    assert.equal(validateFeedback(good)?.providerName, "Élodie 李");
+    assert.equal(validateFeedback(good)?.initials, "合测");
+  }
+  assert.equal(writes, 2);
 });

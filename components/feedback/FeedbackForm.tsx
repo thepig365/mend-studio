@@ -25,6 +25,13 @@ export default function FeedbackForm({ locale }: { locale: FeedbackLocale }) {
     inFlight.current = true;
     const form = event.currentTarget;
     const values = new FormData(form);
+    if (!submittedBody.current && (!String(values.get("providerName") || "").trim() || !String(values.get("initials") || "").trim())) {
+      inFlight.current = false;
+      setStatus("error");
+      setMessage(copy.required);
+      requestAnimationFrame(() => result.current?.focus());
+      return;
+    }
     // Freeze a possibly received submission for retries. Keep only in memory;
     // never put response content in browser storage, URLs, logs or analytics.
     if (!submittedBody.current) {
@@ -96,11 +103,11 @@ export default function FeedbackForm({ locale }: { locale: FeedbackLocale }) {
           </div>
         </fieldset>
         <label className="block font-medium">{copy.provider}
-          <input name="providerName" type="text" maxLength={80} autoComplete="off" aria-describedby="feedback-provider-hint" className={inputClass} />
+          <input name="providerName" type="text" required onInvalid={(event) => event.currentTarget.setCustomValidity(copy.providerRequired)} onInput={(event) => event.currentTarget.setCustomValidity("")} maxLength={80} autoComplete="off" aria-describedby="feedback-provider-hint" className={inputClass} />
         </label>
         <p id="feedback-provider-hint" className="-mt-4 text-sm text-cocoa">{copy.providerHint}</p>
         <label className="block font-medium">{copy.initials}
-          <input name="initials" type="text" maxLength={20} autoComplete="off" className={inputClass} />
+          <input name="initials" type="text" required onInvalid={(event) => event.currentTarget.setCustomValidity(copy.initialsRequired)} onInput={(event) => event.currentTarget.setCustomValidity("")} maxLength={20} autoComplete="off" className={inputClass} />
         </label>
         <label className="block font-medium">{copy.comment}
           <textarea name="comment" rows={3} maxLength={500} aria-describedby="feedback-privacy feedback-limit" className={inputClass} />
