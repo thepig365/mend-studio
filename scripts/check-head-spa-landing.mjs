@@ -23,15 +23,13 @@ for (const [id, price, time] of [
   assert(new RegExp(`item\\("${id}",[^)]*"\\${price}", "${time}"`).test(anna), `${id} menu data stays ${price} / ${time}`);
 }
 assert(data.includes("not a medical treatment") && data.includes("并非医疗诊断或治疗"), "Landing intro keeps the cosmetic boundary");
-assert(data.includes('process.env.VERCEL_ENV !== "production"'), "Empty video slots never show placeholders on production");
+assert(!/placeholder|VERCEL_ENV/i.test(data + landing + video), "No preview-only placeholder slots remain");
 
 const dir = new URL("../public/videos/head-spa/", import.meta.url);
 const files = await readdir(dir);
-assert.deepEqual(files.sort(), [
-  "hero-product-poster.jpg", "hero-product.mp4", "hero-product.webm",
-  "ritual-details-poster.jpg", "ritual-details.mp4", "ritual-details.webm",
-], "Only the reviewed, people-free head spa clips are public");
+const expected = ["aroma-essence", "hero-cleanse", "neck-massage", "ritual", "signature-cleanse"].flatMap((name) => [`${name}-poster.jpg`, `${name}.mp4`, `${name}.webm`]).sort();
+assert.deepEqual(files.sort(), expected, "Only the reviewed head spa clips are public");
 for (const file of files) {
-  assert((await stat(new URL(file, dir))).size < 3 * 1024 * 1024, `${file} stays under 3 MB`);
+  assert((await stat(new URL(file, dir))).size < 600 * 1024, `${file} stays under 600 KB`);
 }
-console.log("Head spa landing checks passed: muted lazy video with poster and reduced-motion, menu-data prices, cosmetic boundary, production-safe slots, reviewed clips only.");
+console.log("Head spa landing checks passed: muted lazy video with poster and reduced-motion, menu-data prices, cosmetic boundary, no placeholder slots, reviewed clips only, each under 600 KB.");

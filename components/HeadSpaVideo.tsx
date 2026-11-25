@@ -3,19 +3,19 @@
 import { useEffect, useRef, useState } from "react";
 
 type HeadSpaVideoProps = {
-  sources: { mp4: string; webm?: string } | null;
-  poster: string | null;
+  sources: { mp4: string; webm?: string };
+  poster: string;
   label: string;
   slotId: string;
-  showPlaceholder: boolean;
-  placeholderText: string;
   aspect?: string;
   className?: string;
+  /** CSS object-position for cropped placements, e.g. "50% 30%". */
+  focus?: string;
 };
 
 /**
- * Silent ambient clip: muted, inline, looped, no sound controls needed.
- * - The file is only attached once the slot is near the viewport (lazy).
+ * Silent ambient clip: muted, inline, looped; the files carry no audio track.
+ * - Sources are only attached once the clip is near the viewport (lazy).
  * - preload="metadata" so nothing heavy downloads before it is needed.
  * - Plays only while visible and only when the visitor has not asked for
  *   reduced motion; with reduced motion the poster stays and controls appear.
@@ -25,10 +25,9 @@ export default function HeadSpaVideo({
   poster,
   label,
   slotId,
-  showPlaceholder,
-  placeholderText,
   aspect = "aspect-[4/5]",
   className = "",
+  focus,
 }: HeadSpaVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [nearViewport, setNearViewport] = useState(false);
@@ -44,25 +43,21 @@ export default function HeadSpaVideo({
 
   useEffect(() => {
     const video = ref.current;
-    if (!video || !sources) return;
+    if (!video) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setNearViewport(true);
-        if (reducedMotion) {
+        if (reducedMotion || !entry.isIntersecting) {
           video.pause();
-          return;
-        }
-        if (entry.isIntersecting) {
-          video.play().catch(() => undefined);
         } else {
-          video.pause();
+          video.play().catch(() => undefined);
         }
       },
       { rootMargin: "200px 0px" },
     );
     observer.observe(video);
     return () => observer.disconnect();
-  }, [sources, reducedMotion]);
+  }, [reducedMotion]);
 
   useEffect(() => {
     const video = ref.current;
@@ -71,27 +66,13 @@ export default function HeadSpaVideo({
     if (!reducedMotion) video.play().catch(() => undefined);
   }, [nearViewport, reducedMotion]);
 
-  if (!sources) {
-    if (!showPlaceholder) return null;
-    return (
-      <div
-        className={`${aspect} ${className} flex flex-col items-center justify-center rounded-[2rem] border-2 border-dashed border-gold/50 bg-linen p-6 text-center`}
-        data-video-slot={slotId}
-        role="img"
-        aria-label={label}
-      >
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-bronze">Video slot · {slotId}</span>
-        <span className="mt-3 max-w-xs text-sm leading-relaxed text-cocoa">{placeholderText}</span>
-      </div>
-    );
-  }
-
   return (
     <video
       ref={ref}
-      className={`${aspect} ${className} w-full rounded-[2rem] bg-sand object-cover`}
+      className={`${aspect} ${className} w-full bg-sand object-cover`}
       data-video-slot={slotId}
-      poster={poster ?? undefined}
+      poster={poster}
+      style={focus ? { objectPosition: focus } : undefined}
       aria-label={label}
       title={label}
       muted

@@ -3,11 +3,8 @@
 // them from the existing head-spa menu data (lib/anna-services.ts) so the
 // visible prices, the menu data and the Service/Offer JSON-LD cannot drift.
 //
-// Video clips: only MEND-filmed footage, never AI-generated or stock. Any
-// identifiable guest or staff member needs written consent before their clip
-// is added. Posters are a frame from the same clip. Empty slots render a
-// labelled placeholder on previews/local builds and render nothing on
-// production (see showVideoSlotPlaceholders).
+// Video clips: only MEND-filmed footage, never AI-generated or stock. Posters
+// are a frame from the same clip.
 
 export type HeadSpaLocale = "en-AU" | "zh-Hans";
 
@@ -28,7 +25,7 @@ export const headSpaLandingIntro: Record<HeadSpaLocale, { eyebrow: string; title
     book: "Book",
     bookHref: "/book",
     menuTitle: "Head spa treatments",
-    clipsTitle: "Inside the head spa",
+    clipsTitle: "The head spa ritual",
   },
   "zh-Hans": {
     eyebrow: "MEND Beauty Studio | Head Spa",
@@ -37,7 +34,7 @@ export const headSpaLandingIntro: Record<HeadSpaLocale, { eyebrow: string; title
     book: "预约",
     bookHref: "/zh/book",
     menuTitle: "头疗项目",
-    clipsTitle: "头疗现场",
+    clipsTitle: "头疗流程",
   },
 };
 
@@ -100,60 +97,46 @@ export const headSpaTreatments: HeadSpaTreatment[] = [
   },
 ];
 
+export type HeadSpaClipId = "hero" | "neck-massage" | "signature-cleanse" | "aroma-essence" | "ritual";
+
 export type HeadSpaClip = {
-  id: "hero" | "clip-1" | "clip-2" | "clip-3";
-  /** Muted web encodes under /public/videos/head-spa. null = slot empty. */
-  sources: { mp4: string; webm?: string } | null;
+  id: HeadSpaClipId;
+  /** Muted web encodes under /public/videos/head-spa. */
+  sources: { mp4: string; webm: string };
   /** Frame taken from the same clip. */
-  poster: string | null;
+  poster: string;
   label: Localised;
-  /** Why an empty slot is still empty (shown on preview placeholders only). */
-  pendingNote?: Localised;
+  /** Crop focus (CSS object-position) when shown in a non-9:16 frame. */
+  focus?: string;
 };
 
-// Source: in-store footage filmed by MEND staff on 2026-11-23 (clip3, and three
-// people-free shots trimmed from the clip1 montage). Audio removed; no C2PA or
-// AI-provenance markers were found in the originals. Clips showing guests or
-// staff (faces, profiles, voices) are deliberately NOT included until written
-// consent is on file.
-export const headSpaClips: Record<HeadSpaClip["id"], HeadSpaClip> = {
-  hero: {
-    id: "hero",
-    sources: { mp4: "/videos/head-spa/hero-product.mp4", webm: "/videos/head-spa/hero-product.webm" },
-    poster: "/videos/head-spa/hero-product-poster.jpg",
-    label: { "en-AU": "Scalp-care product being dispensed at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店头疗护理产品" },
-  },
-  "clip-1": {
-    id: "clip-1",
-    sources: { mp4: "/videos/head-spa/ritual-details.mp4", webm: "/videos/head-spa/ritual-details.webm" },
-    poster: "/videos/head-spa/ritual-details-poster.jpg",
-    label: { "en-AU": "Head spa details: studio flowers, scalp-care product and water-circulation rinse", "zh-Hans": "头疗细节：门店花艺、头皮护理产品与水循环冲洗" },
-  },
-  "clip-2": {
-    id: "clip-2",
-    sources: null,
-    poster: null,
-    label: { "en-AU": "Neck and shoulder massage", "zh-Hans": "肩颈按摩" },
-    pendingNote: { "en-AU": "Neck massage clip held back: needs written consent from the guest and therapist shown (preview only).", "zh-Hans": "肩颈按摩片段暂不使用：需出镜客人与技师书面同意（仅预览可见）。" },
-  },
-  "clip-3": {
-    id: "clip-3",
-    sources: null,
-    poster: null,
-    label: { "en-AU": "Welcome to the head spa station", "zh-Hans": "欢迎来到头疗位" },
-    pendingNote: { "en-AU": "Arrival clip held back: needs written consent from the guest and staff member shown (preview only).", "zh-Hans": "到店片段暂不使用：需出镜客人与员工书面同意（仅预览可见）。" },
-  },
+const clip = (id: HeadSpaClipId, file: string, label: Localised, focus?: string): HeadSpaClip => ({
+  id,
+  focus,
+  sources: { mp4: `/videos/head-spa/${file}.mp4`, webm: `/videos/head-spa/${file}.webm` },
+  poster: `/videos/head-spa/${file}-poster.jpg`,
+  label,
+});
+
+// Source: in-store head spa footage filmed by MEND staff on 2026-11-23.
+// Trimmed and re-encoded only; all audio removed (no speech or music is used).
+// No C2PA or AI-provenance markers were found in the originals. Guests and
+// staff appear in these clips: written consent must be confirmed by the
+// studio before this page is released.
+export const headSpaClips: Record<HeadSpaClipId, HeadSpaClip> = {
+  hero: clip("hero", "hero-cleanse", { "en-AU": "Scalp cleansing and scalp brushing at the head spa bed, Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店头疗床上的头皮清洁与头皮刷按摩" }),
+  "neck-massage": clip("neck-massage", "neck-massage", { "en-AU": "Neck massage during a head spa", "zh-Hans": "头疗中的肩颈按摩" }, "50% 25%"),
+  "signature-cleanse": clip("signature-cleanse", "signature-cleanse", { "en-AU": "Head massage, scalp massage tool and water-circulation rinse", "zh-Hans": "头部按摩、头皮按摩工具与水循环冲洗" }, "50% 40%"),
+  "aroma-essence": clip("aroma-essence", "aroma-essence", { "en-AU": "Preparing scalp-care product for the treatment", "zh-Hans": "准备护理所用的头皮护理产品" }, "50% 60%"),
+  ritual: clip("ritual", "ritual", { "en-AU": "A head spa visit at Mend Beauty Studio: settling in, scalp close-up, scalp brushing and massage", "zh-Hans": "在 Mend Beauty Studio 的一次头疗：入座、头皮近距离查看、头皮刷清洁与按摩" }),
 };
 
-/**
- * Empty video slots show a labelled placeholder on local and preview builds
- * only. On the production deployment an empty slot renders nothing (and the
- * hero falls back to the existing image), so an accidental release never
- * shows placeholder boxes to customers.
- */
-export function showVideoSlotPlaceholders(): boolean {
-  return process.env.VERCEL_ENV !== "production";
-}
+/** Clip shown at the top of each treatment card (cards without one show text only). */
+export const headSpaCardClips: Partial<Record<string, HeadSpaClipId>> = {
+  "express-head-spa": "neck-massage",
+  "korean-signature-head-spa": "signature-cleanse",
+  "aroma-healing-head-spa": "aroma-essence",
+};
 
 /** Durations come from menu data as "30 mins"; Chinese cards show "30 分钟". */
 export function localiseDuration(time: string | undefined, locale: HeadSpaLocale): string | undefined {
