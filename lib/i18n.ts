@@ -39,6 +39,7 @@ export const localizedRoutes = [
   "/gift-cards",
   "/memberships",
   "/careers",
+  "/chair-rental",
   "/contact",
   "/our-story",
   "/policies",

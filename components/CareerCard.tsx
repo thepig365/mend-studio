@@ -3,9 +3,11 @@ type CareerCardProps = {
   type: string;
   summary: string;
   highlights?: string[];
+  href?: string;
+  ctaLabel?: string;
 };
 
-export default function CareerCard({ title, type, summary, highlights }: CareerCardProps) {
+export default function CareerCard({ title, type, summary, highlights, href, ctaLabel }: CareerCardProps) {
   return (
     <div className="flex h-full flex-col rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-8">
       <p className="text-xs font-medium uppercase tracking-[0.24em] text-gold">{type}</p>
@@ -23,10 +25,10 @@ export default function CareerCard({ title, type, summary, highlights }: CareerC
       )}
       <div className="mt-auto pt-6">
         <a
-          href="/contact#booking-enquiry"
+          href={href ?? "/contact#booking-enquiry"}
           className="btn-outline px-6 py-2.5 text-xs"
         >
-          Express Interest
+          {ctaLabel ?? "Express Interest"}
         </a>
       </div>
     </div>

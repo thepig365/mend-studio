@@ -21,6 +21,7 @@ const routes: { path: string; priority: number }[] = [
   { path: "/gift-cards", priority: 0.5 },
   { path: "/memberships", priority: 0.5 },
   { path: "/careers", priority: 0.4 },
+  { path: "/chair-rental", priority: 0.6 },
   { path: "/contact", priority: 0.6 },
   { path: "/our-story", priority: 0.6 },
   { path: "/policies", priority: 0.3 },

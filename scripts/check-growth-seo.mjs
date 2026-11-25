@@ -28,7 +28,7 @@ const seo = await read("lib/seo.ts");
 const envExample = await read(".env.example");
 
 const sitemapPaths = [...sitemap.matchAll(/\{ path: "([^"]*)", priority:/g)].map((match) => match[1]);
-assert(sitemapPaths.length === 19 && new Set(sitemapPaths).size === 19, "Sitemap must contain 19 unique public content paths (38 bilingual URLs)");
+assert(sitemapPaths.length === 20 && new Set(sitemapPaths).size === 20, "Sitemap must contain 20 unique public content paths (40 bilingual URLs)");
 assert(!sitemapPaths.some((path) => /^\/(book|marketing|api)(\/|$)/.test(path)), "Redirects and private/auth routes must stay outside the sitemap");
 assert(!sitemap.includes("nails-semi-permanent"), "The legacy nails-semi-permanent path is a redirect, not a sitemap URL");
 assert(seo.includes('"x-default":') && seo.includes('"zh":') && seo.includes('"en-AU":'), "Hreflang alternates are en-AU, zh and x-default");
@@ -275,5 +275,5 @@ for (const dir of ["app", "components", "lib"]) {
 }
 
 console.log(
-  "Growth SEO checks passed: 38 bilingual sitemap URLs plus promotions, reciprocal hreflang, social identity, local/service structured data, consent gate and conversion events.",
+  "Growth SEO checks passed: 40 bilingual sitemap URLs plus promotions, reciprocal hreflang, social identity, local/service structured data, consent gate and conversion events.",
 );
