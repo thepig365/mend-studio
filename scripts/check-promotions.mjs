@@ -69,7 +69,7 @@ for (const path of paths) {
 
 const sitemap = await (await get("/sitemap.xml")).text();
 const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-assert.equal(urls.length, 42, "38 bilingual content URLs plus four bilingual promotion URLs");
+assert.equal(urls.length, 44, "40 bilingual content URLs plus four bilingual promotion URLs");
 assert.equal(new Set(urls).size, urls.length, "No duplicate sitemap URLs");
 for (const path of paths) assert.ok(urls.includes(`${origin}${path}`));
 for (const path of paths) {

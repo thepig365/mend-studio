@@ -694,6 +694,8 @@ export const careerOpportunities = [
       "Flexible arrangements by discussion",
       "Cross-referral potential from studio clients",
     ],
+    href: "/chair-rental",
+    ctaLabel: "View chair rental",
   },
   {
     title: "Beauty Room / Treatment Room Rental",

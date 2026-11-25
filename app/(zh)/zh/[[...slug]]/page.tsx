@@ -44,6 +44,8 @@ import {
   zhServiceCategories,
 } from "@/lib/zh-services";
 import { siteImages } from "@/src/data/images";
+import ChairRentalLanding from "@/components/ChairRentalLanding";
+import { chairRentalCopy, chairRentalPath } from "@/lib/chair-rental-landing";
 
 type ChinesePageProps = {
   params: Promise<{ slug?: string[] }>;
@@ -91,6 +93,10 @@ const routeMetadata: Record<string, { title: string; description: string }> = {
     title: "招聘与场地合作",
     description: "了解 Mend Beauty Studio 的沙龙经理、美发师、租椅及美容护理房合作机会。",
   },
+  "/chair-rental": {
+    title: chairRentalCopy["zh-Hans"].documentTitle,
+    description: chairRentalCopy["zh-Hans"].metaDescription,
+  },
   "/contact": {
     title: "联系我们｜Deepdene Whitehorse Road",
     description: `联系 Mend Beauty Studio。电话 ${site.phone}，地址 ${site.address}。`,
@@ -115,6 +121,7 @@ export function generateStaticParams() {
     { slug: ["gift-cards"] },
     { slug: ["memberships"] },
     { slug: ["careers"] },
+    { slug: ["chair-rental"] },
     { slug: ["contact"] },
     { slug: ["our-story"] },
     { slug: ["policies"] },
@@ -145,7 +152,7 @@ export async function generateMetadata({
   return chinesePageMetadata({
     ...entry,
     path,
-    absoluteTitle: path === "/",
+    absoluteTitle: path === "/" || path === chairRentalPath,
   });
 }
 
@@ -163,6 +170,7 @@ export default async function ChinesePage({ params }: ChinesePageProps) {
   if (path === "/gift-cards") return <ChineseGiftCards />;
   if (path === "/memberships") return <ChineseMemberships />;
   if (path === "/careers") return <ChineseCareers />;
+  if (path === chairRentalPath) return <ChineseChairRental />;
   if (path === "/contact") return <ChineseContact />;
   if (path === "/our-story") return <BrandManifestoPage locale="zh-Hans" />;
   if (path === "/policies") return <ChinesePolicies />;
@@ -533,6 +541,10 @@ function ChineseMemberships() {
   );
 }
 
+function ChineseChairRental() {
+  return <ChairRentalLanding locale="zh-Hans" />;
+}
+
 function ChineseCareers() {
   const opportunities = [
     ["沙龙经理", "适合具备团队管理及业务发展经验的专业人士。"],
@@ -560,8 +572,11 @@ function ChineseCareers() {
             <article key={title} className="rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-9">
               <h2 className="font-display text-2xl font-medium text-charcoal">{title}</h2>
               <p className="mt-3 text-sm leading-relaxed text-cocoa">{body}</p>
-              <Link className="btn-outline mt-6" href="/zh/contact#booking-enquiry">
-                表达意向
+              <Link
+                className="btn-outline mt-6"
+                href={title === "租椅合作" ? "/zh/chair-rental" : "/zh/contact#booking-enquiry"}
+              >
+                {title === "租椅合作" ? "查看租椅详情" : "表达意向"}
               </Link>
             </article>
           ))}

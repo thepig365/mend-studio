@@ -16,6 +16,7 @@ const requiredRoutes = [
   "/zh/gift-cards",
   "/zh/memberships",
   "/zh/careers",
+  "/zh/chair-rental",
   "/zh/contact",
   "/zh/our-story",
   "/zh/policies",

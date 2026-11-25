@@ -20,6 +20,7 @@ const expectedRoutes = [
   "/gift-cards",
   "/memberships",
   "/careers",
+  "/chair-rental",
   "/contact",
   "/our-story",
   "/policies",
