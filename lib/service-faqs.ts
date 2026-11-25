@@ -385,7 +385,7 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
         {
           question: "What does body care at Mend Beauty Studio involve?",
           answer:
-            "Body care covers body therapy and signature massage for relaxation. The Body Therapy section lists Express Neck & Shoulder Therapy, Meridian Therapy, Circulation Therapy and Lymphatic Detox Therapy. The Signature Massage section lists Express Relaxation Massage, Aroma Healing Massage, Deep Sleep Massage and MEND Signature Body Ritual. Body services support relaxation and wellbeing. They do not diagnose or treat circulation disorders, sleep conditions or other medical concerns; ‘detox’ is retained only as the poster’s service name and is not a medical claim.",
+            "Body care covers body therapy and signature massage for relaxation. The Body Therapy section lists Express Neck & Shoulder Therapy, Meridian Therapy, Circulation Therapy and Lymphatic Detox Therapy. The Signature Massage section lists Express Relaxation Massage, Aroma Healing Massage, Deep Sleep Massage and MEND Signature Body Ritual. Body services support relaxation and wellbeing. They do not diagnose or treat circulation disorders, sleep conditions or other medical concerns; ‘detox’ is retained only as the poster’s service name and is not a medical claim. Relaxation and general wellbeing, not diagnosis or treatment.",
         },
         {
           question: "How long does body care take, and what does it cost?",
@@ -412,7 +412,7 @@ const serviceFaqs: Record<string, Record<Locale, ServiceFaq>> = {
         {
           question: "Mend Beauty Studio 的身体护理包含什么？",
           answer:
-            "身体护理包括身体理疗与特色按摩，用于放松。身体理疗列出头肩颈舒缓、经络调理、气血循环调理和全身淋巴排毒调理。特色按摩列出快速舒缓按摩、芳香舒缓按摩、深度睡眠疗愈和全身焕活身心能量管理。身体护理支持放松与身心舒适，不诊断或治疗循环障碍、失眠或其他医疗问题，也不作医疗排毒声明。",
+            "身体护理包括身体理疗与特色按摩，用于放松。身体理疗列出头肩颈舒缓、经络调理、气血循环调理和全身淋巴排毒调理。特色按摩列出快速舒缓按摩、芳香舒缓按摩、深度睡眠疗愈和全身焕活身心能量管理。身体护理支持放松与身心舒适，不诊断或治疗循环障碍、失眠或其他医疗问题，也不作医疗排毒声明。日常养护及放松，不用于诊断或治疗。",
         },
         {
           question: "身体护理要多久，怎么收费？",

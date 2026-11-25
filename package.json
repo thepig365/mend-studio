@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "type-check": "tsc --noEmit",
-    "test": "npm run check:domain && npm run check:functionality && npm run check:booking && npm run check:i18n && npm run check:anna-services && npm run check:growth-seo && npm run check:analytics && npm run check:marketing-portal && npm run check:mejin-profile && npm run check:hair-popup && npm run check:marketing-growth && npm run check:marketing-locale && npm run check:mase-marketing-home && npm run check:feedback && npm run check:head-spa-landing",
+    "test": "npm run check:domain && npm run check:functionality && npm run check:booking && npm run check:i18n && npm run check:anna-services && npm run check:growth-seo && npm run check:analytics && npm run check:marketing-portal && npm run check:mejin-profile && npm run check:hair-popup && npm run check:marketing-growth && npm run check:marketing-locale && npm run check:mase-marketing-home && npm run check:feedback && npm run check:head-spa-landing && npm run check:body-care-landing",
     "check:mase-marketing-home": "node scripts/check-mase-marketing-home.mjs",
     "check:hair-popup": "node scripts/check-hair-popup.mjs",
     "check:analytics": "node scripts/check-analytics.mjs",
@@ -23,7 +23,8 @@
     "check:marketing-growth": "node scripts/check-marketing-growth.mjs",
     "check:marketing-locale": "node scripts/check-marketing-locale.mjs && node scripts/check-landing-localization.cjs && node scripts/check-guide-localization.mjs && node scripts/check-library-localization.mjs",
     "check:feedback": "tsx --test tests/feedback.test.ts",
-    "check:head-spa-landing": "node scripts/check-head-spa-landing.mjs"
+    "check:head-spa-landing": "node scripts/check-head-spa-landing.mjs",
+    "check:body-care-landing": "node scripts/check-body-care-landing.mjs"
   },
   "dependencies": {
     "next": "16.4.5",
