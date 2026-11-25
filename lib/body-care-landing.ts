@@ -5,12 +5,15 @@
 // Service/Offer JSON-LD cannot drift.
 //
 // Media: four muted in-studio videos from the owner (2026-11-25 handoff) plus
-// head spa clip5 on the neck card only. Seven still PNGs from the same
-// handoff carry ChatGPT/C2PA "trainedAlgorithmicMedia" markers or have no
-// camera metadata and the same 1024/1536 AI-typical size; they are not
-// published. Reserved slots (image1-image7) can be switched on later.
-// Do not present spa-chair footage, facial work or room decor as a full-body
-// massage on a table. Do not claim stills are unretouched.
+// head spa clip5 on the neck card only. Seven stills (t267/t268 resend,
+// still1-still7) are used on the four remaining cards and in the gallery as
+// optimised WebP/AVIF. The earlier C2PA-bearing image1-image7 originals are
+// not used. Do not present spa-chair footage, facial work or room decor as a
+// full-body massage on a table. Do not claim stills are unretouched. Alt text
+// is descriptive and does not name a staff member or assert a Deepdene
+// interior for these stills. The owner confirmed consent on 2026-11-25
+// (t266u) for people identifiable in clip5 and the treatment-room clip
+// (video4), and authorised these stills for the landing page (t268u).
 
 import type { HeadSpaLocale } from "@/lib/head-spa-landing";
 
@@ -57,7 +60,7 @@ export const bodyCareLandingIntro: Record<
     neckCaption: "Neck and shoulder massage filmed during a head spa, in the spa chair. Not a massage table.",
     treatmentCaption: "Head and face massage in the treatment room at Mend Beauty Studio, Deepdene. Not a full-body massage.",
     galleryTitle: "The treatment room",
-    galleryBody: "Quiet corners of the studio, and a head and face massage in the treatment room. Full-body massage footage will be added when new clips are ready.",
+    galleryBody: "Quiet corners of the studio, a head and face massage in the treatment room, and stills of an oil back massage. Full-body massage video will be added when new clips are ready.",
   },
   "zh-Hans": {
     eyebrow: "MEND Beauty Studio | 身体理疗与特色按摩",
@@ -71,7 +74,7 @@ export const bodyCareLandingIntro: Record<
     neckCaption: "头疗过程中拍摄的肩颈按摩（头疗椅，非按摩床）。",
     treatmentCaption: "Mend Beauty Studio Deepdene 门店护理室中的头面部按摩，并非全身按摩。",
     galleryTitle: "护理空间",
-    galleryBody: "门店安静的角落，以及护理室中的头面部按摩。全身按摩的影像会在新素材准备好后补上。",
+    galleryBody: "门店安静的角落、护理室中的头面部按摩，以及精油背部按摩的静帧。全身按摩视频会在新素材准备好后补上。",
   },
 };
 
@@ -229,10 +232,10 @@ export type BodyCareClip = {
   label: Localised;
   /** CSS object-position when shown in a non-9:16 frame. */
   focus?: string;
-  consent?: "unconfirmed";
+  consent?: "confirmed" | "unconfirmed";
 };
 
-const bodyClip = (id: BodyCareClipId, file: string, label: Localised, focus?: string, consent?: "unconfirmed"): BodyCareClip => ({
+const bodyClip = (id: BodyCareClipId, file: string, label: Localised, focus?: string, consent?: "confirmed" | "unconfirmed"): BodyCareClip => ({
   id,
   focus,
   consent,
@@ -250,14 +253,15 @@ export const bodyCareClips: Record<BodyCareClipId, BodyCareClip> = {
   "room-flowers": bodyClip("room-flowers", "room-flowers", { "en-AU": "Dried flowers and candles in an alcove at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店壁龛中的干花与蜡烛" }, "50% 40%"),
   "room-lantern": bodyClip("room-lantern", "room-lantern", { "en-AU": "A lantern and foliage in a corner of Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店角落的灯笼与绿植" }, "50% 60%"),
   "room-berries": bodyClip("room-berries", "room-berries", { "en-AU": "Berry stems, a woven planter and a lantern at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店的浆果枝、编织花器与灯笼" }, "50% 45%"),
-  "treatment-room": bodyClip("treatment-room", "treatment-room", { "en-AU": "Head and face massage in the treatment room at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店护理室中的头面部按摩" }, "50% 35%", "unconfirmed"),
+  "treatment-room": bodyClip("treatment-room", "treatment-room", { "en-AU": "Head and face massage in the treatment room at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店护理室中的头面部按摩" }, "50% 35%", "confirmed"),
 };
 
 /**
  * Muted head spa clip5 (neck/shoulder massage in the spa chair). Reuses the
- * existing encode under /videos/head-spa. Consent is unconfirmed. Kept only
- * on the Express Neck & Shoulder card: it is still the only neck-and-shoulder
- * massage footage. Do not reuse it as a body massage on a table.
+ * existing encode under /videos/head-spa. The owner confirmed consent on
+ * 2026-11-25 (t266u). Kept only on the Express Neck & Shoulder card: it is
+ * still the only neck-and-shoulder massage footage. Do not reuse it as a
+ * body massage on a table.
  */
 export const bodyCareNeckClip = {
   id: "neck-shoulder-clip5",
@@ -272,7 +276,7 @@ export const bodyCareNeckClip = {
   } satisfies Localised,
   focus: "50% 25%",
   treatmentId: "express-neck-shoulder-therapy",
-  consent: "unconfirmed",
+  consent: "confirmed",
 } as const;
 
 /** Video (or clip5) shown at the top of each treatment card. */
@@ -287,16 +291,94 @@ export const bodyCareHeroClipId: BodyCareClipId = "room-flowers";
 
 export const bodyCareGalleryClipIds: BodyCareClipId[] = ["room-flowers", "room-lantern", "room-berries", "treatment-room"];
 
-/** Reserved still slots for the seven owner stills, not published pending origin review. */
-export const bodyCareStillSlotIds = ["image1", "image2", "image3", "image4", "image5", "image6", "image7"] as const;
 
-export const bodyCareMediaSlotIds = [
-  "circulation-therapy",
-  "lymphatic-detox-therapy",
-  "aroma-healing-massage",
-  "mend-signature-body-ritual",
-  ...bodyCareStillSlotIds,
-] as const;
+export type BodyCareStillId = "still1" | "still2" | "still3" | "still4" | "still5" | "still6" | "still7";
+
+export type BodyCareStillVariant = { src: string; width: number; format: "avif" | "webp" };
+
+export type BodyCareStill = {
+  id: BodyCareStillId;
+  width: number;
+  height: number;
+  alt: Localised;
+  focus?: string;
+  variants: BodyCareStillVariant[];
+};
+
+const still = (
+  id: BodyCareStillId,
+  width: number,
+  height: number,
+  widths: number[],
+  alt: Localised,
+  focus?: string,
+): BodyCareStill => ({
+  id,
+  width,
+  height,
+  alt,
+  focus,
+  variants: widths.flatMap((w) => [
+    { src: `/images/body-care/${id}-${w}.avif`, width: w, format: "avif" as const },
+    { src: `/images/body-care/${id}-${w}.webp`, width: w, format: "webp" as const },
+  ]),
+});
+
+const LANDSCAPE_WIDTHS = [800, 1600];
+
+/** t267/t268 resend (still1-still7). No C2PA in the source PNGs. */
+export const bodyCareStills: Record<BodyCareStillId, BodyCareStill> = {
+  still1: still("still1", 1988, 1312, LANDSCAPE_WIDTHS, {
+    "en-AU": "Warm oil back massage, with a therapist's hands and a candle in the foreground",
+    "zh-Hans": "精油背部按摩，画面中是护理师的双手与前景中的蜡烛",
+  }, "50% 40%"),
+  still2: still("still2", 1900, 1318, LANDSCAPE_WIDTHS, {
+    "en-AU": "A therapist in a beige uniform massages a guest's back beside warm lighting and care products",
+    "zh-Hans": "一位身着米色制服的护理师，在暖光与护理产品旁为客人做背部按摩",
+  }, "50% 30%"),
+  still3: still("still3", 1978, 1294, LANDSCAPE_WIDTHS, {
+    "en-AU": "A therapist massages a guest's back with oil, with candles and bottles on a nearby shelf",
+    "zh-Hans": "一位护理师用精油为客人做背部按摩，旁边架子上有蜡烛与护理瓶",
+  }, "50% 35%"),
+  still4: still("still4", 936, 1438, [640, 936], {
+    "en-AU": "A therapist massages a guest's shoulders and back, with candles and a vase of stems in the background",
+    "zh-Hans": "一位护理师为客人按摩肩背，背景中有蜡烛与枝叶",
+  }, "50% 30%"),
+  still5: still("still5", 952, 1444, [640, 952], {
+    "en-AU": "Close view of a therapist's hands massaging an oiled back",
+    "zh-Hans": "护理师双手在涂有精油的背部做按摩的近景",
+  }, "50% 40%"),
+  still6: still("still6", 1982, 1296, LANDSCAPE_WIDTHS, {
+    "en-AU": "Warm oil back massage, with candles and bottles arranged in the background",
+    "zh-Hans": "精油背部按摩，背景中摆放着蜡烛与护理瓶",
+  }, "50% 45%"),
+  still7: still("still7", 1976, 1310, LANDSCAPE_WIDTHS, {
+    "en-AU": "Close view of an oiled back massage, with a candle in the foreground",
+    "zh-Hans": "涂有精油的背部按摩近景，前景中有一支蜡烛",
+  }, "50% 45%"),
+};
+
+/** Stills on the four cards that previously used a logo slot. */
+export const bodyCareCardStills: Partial<Record<string, BodyCareStillId>> = {
+  "circulation-therapy": "still1",
+  "lymphatic-detox-therapy": "still5",
+  "aroma-healing-massage": "still4",
+  "mend-signature-body-ritual": "still2",
+};
+
+/**
+ * Gallery order uses all seven stills. Near-duplicates (still1/still7 and
+ * still2/still3) are not placed next to each other.
+ */
+export const bodyCareGalleryStillIds: BodyCareStillId[] = [
+  "still4",
+  "still1",
+  "still2",
+  "still7",
+  "still5",
+  "still3",
+  "still6",
+];
 
 /** Use the owner's first paragraph as the Service description in JSON-LD. */
 export function withBodyCareLandingDescriptions<T extends { id: string; description: string }>(

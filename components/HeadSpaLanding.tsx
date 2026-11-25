@@ -19,6 +19,7 @@ export function HeadSpaHeroVideo({ locale }: { locale: HeadSpaLocale }) {
       slotId={clip.id}
       aspect="aspect-[4/5]"
       className="rounded-[2rem] shadow-xl shadow-charcoal/10"
+      consent={clip.consent}
     />
   );
 }
@@ -63,6 +64,7 @@ export default function HeadSpaLanding({ locale, menuItems }: HeadSpaLandingProp
                   slotId={clip.id}
                   aspect="aspect-square"
                   focus={clip.focus}
+                  consent={clip.consent}
                 />
               ) : null}
               <div className="flex flex-1 flex-col p-6 sm:p-7">
@@ -107,6 +109,7 @@ export default function HeadSpaLanding({ locale, menuItems }: HeadSpaLandingProp
             slotId={ritual.id}
             aspect="aspect-[9/16]"
             className="rounded-[2rem]"
+            consent={ritual.consent}
           />
         </div>
       </section>

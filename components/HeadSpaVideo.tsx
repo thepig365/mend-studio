@@ -11,6 +11,8 @@ type HeadSpaVideoProps = {
   className?: string;
   /** CSS object-position for cropped placements, e.g. "50% 30%". */
   focus?: string;
+  /** Written-consent status for identifiable people in the clip. */
+  consent?: "confirmed" | "unconfirmed";
 };
 
 /**
@@ -28,6 +30,7 @@ export default function HeadSpaVideo({
   aspect = "aspect-[4/5]",
   className = "",
   focus,
+  consent,
 }: HeadSpaVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [nearViewport, setNearViewport] = useState(false);
@@ -71,6 +74,7 @@ export default function HeadSpaVideo({
       ref={ref}
       className={`${aspect} ${className} w-full bg-sand object-cover`}
       data-video-slot={slotId}
+      data-consent={consent}
       poster={poster}
       style={focus ? { objectPosition: focus } : undefined}
       aria-label={label}

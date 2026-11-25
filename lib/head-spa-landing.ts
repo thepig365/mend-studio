@@ -108,11 +108,20 @@ export type HeadSpaClip = {
   label: Localised;
   /** Crop focus (CSS object-position) when shown in a non-9:16 frame. */
   focus?: string;
+  /** Written-consent status for identifiable people in the clip. */
+  consent?: "confirmed" | "unconfirmed";
 };
 
-const clip = (id: HeadSpaClipId, file: string, label: Localised, focus?: string): HeadSpaClip => ({
+const clip = (
+  id: HeadSpaClipId,
+  file: string,
+  label: Localised,
+  focus?: string,
+  consent?: "confirmed" | "unconfirmed",
+): HeadSpaClip => ({
   id,
   focus,
+  consent,
   sources: { mp4: `/videos/head-spa/${file}.mp4`, webm: `/videos/head-spa/${file}.webm` },
   poster: `/videos/head-spa/${file}-poster.jpg`,
   label,
@@ -120,12 +129,13 @@ const clip = (id: HeadSpaClipId, file: string, label: Localised, focus?: string)
 
 // Source: in-store head spa footage filmed by MEND staff on 2026-11-23.
 // Trimmed and re-encoded only; all audio removed (no speech or music is used).
-// No C2PA or AI-provenance markers were found in the originals. Guests and
-// staff appear in these clips: written consent must be confirmed by the
-// studio before this page is released.
+// No C2PA or AI-provenance markers were found in the originals. The owner
+// confirmed consent on 2026-11-25 (t266u) for people identifiable in
+// neck-massage (clip5). The other in-store clips were already released with
+// the head spa landing.
 export const headSpaClips: Record<HeadSpaClipId, HeadSpaClip> = {
   hero: clip("hero", "hero-cleanse", { "en-AU": "Scalp cleansing and scalp brushing at the head spa bed, Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店头疗床上的头皮清洁与头皮刷按摩" }),
-  "neck-massage": clip("neck-massage", "neck-massage", { "en-AU": "Neck massage during a head spa", "zh-Hans": "头疗中的肩颈按摩" }, "50% 25%"),
+  "neck-massage": clip("neck-massage", "neck-massage", { "en-AU": "Neck massage during a head spa", "zh-Hans": "头疗中的肩颈按摩" }, "50% 25%", "confirmed"),
   "signature-cleanse": clip("signature-cleanse", "signature-cleanse", { "en-AU": "Head massage, scalp massage tool and water-circulation rinse", "zh-Hans": "头部按摩、头皮按摩工具与水循环冲洗" }, "50% 40%"),
   "aroma-essence": clip("aroma-essence", "aroma-essence", { "en-AU": "Preparing scalp-care product for the treatment", "zh-Hans": "准备护理所用的头皮护理产品" }, "50% 60%"),
   ritual: clip("ritual", "ritual", { "en-AU": "A head spa visit at Mend Beauty Studio: settling in, scalp close-up, scalp brushing and massage", "zh-Hans": "在 Mend Beauty Studio 的一次头疗：入座、头皮近距离查看、头皮刷清洁与按摩" }),
