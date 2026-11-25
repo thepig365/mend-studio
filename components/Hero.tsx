@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 export type HeroAction = {
@@ -21,6 +22,8 @@ type HeroProps = {
   imageAlt?: string;
   /** Tailwind aspect-ratio class for the hero image (default 4:3) */
   imageAspect?: string;
+  /** Optional media (e.g. a muted video) shown instead of the image. */
+  media?: ReactNode;
 };
 
 const actionClass: Record<NonNullable<HeroAction["variant"]>, string> = {
@@ -40,15 +43,17 @@ export default function Hero({
   image,
   imageAlt,
   imageAspect = "aspect-[4/3]",
+  media,
 }: HeroProps) {
+  const hasMedia = Boolean(image || media);
   return (
     <section className="relative overflow-hidden bg-sand">
       <div
         className={`wrap grid items-center gap-12 py-16 sm:py-20 lg:py-24 ${
-          image ? "lg:grid-cols-[1.1fr_1fr]" : ""
+          hasMedia ? "lg:grid-cols-[1.1fr_1fr]" : ""
         }`}
       >
-        <div className={image ? "" : "mx-auto max-w-3xl text-center"}>
+        <div className={hasMedia ? "" : "mx-auto max-w-3xl text-center"}>
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
           {kicker && (
             <p className="mt-3 max-w-xl text-sm font-medium leading-relaxed text-bronze">{kicker}</p>
@@ -67,13 +72,13 @@ export default function Hero({
             </p>
           )}
           {body && (
-            <p className={`mt-5 text-base leading-relaxed text-cocoa ${image ? "max-w-xl" : ""}`}>
+            <p className={`mt-5 text-base leading-relaxed text-cocoa ${hasMedia ? "max-w-xl" : ""}`}>
               {body}
             </p>
           )}
           {actions && actions.length > 0 && (
             <div
-              className={`mt-8 flex flex-wrap gap-3 ${image ? "" : "justify-center"}`}
+              className={`mt-8 flex flex-wrap gap-3 ${hasMedia ? "" : "justify-center"}`}
             >
               {actions.map((action) => (
                 <a
@@ -89,7 +94,12 @@ export default function Hero({
             </div>
           )}
         </div>
-        {image && (
+        {media ? (
+          <div className="relative mx-auto w-full max-w-md">
+            <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-gold/10" aria-hidden />
+            {media}
+          </div>
+        ) : image && (
           <div className="relative">
             <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-gold/10" aria-hidden />
             <ResponsiveImage

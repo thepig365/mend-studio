@@ -21,6 +21,10 @@ type ServicePageProps = {
   beforeMenuContent?: ReactNode;
   afterMenuContent?: ReactNode;
   hidePriceList?: boolean;
+  /** Optional hero media (e.g. a muted video) shown instead of the hero image. */
+  heroMedia?: ReactNode;
+  /** Optional JSON-LD item list; defaults to the menu items. */
+  structuredDataItems?: MenuServiceItem[];
   menuOverride?: {
     items: MenuServiceItem[];
     secondaryItems: MenuServiceItem[];
@@ -45,6 +49,8 @@ export default function ServicePage({
   beforeMenuContent,
   afterMenuContent,
   hidePriceList = false,
+  heroMedia,
+  structuredDataItems,
   menuOverride,
 }: ServicePageProps) {
   const menu = menuOverride ?? getMenuItemsForCategory(category.slug);
@@ -59,7 +65,7 @@ export default function ServicePage({
     <>
       <ServiceStructuredData
         categoryName={category.title}
-        items={allItems}
+        items={structuredDataItems ?? allItems}
         path={`/services/${category.slug}`}
       />
       <Hero
@@ -70,6 +76,7 @@ export default function ServicePage({
         body={opening}
         image={category.image}
         imageAlt={category.imageAlt}
+        media={heroMedia}
         actions={[
           { label: "Book", href: "/book", variant: "gold", ctaLocation: "service-hero", service: category.slug },
           { label: "All Services", href: "/services", variant: "outline" },
