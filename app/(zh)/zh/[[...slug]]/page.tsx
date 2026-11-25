@@ -1,5 +1,7 @@
 import GettingHere from "@/components/GettingHere";
+import HeadSpaLanding, { HeadSpaHeroVideo } from "@/components/HeadSpaLanding";
 import HeadSpaScalpChoice from "@/components/HeadSpaScalpChoice";
+import { withHeadSpaLandingDescriptions } from "@/lib/head-spa-landing";
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
 import NearbySuburbs from "@/components/NearbySuburbs";
 import ScalpCareMenuIntro from "@/components/ScalpCareMenuIntro";
@@ -382,7 +384,7 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
     <>
       <ServiceStructuredData
         categoryName={heading}
-        items={allItems}
+        items={slug === "head-spa" ? withHeadSpaLandingDescriptions(allItems, "zh-Hans") : allItems}
         path={`/zh/services/${slug}`}
       />
       <Hero
@@ -393,17 +395,19 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         body={opening}
         image={slug === "hair" ? hairStudioImage.src : category.image}
         imageAlt={slug === "hair" ? hairStudioImage.alt["zh-Hans"] : category.title}
+        media={slug === "head-spa" ? <HeadSpaHeroVideo locale="zh-Hans" /> : undefined}
         actions={[
           { label: "预约", href: "/zh/book", variant: "gold", ctaLocation: "service-hero", service: slug },
           { label: "全部服务", href: "/zh/services", variant: "outline" },
         ]}
       />
       <section className="wrap py-16 sm:py-20">
+        {slug === "head-spa" ? <HeadSpaLanding locale="zh-Hans" menuItems={menu.items} /> : null}
         {local ? <NearbySuburbs locale="zh-Hans" service={slug as LocalServiceSlug} /> : null}
         {slug === "hair" && <HairMenuIntro locale="zh-Hans" />}
         {slug === "hair-scalp-recovery" && <ScalpCareMenuIntro locale="zh-Hans" />}
         <MenuDownloads slug={slug} chinese />
-        {primaryGroups.map(([title, items], index) => (
+        {slug !== "head-spa" && primaryGroups.map(([title, items], index) => (
           <div key={title} className={index === 0 ? "" : "mt-10"}>
             <ServiceMenuSection
               items={items}
