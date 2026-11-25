@@ -1,18 +1,20 @@
 import HeadSpaVideo from "@/components/HeadSpaVideo";
-import MediaSlot from "@/components/MediaSlot";
 import {
   bodyCareCardClips,
+  bodyCareCardStills,
   bodyCareClips,
   bodyCareGalleryClipIds,
+  bodyCareGalleryStillIds,
   bodyCareGroups,
   bodyCareHeroClipId,
   bodyCareLandingIntro,
   bodyCareNeckClip,
-  bodyCareStillSlotIds,
+  bodyCareStills,
   bodyCareTreatments,
   type BodyCareClip,
   type BodyCareGroupId,
   type BodyCareLocale,
+  type BodyCareStill,
   type BodyCareTreatment,
 } from "@/lib/body-care-landing";
 import { localiseDuration } from "@/lib/head-spa-landing";
@@ -31,6 +33,7 @@ function ClipVideo({
   className?: string;
   caption?: string;
 }) {
+  const consent = "consent" in clip ? clip.consent : undefined;
   return (
     <div>
       <HeadSpaVideo
@@ -41,17 +44,57 @@ function ClipVideo({
         aspect={aspect}
         focus={clip.focus}
         className={className}
+        consent={consent}
       />
       {caption ? (
-        <p
-          className="bg-sand px-4 py-2 text-center text-xs leading-relaxed text-taupe"
-          data-consent={"consent" in clip ? clip.consent : undefined}
-        >
+        <p className="bg-sand px-4 py-2 text-center text-xs leading-relaxed text-taupe" data-consent={consent}>
           {caption}
         </p>
-      ) : "consent" in clip && clip.consent ? (
-        <span data-consent={clip.consent} hidden />
       ) : null}
+    </div>
+  );
+}
+
+function StillImage({
+  still,
+  locale,
+  aspect,
+  className,
+  sizes,
+}: {
+  still: BodyCareStill;
+  locale: BodyCareLocale;
+  aspect: string;
+  className?: string;
+  sizes: string;
+}) {
+  const avif = still.variants
+    .filter((variant) => variant.format === "avif")
+    .map((variant) => `${variant.src} ${variant.width}w`)
+    .join(", ");
+  const webp = still.variants
+    .filter((variant) => variant.format === "webp")
+    .map((variant) => `${variant.src} ${variant.width}w`)
+    .join(", ");
+  const fallback = still.variants.filter((variant) => variant.format === "webp").at(-1);
+  if (!fallback) return null;
+
+  return (
+    <div className={`${aspect} ${className ?? ""} overflow-hidden bg-sand`} data-still-slot={still.id}>
+      <picture>
+        <source type="image/avif" srcSet={avif} sizes={sizes} />
+        <source type="image/webp" srcSet={webp} sizes={sizes} />
+        <img
+          src={fallback.src}
+          alt={still.alt[locale]}
+          width={still.width}
+          height={still.height}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+          style={still.focus ? { objectPosition: still.focus } : undefined}
+        />
+      </picture>
     </div>
   );
 }
@@ -95,6 +138,8 @@ function TreatmentCard({
   if (!item) return null;
   const duration = localiseDuration(item.time, locale);
   const clip = cardClip(treatment.id);
+  const stillId = bodyCareCardStills[treatment.id];
+  const still = stillId ? bodyCareStills[stillId] : undefined;
   const caption =
     clip?.id === bodyCareNeckClip.id
       ? copy.neckCaption
@@ -109,9 +154,9 @@ function TreatmentCard({
     >
       {clip ? (
         <ClipVideo clip={clip} locale={locale} aspect="aspect-square" caption={caption} />
-      ) : (
-        <MediaSlot slotId={treatment.id} label={copy.mediaSlotLabel} aspect="aspect-square" />
-      )}
+      ) : still ? (
+        <StillImage still={still} locale={locale} aspect="aspect-square" sizes="(min-width: 768px) 42vw, 100vw" />
+      ) : null}
       <div className="flex flex-1 flex-col p-6 sm:p-7">
         <h4 className="text-xl font-semibold text-charcoal">{treatment.name[locale]}</h4>
         {locale === "zh-Hans" ? (
@@ -180,8 +225,15 @@ function RoomGallery({ locale }: { locale: BodyCareLocale }) {
         })}
       </div>
       <div className="mt-5 grid gap-5 sm:grid-cols-2 md:grid-cols-4">
-        {bodyCareStillSlotIds.map((id) => (
-          <MediaSlot key={id} slotId={id} label={copy.mediaSlotLabel} aspect="aspect-[4/5]" className="rounded-3xl" />
+        {bodyCareGalleryStillIds.map((id) => (
+          <StillImage
+            key={id}
+            still={bodyCareStills[id]}
+            locale={locale}
+            aspect="aspect-[4/5]"
+            className="rounded-3xl"
+            sizes="(min-width: 768px) 25vw, 50vw"
+          />
         ))}
       </div>
     </section>
