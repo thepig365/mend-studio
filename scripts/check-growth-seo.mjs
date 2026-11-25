@@ -229,7 +229,7 @@ for (const omitted of ["$", "minutes", "mins", "分钟", "Balwyn", "停车", "po
   assert(!headSpaChoice.includes(omitted), `Head spa choice must omit ${omitted}`);
 }
 assert(!faqData.slice(faqData.indexOf('"head-spa"'), faqData.indexOf('"hair-scalp-recovery"')).includes("How is head spa different"), "Head spa FAQ schema stays unchanged");
-assert(faqData.includes("Monday to Saturday, 10:00 am – 6:00 pm, and closed Sunday.") && faqData.includes("星期一至星期六上午 10:00–下午 6:00 营业，星期日休息。"), "Standard booking answers include the published hours");
+assert(faqData.includes("Monday, Tuesday and Thursday to Saturday, 10:00 am – 6:00 pm, and closed Wednesday and Sunday.") && faqData.includes("星期一、星期二及星期四至星期六上午 10:00–下午 6:00 营业，星期三和星期日休息。"), "Standard booking answers include the published hours");
 assert(faqData.includes("Do you offer Korean perms or digital perms?") && faqData.includes("有韩式烫发或数码烫吗？"), "Hair perm FAQ is bilingual");
 assert(faqData.includes("Where on Whitehorse Road is the salon?") && faqData.includes("门店在 Whitehorse Road 哪里？"), "Whitehorse Road FAQ is bilingual");
 assert(faqData.includes("Is a head spa the same as a hair spa or scalp spa?") && faqData.includes("What is included in the Korean Signature Head Spa?"), "Head spa synonym and Korean Signature FAQs are present");

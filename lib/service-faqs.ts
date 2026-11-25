@@ -18,9 +18,9 @@ const priceCaveatZh =
 
 function bookAnswer(locale: Locale, serviceLabel: string) {
   if (locale === "zh-Hans") {
-    return `预约${serviceLabel}，请点击本页“预约”，或打开 ${site.url}/zh/book。预约页面会转到 MaSe，请在 MaSe 选择项目，并查看当前价格与可预约时间。也可致电 ${site.phone}、发送邮件至 ${site.email}，或通过微信 ${site.wechat} 联系。建议提前预约。门店星期一至星期六上午 10:00–下午 6:00 营业，星期日休息。公共假期营业时间可能有所调整。临时到店的空位可能有限。`;
+    return `预约${serviceLabel}，请点击本页“预约”，或打开 ${site.url}/zh/book。预约页面会转到 MaSe，请在 MaSe 选择项目，并查看当前价格与可预约时间。也可致电 ${site.phone}、发送邮件至 ${site.email}，或通过微信 ${site.wechat} 联系。建议提前预约。门店星期一、星期二及星期四至星期六上午 10:00–下午 6:00 营业，星期三和星期日休息。公共假期营业时间可能有所调整。临时到店的空位可能有限。`;
   }
-  return `To book ${serviceLabel}, use Book on this page or open ${site.url}/book. The booking page hands you to MaSe, where you select the service and check the current price and available times. You can also call ${site.phone}, email ${site.email}, or message WeChat ${site.wechat}. Appointments are recommended. The studio is open Monday to Saturday, 10:00 am – 6:00 pm, and closed Sunday. Public holiday hours may vary. Walk-in availability may be limited.`;
+  return `To book ${serviceLabel}, use Book on this page or open ${site.url}/book. The booking page hands you to MaSe, where you select the service and check the current price and available times. You can also call ${site.phone}, email ${site.email}, or message WeChat ${site.wechat}. Appointments are recommended. The studio is open Monday, Tuesday and Thursday to Saturday, 10:00 am – 6:00 pm, and closed Wednesday and Sunday. Public holiday hours may vary. Walk-in availability may be limited.`;
 }
 
 // Owner-confirmed 5 November 2026. Six parks at the back of the studio.
