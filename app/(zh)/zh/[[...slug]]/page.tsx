@@ -1,6 +1,8 @@
 import GettingHere from "@/components/GettingHere";
+import BodyCareLanding, { BodyCareHeroMedia } from "@/components/BodyCareLanding";
 import HeadSpaLanding, { HeadSpaHeroVideo } from "@/components/HeadSpaLanding";
 import HeadSpaScalpChoice from "@/components/HeadSpaScalpChoice";
+import { withBodyCareLandingDescriptions } from "@/lib/body-care-landing";
 import { withHeadSpaLandingDescriptions } from "@/lib/head-spa-landing";
 import HairVisitGuide, { HairMenuIntro } from "@/components/HairVisitGuide";
 import NearbySuburbs from "@/components/NearbySuburbs";
@@ -384,7 +386,13 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
     <>
       <ServiceStructuredData
         categoryName={heading}
-        items={slug === "head-spa" ? withHeadSpaLandingDescriptions(allItems, "zh-Hans") : allItems}
+        items={
+          slug === "head-spa"
+            ? withHeadSpaLandingDescriptions(allItems, "zh-Hans")
+            : slug === "body-care"
+              ? withBodyCareLandingDescriptions(allItems, "zh-Hans")
+              : allItems
+        }
         path={`/zh/services/${slug}`}
       />
       <Hero
@@ -395,7 +403,13 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
         body={opening}
         image={slug === "hair" ? hairStudioImage.src : category.image}
         imageAlt={slug === "hair" ? hairStudioImage.alt["zh-Hans"] : category.title}
-        media={slug === "head-spa" ? <HeadSpaHeroVideo locale="zh-Hans" /> : undefined}
+        media={
+          slug === "head-spa" ? (
+            <HeadSpaHeroVideo locale="zh-Hans" />
+          ) : slug === "body-care" ? (
+            <BodyCareHeroMedia locale="zh-Hans" />
+          ) : undefined
+        }
         actions={[
           { label: "预约", href: "/zh/book", variant: "gold", ctaLocation: "service-hero", service: slug },
           { label: "全部服务", href: "/zh/services", variant: "outline" },
@@ -403,11 +417,12 @@ function ChineseServiceDetail({ slug }: { slug: string }) {
       />
       <section className="wrap py-16 sm:py-20">
         {slug === "head-spa" ? <HeadSpaLanding locale="zh-Hans" menuItems={menu.items} /> : null}
+        {slug === "body-care" ? <BodyCareLanding locale="zh-Hans" menuItems={menu.items} /> : null}
         {local ? <NearbySuburbs locale="zh-Hans" service={slug as LocalServiceSlug} /> : null}
         {slug === "hair" && <HairMenuIntro locale="zh-Hans" />}
         {slug === "hair-scalp-recovery" && <ScalpCareMenuIntro locale="zh-Hans" />}
         <MenuDownloads slug={slug} chinese />
-        {slug !== "head-spa" && primaryGroups.map(([title, items], index) => (
+        {slug !== "head-spa" && slug !== "body-care" && primaryGroups.map(([title, items], index) => (
           <div key={title} className={index === 0 ? "" : "mt-10"}>
             <ServiceMenuSection
               items={items}
