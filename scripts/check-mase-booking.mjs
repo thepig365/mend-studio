@@ -39,9 +39,19 @@ assert.doesNotMatch(bookingConfig, /NEXT_PUBLIC_MASE_BOOKING_URL/);
 assert.match(bookingConfig, /clients\.mase\.cloud/);
 
 const siteConfig = readFileSync("lib/site.ts", "utf8");
-assert.match(siteConfig, /Sunday", time: "Closed"/);
+assert.match(siteConfig, /days: "Wednesday", time: "Closed"/);
+assert.match(siteConfig, /days: "Sunday", time: "Closed"/);
+assert.match(siteConfig, /days: "星期三", time: "休息"/);
 assert.match(siteConfig, /10:00 am – 6:00 pm/);
 assert.match(siteConfig, /structuredOpeningHours/);
+assert.match(
+  siteConfig,
+  /structuredOpeningHours: \[\s*"Monday",\s*"Tuesday",\s*"Thursday",\s*"Friday",\s*"Saturday",\s*\]/,
+);
+assert.doesNotMatch(
+  siteConfig,
+  /structuredOpeningHours: \[[^\]]*Wednesday[^\]]*\]/s,
+);
 
 const sitemap = readFileSync("app/sitemap.ts", "utf8");
 assert.doesNotMatch(sitemap, /path: "(?:\/zh)?\/book"/, "Booking redirects must not be submitted as canonical sitemap pages");

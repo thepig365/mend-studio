@@ -30,13 +30,21 @@ export const site = {
   // hardcode this string elsewhere.
   url: "https://mendbeauty.com.au",
   hours: [
-    { days: "Monday – Saturday", time: "10:00 am – 6:00 pm" },
+    { days: "Monday – Tuesday", time: "10:00 am – 6:00 pm" },
+    { days: "Wednesday", time: "Closed" },
+    { days: "Thursday – Saturday", time: "10:00 am – 6:00 pm" },
     { days: "Sunday", time: "Closed" },
   ],
+  hoursZh: [
+    { days: "星期一至星期二", time: "上午 10:00–下午 6:00" },
+    { days: "星期三", time: "休息" },
+    { days: "星期四至星期六", time: "上午 10:00–下午 6:00" },
+    { days: "星期日", time: "休息" },
+  ],
+  // Closed days are omitted, matching the existing Sunday pattern and Google's guidance.
   structuredOpeningHours: [
     "Monday",
     "Tuesday",
-    "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
@@ -48,6 +56,11 @@ export const site = {
   })),
   hoursNote: "Appointments are recommended. Public holiday hours may vary.",
 };
+
+export const hoursDescriptionEn = [
+  `Open ${site.hours[0].days}, ${site.hours[0].time}.`,
+  ...site.hours.slice(1).map((slot) => `${slot.days}: ${slot.time}.`),
+].join(" ");
 
 // Places guests travel from. The studio address stays Deepdene; these are not salon locations.
 export const serviceAreas = [

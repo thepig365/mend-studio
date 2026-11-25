@@ -6,5 +6,5 @@ export const booking = {
   url: process.env.MASE_BOOKING_URL ?? defaultMaseBookingUrl,
   cancellationNoticeHours: 24,
   openingHoursSummary:
-    "Open 10:00 am – 6:00 pm Monday through Saturday. Closed Sunday.",
+    "Open 10:00 am – 6:00 pm Monday, Tuesday and Thursday through Saturday. Closed Wednesday and Sunday.",
 } as const;

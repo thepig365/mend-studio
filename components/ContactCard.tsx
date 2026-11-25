@@ -12,12 +12,7 @@ export default function ContactCard({
 }: ContactCardProps) {
   const isChinese = locale === "zh-Hans";
   const copy = ui[locale];
-  const hours = isChinese
-    ? [
-        { days: "星期一至星期六", time: "上午 10:00–下午 6:00" },
-        { days: "星期日", time: "休息" },
-      ]
-    : site.hours;
+  const hours = isChinese ? site.hoursZh : site.hours;
 
   return (
     <div className="rounded-3xl border border-beige/70 bg-white/60 p-7 sm:p-9">

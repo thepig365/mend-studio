@@ -1,10 +1,10 @@
-import { serviceAreas, site } from "@/lib/site";
+import { hoursDescriptionEn, serviceAreas, site } from "@/lib/site";
 
 // HairSalon plus the beauty and spa services published on the site.
 export const localBusinessTypes = ["HairSalon", "BeautySalon", "DaySpa"] as const;
 
 // Factual description. The tagline stays on `slogan`, not here.
-export const businessDescription = `${site.name} is a hair and beauty studio at ${site.address}, near Balwyn, in ${site.region}. Published services include haircuts and colour, head spa, scalp care, facials, body care, brows and lashes, grooming for men, nails, and semi-permanent beauty by consultation only. Book online or call ${site.phone}. Open ${site.hours[0].days}, ${site.hours[0].time}. ${site.hours[1].days}: ${site.hours[1].time}.`;
+export const businessDescription = `${site.name} is a hair and beauty studio at ${site.address}, near Balwyn, in ${site.region}. Published services include haircuts and colour, head spa, scalp care, facials, body care, brows and lashes, grooming for men, nails, and semi-permanent beauty by consultation only. Book online or call ${site.phone}. ${hoursDescriptionEn}`;
 
 // Published menu span for schema.org priceRange.
 // Floor: Fringe Refresh "From $25" in lib/anna-services.ts.
