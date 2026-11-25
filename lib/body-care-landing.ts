@@ -4,13 +4,13 @@
 // (lib/anna-services.ts) so the visible prices, the menu data and the
 // Service/Offer JSON-LD cannot drift.
 //
-// Media: EA confirmed there is no body-massage, aromatherapy-oil or
-// treatment-room footage. The only relevant item is head spa clip5 (neck and
-// shoulder massage in the spa chair, Mandarin speech around 10s). That muted
-// encode is reused only on the Express Neck & Shoulder card, with a caption
-// that it was filmed during a head spa. Written consent is unconfirmed.
-// Every other placement is a reserved logo/text slot for later studio footage.
-// Do not present spa-chair footage as a body massage on a treatment table.
+// Media: four muted in-studio videos from the owner (2026-11-25 handoff) plus
+// head spa clip5 on the neck card only. Seven still PNGs from the same
+// handoff carry ChatGPT/C2PA "trainedAlgorithmicMedia" markers or have no
+// camera metadata and the same 1024/1536 AI-typical size; they are not
+// published. Reserved slots (image1-image7) can be switched on later.
+// Do not present spa-chair footage, facial work or room decor as a full-body
+// massage on a table. Do not claim stills are unretouched.
 
 import type { HeadSpaLocale } from "@/lib/head-spa-landing";
 
@@ -40,6 +40,9 @@ export const bodyCareLandingIntro: Record<
     heroSlotLabel: string;
     mediaSlotLabel: string;
     neckCaption: string;
+    treatmentCaption: string;
+    galleryTitle: string;
+    galleryBody: string;
   }
 > = {
   "en-AU": {
@@ -49,9 +52,12 @@ export const bodyCareLandingIntro: Record<
     book: "Book",
     bookHref: "/book",
     disclaimer: "Relaxation and general wellbeing, not diagnosis or treatment.",
-    heroSlotLabel: "Studio photo or video of body therapy and signature massage to come",
-    mediaSlotLabel: "Studio photo or video to come",
+    heroSlotLabel: "Studio photo to come",
+    mediaSlotLabel: "Studio photo to come",
     neckCaption: "Neck and shoulder massage filmed during a head spa, in the spa chair. Not a massage table.",
+    treatmentCaption: "Head and face massage in the treatment room at Mend Beauty Studio, Deepdene. Not a full-body massage.",
+    galleryTitle: "The treatment room",
+    galleryBody: "Quiet corners of the studio, and a head and face massage in the treatment room. Full-body massage footage will be added when new clips are ready.",
   },
   "zh-Hans": {
     eyebrow: "MEND Beauty Studio | 身体理疗与特色按摩",
@@ -60,9 +66,12 @@ export const bodyCareLandingIntro: Record<
     book: "预约",
     bookHref: "/zh/book",
     disclaimer: "日常养护及放松，不用于诊断或治疗。",
-    heroSlotLabel: "身体理疗与特色按摩的门店影像稍后更新",
-    mediaSlotLabel: "门店护理影像稍后更新",
+    heroSlotLabel: "门店照片稍后更新",
+    mediaSlotLabel: "门店照片稍后更新",
     neckCaption: "头疗过程中拍摄的肩颈按摩（头疗椅，非按摩床）。",
+    treatmentCaption: "Mend Beauty Studio Deepdene 门店护理室中的头面部按摩，并非全身按摩。",
+    galleryTitle: "护理空间",
+    galleryBody: "门店安静的角落，以及护理室中的头面部按摩。全身按摩的影像会在新素材准备好后补上。",
   },
 };
 
@@ -211,10 +220,44 @@ export const bodyCareTreatments: BodyCareTreatment[] = [
   },
 ];
 
+export type BodyCareClipId = "room-flowers" | "room-lantern" | "room-berries" | "treatment-room";
+
+export type BodyCareClip = {
+  id: BodyCareClipId;
+  sources: { mp4: string; webm: string };
+  poster: string;
+  label: Localised;
+  /** CSS object-position when shown in a non-9:16 frame. */
+  focus?: string;
+  consent?: "unconfirmed";
+};
+
+const bodyClip = (id: BodyCareClipId, file: string, label: Localised, focus?: string, consent?: "unconfirmed"): BodyCareClip => ({
+  id,
+  focus,
+  consent,
+  sources: { mp4: `/videos/body-care/${file}.mp4`, webm: `/videos/body-care/${file}.webm` },
+  poster: `/videos/body-care/${file}-poster.jpg`,
+  label,
+});
+
+// Source: owner-supplied in-studio clips (from-leon/video1-4.mov). Muted web
+// encodes only; audio stripped. video1-3 are WeChat exports (WXVer) filmed
+// around 2026-11-23, people-free room details. video4 is an iPhone 14 Pro Max
+// recording on 2026-11-02 of a head and face massage (guest and therapist
+// identifiable). Trimmed 10-18s and rotated to portrait for the web encode.
+export const bodyCareClips: Record<BodyCareClipId, BodyCareClip> = {
+  "room-flowers": bodyClip("room-flowers", "room-flowers", { "en-AU": "Dried flowers and candles in an alcove at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店壁龛中的干花与蜡烛" }, "50% 40%"),
+  "room-lantern": bodyClip("room-lantern", "room-lantern", { "en-AU": "A lantern and foliage in a corner of Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店角落的灯笼与绿植" }, "50% 60%"),
+  "room-berries": bodyClip("room-berries", "room-berries", { "en-AU": "Berry stems, a woven planter and a lantern at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店的浆果枝、编织花器与灯笼" }, "50% 45%"),
+  "treatment-room": bodyClip("treatment-room", "treatment-room", { "en-AU": "Head and face massage in the treatment room at Mend Beauty Studio, Deepdene", "zh-Hans": "Mend Beauty Studio Deepdene 门店护理室中的头面部按摩" }, "50% 35%", "unconfirmed"),
+};
+
 /**
- * The only usable footage: muted head spa clip5 (neck/shoulder massage in the
- * spa chair). Reuses the already published encode under /videos/head-spa.
- * Consent to appear is unconfirmed. Do not reuse this clip on other cards.
+ * Muted head spa clip5 (neck/shoulder massage in the spa chair). Reuses the
+ * existing encode under /videos/head-spa. Consent is unconfirmed. Kept only
+ * on the Express Neck & Shoulder card: it is still the only neck-and-shoulder
+ * massage footage. Do not reuse it as a body massage on a table.
  */
 export const bodyCareNeckClip = {
   id: "neck-shoulder-clip5",
@@ -232,15 +275,27 @@ export const bodyCareNeckClip = {
   consent: "unconfirmed",
 } as const;
 
+/** Video (or clip5) shown at the top of each treatment card. */
+export const bodyCareCardClips: Partial<Record<string, "neck-shoulder-clip5" | BodyCareClipId>> = {
+  "express-neck-shoulder-therapy": "neck-shoulder-clip5",
+  "meridian-therapy": "room-lantern",
+  "express-relaxation-massage": "room-berries",
+  "deep-sleep-massage": "treatment-room",
+};
+
+export const bodyCareHeroClipId: BodyCareClipId = "room-flowers";
+
+export const bodyCareGalleryClipIds: BodyCareClipId[] = ["room-flowers", "room-lantern", "room-berries", "treatment-room"];
+
+/** Reserved still slots for the seven owner stills, not published pending origin review. */
+export const bodyCareStillSlotIds = ["image1", "image2", "image3", "image4", "image5", "image6", "image7"] as const;
+
 export const bodyCareMediaSlotIds = [
-  "hero",
-  "meridian-therapy",
   "circulation-therapy",
   "lymphatic-detox-therapy",
-  "express-relaxation-massage",
   "aroma-healing-massage",
-  "deep-sleep-massage",
   "mend-signature-body-ritual",
+  ...bodyCareStillSlotIds,
 ] as const;
 
 /** Use the owner's first paragraph as the Service description in JSON-LD. */

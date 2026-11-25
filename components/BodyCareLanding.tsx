@@ -1,10 +1,16 @@
 import HeadSpaVideo from "@/components/HeadSpaVideo";
 import MediaSlot from "@/components/MediaSlot";
 import {
+  bodyCareCardClips,
+  bodyCareClips,
+  bodyCareGalleryClipIds,
   bodyCareGroups,
+  bodyCareHeroClipId,
   bodyCareLandingIntro,
   bodyCareNeckClip,
+  bodyCareStillSlotIds,
   bodyCareTreatments,
+  type BodyCareClip,
   type BodyCareGroupId,
   type BodyCareLocale,
   type BodyCareTreatment,
@@ -12,12 +18,50 @@ import {
 import { localiseDuration } from "@/lib/head-spa-landing";
 import type { ServiceItem } from "@/src/data/serviceMenu";
 
-export function BodyCareHeroMedia({ locale }: { locale: BodyCareLocale }) {
-  const copy = bodyCareLandingIntro[locale];
+function ClipVideo({
+  clip,
+  locale,
+  aspect,
+  className,
+  caption,
+}: {
+  clip: BodyCareClip | typeof bodyCareNeckClip;
+  locale: BodyCareLocale;
+  aspect: string;
+  className?: string;
+  caption?: string;
+}) {
   return (
-    <MediaSlot
-      slotId="hero"
-      label={copy.heroSlotLabel}
+    <div>
+      <HeadSpaVideo
+        sources={clip.sources}
+        poster={clip.poster}
+        label={clip.label[locale]}
+        slotId={clip.id}
+        aspect={aspect}
+        focus={clip.focus}
+        className={className}
+      />
+      {caption ? (
+        <p
+          className="bg-sand px-4 py-2 text-center text-xs leading-relaxed text-taupe"
+          data-consent={"consent" in clip ? clip.consent : undefined}
+        >
+          {caption}
+        </p>
+      ) : "consent" in clip && clip.consent ? (
+        <span data-consent={clip.consent} hidden />
+      ) : null}
+    </div>
+  );
+}
+
+export function BodyCareHeroMedia({ locale }: { locale: BodyCareLocale }) {
+  const clip = bodyCareClips[bodyCareHeroClipId];
+  return (
+    <ClipVideo
+      clip={clip}
+      locale={locale}
       aspect="aspect-[4/5]"
       className="rounded-[2rem] shadow-xl shadow-charcoal/10"
     />
@@ -29,6 +73,13 @@ type BodyCareLandingProps = {
   /** Existing body-care menu items: the single source of prices and durations. */
   menuItems: ServiceItem[];
 };
+
+function cardClip(treatmentId: string): BodyCareClip | typeof bodyCareNeckClip | undefined {
+  const id = bodyCareCardClips[treatmentId];
+  if (!id) return undefined;
+  if (id === bodyCareNeckClip.id) return bodyCareNeckClip;
+  return bodyCareClips[id];
+}
 
 function TreatmentCard({
   treatment,
@@ -43,30 +94,21 @@ function TreatmentCard({
   const item = menuItems.find((entry) => entry.id === treatment.id);
   if (!item) return null;
   const duration = localiseDuration(item.time, locale);
-  const isNeckCard = treatment.id === bodyCareNeckClip.treatmentId;
+  const clip = cardClip(treatment.id);
+  const caption =
+    clip?.id === bodyCareNeckClip.id
+      ? copy.neckCaption
+      : clip?.id === "treatment-room"
+        ? copy.treatmentCaption
+        : undefined;
 
   return (
     <article
       className="flex flex-col overflow-hidden rounded-3xl border border-gold/20 bg-white/70"
       data-body-care-treatment={treatment.id}
     >
-      {isNeckCard ? (
-        <div>
-          <HeadSpaVideo
-            sources={bodyCareNeckClip.sources}
-            poster={bodyCareNeckClip.poster}
-            label={bodyCareNeckClip.label[locale]}
-            slotId={bodyCareNeckClip.id}
-            aspect="aspect-square"
-            focus={bodyCareNeckClip.focus}
-          />
-          <p
-            className="bg-sand px-4 py-2 text-center text-xs leading-relaxed text-taupe"
-            data-consent={bodyCareNeckClip.consent}
-          >
-            {copy.neckCaption}
-          </p>
-        </div>
+      {clip ? (
+        <ClipVideo clip={clip} locale={locale} aspect="aspect-square" caption={caption} />
       ) : (
         <MediaSlot slotId={treatment.id} label={copy.mediaSlotLabel} aspect="aspect-square" />
       )}
@@ -122,6 +164,30 @@ function GroupBlock({
   );
 }
 
+function RoomGallery({ locale }: { locale: BodyCareLocale }) {
+  const copy = bodyCareLandingIntro[locale];
+  return (
+    <section className="mt-14" data-body-care-gallery="">
+      <h3 className="font-display text-2xl font-medium text-charcoal sm:text-3xl">{copy.galleryTitle}</h3>
+      <p className="mt-3 max-w-3xl text-sm leading-relaxed text-cocoa sm:text-base">{copy.galleryBody}</p>
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {bodyCareGalleryClipIds.map((id) => {
+          const clip = bodyCareClips[id];
+          const caption = id === "treatment-room" ? copy.treatmentCaption : undefined;
+          return (
+            <ClipVideo key={id} clip={clip} locale={locale} aspect="aspect-[9/16]" className="rounded-[1.5rem]" caption={caption} />
+          );
+        })}
+      </div>
+      <div className="mt-5 grid gap-5 sm:grid-cols-2 md:grid-cols-4">
+        {bodyCareStillSlotIds.map((id) => (
+          <MediaSlot key={id} slotId={id} label={copy.mediaSlotLabel} aspect="aspect-[4/5]" className="rounded-3xl" />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function BodyCareLanding({ locale, menuItems }: BodyCareLandingProps) {
   const copy = bodyCareLandingIntro[locale];
 
@@ -135,6 +201,7 @@ export default function BodyCareLanding({ locale, menuItems }: BodyCareLandingPr
       </div>
       <GroupBlock group="body-therapy" locale={locale} menuItems={menuItems} />
       <GroupBlock group="signature-massage" locale={locale} menuItems={menuItems} />
+      <RoomGallery locale={locale} />
     </div>
   );
 }
