@@ -6,19 +6,22 @@
 // The Chinese page is a faithful draft translation for Chinese-Australian
 // hairdressers; mark it as a draft in review until the owner approves it.
 //
-// Photos: only real studio stills and one frame from a real décor clip.
-// Leon's eleven later stills (2026-11-25 handoff) carry C2PA / OpenAI
-// gpt-image / trainedAlgorithmicMedia provenance and are not used.
+// Photos: real studio stills only. The eleven later stills from the
+// 2026-11-25 handoff carry C2PA / OpenAI provenance and are not used.
+// t286 camera originals: photo1 (hero, reflection faces and a counter
+// flyer softly blurred), a cropped photo3 reception logo, photo4 wash
+// bed, plus the existing empty salon interior. photo2 and both clips
+// were skipped because people could not be removed.
 
 export type ChairRentalLocale = "en-AU" | "zh-Hans";
 
 type Localised = Record<ChairRentalLocale, string>;
 
 export type ChairRentalStillId =
-  | "salon-interior"
   | "styling-stations"
-  | "product-station"
-  | "studio-decor";
+  | "salon-interior"
+  | "reception"
+  | "wash-bed";
 
 export type ChairRentalStillVariant = {
   src: string;
@@ -53,21 +56,21 @@ const still = (
 });
 
 export const chairRentalStills: Record<ChairRentalStillId, ChairRentalStill> = {
+  "styling-stations": still("styling-stations", 1440, 1920, [800, 1440], {
+    "en-AU": "Two styling stations with arched mirrors and beige chairs at Mend Beauty Studio, Deepdene",
+    "zh-Hans": "Mend Beauty Studio Deepdene 的两个美发工位，配拱形镜与米色座椅",
+  }),
   "salon-interior": still("salon-interior", 1024, 576, [640, 1024], {
     "en-AU": "The salon interior at Mend Beauty Studio in Deepdene, with styling stations along a row of arched mirrors",
     "zh-Hans": "Mend Beauty Studio Deepdene 门店内景，一排拱形镜前的美发工位",
   }),
-  "styling-stations": still("styling-stations", 768, 1024, [480, 768], {
-    "en-AU": "Hair styling stations and arched mirrors at Mend Beauty Studio, Deepdene",
-    "zh-Hans": "Mend Beauty Studio Deepdene 的美发工位与拱形镜",
+  reception: still("reception", 1600, 1054, [800, 1600], {
+    "en-AU": "The MEND Beauty, Hair and Wellness wall and floral arrangement at the studio reception in Deepdene",
+    "zh-Hans": "Mend Beauty Studio Deepdene 前台的 MEND Beauty · Hair · Wellness 墙面与花艺",
   }),
-  "product-station": still("product-station", 768, 1024, [480, 768], {
-    "en-AU": "Product shelves and a professional hair care station at Mend Beauty Studio, Deepdene",
-    "zh-Hans": "Mend Beauty Studio Deepdene 的产品货架与专业美发工作台",
-  }),
-  "studio-decor": still("studio-decor", 720, 1280, [480, 720], {
-    "en-AU": "A floral arrangement in a lit niche at Mend Beauty Studio, Deepdene",
-    "zh-Hans": "Mend Beauty Studio Deepdene 门店壁龛中的花艺陈列",
+  "wash-bed": still("wash-bed", 1355, 2408, [640, 1355], {
+    "en-AU": "A head spa wash bed and basin at Mend Beauty Studio, Deepdene",
+    "zh-Hans": "Mend Beauty Studio Deepdene 的头疗洗头床与水盆",
   }),
 };
 

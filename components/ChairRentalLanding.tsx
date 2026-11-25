@@ -53,57 +53,61 @@ function StillPicture({
 
 export default function ChairRentalLanding({ locale }: { locale: ChairRentalLocale }) {
   const copy = chairRentalCopy[locale];
-  const hero = chairRentalStills["salon-interior"];
   const stations = chairRentalStills["styling-stations"];
-  const products = chairRentalStills["product-station"];
-  const decor = chairRentalStills["studio-decor"];
+  const interior = chairRentalStills["salon-interior"];
+  const reception = chairRentalStills.reception;
+  const washBed = chairRentalStills["wash-bed"];
 
   return (
     <>
       <section className="bg-sand">
-        <div className="wrap pt-8 sm:pt-10">
-          <StillPicture
-            still={hero}
-            locale={locale}
-            aspect="aspect-[16/9]"
-            className="rounded-[2rem] shadow-xl shadow-charcoal/10"
-            sizes="(max-width: 1024px) 100vw, 1120px"
-            priority
-          />
-        </div>
-        <div className="wrap max-w-3xl py-12 sm:py-16">
-          <p className="text-sm font-medium uppercase tracking-[0.24em] text-gold">{copy.subtitle}</p>
-          <h1 className="mt-4 font-display text-4xl font-medium leading-[1.1] text-charcoal sm:text-5xl lg:text-6xl">
-            {copy.title}
-          </h1>
-          <p className="mt-6 font-display text-2xl italic leading-snug text-cocoa sm:text-3xl">{copy.lead}</p>
-          <p className="mt-6 text-base leading-relaxed text-cocoa">{copy.intro}</p>
+        <div className="wrap py-10 sm:py-14 lg:py-16">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <StillPicture
+              still={stations}
+              locale={locale}
+              aspect="aspect-[3/4]"
+              className="rounded-[2rem] shadow-xl shadow-charcoal/10"
+              sizes="(max-width: 1024px) 100vw, 560px"
+              priority
+            />
+            <div>
+              <p className="text-sm font-medium uppercase tracking-[0.24em] text-gold">{copy.subtitle}</p>
+              <h1 className="mt-4 font-display text-4xl font-medium leading-[1.1] text-charcoal sm:text-5xl lg:text-6xl">
+                {copy.title}
+              </h1>
+              <p className="mt-6 font-display text-2xl italic leading-snug text-cocoa sm:text-3xl">{copy.lead}</p>
+              <p className="mt-6 text-base leading-relaxed text-cocoa">{copy.intro}</p>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="wrap pb-16 sm:pb-20" aria-label={copy.galleryLabel}>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5">
           <StillPicture
-            still={stations}
+            still={interior}
             locale={locale}
-            aspect="aspect-[3/4]"
-            className="rounded-[2rem] md:col-span-1"
-            sizes="(max-width: 768px) 100vw, 33vw"
-          />
-          <StillPicture
-            still={products}
-            locale={locale}
-            aspect="aspect-[3/4]"
+            aspect="aspect-[16/9]"
             className="rounded-[2rem]"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            sizes="(max-width: 1024px) 100vw, 1120px"
           />
-          <StillPicture
-            still={decor}
-            locale={locale}
-            aspect="aspect-[3/4]"
-            className="rounded-[2rem]"
-            sizes="(max-width: 768px) 100vw, 33vw"
-          />
+          <div className="grid gap-5 md:grid-cols-3">
+            <StillPicture
+              still={reception}
+              locale={locale}
+              aspect="aspect-[3/2]"
+              className="rounded-[2rem] md:col-span-2"
+              sizes="(max-width: 768px) 100vw, 66vw"
+            />
+            <StillPicture
+              still={washBed}
+              locale={locale}
+              aspect="aspect-[3/4]"
+              className="rounded-[2rem]"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>
         </div>
       </section>
 

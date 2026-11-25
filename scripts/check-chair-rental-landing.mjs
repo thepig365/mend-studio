@@ -67,6 +67,11 @@ assert(!/\/image0\d\.(png|jpg|webp)/.test(data + landing), "C2PA-labelled later 
 const dir = new URL("../public/images/chair-rental/", import.meta.url);
 const files = (await readdir(dir)).filter((name) => !name.startsWith("."));
 assert(files.length > 0, "Optimised chair-rental images are present");
+const stems = new Set(files.map((name) => name.replace(/-\d+\.(avif|webp|jpg)$/, "")));
+for (const stem of ["styling-stations", "salon-interior", "reception", "wash-bed"]) {
+  assert(stems.has(stem), `Expected still ${stem} is present`);
+}
+assert(!stems.has("product-station") && !stems.has("studio-decor"), "Superseded v1 gallery stills were removed");
 for (const file of files) {
   const size = (await stat(new URL(file, dir))).size;
   assert(size < 250 * 1024, `${file} stays under 250 KB (got ${size})`);
