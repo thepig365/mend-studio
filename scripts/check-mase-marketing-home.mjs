@@ -112,6 +112,7 @@ const workspace = load("components/MarketingPortalWorkspace.tsx", {
   "@/components/MarketingGrowthDesk": { default: () => element("div", { id: "growth-desk" }) },
   "@/components/LandingPageStudio": { default: () => element("div", { id: "landing-studio" }) },
   "@/components/MarketingOperatingGuide": { default: () => element("div", { id: "operating-guide" }) },
+  "@/components/MarketingReferenceHub": { default: () => element("div", { id: "reference-hub" }) },
   "@/components/MaseMarketingHomeReference": { default: reference },
 }).default;
 const renderWorkspace = () => { cursor = 0; return nodes(workspace()); };

@@ -7,6 +7,7 @@ import MarketingGrowthDesk from "@/components/MarketingGrowthDesk";
 import LandingPageStudio from "@/components/LandingPageStudio";
 import MaseMarketingHomeReference from "@/components/MaseMarketingHomeReference";
 import MarketingOperatingGuide from "@/components/MarketingOperatingGuide";
+import MarketingReferenceHub from "@/components/MarketingReferenceHub";
 
 const workspaces = [
   {
@@ -133,7 +134,11 @@ const workspaceZh: Record<string, string> = {
   "Do not publish, approve, spend money or change any account or production setting.": "不得发布、批准、花费资金或更改任何账号及正式环境设置。"
 };
 
-export default function MarketingPortalWorkspace() {
+export default function MarketingPortalWorkspace({
+  driveLibraryUrl = null,
+}: {
+  driveLibraryUrl?: string | null;
+} = {}) {
   const { t } = useMarketingLocale();
   const tr = (text: string) => t(text, workspaceZh[text] ?? text);
   const [provider, setProvider] = useState<Provider>("ChatGPT");
@@ -168,6 +173,7 @@ export default function MarketingPortalWorkspace() {
 
   return (
     <>
+      <MarketingReferenceHub driveLibraryUrl={driveLibraryUrl} />
       <MarketingGrowthDesk />
       <section className="mb-10 rounded-3xl border border-gold/40 bg-white/80 p-6 sm:p-8">
         <p className="eyebrow">{tr("Reference library")}</p>

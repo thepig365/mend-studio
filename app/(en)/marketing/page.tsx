@@ -7,6 +7,7 @@ import {
   marketingPortalEmail,
 } from "@/auth";
 import MarketingPortalWorkspace from "@/components/MarketingPortalWorkspace";
+import { sanitizeDriveLibraryUrl } from "@/lib/marketing-drive-library";
 import { signOutOfMarketingPortal } from "./actions";
 
 export const metadata: Metadata = {
@@ -30,6 +31,8 @@ export default async function MarketingPortalPage() {
   if (email !== marketingPortalEmail) {
     redirect("/marketing/login");
   }
+
+  const driveLibraryUrl = sanitizeDriveLibraryUrl(process.env.MEND_DRIVE_LIBRARY_URL);
 
   return (
     <section className="bg-sand/45 py-12 sm:py-16">
@@ -58,7 +61,7 @@ export default async function MarketingPortalPage() {
         <a href="/staff/feedback" className="btn-outline mt-8">
           <MarketingText en="Private customer feedback" zh="私密顾客反馈" />
         </a>
-        <MarketingPortalWorkspace />
+        <MarketingPortalWorkspace driveLibraryUrl={driveLibraryUrl} />
       </div>
     </section>
   );
