@@ -34,6 +34,20 @@ values only as server-side Vercel environment variables:
 - `AUTH_GOOGLE_SECRET`
 - `MARKETING_PORTAL_ALLOWED_EMAIL`
 
+The material-library link is separate, optional and server-side:
+
+- `MEND_DRIVE_LIBRARY_URL`
+
+Set it to the full `https://drive.google.com/...` or `https://docs.google.com/...`
+URL of the private `MEND-Material-Library` folder. The portal reads it only
+after the existing login check. Do not use `NEXT_PUBLIC_MEND_DRIVE_LIBRARY_URL`;
+a public variable would copy the folder link into the website JavaScript.
+Leave the variable unset until Leon supplies the URL. The portal then shows
+the seven folder names without a link. An invalid URL is treated as unset and
+is not rendered. Do not commit the URL, a Drive folder ID, a full-size photo
+or a Google API key. Live Drive API thumbnails are not built. They are a later
+phase and need Leon's explicit approval before any API key is added.
+
 The Google OAuth application must allow this production callback:
 
 `https://mendbeauty.com.au/api/auth/callback/google`
@@ -66,6 +80,15 @@ client secrets, access tokens or passwords.
   third-party guidance; unsourced statistics must not be quoted as fact to
   customers. Do not store private strategy, customer or staff records, budgets
   or secrets in the vendored files.
+- Marketing reference hub: brand, copy and AI checks, the material-library
+  taxonomy, verified public channels, routines and owner-approval gates. The
+  working text is the Simplified Chinese section
+  [营销参考中心](#营销参考中心) and
+  [marketing-reference.md](./marketing-reference.md).
+- Lead generation plan: one call to action, two proposed offers, a hand-filled
+  tracking table, Australian compliance notes and the Monday review. The
+  working text is [获客执行方案](#获客执行方案). Nothing in that plan is
+  approved to launch.
 
 ## AI boundary
 
@@ -237,3 +260,100 @@ report edits and task records are not translated, overwritten or sent externally
 A pristine weekly report template follows the chosen language; edited text is
 retained. The existing printed review stand remains authoritative and all QR work
 is paused pending the owner-provided photo/file.
+
+## 营销参考中心
+
+私有 `/marketing` 工作台以营销参考中心作为广告与推广的统一查阅入口。条文见 [营销参考](./marketing-reference.md)。门户里的同名面板与该文件对应，并保留英文 / 中文切换。阅读不会授予发布、花费或更改账户的权限。
+
+参考中心包含三块：
+
+1. **营销技能与 AI 质量标准**：品牌叙事、情绪价值与服务文案、AI 工作流与发布前质量检查。
+2. **MEND 素材库结构参考**：本地 `MEND-Material-Library/` 的七个文件夹，以及登录后才显示的 Google Drive 链接。
+3. **已核实的公开营销与分类信息渠道**：Facebook 主页、Instagram、官网，以及 Gumtree 公开信息编号 `1345924936`。
+
+品牌主句仍是 Mend your hair. Refresh your skin. Renew your look. 网站上已在使用的中文是「修护秀发，焕亮肌肤，重拾自信光彩。」中文服务说明使用「提供中文服务」。门店地址是 74 Whitehorse Road, Deepdene VIC 3103。主要服务范围是 Deepdene、Balwyn、Canterbury、Surrey Hills、Kew、Camberwell。Mont Albert 是次要服务范围。这些城区不是分店。
+
+### 素材库与 Google Drive
+
+Anna 和其他被点名的员工在 Google Drive 中上传照片。门户只在现有登录检查通过后，从私有的 Vercel 环境变量读取文件夹链接。
+
+需要的变量只有一个：
+
+- `MEND_DRIVE_LIBRARY_URL`
+
+它必须是 `drive.google.com` 或 `docs.google.com` 上的完整 https 链接，指向名为 `MEND-Material-Library` 的私有文件夹。文件夹内镜像这七个子文件夹：`Head Spa`、`Hairdressing`、`Skin Care`、`Rent a Chair`、`Studio & Interior`、`Staff`、`Unsorted`。
+
+不要使用 `NEXT_PUBLIC_MEND_DRIVE_LIBRARY_URL`。带 `NEXT_PUBLIC_` 的变量会把链接写进网站的 JavaScript，未登录的人也能从脚本里看到。服务器变量只在门户登录之后交给页面。
+
+未配置或链接无效时，门户仍显示七个文件夹名称，并说明链接尚未配置，不展示按钮，也不猜测文件夹 ID。
+
+安全姿势是先只读：
+
+- 这个 Drive 文件夹是独立的顶层资料库，与财务和工资文件夹分开。
+- 编辑权限只授予明确具名的员工 Google 账户，例如 Anna。不要开启「任何知道链接的人」。
+- 门户不上传文件、不删除文件、不更改共享设置。上传发生在 Google Drive 里，而且只有 Leon 指定的编辑者可以上传。
+- 不要把全尺寸照片、Drive 文件夹 ID 或 Google API 凭证提交到这个公开 Git 仓库。
+
+缩略图是后续阶段，本版本没有接上。实时 Drive API 缩略图须先得到 Leon 的明确批准，才能在 Vercel 添加任何 API 密钥。当前代码不读取 Google API 密钥，也不从 Drive 下载照片。
+
+## 获客执行方案
+
+本方案是内部执行说明。对客的行动指引和同意文案同时给出澳大利亚英语和简体中文。标为 Proposed / 待店主核准具体条款后启用 的项目，在 Leon 核准具体条款之前不得对外使用。
+
+已确认预约和已完成到店是主要成效，曝光本身不是结果。Confirmed bookings and completed visits are the primary success metrics, not impressions alone.
+
+### 1. 单一行动指引
+
+每条 Facebook 帖子和每则 Gumtree 广告只放一个明确的行动指引：请客人发消息预约，或给出选择时间的预约链接。不要发布没有预约或咨询路径的纯品牌帖。
+
+美发工位的 Gumtree 广告使用现有工位咨询页（https://mendbeauty.com.au/careers 与 https://mendbeauty.com.au/zh/careers），不用美容预约链接。美容服务的选时链接是 https://mendbeauty.com.au/book 与 https://mendbeauty.com.au/zh/book。
+
+对客示例：
+
+- Send us a message to book your visit at our Deepdene studio.
+- 发消息给我们，预约 Deepdene 门店的到访。
+- Choose a time: https://mendbeauty.com.au/book
+- 选择时间：https://mendbeauty.com.au/zh/book
+- Message us and we will help you book.
+- 私信我们，我们帮你预约。
+
+### 2. 获客赠品
+
+Proposed / 待店主核准具体条款后启用
+
+提议的形式是：免费的美容头皮咨询，或首次到店体验，用来交换姓名和手机号。这不是医疗检查。具体是哪一项、是否收费、有效期和适用服务，都要等 Leon 写成明确条款。
+
+收集姓名或手机号时，必须有单独的同意勾选，并附上说明。提议中的说明是：
+
+- I agree that Mend Beauty Studio may contact me about this booking. I can opt out at any time.
+- 我同意 Mend Beauty Studio 就本次预约与我联系。我可以随时取消。
+
+同意预约不等于同意接收营销信息。没有勾选同意，就不发送后续消息。本门户不收集、不保存姓名或号码。
+
+### 3. 转介绍
+
+Proposed / 待店主核准具体条款后启用
+
+提议的形式是：被介绍的人是新客，预约已确认，并且到店完成之后，介绍人获得一次免费护理。Leon 在启用前必须写清：是哪一项护理、何时失效、员工是否可参加、介绍人与新客是否必须是不同的人。在此之前不要写成已经生效的优惠，也不要标价格。
+
+### 4. 每日手工记录表
+
+每天把汇总数字抄到获准的私人工作区。下表是空的示例。不要在这个公开仓库里填写真实客户、电话或收入。门户不保存这张表。
+
+Confirmed Bookings 与 Completed Visits 是主要栏目。Traffic/Page Views 只作背景。
+
+| Date 日期 | Channel/Post 渠道／帖子 | Traffic/Page Views 访问／页面浏览 | Booking Clicks 预约点击 | Inbound Calls/DMs 来电／私信 | Confirmed Bookings 已确认预约 | Completed Visits 已完成到店 | Notes 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Example 示例 | Example post label 示例帖子 | — | — | — | — | — | Example row only. Do not enter customer names, phone numbers or revenue. 示例行。不要填写客户姓名、电话或收入。 |
+
+### 5. 澳大利亚合规要点
+
+- 不写医疗或疗效承诺。TGA 与 AHPRA 的边界是：只谈美容护理和放松。头皮咨询是美容咨询，不是医疗诊断。
+- 前后对比照片须有客户书面同意。不用误导性的滤镜或修图。说明效果因人而异。
+- 遵守 ACCC 与澳大利亚消费者法的基本要求：价格真实，优惠条款在客人接受前可读，不伪造评价，也不以奖励换评价。
+- 若获客赠品要收集电话或邮箱，遵守 ACMA《Spam Act 2003》：明确同意、表明发送者是 Mend Beauty Studio，并提供简便的退出方式。
+
+### 6. 每周复盘
+
+每个周一，按 Australia/Melbourne 时间，结合 09:00 的周报，复盘哪个渠道或哪条帖子带来了已确认预约和已完成到店，什么值得重复，什么应该暂停或停止。重复一条内容不等于可以增加广告花费。花费仍须 Leon 另行批准。
+
