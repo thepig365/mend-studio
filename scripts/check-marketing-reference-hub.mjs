@@ -53,9 +53,26 @@ function walkBilingual(value, path) {
     walkBilingual(child, `${path}.${key}`);
   }
 }
-for (const key of ["customerFacingCopy", "studioServices", "materialFolders", "prePromotionChecks", "skillStandards", "routines", "approvalItems", "publicChannels", "ctaExamples", "consentNotice", "trackingColumns", "trackingCaption", "trackingExampleNote", "complianceNotes", "driveCopy"]) {
+for (const key of ["customerFacingCopy", "studioServices", "materialFolders", "prePromotionChecks", "skillStandards", "routines", "approvalItems", "publicChannels", "ctaExamples", "consentNotice", "trackingColumns", "trackingCaption", "trackingExampleNote", "complianceNotes", "driveCopy", "facebookGroupNotice", "facebookGroupTitle", "groupDraftsTitle", "facebookGroupBlocks", "welcomePost", "groupReferences", "groupReferenceNote", "groupDraftIntro"]) {
   walkBilingual(hub[key], key);
 }
+assert.equal(hub.draftOnlyLabel, "Draft only / 未经 Leon 明确批准不得发布");
+assert.equal(hub.facebookGroupNotice.zh, "尚未创建任何 Facebook 群；创建群、邀请客人、发布帖子或启用会员礼遇均须 Leon 明确批准。");
+assert.equal(hub.groupPostDrafts.length, 9);
+const newChinese = [
+  hub.facebookGroupNotice.zh,
+  hub.welcomePost.zh,
+  hub.groupDraftIntro.zh,
+  hub.groupReferenceNote.zh,
+  ...hub.facebookGroupBlocks.flatMap((block) => [block.title.zh, block.detail.zh]),
+  ...hub.groupReferences.map((item) => item.detail.zh),
+  ...hub.groupPostDrafts.map((post) => post.zh),
+];
+for (const bit of newChinese) assert.doesNotMatch(bit, /—|–/, bit.slice(0, 48));
+assert.match(hub.facebookGroupBlocks.map((block) => block.detail.en).join("\n"), /not separate branches/);
+assert.match(hub.facebookGroupBlocks.map((block) => block.detail.zh).join("\n"), /不是分店/);
+assert.match(hub.facebookGroupBlocks.map((block) => block.detail.en).join("\n"), /Private \+ Visible/);
+assert.match(hub.facebookGroupBlocks.map((block) => block.detail.en).join("\n"), /250/);
 
 const exampleUrl = "https://drive.google.com/drive/folders/example-library";
 assert.equal(sanitizeDriveLibraryUrl(exampleUrl), exampleUrl);
@@ -103,6 +120,16 @@ assert.match(portal, /\]\(\.\/marketing-reference\.md\)/);
 for (const phrase of ["## 获客执行方案", "Proposed / 待店主核准具体条款后启用", "Spam Act 2003", "TGA", "AHPRA", "ACCC", "Confirmed Bookings", "Completed Visits", "Inbound Calls/DMs", "MEND_DRIVE_LIBRARY_URL", "NEXT_PUBLIC_MEND_DRIVE_LIBRARY_URL", "Anna", "任何知道链接的人", hub.ctaExamples[0].en, hub.ctaExamples[0].zh, hub.ctaExamples[1].en, hub.ctaExamples[1].zh, hub.ctaExamples[2].en, hub.ctaExamples[2].zh, hub.consentNotice.en, hub.consentNotice.zh]) {
   assert.ok(portal.includes(phrase), phrase);
 }
+for (const phrase of [hub.facebookGroupNotice.zh, hub.draftOnlyLabel, hub.welcomePost.en, hub.welcomePost.zh, hub.groupDraftIntro.zh, "MEND Circle | Deepdene & Boroondara Hair, Scalp & Skin", "https://www.facebook.com/groups/yourgotogang", "https://www.facebook.com/groups/MECCAchitchat/", "https://www.facebook.com/groups/1009128699111228/", "Fashion Journal", "Private + Visible"]) {
+  assert.ok(portal.includes(phrase), phrase);
+}
+for (const post of hub.groupPostDrafts) {
+  assert.ok(portal.includes(post.en), post.title);
+  assert.ok(portal.includes(post.zh), post.title);
+  assert.ok(post.en.includes("https://mendbeauty.com.au/book"));
+  assert.ok(post.en.includes("提供中文服务"));
+  assert.match(post.zh, /\p{Script=Han}/u);
+}
 assert.match(read(".env.example"), /# MEND_DRIVE_LIBRARY_URL=/);
 assert.match(read("app/(en)/marketing/page.tsx"), /sanitizeDriveLibraryUrl\(process\.env\.MEND_DRIVE_LIBRARY_URL\)/);
 assert.match(read("components/MarketingPortalWorkspace.tsx"), /<MarketingReferenceHub driveLibraryUrl=\{driveLibraryUrl\} \/>/);
@@ -149,6 +176,17 @@ assert.ok(text(tree).includes(hub.proposedLabel));
 assert.ok(text(tree).includes("1345924936"));
 for (const column of hub.trackingColumns) assert.ok(text(tree).includes(column.en), column.en);
 assert.equal(tree.filter((node) => node.props?.["data-offer-status"] === "proposed").length, 2);
+assert.equal(tree.filter((node) => node.props?.["data-draft-status"] === "draft-only").length, 10);
+assert.ok(text(tree).includes(hub.draftOnlyLabel));
+assert.ok(text(tree).includes(hub.facebookGroupNotice.zh));
+assert.ok(text(tree).includes(hub.facebookGroupTitle.en));
+assert.ok(text(tree).includes(hub.groupDraftsTitle.en));
+for (const post of hub.groupPostDrafts) {
+  assert.ok(text(tree).includes(post.en), post.title);
+  assert.ok(text(tree).includes(post.zh), post.title);
+  assert.ok(text(tree).includes(post.trend), post.title);
+  assert.ok(text(tree).includes(post.tone), post.title);
+}
 
 tree = render({ driveLibraryUrl: "https://evil.example/library" });
 assert.equal(tree.find((node) => node.props?.["data-drive-state"])?.props["data-drive-state"], "unconfigured");
@@ -165,6 +203,9 @@ assert.equal(tree.filter((node) => node.type === "img").length, 0);
 locale = "zh";
 tree = render({ driveLibraryUrl: null });
 assert.ok(tree.some((node) => node.type === "h2" && text(node) === "获客执行方案"));
+assert.ok(tree.some((node) => node.type === "h2" && text(node) === hub.facebookGroupTitle.zh));
+assert.ok(tree.some((node) => node.type === "h2" && text(node) === hub.groupDraftsTitle.zh));
+assert.equal(tree.filter((node) => node.props?.["data-draft-status"] === "draft-only").length, 10);
 assert.ok(tree.some((node) => node.type === "h2" && text(node) === "营销技能与 AI 质量标准"));
 assert.ok(text(tree).includes("尚未配置 Drive 链接"));
 assert.ok(text(tree).includes(hub.ctaExamples[0].zh));

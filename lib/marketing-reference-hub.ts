@@ -211,3 +211,178 @@ export const driveCopy = {
     zh: "不要把全尺寸照片、Drive 文件夹 ID 或 Google API 凭证提交到这个公开仓库。",
   },
 };
+
+export const draftOnlyLabel = "Draft only / 未经 Leon 明确批准不得发布";
+
+export const facebookGroupNotice: Bilingual = {
+  en: "No Facebook group has been created. Creating the group, inviting guests, publishing posts, or turning on member perks all require Leon's explicit approval.",
+  zh: "尚未创建任何 Facebook 群；创建群、邀请客人、发布帖子或启用会员礼遇均须 Leon 明确批准。",
+};
+
+export const facebookGroupTitle: Bilingual = {
+  en: "MEND Facebook member group plan (5 km local circle)",
+  zh: "MEND 自建 Facebook 会员群运营方案（5 公里本地圈）",
+};
+
+export const groupDraftsTitle: Bilingual = {
+  en: "2026 Melbourne beauty trends and 9 bilingual Facebook group drafts",
+  zh: "2026 墨尔本美业趋势与 9 条双语 Facebook 群帖草稿",
+};
+
+export const facebookGroupBlocks: { title: Bilingual; detail: Bilingual }[] = [
+  {
+    title: { en: "Place and reach", zh: "定位与范围" },
+    detail: {
+      en: "The circle starts at 74 Whitehorse Road, Deepdene VIC 3103 and covers about 5 km: Deepdene, Balwyn, Canterbury, Surrey Hills, Kew, Camberwell and Mont Albert. These suburbs are the catchment of this one studio, not separate branches. The group is a retention and relationship layer. It does not replace Google Business Profile, the highest-intent booking entry, or the Facebook Page.",
+      zh: "范围从 74 Whitehorse Road, Deepdene VIC 3103 起约 5 公里: Deepdene、Balwyn、Canterbury、Surrey Hills、Kew、Camberwell、Mont Albert。这些郊区是这一间工作室的来客范围, 不是分店。群是留存与关系层, 不替代 Google 商家资料(最高意向预约入口), 也不替代 Facebook 主页。",
+    },
+  },
+  {
+    title: { en: "Name and settings, after Leon approves creation", zh: "命名与设置(须 Leon 批准后方可创建)" },
+    detail: {
+      en: "Suggested privacy: Private + Visible, so people can find the group and ask to join, while posts stay visible to members. Do not make it Public, and do not turn on limited membership. The Mend Beauty Studio Facebook Page should be an admin and the official linked Page. The Page has no age restriction. Leon is an admin. Anna can be a co-admin if needed. Suggested name: MEND Circle | Deepdene & Boroondara Hair, Scalp & Skin. Alternatives: The MEND Neighbourhood | Deepdene · Balwyn · Kew; MEND Studio Circle | Whitehorse Road, Deepdene. Avoid names that sound like a group-buy or a classifieds board.",
+      zh: "隐私建议为 Private + Visible: 可以被搜到并申请加入, 帖子仅会员可见。不开 Public, 也不开 limited membership。由 Mend Beauty Studio 官方 Facebook 主页作为管理员并官方关联, 主页不设年龄限制。Leon 为管理员, Anna 可按需设为协管。建议群名: MEND Circle | Deepdene & Boroondara Hair, Scalp & Skin。备选: The MEND Neighbourhood | Deepdene · Balwyn · Kew; MEND Studio Circle | Whitehorse Road, Deepdene。避免团购或广告板式命名。",
+    },
+  },
+  {
+    title: { en: "Three join questions", zh: "3 个入群问题" },
+    detail: {
+      en: "1. Which suburb are you in? Deepdene, Balwyn, Canterbury, Surrey Hills, Kew, Camberwell, Mont Albert, or nearby. Suburb name only. 2. Are you most interested in hair, scalp and Head Spa, or in skin care? 3. Group rules and optional updates: respect, no spam, no medical advice, and no photos of other people without consent. If you are willing to see occasional MEND updates in the group, reply Yes or 先看看. Join questions do not replace Spam Act consent for SMS, WhatsApp or email. Do not collect a phone number, email address or health information in the questions.",
+      zh: "①所在郊区(Deepdene、Balwyn、Canterbury、Surrey Hills、Kew、Camberwell、Mont Albert 或附近, 仅填郊区名)。②当前最关注美发、头皮与 Head Spa, 还是皮肤护理。③群规与可选通知说明: 尊重、不发垃圾广告、不提供医疗建议、未经同意不发他人正面照; 愿意在群内看到 MEND 不定期更新, 回复 Yes 或“先看看”。入群问题不能替代《垃圾邮件法》对短信、WhatsApp 或邮件的正式同意, 且不得在入群问题中收集电话、邮箱或健康信息。",
+    },
+  },
+  {
+    title: { en: "Cold start", zh: "冷启动" },
+    detail: {
+      en: "Set the rules and a real studio-photo cover first. No AI image and no stock photo. Then prepare 5 to 10 useful seed posts: a welcome post, Melbourne weather and hair, a Head Spa comfort-and-cleanse note, barrier-first skin care, one poll, and one pinned booking guide. Invite existing MEND guests first: an optional QR at reception or the mirror, a mention after the visit only on a channel they already agreed to, and a Page invitation after Leon approves it. Do not buy members, scrape contacts, or tie joining to a review. A practical first-30-day aim is 30 to 50 real local members.",
+      zh: "先配置群规与真实店景封面, 不用 AI 图, 也不用库存图。再预发 5 到 10 条实用种子帖: 欢迎帖、墨尔本天气与美发、Head Spa 舒适清洁说明、屏障优先护肤、1 条互动投票、1 条置顶预约指引。然后优先邀请现有 MEND 客人: 前台或镜面可选二维码, 仅在客人已经同意的渠道于离店后提及, 经批准后再在主页置顶邀请。不买粉, 不抓取, 不将入群与好评挂钩。前 30 天的务实目标是 30 到 50 名真实本地会员。",
+    },
+  },
+  {
+    title: { en: "Weekly rhythm", zh: "每周内容节奏" },
+    detail: {
+      en: "At most 2 or 3 posts a week: a useful note on Monday or Tuesday, a light poll or question midweek, and an optional weekend story or a member note that is still waiting for approval. Any member-only price or perk is labelled Proposed / 待店主核准具体条款后启用.",
+      zh: "每周最多 2 到 3 帖: 周一至周二实用说明, 周中轻松投票或问答, 周末可选一条质感故事, 或一条仍待批准的会员说明。任何会员专享价或礼遇均标明 Proposed / 待店主核准具体条款后启用。",
+    },
+  },
+  {
+    title: { en: "Group rules and Australian boundaries", zh: "群规与澳洲合规" },
+    detail: {
+      en: "Turn on Meta Admin Assist to decline unanswered join requests, and to hold spam links and medical solicitation. A person still checks the group quickly each day. Sensitive questions go to Leon. TGA: promotion inside a private group can still be an advertisement, so do not claim hair regrowth, treatment of illness, or a therapeutic result. AHPRA: do not use a protected medical title. ACCC: do not ask for five-star reviews, filter by star rating, or use a fake review. Spam Act: do not message a phone or email list from the group.",
+      zh: "启用 Meta Admin Assist: 拒答入群问题则自动拒绝, 并拦截垃圾外链与医疗招揽。同时每天由人快速巡检, 敏感问题交给 Leon。TGA: 私密群里的推广也可能构成广告, 禁止生发、治病或疗效宣称。AHPRA: 不使用受保护的医疗头衔。ACCC: 禁止诱导五星评价、按星级筛选或使用虚假评价。《垃圾邮件法》: 不从群里发展短信或邮件名单。",
+    },
+  },
+  {
+    title: { en: "Path to a booking", zh: "会员转化路径" },
+    detail: {
+      en: "Lead with something useful. Each post has one soft call to action, the booking link https://mendbeauty.com.au/book. Pin a bilingual service and booking note, and do not lock in prices unless Leon has approved them. If someone asks about a time in a comment or message, reply with the booking link and do not push. Post a same-day opening only when the gap is real and Leon has approved that post.",
+      zh: "价值优先。每条帖子只给一个清晰的软性行动指引, 指向 https://mendbeauty.com.au/book。置顶双语服务与预约说明, 未经 Leon 批准不写死价格。有人在评论或私信询问档期时, 简洁回复预约链接, 不硬推。只有真实当天空档, 并且该条帖子已经批准时, 才发布临时空位。",
+    },
+  },
+  {
+    title: { en: "What to record on Monday at 09:00", zh: "周一 09:00 复盘要记的数" },
+    detail: {
+      en: "Add these to the Monday 09:00 Australia/Melbourne hand-filled review: net growth of real local members, posts published that week, member interactions, genuine enquiry comments or messages, booking-link clicks, and confirmed bookings and completed visits attributed to the group. Attribution can be a front-desk question or a member mentioning the group. A new group is usually below Meta Insights' 250-person threshold, so use the hand-filled booking attribution.",
+      zh: "纳入周一 09:00 墨尔本复盘的手填表: 净本地会员增长、当周发帖数、会员互动数、实质咨询评论或私信、预约链接点击, 以及归因到本群的确认预约与实际到店。来源可以是前台询问, 或会员自己提及。新群初期通常低于 Meta Insights 的 250 人门槛, 以手填预约归因为准。",
+    },
+  },
+];
+
+export const welcomePost: Bilingual = {
+  en: "This group is the local member space for one studio, MEND Beauty Studio at 74 Whitehorse Road, Deepdene. We offer hairdressing, Head Spa as scalp comfort and cleansing, and skin care. 提供中文服务. This is not a noticeboard, and we do not give medical advice. Book at https://mendbeauty.com.au/book. Guests travel from Deepdene, Balwyn, Canterbury, Surrey Hills, Kew, Camberwell and Mont Albert. Those nearby suburbs are not separate branches.",
+  zh: "本群是 74 Whitehorse Road, Deepdene 这一间工作室的本地会员空间。我们提供美发、Head Spa / 头皮舒适护理与皮肤护理。提供中文服务。这里不是广告板, 也不提供医疗建议。预约请走 https://mendbeauty.com.au/book。Deepdene、Balwyn、Canterbury、Surrey Hills、Kew、Camberwell、Mont Albert 是这一间工作室的来客范围, 不是分店。",
+};
+
+export const groupReferences: { name: string; href: string; detail: Bilingual }[] = [
+  {
+    name: "Your Go-To Gang",
+    href: "https://www.facebook.com/groups/yourgotogang",
+    detail: { en: "Borrow clear rules, brand participation and members answering one another. Avoid a national retail volume and frequent promotions.", zh: "可借鉴清晰群规、品牌亲自互动和会员互答。应避免全国零售体量与高频促销。" },
+  },
+  {
+    name: "MECCA Chit Chat",
+    href: "https://www.facebook.com/groups/MECCAchitchat/",
+    detail: { en: "Borrow patient answers and a clear host. Avoid turning it into a national open forum.", zh: "可借鉴耐心问答与明确主持。应避免泛全国论坛化。" },
+  },
+  {
+    name: "BAHM! (Beauty and Hair Melbourne)",
+    href: "https://www.facebook.com/groups/1009128699111228/",
+    detail: { en: "Borrow a Melbourne-local name and a natural help-seeking tone. Avoid model calls and a stream of ads.", zh: "可借鉴墨尔本本地命名与自然求助语气。应避免招模特与广告刷屏。" },
+  },
+];
+
+export const groupReferenceNote: Bilingual = {
+  en: "Honest limit: many Australian boutique VIP groups are not indexed for people who are logged out. The three links below are publicly checkable examples. Member counts are not invented.",
+  zh: "诚实说明: 多数澳洲精品沙龙的私密会员群, 在未登录检索时并没有公开索引。下面只列可以公开核实的例子, 不编造人数。",
+};
+
+export const groupDraftIntro: Bilingual = {
+  en: "The trend notes are a 2026 reading of public Australian style reporting, including Fashion Journal, Nine.com.au, news.com.au and Clean Beauty Market. They are not efficacy claims. Head Spa is a cleanse and comfort ritual only. It does not claim hair regrowth or a medical result. Every draft below is Draft only / 未经 Leon 明确批准不得发布.",
+  zh: "趋势依据为 2026 年澳洲公开媒体与美业报道的整理, 包括 Fashion Journal、Nine.com.au、news.com.au、Clean Beauty Market。这些不是疗效承诺。Head Spa 只作为清洁与舒适护理仪式, 不宣称生发或医疗效果。下面每一条都是 Draft only / 未经 Leon 明确批准不得发布。",
+};
+
+export const groupPostDrafts: { title: string; trend: string; tone: string; en: string; zh: string }[] = [
+  {
+    title: "屏障优先光泽（Barrier-First Glow）",
+    trend: "屏障优先光泽（Barrier-First Glow）",
+    tone: "知识科普 (Educational)",
+    en: "Glass skin had its moment on TikTok. What actually lasts in Australian weather is a calmer, barrier-first glow. That means skin that looks hydrated and comfortable, with normal texture, not a poreless filter. Chasing a crystal finish with stacked exfoliation is the opposite of current, careful skin care. At MEND Beauty Studio, 74 Whitehorse Road, Deepdene, our skin treatments are here to help your skin feel looked after, for clients from Balwyn, Kew, Canterbury and nearby as well. 提供中文服务. If you want a simple, modern skin appointment, start here when you are ready: https://mendbeauty.com.au/book",
+    zh: "玻璃皮肤在网上火过一阵，但更适合澳洲天气、也更经得起日常的，是先把皮肤屏障照顾好的自然光泽：看起来水润、舒服，可以有正常纹理，而不是磨成滤镜里那种“没有毛孔”。用层层去角质去追水晶光，并不是现在更谨慎的护理方式。MEND Beauty Studio 在 Deepdene 的 74 Whitehorse Road，皮肤护理就是为了让皮肤被好好照顾；Balwyn、Kew、Canterbury 及附近的朋友都来这一间工作室即可。提供中文服务。想约一个简单、现时的皮肤护理，准备好了就走：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "Bloom Skin 柔光感",
+    trend: "Bloom Skin 柔光感",
+    tone: "质感向往 (Aspirational)",
+    en: "The prettiest glow this year is not a wet-look highlight. It is the soft sheen of skin that looks well-rested, sometimes called \"bloom skin\". Think a quiet light, not a glossy pane of glass. If you live or work around Deepdene, Surrey Hills or Camberwell and want that kind of considered, modern skin moment, our skin treatments at the Whitehorse Road studio are designed as a calm in-salon pause, not a 10-step performance. 提供中文服务. Book a time that suits you: https://mendbeauty.com.au/book",
+    zh: "今年最耐看的光泽，往往不是亮片式的水光，而是皮肤状态好时那种柔和、像刚休息够的浅光，有人称之为 bloom skin：是轻轻发光，不是一块玻璃。如果你住在或工作在 Deepdene、Surrey Hills 或 Camberwell 一带，想体验这种克制又现代的皮肤护理，欢迎来 Whitehorse Road 的工作室，它更像一段安静的到店时光，而不是十步表演。提供中文服务。适合你的时间可在这里预约：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "头皮护理日常化（Scalp Wellness）",
+    trend: "头皮护理日常化（Scalp Wellness）",
+    tone: "知识科普 (Educational)",
+    en: "We are careful with the skin on our face, and often forget the skin under our hair. Scalp comfort has moved into everyday hair conversations in Melbourne: cleanliness, product build-up, and how the scalp feels. A Head Spa is a comfort-and-cleanse ritual, not a medical treatment, and it is not a claim to change hair loss or a health condition. If you are near Deepdene, Balwyn or Kew and curious about scalp-focused care, you will find Head Spa at the same MEND studio as our hair and skin services. 提供中文服务. Questions welcome below, or book here: https://mendbeauty.com.au/book",
+    zh: "我们很认真地护理脸上的皮肤，却常常忘记头发下面那一层皮肤。在墨尔本，头皮舒不舒服、有没有产品堆积，已经越来越多地出现在日常美发对话里。Head Spa 是清洁与舒适的护理仪式，不是医疗项目，也不会声称能改变掉发或任何健康状况。如果你在 Deepdene、Balwyn 或 Kew 附近，想了解以头皮为中心的护理，MEND 的 Head Spa 和美发、皮肤护理在同一间工作室。提供中文服务。想先提问可以留言，想预约请走：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "日式/韩式 Head Spa 仪式",
+    trend: "日式/韩式 Head Spa 仪式",
+    tone: "质感向往 (Aspirational)",
+    en: "Head Spa is one of the rituals Melbourne has been talking about this year: a quieter pause where the scalp is treated with the same kind of attention we usually save for a facial, with a thorough cleanse and hair that feels smoother and looks shinier when you step back onto Whitehorse Road. That is the experience, not a medical result. Our Head Spa lives at MEND Beauty Studio, 74 Whitehorse Road, Deepdene, and welcomes neighbours from Mont Albert, Canterbury and across the 5 km around us. 提供中文服务. When you want that in-salon pause: https://mendbeauty.com.au/book",
+    zh: "Head Spa 是今年墨尔本常被提起的护理仪式：把平时给面部护理的那份专注轻轻放到头皮上，彻底清洁、安静歇一会儿，再走回 Whitehorse Road 时，头发往往摸起来更顺、看起来更有光泽。这是到店体验，不是医疗效果。MEND 的 Head Spa 就在 Deepdene 的 74 Whitehorse Road，也欢迎 Mont Albert、Canterbury 以及附近五公里的朋友前来。提供中文服务。想给自己留这段到店时光：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "好打理的生活感剪裁（Low-Maintenance Cuts）",
+    trend: "好打理的生活感剪裁（Low-Maintenance Cuts）",
+    tone: "知识科普 (Educational)",
+    en: "The 2026 cut people keep asking for is not a style that only works on day one. Melbourne clients are leaning into softer layers, lived-in movement, and shapes that still look considered weeks later, including on a windy, humid commute through Kew or Camberwell. If that sounds like your life, our hairdressing team at the Deepdene studio can help you find a shape that fits your hair, not a rigid trend. 提供中文服务. Ready when you are: https://mendbeauty.com.au/book",
+    zh: "2026 年很多人在找的剪裁，不是只在第一天好看的造型。墨尔本客人更偏向柔和层次、自然动感，以及几周后、甚至在 Kew 或 Camberwell 又风又湿的通勤路上，依然看起来有设计感的形状。如果这像你的日常，欢迎来 Deepdene 工作室，让美发团队一起找适合你头发、而不是硬套流行的剪裁。提供中文服务。准备好了就预约：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "Suede 棕 / 生活妆金与光泽（Lived-In Colour & Gloss）",
+    trend: "Suede 棕 / 生活妆金与光泽（Lived-In Colour & Gloss）",
+    tone: "质感向往 (Aspirational)",
+    en: "The colour that looks expensive in 2026 often grows out softly: suede or mocha brunettes, sunlit lived-in blondes, and gloss-led shine, rather than a harsh line at the part. Australian stylists have been talking about colour that still looks considered between visits. If you are thinking about a richer brunette or a softer blonde, we would love to see you at MEND in Deepdene, one studio for neighbours from Balwyn, Surrey Hills and nearby. 提供中文服务. Start with a conversation and a booking: https://mendbeauty.com.au/book",
+    zh: "2026 年看起来更有质感的发色，往往是长出来也很自然的那种：suede 或摩卡棕、阳光感的生活妆金发，以及强调光泽的 gloss，而不是分线上一条生硬的分界。澳洲造型师也在讨论“两次来店之间依然好看”的颜色。若你想试试更有层次的棕，或更柔和的金，欢迎来 Deepdene 的 MEND，Balwyn、Surrey Hills 及附近的朋友都来这一间即可。提供中文服务。想先聊聊再预约：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "点缀式发色（Expressive Placement Colour）",
+    trend: "点缀式发色（Expressive Placement Colour）",
+    tone: "轻松互动 (Playful)",
+    en: "Not ready for a full colour overhaul? 2026 has a cheeky middle path: a ribbon of copper, a hint of pink in the fringe, or a little dimension tucked behind the ear, giving higher personality while usually staying easier to live with than a whole-head change. Tell us with a comment: copper, a soft pink moment, or \"just a gloss, thank you\". If you would rather talk it through in the chair, we are at 74 Whitehorse Road, Deepdene, and we 提供中文服务. Book here: https://mendbeauty.com.au/book",
+    zh: "还不想整头大改发色？2026 年有一条更俏皮的中间路：一缕铜棕、刘海上一点柔粉，或耳后一点点层次，个性更明显，通常也比整头改变更好打理。欢迎在评论里选一个：铜棕、柔粉，还是“谢谢，先做个光泽就好”。若想坐下来慢慢聊，我们在 Deepdene 的 74 Whitehorse Road，提供中文服务。预约在这里：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "经得起墨尔本天气的头发（Climate-Proof Texture）",
+    trend: "经得起墨尔本天气的头发（Climate-Proof Texture）",
+    tone: "轻松互动 (Playful)",
+    en: "Melbourne served four seasons before lunch again. Your hair sent a memo. The 2026 answer is less \"perfect in the salon, undone by the tram\", and more climate-proof texture: cuts and finishes that still look like you after wind, humidity and a sudden cool change. If you commute through Deepdene, Balwyn or Camberwell, come in for a hair appointment that respects real weather. 提供中文服务. What is your hair's personality on a true Melbourne day: frizz, flat, or surprisingly fine? Tell us below, or book: https://mendbeauty.com.au/book",
+    zh: "墨尔本又在午饭前把四季演了一遍，头发大概先收到了通知。2026 年更实用的方向，不是“在店里完美、上了电车就散”，而是更经得起天气的质感：出了门、遇上大风、湿气和突然转凉，依然还像你。如果你经常经过 Deepdene、Balwyn 或 Camberwell，欢迎来做一次尊重真实天气的美发预约。提供中文服务。真正的墨尔本日，你的头发是蓬、塌，还是意外地还好？评论区见，或直接预约：https://mendbeauty.com.au/book",
+  },
+  {
+    title: "精简护肤（Skinimalism / Clean Beauty）",
+    trend: "精简护肤（Skinimalism / Clean Beauty）",
+    tone: "知识科普 (Educational)",
+    en: "The most modern skin routine might be the shortest one you actually keep. \"Skinimalism\" in 2026 is not neglect; it is fewer steps that earn their place: a gentle cleanse, thoughtful hydration, daily sun care, and in-salon skin treatments when you want a properly considered pause. No ten-step performance required. Visit us at MEND Beauty Studio, 74 Whitehorse Road, Deepdene, the same studio serving Kew, Mont Albert and our other neighbouring suburbs. 提供中文服务. What is the one step you would never skip? Comment below, or book a skin treatment: https://mendbeauty.com.au/book",
+    zh: "最现代的护肤步骤，也许是你真正能坚持的那几步。2026 年的“精简护肤 / skinimalism”不是放任不管，而是每一步都有理由：温和清洁、好好补水、日常防晒，以及当你想要一段被认真对待的到店时光时，再来做皮肤护理。不必上演十步表演。欢迎来 MEND Beauty Studio，地址是 Deepdene 的 74 Whitehorse Road，Kew、Mont Albert 和附近郊区的朋友都来这一间。提供中文服务。有哪一步是你绝不会省的？欢迎留言，或预约皮肤护理：https://mendbeauty.com.au/book",
+  },
+];

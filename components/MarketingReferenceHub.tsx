@@ -8,7 +8,16 @@ import {
   consentNotice,
   ctaExamples,
   customerFacingCopy,
+  draftOnlyLabel,
   driveCopy,
+  facebookGroupBlocks,
+  facebookGroupNotice,
+  facebookGroupTitle,
+  groupDraftIntro,
+  groupDraftsTitle,
+  groupPostDrafts,
+  groupReferenceNote,
+  groupReferences,
   driveLibraryEnvName,
   gumtreeListingId,
   marketingReferenceDoc,
@@ -17,6 +26,7 @@ import {
   prePromotionChecks,
   proposedLabel,
   publicChannels,
+  welcomePost,
   routines,
   skillStandards,
   studioAddress,
@@ -35,6 +45,8 @@ const nav = [
   ["marketing-reference-routines", "Routines", "日常节奏"],
   ["marketing-owner-approval", "Owner approval", "店主审批"],
   ["marketing-lead-generation", "Detailed Lead Generation Plan", "获客执行方案"],
+  ["marketing-facebook-group", "Facebook member group", "Facebook 会员群"],
+  ["marketing-group-drafts", "Group post drafts", "群帖草稿"],
 ] as const;
 
 function Quote({ en, zh }: Bilingual) {
@@ -47,7 +59,7 @@ function Quote({ en, zh }: Bilingual) {
 }
 
 export default function MarketingReferenceHub({ driveLibraryUrl = null }: { driveLibraryUrl?: string | null }) {
-  const { t } = useMarketingLocale();
+  const { locale, t } = useMarketingLocale();
   const driveHref = sanitizeDriveLibraryUrl(driveLibraryUrl);
   const copy = (item: Bilingual) => t(item.en, item.zh);
 
@@ -237,6 +249,54 @@ export default function MarketingReferenceHub({ driveLibraryUrl = null }: { driv
             <h3 className="text-lg font-medium text-charcoal">{t("6. Monday review", "6. 每周复盘")}</h3>
             <p className="mt-2 text-sm leading-relaxed text-cocoa">{t("Every Monday in Australia/Melbourne, review which channel or post produced confirmed bookings and completed visits, what to repeat, and what to pause or stop. Repeating a post is not permission to spend.", "每个周一按 Australia/Melbourne 时间复盘：哪个渠道或哪条帖子带来了已确认预约和已完成到店，什么值得重复，什么应该暂停或停止。重复一条内容不等于可以花费。")}</p>
           </article>
+        </div>
+      </section>
+
+      <section id="marketing-facebook-group" className={panelClass}>
+        <p className="eyebrow">{t("Member group", "会员群")}</p>
+        <h2 className="mt-3 font-display text-3xl font-medium text-charcoal">{copy(facebookGroupTitle)}</h2>
+        <p lang="zh-Hans" className="mt-4 rounded-2xl border border-gold/40 bg-sand/60 p-4 text-sm font-medium leading-relaxed text-charcoal">{facebookGroupNotice.zh}</p>
+        {locale === "en" ? <p lang="en-AU" className="mt-3 text-sm leading-relaxed text-cocoa">{facebookGroupNotice.en}</p> : null}
+        <div className="mt-6 space-y-5">
+          {facebookGroupBlocks.map((block) => (
+            <article key={block.title.en}>
+              <h3 className="text-lg font-medium text-charcoal">{copy(block.title)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-cocoa">{copy(block.detail)}</p>
+            </article>
+          ))}
+        </div>
+        <article className="mt-6" data-draft-status="draft-only">
+          <h3 className="text-lg font-medium text-charcoal">{t("Pinned welcome post", "置顶欢迎帖")}</h3>
+          <p className="mt-2 text-sm font-medium text-bronze">{draftOnlyLabel}</p>
+          <Quote en={welcomePost.en} zh={welcomePost.zh} />
+        </article>
+        <h3 className="mt-8 text-lg font-medium text-charcoal">{t("Public examples that can be checked", "可公开核实的参考")}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-cocoa">{copy(groupReferenceNote)}</p>
+        <ul className="mt-4 space-y-4">
+          {groupReferences.map((item) => (
+            <li key={item.href} className="rounded-2xl border border-beige p-4">
+              <a href={item.href} target="_blank" rel="noopener noreferrer" className="font-medium text-bronze underline">{item.name}<span className="sr-only">{t(" (opens in a new tab)", "（在新标签页打开）")}</span></a>
+              <p className="mt-2 text-sm leading-relaxed text-cocoa">{copy(item.detail)}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="marketing-group-drafts" className={panelClass}>
+        <p className="eyebrow">{t("Draft posts", "帖子草稿")}</p>
+        <h2 className="mt-3 font-display text-3xl font-medium text-charcoal">{copy(groupDraftsTitle)}</h2>
+        <p className="mt-4 text-sm font-medium text-bronze">{draftOnlyLabel}</p>
+        <p className="mt-3 text-sm leading-relaxed text-cocoa">{copy(groupDraftIntro)}</p>
+        <div className="mt-6 space-y-6">
+          {groupPostDrafts.map((post, index) => (
+            <article key={post.title} data-draft-status="draft-only">
+              <h3 className="text-lg font-medium text-charcoal">{index + 1}. {post.title}</h3>
+              <p className="mt-2 text-sm text-cocoa">{t("Trend", "趋势")}: {post.trend}</p>
+              <p className="mt-1 text-sm text-cocoa">{t("Tone", "语气")}: {post.tone}</p>
+              <p className="mt-2 text-sm font-medium text-bronze">{draftOnlyLabel}</p>
+              <Quote en={post.en} zh={post.zh} />
+            </article>
+          ))}
         </div>
       </section>
     </div>
