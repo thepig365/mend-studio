@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { chairRentalPhoneForPath } from "@/lib/chair-rental-phone";
 import { chineseLocale, isChinesePath, localePath, ui } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
@@ -9,6 +10,8 @@ export default function MobileStickyBar() {
   const pathname = usePathname();
   const locale = isChinesePath(pathname) ? chineseLocale : "en-AU";
   const copy = ui[locale];
+  const routePhone = chairRentalPhoneForPath(pathname);
+  const phoneHref = routePhone?.href ?? site.phoneHref;
 
   return (
     <div
@@ -17,8 +20,9 @@ export default function MobileStickyBar() {
       aria-label={locale === chineseLocale ? "快捷操作" : "Quick actions"}
     >
       <div className="mx-auto flex max-w-lg gap-2">
-        <a href={site.phoneHref} data-cta-location="mobile-sticky" className="btn-outline flex-1 py-3 text-sm">
+        <a href={phoneHref} data-cta-location="mobile-sticky" className="btn-outline flex-1 py-3 text-sm">
           {copy.call}
+          {routePhone ? <span className="sr-only"> {routePhone.display}</span> : null}
         </a>
         <a href={localePath("/book", locale)} data-cta-location="mobile-sticky" className="btn-gold flex-1 py-3 text-sm">
           {copy.bookNow}

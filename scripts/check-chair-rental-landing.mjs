@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
 const data = await read("lib/chair-rental-landing.ts");
+const phone = await read("lib/chair-rental-phone.ts");
 const landing = await read("components/ChairRentalLanding.tsx");
 const enPage = await read("app/(en)/chair-rental/page.tsx");
 const zhPage = await read("app/(zh)/zh/[[...slug]]/page.tsx");
@@ -13,6 +14,10 @@ const sitemap = await read("app/sitemap.ts");
 const site = await read("lib/site.ts");
 const services = await read("lib/services.ts");
 const careerCard = await read("components/CareerCard.tsx");
+const header = await read("components/Header.tsx");
+const footer = await read("components/Footer.tsx");
+const sticky = await read("components/MobileStickyBar.tsx");
+const careers = await read("app/(en)/careers/page.tsx");
 
 assert(enPage.includes('absoluteTitle: true'), "EN title tag stays exact");
 assert(enPage.includes('chairRentalPath'), "EN page uses the shared path");
@@ -51,6 +56,37 @@ assert(!/including weekends/.test(data), "Copy must not say including weekends")
 assert(data.includes('ctaHref: "/careers"'), "EN CTA points to /careers");
 assert(data.includes('ctaHref: "/zh/careers"'), "ZH CTA points to /zh/careers");
 assert(landing.includes("copy.ctaHref"), "Landing uses the locale CTA href");
+assert(data.includes('phoneLabel: "Phone"'), "EN phone label stays English");
+assert(data.includes('phoneLabel: "电话"'), "ZH phone label stays Chinese");
+assert(phone.includes('display: "0499 666 688"'), "Chair rental display phone");
+assert(phone.includes('href: "tel:+61499666688"'), "Chair rental telephone URI");
+assert(!phone.includes("0499 66 88 99") && !phone.includes("tel:+61499668899"), "Chair rental phone module does not carry the studio number");
+assert(!data.includes("0499 66 88 99") && !landing.includes("0499 66 88 99"), "Landing copy does not show the studio number");
+assert(landing.includes("chairRentalPhone.href") && landing.includes("chairRentalPhone.display"), "Landing links the chair rental number");
+assert(landing.includes("copy.phoneLabel"), "Landing uses the locale phone label");
+assert(
+  phone.includes("return path === chairRentalPath || path === `/zh${chairRentalPath}`;"),
+  "Only /chair-rental and /zh/chair-rental match",
+);
+assert(
+  phone.includes("return isChairRentalPath(pathname) ? chairRentalPhone : null;"),
+  "Every other route keeps the studio phone",
+);
+for (const [name, source] of [
+  ["header", header],
+  ["footer", footer],
+  ["mobile sticky bar", sticky],
+]) {
+  assert(source.includes("chairRentalPhoneForPath(pathname)"), `${name} overrides the phone only on the chair rental routes`);
+  assert(!source.includes("0499 666 688") && !source.includes("tel:+61499666688"), `${name} does not hardcode the chair rental number`);
+}
+assert(header.includes("routePhone?.display ?? site.phone"), "Header falls back to the studio phone");
+assert(footer.includes("routePhone?.display ?? site.phone"), "Footer falls back to the studio phone");
+assert(sticky.includes("routePhone?.href ?? site.phoneHref"), "Sticky bar falls back to the studio phone");
+assert(sticky.includes("routePhone ? <span className=\"sr-only\"> {routePhone.display}</span> : null"), "Sticky call control names the chair rental number only on those routes");
+assert(site.includes('phone: "0499 66 88 99"'), "Studio display phone stays unchanged");
+assert(site.includes('phoneHref: "tel:+61499668899"'), "Studio telephone URI stays unchanged");
+assert(careers.includes("0499 66 88 99"), "Careers page keeps the studio phone");
 
 assert(!/\b(\d+\s*(mins?|minutes)|duration)\b/i.test(data + landing), "Chair rental copy has no service durations");
 
@@ -80,5 +116,5 @@ for (const file of files) {
 }
 
 console.log(
-  "Chair rental landing checks passed: owner EN copy with t281 days sentence, ZH draft present, CTA to careers, no service durations, Wednesday customer hours unchanged, careers links, no C2PA stills, images under 250 KB without GPS.",
+  "Chair rental landing checks passed: owner EN copy with t281 days sentence, ZH draft present, CTA to careers, chair-let phone 0499 666 688 on the landing and route chrome only, studio phone unchanged, no service durations, Wednesday customer hours unchanged, careers links, no C2PA stills, images under 250 KB without GPS.",
 );

@@ -97,6 +97,7 @@ export const chairRentalCopy: Record<
     ctaLabel: string;
     ctaHref: string;
     ctaFollow: string;
+    phoneLabel: string;
     galleryLabel: string;
   }
 > = {
@@ -138,6 +139,7 @@ export const chairRentalCopy: Record<
     ctaHref: "/careers",
     ctaFollow:
       "Tell us what you specialise in, share your portfolio or Instagram, and let us know which three days would suit you.",
+    phoneLabel: "Phone",
     galleryLabel: "The studio",
   },
   "zh-Hans": {
@@ -177,8 +179,9 @@ export const chairRentalCopy: Record<
     ctaLabel: "预约看店",
     ctaHref: "/zh/careers",
     ctaFollow: "请告诉我们你擅长的项目，分享作品集或 Instagram，并告知哪三天对你最合适。",
+    phoneLabel: "电话",
     galleryLabel: "门店环境",
   },
 };
 
-export const chairRentalPath = "/chair-rental";
+export { chairRentalPath } from "@/lib/chair-rental-phone";
