@@ -4,6 +4,7 @@ import {
   type ChairRentalLocale,
   type ChairRentalStill,
 } from "@/lib/chair-rental-landing";
+import { chairRentalPhone } from "@/lib/chair-rental-phone";
 
 function StillPicture({
   still,
@@ -151,10 +152,22 @@ export default function ChairRentalLanding({ locale }: { locale: ChairRentalLoca
             {copy.ctaHeading}
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-cream/80">{copy.ctaBody}</p>
-          <a href={copy.ctaHref} className="btn-light mt-8 inline-flex">
-            {copy.ctaLabel}
-          </a>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-cream/75">{copy.ctaFollow}</p>
+          <div className="mt-8 flex w-full flex-col items-center gap-8">
+            <a
+              href={chairRentalPhone.href}
+              data-cta-location="chair-rental"
+              className="group inline-flex flex-col items-center gap-3 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45 focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
+            >
+              <span className="text-xs font-medium uppercase tracking-[0.24em] text-gold">{copy.phoneLabel}</span>
+              <span className="whitespace-nowrap font-display text-3xl font-medium tracking-wide text-cream underline decoration-gold/60 underline-offset-[0.2em] transition-colors group-hover:text-gold sm:text-5xl">
+                {chairRentalPhone.display}
+              </span>
+            </a>
+            <a href={copy.ctaHref} className="btn-light inline-flex">
+              {copy.ctaLabel}
+            </a>
+          </div>
+          <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-cream/75">{copy.ctaFollow}</p>
         </div>
       </section>
     </>

@@ -14,6 +14,7 @@ import {
   servicesNavByLocale,
   ui,
 } from "@/lib/i18n";
+import { chairRentalPhoneForPath } from "@/lib/chair-rental-phone";
 import { site } from "@/lib/site";
 
 export default function Footer() {
@@ -22,6 +23,9 @@ export default function Footer() {
   const copy = ui[locale];
   const mainNav = navByLocale[locale];
   const servicesNav = servicesNavByLocale[locale];
+  const routePhone = chairRentalPhoneForPath(pathname);
+  const phone = routePhone?.display ?? site.phone;
+  const phoneHref = routePhone?.href ?? site.phoneHref;
 
   return (
     <footer className="bg-charcoal pb-20 text-cream lg:pb-0">
@@ -125,8 +129,8 @@ export default function Footer() {
             <p>{site.address}</p>
             <p>
               {copy.phone}:{" "}
-              <a href={site.phoneHref} data-cta-location="footer" className="transition-colors hover:text-gold">
-                {site.phone}
+              <a href={phoneHref} data-cta-location="footer" className="transition-colors hover:text-gold">
+                {phone}
               </a>
             </p>
             <p>

@@ -12,6 +12,7 @@ import {
   servicesNavByLocale,
   ui,
 } from "@/lib/i18n";
+import { chairRentalPhoneForPath } from "@/lib/chair-rental-phone";
 import { site } from "@/lib/site";
 
 function isNavActive(pathname: string, href: string, hasDropdown?: boolean) {
@@ -27,6 +28,9 @@ export default function Header() {
   const copy = ui[locale];
   const mainNav = navByLocale[locale];
   const servicesNav = servicesNavByLocale[locale];
+  const routePhone = chairRentalPhoneForPath(pathname);
+  const phone = routePhone?.display ?? site.phone;
+  const phoneHref = routePhone?.href ?? site.phoneHref;
   const showLanguageSwitch = !pathname.startsWith("/marketing");
   const languageHref = localePath(
     pathname,
@@ -218,8 +222,8 @@ export default function Header() {
               >
                 {copy.bookAppointment}
               </a>
-              <a href={site.phoneHref} data-cta-location="mobile-nav" className="btn-outline w-full py-3.5 text-center">
-                {copy.call} {site.phone}
+              <a href={phoneHref} data-cta-location="mobile-nav" className="btn-outline w-full py-3.5 text-center">
+                {copy.call} {phone}
               </a>
             </div>
 
